@@ -1,0 +1,109 @@
+{
+  "baseline": "674f3b63c6dc881958da26f4008daf6d6952be02",
+  "onDiskTileCells": 128,
+  "candidateTerrainSourceSHA256": "a046cdf1e9a1639480e379420c7d88b609949eff7058de3efc7f29ad15691734",
+  "pngSHA256": "906de0a1812380a748aef6a150058c2f2feb2d16f09a16d22b4a270eccd77a07",
+  "threeRevision": "187",
+  "cases": [
+    {
+      "step": 1,
+      "tileCells": 64,
+      "grid": [
+        800,
+        690
+      ],
+      "tileCount": 143,
+      "tileCellShapes": [
+        "64x64",
+        "31x64",
+        "64x49",
+        "31x49"
+      ],
+      "gridVertices": 552000,
+      "storedVertices": 568400,
+      "duplicateBorderCopies": 16400,
+      "triangles": 1101022,
+      "checkedBoundingSpheres": 143,
+      "terrainMaterials": 1,
+      "referenceGeometryBytes": 30876264,
+      "tiledGeometryBytes": 24794932,
+      "downwardRays": 6,
+      "maxRayVsHeightFieldError": 0.00001640942370073617
+    },
+    {
+      "step": 1,
+      "tileCells": 128,
+      "grid": [
+        800,
+        690
+      ],
+      "tileCount": 42,
+      "tileCellShapes": [
+        "128x128",
+        "31x128",
+        "128x49",
+        "31x49"
+      ],
+      "gridVertices": 552000,
+      "storedVertices": 560170,
+      "duplicateBorderCopies": 8170,
+      "triangles": 1101022,
+      "checkedBoundingSpheres": 42,
+      "terrainMaterials": 1,
+      "referenceGeometryBytes": 30876264,
+      "tiledGeometryBytes": 24531572,
+      "downwardRays": 6,
+      "maxRayVsHeightFieldError": 0.00001640942370073617
+    },
+    {
+      "step": 2,
+      "tileCells": 64,
+      "grid": [
+        400,
+        345
+      ],
+      "tileCount": 42,
+      "tileCellShapes": [
+        "64x64",
+        "15x64",
+        "64x24",
+        "15x24"
+      ],
+      "gridVertices": 138000,
+      "storedVertices": 142100,
+      "duplicateBorderCopies": 4100,
+      "triangles": 274512,
+      "checkedBoundingSpheres": 42,
+      "terrainMaterials": 1,
+      "referenceGeometryBytes": 7710144,
+      "tiledGeometryBytes": 6194272,
+      "downwardRays": 6,
+      "maxRayVsHeightFieldError": 0.00008742002975736796
+    },
+    {
+      "step": 2,
+      "tileCells": 128,
+      "grid": [
+        400,
+        345
+      ],
+      "tileCount": 12,
+      "tileCellShapes": [
+        "128x128",
+        "15x128",
+        "128x88",
+        "15x88"
+      ],
+      "gridVertices": 138000,
+      "storedVertices": 139841,
+      "duplicateBorderCopies": 1841,
+      "triangles": 274512,
+      "checkedBoundingSpheres": 12,
+      "terrainMaterials": 1,
+      "referenceGeometryBytes": 7710144,
+      "tiledGeometryBytes": 6121984,
+      "downwardRays": 6,
+      "maxRayVsHeightFieldError": 0.00008742002975736796
+    }
+  ]
+}

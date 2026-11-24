@@ -1,0 +1,755 @@
+{
+  "baseline": {
+    "sha256": "3792c538e7ab24f7fafb32c7edf58a6995b2f2a19158a0c9f341d00f14049c7a",
+    "viewer": {
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "quality": "high",
+      "dpr": 1,
+      "size": [
+        1600,
+        900
+      ],
+      "commit": "3c163a9",
+      "version": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.0.0 Safari/537.36",
+      "anchor": [
+        -196.78272000059314,
+        -387.4196649999253
+      ]
+    },
+    "wholeMapIsDiagnostic": true,
+    "power": [
+      {
+        "round": "ac",
+        "AC": "connected",
+        "maxObserverIntervalS": 0.401
+      },
+      {
+        "round": "flight",
+        "AC": "connected",
+        "maxObserverIntervalS": 0.401
+      }
+    ],
+    "cameras": {
+      "street": {
+        "frameMs": {
+          "n": 957,
+          "median": 16.7,
+          "p95": 17.2
+        },
+        "draws": {
+          "n": 957,
+          "median": 319,
+          "p95": 357
+        },
+        "triangles": {
+          "n": 957,
+          "median": 2877273,
+          "p95": 3199230
+        },
+        "textures": {
+          "n": 957,
+          "median": 40,
+          "p95": 44
+        },
+        "geometries": {
+          "n": 957,
+          "median": 395,
+          "p95": 402
+        },
+        "gpuMs": {
+          "n": 239,
+          "median": 3.22,
+          "p95": 6.253
+        },
+        "landAtMidpoint": {
+          "visibleDraws": 1,
+          "visibleTriangles": 1101022,
+          "storedTriangles": 1101022,
+          "meshCount": 1,
+          "geometryBufferBytes": 30876264,
+          "camera": [
+            -178.75022887378543,
+            18.163180009620994,
+            -352.99760450621505
+          ],
+          "pitch": 0.2296159417455762,
+          "yaw": -2.847392500863719,
+          "rendererPixelRatio": 1
+        },
+        "landPixelComparison": {
+          "pixels": 1440000,
+          "differentPixels": 0,
+          "maxChannelDifference": 0,
+          "meanMaxChannelDifference": 0.0
+        }
+      },
+      "flight": {
+        "frameMs": {
+          "n": 601,
+          "median": 16.7,
+          "p95": 16.9
+        },
+        "draws": {
+          "n": 601,
+          "median": 636,
+          "p95": 640
+        },
+        "triangles": {
+          "n": 601,
+          "median": 3790295,
+          "p95": 3821677
+        },
+        "textures": {
+          "n": 601,
+          "median": 40,
+          "p95": 40
+        },
+        "geometries": {
+          "n": 601,
+          "median": 381,
+          "p95": 381
+        },
+        "gpuMs": {
+          "n": 150,
+          "median": 5.184,
+          "p95": 8.951
+        },
+        "landAtMidpoint": {
+          "visibleDraws": 1,
+          "visibleTriangles": 1101022,
+          "storedTriangles": 1101022,
+          "meshCount": 1,
+          "geometryBufferBytes": 30876264,
+          "camera": [
+            -350,
+            667.5,
+            775
+          ],
+          "pitch": -0.5360447549917038,
+          "yaw": -0.06955055875078646,
+          "rendererPixelRatio": 1
+        },
+        "landPixelComparison": {
+          "pixels": 1440000,
+          "differentPixels": 0,
+          "maxChannelDifference": 0,
+          "meanMaxChannelDifference": 0.0
+        }
+      },
+      "aerial": {
+        "frameMs": {
+          "n": 481,
+          "median": 16.7,
+          "p95": 16.8
+        },
+        "draws": {
+          "n": 481,
+          "median": 597,
+          "p95": 599
+        },
+        "triangles": {
+          "n": 481,
+          "median": 4216960,
+          "p95": 4216976
+        },
+        "textures": {
+          "n": 481,
+          "median": 46,
+          "p95": 46
+        },
+        "geometries": {
+          "n": 481,
+          "median": 410,
+          "p95": 410
+        },
+        "gpuMs": {
+          "n": 120,
+          "median": 6.084,
+          "p95": 10.411
+        },
+        "landAtMidpoint": {
+          "visibleDraws": 1,
+          "visibleTriangles": 1101022,
+          "storedTriangles": 1101022,
+          "meshCount": 1,
+          "geometryBufferBytes": 30876264,
+          "camera": [
+            659.4925239360067,
+            11200,
+            4855.416522902285
+          ],
+          "pitch": -1.1583858851975093,
+          "yaw": 0.135,
+          "rendererPixelRatio": 1
+        },
+        "landPixelComparison": {
+          "pixels": 1440000,
+          "differentPixels": 0,
+          "maxChannelDifference": 0,
+          "meanMaxChannelDifference": 0.0
+        }
+      },
+      "shore": {
+        "frameMs": {
+          "n": 481,
+          "median": 16.7,
+          "p95": 16.9
+        },
+        "draws": {
+          "n": 481,
+          "median": 200,
+          "p95": 330
+        },
+        "triangles": {
+          "n": 481,
+          "median": 2850156,
+          "p95": 2927227
+        },
+        "textures": {
+          "n": 481,
+          "median": 46,
+          "p95": 46
+        },
+        "geometries": {
+          "n": 481,
+          "median": 410,
+          "p95": 410
+        },
+        "gpuMs": {
+          "n": 120,
+          "median": 4.252,
+          "p95": 7.128
+        },
+        "landAtMidpoint": {
+          "visibleDraws": 1,
+          "visibleTriangles": 1101022,
+          "storedTriangles": 1101022,
+          "meshCount": 1,
+          "geometryBufferBytes": 30876264,
+          "camera": [
+            -155.20576249999976,
+            82,
+            110
+          ],
+          "pitch": -0.5339540731194306,
+          "yaw": 0,
+          "rendererPixelRatio": 1
+        },
+        "landPixelComparison": {
+          "pixels": 1440000,
+          "differentPixels": 0,
+          "maxChannelDifference": 0,
+          "meanMaxChannelDifference": 0.0
+        }
+      }
+    },
+    "coldBytes": 2885025,
+    "coldRequests": 10,
+    "terrainBuildMs": 34.9,
+    "viewerReadyMs": 2773,
+    "flightTerrainBuildMs": 36.7,
+    "flightViewerReadyMs": 2721
+  },
+  "tile64": {
+    "sha256": "5ee6b28bc31842bfc643d93f35f9c1796fee9926c747ea287522ea974e75a1c6",
+    "viewer": {
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "quality": "high",
+      "dpr": 1,
+      "size": [
+        1600,
+        900
+      ],
+      "commit": "3c163a9",
+      "version": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.0.0 Safari/537.36",
+      "anchor": [
+        -196.78272000059314,
+        -387.4196649999253
+      ]
+    },
+    "wholeMapIsDiagnostic": true,
+    "power": [
+      {
+        "round": "ac",
+        "AC": "connected",
+        "maxObserverIntervalS": 0.401
+      },
+      {
+        "round": "flight",
+        "AC": "connected",
+        "maxObserverIntervalS": 0.401
+      }
+    ],
+    "cameras": {
+      "street": {
+        "frameMs": {
+          "n": 956,
+          "median": 16.7,
+          "p95": 17.2
+        },
+        "draws": {
+          "n": 956,
+          "median": 374.0,
+          "p95": 407
+        },
+        "triangles": {
+          "n": 956,
+          "median": 2129060.0,
+          "p95": 2518386
+        },
+        "textures": {
+          "n": 956,
+          "median": 40.0,
+          "p95": 44
+        },
+        "geometries": {
+          "n": 956,
+          "median": 505.5,
+          "p95": 532
+        },
+        "gpuMs": {
+          "n": 239,
+          "median": 4.691,
+          "p95": 7.622
+        },
+        "landAtMidpoint": {
+          "visibleDraws": 52,
+          "visibleTriangles": 393182,
+          "storedTriangles": 1101022,
+          "meshCount": 143,
+          "geometryBufferBytes": 24794932,
+          "camera": [
+            -178.75022887378543,
+            18.163180009620994,
+            -352.99760450621505
+          ],
+          "pitch": 0.2296159417455762,
+          "yaw": -2.847392500863719,
+          "rendererPixelRatio": 1
+        },
+        "landPixelComparison": {
+          "pixels": 1440000,
+          "differentPixels": 0,
+          "maxChannelDifference": 0,
+          "meanMaxChannelDifference": 0.0
+        }
+      },
+      "flight": {
+        "frameMs": {
+          "n": 601,
+          "median": 16.7,
+          "p95": 17.2
+        },
+        "draws": {
+          "n": 601,
+          "median": 692,
+          "p95": 700
+        },
+        "triangles": {
+          "n": 601,
+          "median": 3155867,
+          "p95": 3211871
+        },
+        "textures": {
+          "n": 601,
+          "median": 40,
+          "p95": 40
+        },
+        "geometries": {
+          "n": 601,
+          "median": 455,
+          "p95": 456
+        },
+        "gpuMs": {
+          "n": 150,
+          "median": 5.194,
+          "p95": 8.07
+        },
+        "landAtMidpoint": {
+          "visibleDraws": 58,
+          "visibleTriangles": 466688,
+          "storedTriangles": 1101022,
+          "meshCount": 143,
+          "geometryBufferBytes": 24794932,
+          "camera": [
+            -350,
+            667.5,
+            775
+          ],
+          "pitch": -0.5360447549917038,
+          "yaw": -0.06955055875078646,
+          "rendererPixelRatio": 1
+        },
+        "landPixelComparison": {
+          "pixels": 1440000,
+          "differentPixels": 15,
+          "maxChannelDifference": 71,
+          "meanMaxChannelDifference": 0.0002007
+        }
+      },
+      "aerial": {
+        "frameMs": {
+          "n": 481,
+          "median": 16.7,
+          "p95": 16.8
+        },
+        "draws": {
+          "n": 481,
+          "median": 739,
+          "p95": 741
+        },
+        "triangles": {
+          "n": 481,
+          "median": 4216912,
+          "p95": 4216928
+        },
+        "textures": {
+          "n": 481,
+          "median": 46,
+          "p95": 46
+        },
+        "geometries": {
+          "n": 481,
+          "median": 552,
+          "p95": 552
+        },
+        "gpuMs": {
+          "n": 120,
+          "median": 5.997,
+          "p95": 9.984
+        },
+        "landAtMidpoint": {
+          "visibleDraws": 143,
+          "visibleTriangles": 1101022,
+          "storedTriangles": 1101022,
+          "meshCount": 143,
+          "geometryBufferBytes": 24794932,
+          "camera": [
+            659.4925239360067,
+            11200,
+            4855.416522902285
+          ],
+          "pitch": -1.1583858851975093,
+          "yaw": 0.135,
+          "rendererPixelRatio": 1
+        },
+        "landPixelComparison": {
+          "pixels": 1440000,
+          "differentPixels": 1,
+          "maxChannelDifference": 2,
+          "meanMaxChannelDifference": 1.4e-06
+        }
+      },
+      "shore": {
+        "frameMs": {
+          "n": 481,
+          "median": 16.7,
+          "p95": 17
+        },
+        "draws": {
+          "n": 481,
+          "median": 243,
+          "p95": 370
+        },
+        "triangles": {
+          "n": 481,
+          "median": 2077835,
+          "p95": 2155021
+        },
+        "textures": {
+          "n": 481,
+          "median": 46,
+          "p95": 46
+        },
+        "geometries": {
+          "n": 481,
+          "median": 552,
+          "p95": 552
+        },
+        "gpuMs": {
+          "n": 120,
+          "median": 3.7,
+          "p95": 6.856
+        },
+        "landAtMidpoint": {
+          "visibleDraws": 41,
+          "visibleTriangles": 335872,
+          "storedTriangles": 1101022,
+          "meshCount": 143,
+          "geometryBufferBytes": 24794932,
+          "camera": [
+            -155.20576249999976,
+            82,
+            110
+          ],
+          "pitch": -0.5339540731194306,
+          "yaw": 0,
+          "rendererPixelRatio": 1
+        },
+        "landPixelComparison": {
+          "pixels": 1440000,
+          "differentPixels": 50,
+          "maxChannelDifference": 69,
+          "meanMaxChannelDifference": 0.0017556
+        }
+      }
+    },
+    "coldBytes": 2885099,
+    "coldRequests": 10,
+    "terrainBuildMs": 37.5,
+    "viewerReadyMs": 2701,
+    "flightTerrainBuildMs": 37.5,
+    "flightViewerReadyMs": 2720
+  },
+  "tile128": {
+    "sha256": "9ff4c2e2900ccd10bb6bfd41620fe3a98e32c69e8b487cfb45cec91c7bf345b7",
+    "viewer": {
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "quality": "high",
+      "dpr": 1,
+      "size": [
+        1600,
+        900
+      ],
+      "commit": "3c163a9",
+      "version": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.0.0 Safari/537.36",
+      "anchor": [
+        -196.78272000059314,
+        -387.4196649999253
+      ]
+    },
+    "wholeMapIsDiagnostic": true,
+    "power": [
+      {
+        "round": "ac",
+        "AC": "connected",
+        "maxObserverIntervalS": 0.401
+      },
+      {
+        "round": "flight",
+        "AC": "connected",
+        "maxObserverIntervalS": 0.401
+      }
+    ],
+    "cameras": {
+      "street": {
+        "frameMs": {
+          "n": 959,
+          "median": 16.7,
+          "p95": 17.2
+        },
+        "draws": {
+          "n": 959,
+          "median": 340,
+          "p95": 439
+        },
+        "triangles": {
+          "n": 959,
+          "median": 2208794,
+          "p95": 2586211
+        },
+        "textures": {
+          "n": 959,
+          "median": 40,
+          "p95": 44
+        },
+        "geometries": {
+          "n": 959,
+          "median": 426,
+          "p95": 440
+        },
+        "gpuMs": {
+          "n": 239,
+          "median": 2.873,
+          "p95": 6.219
+        },
+        "landAtMidpoint": {
+          "visibleDraws": 19,
+          "visibleTriangles": 466910,
+          "storedTriangles": 1101022,
+          "meshCount": 42,
+          "geometryBufferBytes": 24531572,
+          "camera": [
+            -178.75022887378543,
+            18.163180009620994,
+            -352.99760450621505
+          ],
+          "pitch": 0.2296159417455762,
+          "yaw": -2.847392500863719,
+          "rendererPixelRatio": 1
+        },
+        "landPixelComparison": {
+          "pixels": 1440000,
+          "differentPixels": 0,
+          "maxChannelDifference": 0,
+          "meanMaxChannelDifference": 0.0
+        }
+      },
+      "flight": {
+        "frameMs": {
+          "n": 601,
+          "median": 16.7,
+          "p95": 17.1
+        },
+        "draws": {
+          "n": 601,
+          "median": 648,
+          "p95": 652
+        },
+        "triangles": {
+          "n": 601,
+          "median": 3286501,
+          "p95": 3318121
+        },
+        "textures": {
+          "n": 601,
+          "median": 40,
+          "p95": 40
+        },
+        "geometries": {
+          "n": 601,
+          "median": 402,
+          "p95": 402
+        },
+        "gpuMs": {
+          "n": 150,
+          "median": 3.421,
+          "p95": 6.33
+        },
+        "landAtMidpoint": {
+          "visibleDraws": 19,
+          "visibleTriangles": 597760,
+          "storedTriangles": 1101022,
+          "meshCount": 42,
+          "geometryBufferBytes": 24531572,
+          "camera": [
+            -350,
+            667.5,
+            775
+          ],
+          "pitch": -0.5360447549917038,
+          "yaw": -0.06955055875078646,
+          "rendererPixelRatio": 1
+        },
+        "landPixelComparison": {
+          "pixels": 1440000,
+          "differentPixels": 39,
+          "maxChannelDifference": 57,
+          "meanMaxChannelDifference": 0.0003583
+        }
+      },
+      "aerial": {
+        "frameMs": {
+          "n": 480,
+          "median": 16.7,
+          "p95": 17.1
+        },
+        "draws": {
+          "n": 480,
+          "median": 640.0,
+          "p95": 642
+        },
+        "triangles": {
+          "n": 480,
+          "median": 4217130.0,
+          "p95": 4217146
+        },
+        "textures": {
+          "n": 480,
+          "median": 46.0,
+          "p95": 46
+        },
+        "geometries": {
+          "n": 480,
+          "median": 451.0,
+          "p95": 451
+        },
+        "gpuMs": {
+          "n": 120,
+          "median": 5.485,
+          "p95": 9.196
+        },
+        "landAtMidpoint": {
+          "visibleDraws": 42,
+          "visibleTriangles": 1101022,
+          "storedTriangles": 1101022,
+          "meshCount": 42,
+          "geometryBufferBytes": 24531572,
+          "camera": [
+            659.4925239360067,
+            11200,
+            4855.416522902285
+          ],
+          "pitch": -1.1583858851975093,
+          "yaw": 0.135,
+          "rendererPixelRatio": 1
+        },
+        "landPixelComparison": {
+          "pixels": 1440000,
+          "differentPixels": 5,
+          "maxChannelDifference": 60,
+          "meanMaxChannelDifference": 5.56e-05
+        }
+      },
+      "shore": {
+        "frameMs": {
+          "n": 481,
+          "median": 16.7,
+          "p95": 17.1
+        },
+        "draws": {
+          "n": 481,
+          "median": 209,
+          "p95": 338
+        },
+        "triangles": {
+          "n": 481,
+          "median": 2159523,
+          "p95": 2241053
+        },
+        "textures": {
+          "n": 481,
+          "median": 46,
+          "p95": 46
+        },
+        "geometries": {
+          "n": 481,
+          "median": 451,
+          "p95": 451
+        },
+        "gpuMs": {
+          "n": 120,
+          "median": 3.892,
+          "p95": 6.428
+        },
+        "landAtMidpoint": {
+          "visibleDraws": 12,
+          "visibleTriangles": 393216,
+          "storedTriangles": 1101022,
+          "meshCount": 42,
+          "geometryBufferBytes": 24531572,
+          "camera": [
+            -155.20576249999976,
+            82,
+            110
+          ],
+          "pitch": -0.5339540731194306,
+          "yaw": 0,
+          "rendererPixelRatio": 1
+        },
+        "landPixelComparison": {
+          "pixels": 1440000,
+          "differentPixels": 44,
+          "maxChannelDifference": 40,
+          "meanMaxChannelDifference": 0.0003313
+        }
+      }
+    },
+    "coldBytes": 2885099,
+    "coldRequests": 10,
+    "terrainBuildMs": 41.7,
+    "viewerReadyMs": 2755,
+    "flightTerrainBuildMs": 36.5,
+    "flightViewerReadyMs": 2840
+  }
+}
