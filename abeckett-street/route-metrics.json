@@ -1,0 +1,534 @@
+{
+  "before": {
+    "runtime": {
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "quality": "high",
+      "dpr": 1,
+      "size": [
+        1600,
+        900
+      ],
+      "commit": "eb5943c",
+      "version": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.0.0 Safari/537.36",
+      "anchor": [
+        -196.78272000059314,
+        -387.4196649999253
+      ]
+    },
+    "completeRoute": {
+      "frameMs": {
+        "count": 2759,
+        "median": 16.7,
+        "p95": 16.8
+      },
+      "gpuMs": {
+        "count": 551,
+        "median": 1.44,
+        "p95": 6.049
+      },
+      "calls": {
+        "count": 2759,
+        "median": 347,
+        "p95": 402
+      },
+      "triangles": {
+        "count": 2759,
+        "median": 3131015,
+        "p95": 3252857
+      },
+      "textures": {
+        "count": 2759,
+        "median": 56,
+        "p95": 62
+      },
+      "geometries": {
+        "count": 2759,
+        "median": 420,
+        "p95": 425
+      }
+    },
+    "sections": {
+      "Reilly Street \u00b7 Northern shopfronts": {
+        "frameMs": {
+          "count": 420,
+          "median": 16.7,
+          "p95": 16.8
+        },
+        "gpuMs": {
+          "count": 84,
+          "median": 1.419,
+          "p95": 3.734
+        },
+        "calls": {
+          "count": 420,
+          "median": 241.0,
+          "p95": 371
+        },
+        "triangles": {
+          "count": 420,
+          "median": 3220762.0,
+          "p95": 3253115
+        },
+        "textures": {
+          "count": 420,
+          "median": 42.0,
+          "p95": 42
+        },
+        "geometries": {
+          "count": 420,
+          "median": 245.0,
+          "p95": 245
+        }
+      },
+      "Reilly Street \u00b7 Approaching the corner": {
+        "frameMs": {
+          "count": 480,
+          "median": 16.7,
+          "p95": 16.8
+        },
+        "gpuMs": {
+          "count": 96,
+          "median": 1.433,
+          "p95": 4.149
+        },
+        "calls": {
+          "count": 480,
+          "median": 364.0,
+          "p95": 366
+        },
+        "triangles": {
+          "count": 480,
+          "median": 3187224.0,
+          "p95": 3242027
+        },
+        "textures": {
+          "count": 480,
+          "median": 42.0,
+          "p95": 42
+        },
+        "geometries": {
+          "count": 480,
+          "median": 246.0,
+          "p95": 246
+        }
+      },
+      "A\u2019Beckett Street \u00b7 Bakery frontage": {
+        "frameMs": {
+          "count": 599,
+          "median": 16.7,
+          "p95": 16.9
+        },
+        "gpuMs": {
+          "count": 120,
+          "median": 2.111,
+          "p95": 5.94
+        },
+        "calls": {
+          "count": 599,
+          "median": 355,
+          "p95": 505
+        },
+        "triangles": {
+          "count": 599,
+          "median": 3052695,
+          "p95": 3140831
+        },
+        "textures": {
+          "count": 599,
+          "median": 44,
+          "p95": 56
+        },
+        "geometries": {
+          "count": 599,
+          "median": 258,
+          "p95": 420
+        }
+      },
+      "Rotary clock": {
+        "frameMs": {
+          "count": 299,
+          "median": 16.7,
+          "p95": 16.9
+        },
+        "gpuMs": {
+          "count": 60,
+          "median": 4.41,
+          "p95": 6.0
+        },
+        "calls": {
+          "count": 299,
+          "median": 262,
+          "p95": 360
+        },
+        "triangles": {
+          "count": 299,
+          "median": 2790612,
+          "p95": 3249529
+        },
+        "textures": {
+          "count": 299,
+          "median": 60,
+          "p95": 62
+        },
+        "geometries": {
+          "count": 299,
+          "median": 422,
+          "p95": 424
+        }
+      },
+      "Inverloch Library and The Hub": {
+        "frameMs": {
+          "count": 600,
+          "median": 16.7,
+          "p95": 16.8
+        },
+        "gpuMs": {
+          "count": 120,
+          "median": 1.332,
+          "p95": 6.199
+        },
+        "calls": {
+          "count": 600,
+          "median": 229.0,
+          "p95": 254
+        },
+        "triangles": {
+          "count": 600,
+          "median": 2824425.0,
+          "p95": 3221514
+        },
+        "textures": {
+          "count": 600,
+          "median": 62.0,
+          "p95": 62
+        },
+        "geometries": {
+          "count": 600,
+          "median": 425.0,
+          "p95": 425
+        }
+      },
+      "War memorial and plaza": {
+        "frameMs": {
+          "count": 361,
+          "median": 16.7,
+          "p95": 16.8
+        },
+        "gpuMs": {
+          "count": 71,
+          "median": 4.166,
+          "p95": 7.521
+        },
+        "calls": {
+          "count": 361,
+          "median": 401,
+          "p95": 404
+        },
+        "triangles": {
+          "count": 361,
+          "median": 3145427,
+          "p95": 3292761
+        },
+        "textures": {
+          "count": 361,
+          "median": 62,
+          "p95": 62
+        },
+        "geometries": {
+          "count": 361,
+          "median": 425,
+          "p95": 425
+        }
+      }
+    },
+    "coldTraffic": [
+      {
+        "originalLocalBodyBytes": 2886460,
+        "localRequests": 10,
+        "wireBytesIncludesHeadersAndProbesAndCDN": 3142944,
+        "localFiles": {
+          "/3dModels/inverloch/explore/": 808232,
+          "/3dModels/inverloch/explore/version.json": 45,
+          "/3dModels/town3d/inverloch-model.js": 189619,
+          "/3dModels/inverloch/explore/explore-icon.png": 61365,
+          "/3dModels/town3d/town.json": 366704,
+          "/3dModels/town3d/height.png": 714779,
+          "/3dModels/town3d/ground.webp": 578872,
+          "/3dModels/town3d/detail.json": 174,
+          "/3dModels/town3d/detail-town.webp": 127700,
+          "/3dModels/town3d/detail-norman.webp": 38970
+        }
+      }
+    ],
+    "readyMs": [
+      2954
+    ],
+    "pageErrors": []
+  },
+  "after": {
+    "runtime": {
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "quality": "high",
+      "dpr": 1,
+      "size": [
+        1600,
+        900
+      ],
+      "commit": "adefa39",
+      "version": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.0.0 Safari/537.36",
+      "anchor": [
+        -196.78272000059314,
+        -387.4196649999253
+      ]
+    },
+    "completeRoute": {
+      "frameMs": {
+        "count": 2759,
+        "median": 16.7,
+        "p95": 17
+      },
+      "gpuMs": {
+        "count": 551,
+        "median": 1.923,
+        "p95": 5.888
+      },
+      "calls": {
+        "count": 2759,
+        "median": 326,
+        "p95": 376
+      },
+      "triangles": {
+        "count": 2759,
+        "median": 3170861,
+        "p95": 3292729
+      },
+      "textures": {
+        "count": 2759,
+        "median": 44,
+        "p95": 48
+      },
+      "geometries": {
+        "count": 2759,
+        "median": 405,
+        "p95": 408
+      }
+    },
+    "sections": {
+      "Reilly Street \u00b7 Northern shopfronts": {
+        "frameMs": {
+          "count": 420,
+          "median": 16.7,
+          "p95": 17.1
+        },
+        "gpuMs": {
+          "count": 84,
+          "median": 1.465,
+          "p95": 3.641
+        },
+        "calls": {
+          "count": 420,
+          "median": 224.0,
+          "p95": 348
+        },
+        "triangles": {
+          "count": 420,
+          "median": 3260705.0,
+          "p95": 3292739
+        },
+        "textures": {
+          "count": 420,
+          "median": 34.0,
+          "p95": 34
+        },
+        "geometries": {
+          "count": 420,
+          "median": 229.0,
+          "p95": 229
+        }
+      },
+      "Reilly Street \u00b7 Approaching the corner": {
+        "frameMs": {
+          "count": 480,
+          "median": 16.7,
+          "p95": 17
+        },
+        "gpuMs": {
+          "count": 96,
+          "median": 1.487,
+          "p95": 3.964
+        },
+        "calls": {
+          "count": 480,
+          "median": 342.0,
+          "p95": 345
+        },
+        "triangles": {
+          "count": 480,
+          "median": 3226725.0,
+          "p95": 3281251
+        },
+        "textures": {
+          "count": 480,
+          "median": 34.0,
+          "p95": 34
+        },
+        "geometries": {
+          "count": 480,
+          "median": 230.0,
+          "p95": 230
+        }
+      },
+      "A\u2019Beckett Street \u00b7 Bakery frontage": {
+        "frameMs": {
+          "count": 599,
+          "median": 16.7,
+          "p95": 16.8
+        },
+        "gpuMs": {
+          "count": 120,
+          "median": 2.811,
+          "p95": 5.423
+        },
+        "calls": {
+          "count": 599,
+          "median": 334,
+          "p95": 483
+        },
+        "triangles": {
+          "count": 599,
+          "median": 3091461,
+          "p95": 3179365
+        },
+        "textures": {
+          "count": 599,
+          "median": 35,
+          "p95": 44
+        },
+        "geometries": {
+          "count": 599,
+          "median": 243,
+          "p95": 405
+        }
+      },
+      "Rotary clock": {
+        "frameMs": {
+          "count": 299,
+          "median": 16.7,
+          "p95": 17
+        },
+        "gpuMs": {
+          "count": 60,
+          "median": 2.025,
+          "p95": 7.135
+        },
+        "calls": {
+          "count": 299,
+          "median": 240,
+          "p95": 338
+        },
+        "triangles": {
+          "count": 299,
+          "median": 2829542,
+          "p95": 3289507
+        },
+        "textures": {
+          "count": 299,
+          "median": 44,
+          "p95": 47
+        },
+        "geometries": {
+          "count": 299,
+          "median": 406,
+          "p95": 407
+        }
+      },
+      "Inverloch Library and The Hub": {
+        "frameMs": {
+          "count": 600,
+          "median": 16.7,
+          "p95": 17
+        },
+        "gpuMs": {
+          "count": 120,
+          "median": 4.286,
+          "p95": 6.057
+        },
+        "calls": {
+          "count": 600,
+          "median": 208.0,
+          "p95": 231
+        },
+        "triangles": {
+          "count": 600,
+          "median": 2863149.0,
+          "p95": 3261488
+        },
+        "textures": {
+          "count": 600,
+          "median": 48.0,
+          "p95": 48
+        },
+        "geometries": {
+          "count": 600,
+          "median": 408.0,
+          "p95": 408
+        }
+      },
+      "War memorial and plaza": {
+        "frameMs": {
+          "count": 361,
+          "median": 16.7,
+          "p95": 16.8
+        },
+        "gpuMs": {
+          "count": 71,
+          "median": 3.41,
+          "p95": 5.9
+        },
+        "calls": {
+          "count": 361,
+          "median": 374,
+          "p95": 379
+        },
+        "triangles": {
+          "count": 361,
+          "median": 3185287,
+          "p95": 3332611
+        },
+        "textures": {
+          "count": 361,
+          "median": 48,
+          "p95": 48
+        },
+        "geometries": {
+          "count": 361,
+          "median": 408,
+          "p95": 408
+        }
+      }
+    },
+    "coldTraffic": [
+      {
+        "originalLocalBodyBytes": 2896944,
+        "localRequests": 10,
+        "wireBytesIncludesHeadersAndProbesAndCDN": 3153423,
+        "localFiles": {
+          "/3dModels/inverloch/explore/": 818716,
+          "/3dModels/inverloch/explore/version.json": 45,
+          "/3dModels/town3d/inverloch-model.js": 189619,
+          "/3dModels/town3d/town.json": 366704,
+          "/3dModels/town3d/height.png": 714779,
+          "/3dModels/town3d/ground.webp": 578872,
+          "/3dModels/inverloch/explore/explore-icon.png": 61365,
+          "/3dModels/town3d/detail.json": 174,
+          "/3dModels/town3d/detail-town.webp": 127700,
+          "/3dModels/town3d/detail-norman.webp": 38970
+        }
+      }
+    ],
+    "readyMs": [
+      2674
+    ],
+    "pageErrors": []
+  }
+}

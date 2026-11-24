@@ -1,0 +1,22 @@
+{
+  "label": "before",
+  "info": {
+    "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "quality": "high",
+    "dpr": 1,
+    "size": [
+      960,
+      960
+    ],
+    "commit": "eb5943c",
+    "version": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/158.0.0.0 Safari/537.36",
+    "anchor": [
+      -196.78272000059314,
+      -387.4196649999253
+    ]
+  },
+  "duration": 46,
+  "fps": 25,
+  "frameCount": 1151,
+  "errors": []
+}

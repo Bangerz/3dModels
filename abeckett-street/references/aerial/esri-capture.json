@@ -1,0 +1,39 @@
+{
+  "query": "https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/4/query?geometry=145.72774%2C-38.63351&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=%2A&returnGeometry=false&f=json",
+  "features": [
+    {
+      "attributes": {
+        "OBJECTID": 6072228,
+        "SRC_DATE": 20220326,
+        "SRC_RES": 0.5,
+        "SRC_ACC": 5,
+        "SRC_DESC": "WV02",
+        "MinMapLevel": 12,
+        "MaxMapLevel": 18,
+        "NICE_NAME": "Vivid",
+        "DrawOrder": 80,
+        "SRC_DATE2": 1648252800000,
+        "NICE_DESC": "Vantor",
+        "BlockName": "Vivid_Standard_AU26_26Q1",
+        "ReleaseName": "Raster Basemaps 2026.R05"
+      }
+    },
+    {
+      "attributes": {
+        "OBJECTID": 6135792,
+        "SRC_DATE": null,
+        "SRC_RES": 15,
+        "SRC_ACC": 12,
+        "SRC_DESC": "TerraColor NextGen",
+        "MinMapLevel": 0,
+        "MaxMapLevel": 11,
+        "NICE_NAME": "TerraColor NextGen",
+        "DrawOrder": 70,
+        "SRC_DATE2": null,
+        "NICE_DESC": "Earthstar Geographics",
+        "BlockName": null,
+        "ReleaseName": null
+      }
+    }
+  ]
+}

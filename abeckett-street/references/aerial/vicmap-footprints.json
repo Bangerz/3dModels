@@ -1,0 +1,43 @@
+{
+  "query": "https://services-ap1.arcgis.com/P744lA0wf4LlBZ84/ArcGIS/rest/services/Aerial_Imagery_viewable/FeatureServer/0/query?geometry=145.72774%2C-38.63351&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelIntersects&outFields=%2A&returnGeometry=false&f=json",
+  "features": [
+    {
+      "attributes": {
+        "OBJECTID": 51,
+        "WMS_NAME": "south-gippsland_2021dec13_air_vis_10cm_epsg28355",
+        "DESCRIPTIO": null,
+        "RESOLUTION": null,
+        "YEAR": "2022",
+        "BEGIN_DATE": null,
+        "THEME": null,
+        "TYPE": null,
+        "PROJECTION": null,
+        "FORMAT": null,
+        "IWS_URL": null,
+        "ECWP": null,
+        "UFI": null,
+        "Shape__Area": 5408376519.28125,
+        "Shape__Length": 525086.6242405362
+      }
+    },
+    {
+      "attributes": {
+        "OBJECTID": 59,
+        "WMS_NAME": "outer-melbourne-east_2023jan08_air_vis_10cm_epsg7855",
+        "DESCRIPTIO": "2022-23 Outer Melbourne East Photography",
+        "RESOLUTION": null,
+        "YEAR": "2023",
+        "BEGIN_DATE": "1/8/2023 12:00:00 AM",
+        "THEME": null,
+        "TYPE": null,
+        "PROJECTION": null,
+        "FORMAT": null,
+        "IWS_URL": null,
+        "ECWP": null,
+        "UFI": null,
+        "Shape__Area": 11402464341.546875,
+        "Shape__Length": 768068.6725658086
+      }
+    }
+  ]
+}
