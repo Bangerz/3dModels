@@ -1,0 +1,179 @@
+{
+  "method": "Linear RGB, post-UV texel centers at mip zero, 1.6-texel taps, 1.6 gain, full-strength filter. This isolates the base-map clamp. Camera-dependent UV fray, mip selection, streaming overlays, lighting and screen coverage are outside this CPU comparison.",
+  "source_sha256": "356493f514141380aa28277d3c37d61195d9d9dff707601ac3d86d6b473bfc5c",
+  "source_size_px": [
+    4096,
+    3520
+  ],
+  "terrain_size_m": [
+    8010.62,
+    6882.53
+  ],
+  "sites": {
+    "Cuttriss Street": {
+      "center_world_xz_m": [
+        879.4,
+        -552.1
+      ],
+      "bounds_source_texels_xyxy_exclusive": [
+        2435,
+        1415,
+        2559,
+        1539
+      ],
+      "sampled_texels": 15376,
+      "count_any_channel_changes_by_at_least_5_of_255": 321,
+      "pct_any_channel_changes_by_at_least_5_of_255": 2.09,
+      "most_changed_sample": {
+        "source_texel_xy": [
+          2502,
+          1460
+        ],
+        "world_xz_m": [
+          888.874,
+          -585.602
+        ],
+        "source_linear_rgb": [
+          0.39157,
+          0.42869,
+          0.30499
+        ],
+        "previous_linear_rgb": [
+          0.27901,
+          0.30617,
+          0.18682
+        ],
+        "candidate_linear_rgb": [
+          0.39157,
+          0.42869,
+          0.30499
+        ],
+        "source_srgb255": [
+          168.0,
+          175.0,
+          150.0
+        ],
+        "previous_srgb255": [
+          144.0266,
+          150.26554,
+          119.70196
+        ],
+        "candidate_srgb255": [
+          168.0,
+          175.0,
+          150.0
+        ]
+      }
+    },
+    "Cashin Street": {
+      "center_world_xz_m": [
+        -1179.3,
+        -506.5
+      ],
+      "bounds_source_texels_xyxy_exclusive": [
+        1382,
+        1438,
+        1506,
+        1562
+      ],
+      "sampled_texels": 15376,
+      "count_any_channel_changes_by_at_least_5_of_255": 336,
+      "pct_any_channel_changes_by_at_least_5_of_255": 2.19,
+      "most_changed_sample": {
+        "source_texel_xy": [
+          1437,
+          1504
+        ],
+        "world_xz_m": [
+          -1193.966,
+          -499.57
+        ],
+        "source_linear_rgb": [
+          0.4452,
+          0.50888,
+          0.31855
+        ],
+        "previous_linear_rgb": [
+          0.2454,
+          0.29071,
+          0.15479
+        ],
+        "candidate_linear_rgb": [
+          0.4452,
+          0.50888,
+          0.31855
+        ],
+        "source_srgb255": [
+          178.0,
+          189.0,
+          153.0
+        ],
+        "previous_srgb255": [
+          135.79626,
+          146.75538,
+          109.62176
+        ],
+        "candidate_srgb255": [
+          178.0,
+          189.0,
+          153.0
+        ]
+      }
+    },
+    "Bass Highway": {
+      "center_world_xz_m": [
+        948.8,
+        -2238.6
+      ],
+      "bounds_source_texels_xyxy_exclusive": [
+        2471,
+        553,
+        2595,
+        677
+      ],
+      "sampled_texels": 15376,
+      "count_any_channel_changes_by_at_least_5_of_255": 593,
+      "pct_any_channel_changes_by_at_least_5_of_255": 3.86,
+      "most_changed_sample": {
+        "source_texel_xy": [
+          2563,
+          594
+        ],
+        "world_xz_m": [
+          1008.173,
+          -2278.86
+        ],
+        "source_linear_rgb": [
+          0.21953,
+          0.26636,
+          0.18447
+        ],
+        "previous_linear_rgb": [
+          0.09823,
+          0.13347,
+          0.0913
+        ],
+        "candidate_linear_rgb": [
+          0.21953,
+          0.26636,
+          0.18447
+        ],
+        "source_srgb255": [
+          129.0,
+          141.0,
+          119.0
+        ],
+        "previous_srgb255": [
+          88.2773,
+          102.21971,
+          85.20677
+        ],
+        "candidate_srgb255": [
+          129.0,
+          141.0,
+          119.0
+        ]
+      }
+    }
+  }
+}

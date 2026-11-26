@@ -1,0 +1,35 @@
+[
+  {
+    "x": 350,
+    "y": 812,
+    "roadHeightAboveTerrain": 0.27188482929031643,
+    "roadRayDistance": 24.213091748339128,
+    "firstTerrainDistance": 7.314999999999866
+  },
+  {
+    "x": 328,
+    "y": 826,
+    "roadHeightAboveTerrain": 0.19191460947075178,
+    "roadRayDistance": 23.059229026497654,
+    "firstTerrainDistance": 7.174999999999869
+  },
+  {
+    "x": 298,
+    "y": 833,
+    "missingRoad": true
+  },
+  {
+    "x": 315,
+    "y": 838,
+    "roadHeightAboveTerrain": 0.1445214320619188,
+    "roadRayDistance": 22.18603484677739,
+    "firstTerrainDistance": 7.054999999999872
+  },
+  {
+    "x": 298,
+    "y": 852,
+    "roadHeightAboveTerrain": 0.12107149039005538,
+    "roadRayDistance": 21.247717125892024,
+    "firstTerrainDistance": 6.9299999999998745
+  }
+]

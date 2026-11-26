@@ -1,0 +1,86 @@
+{
+  "label": "replay-ultra",
+  "sha": "2bdc328688ce99c2eaed7a09bfa30dec959b275c9b9605ceaca44f6d5097c948",
+  "tier": "ultra",
+  "browser": "158.0.8127.37",
+  "pageErrors": [],
+  "drives": [],
+  "views": [
+    {
+      "sceneName": "abeckett",
+      "draws": 321,
+      "triangles": 1279855,
+      "residentTextures": 25,
+      "nearTriangles": 1486885,
+      "cssEffects": [],
+      "eye": [
+        -214.48842728993907,
+        19.58333483883132,
+        -357.4395945180936
+      ],
+      "quat": [
+        -0.06632358431432948,
+        -0.7432634347272403,
+        -0.07451923055221545,
+        0.6615191101087489
+      ],
+      "buffer": [
+        852,
+        1560
+      ],
+      "fixed": 2,
+      "adaptiveRatio": 2
+    },
+    {
+      "sceneName": "cuttriss",
+      "draws": 137,
+      "triangles": 1032009,
+      "residentTextures": 24,
+      "nearTriangles": 1229574,
+      "cssEffects": [],
+      "eye": [
+        953.748886730723,
+        16.378118353322478,
+        -1116.9146398974622
+      ],
+      "quat": [
+        -0.0068127386239131785,
+        0.9926910106515068,
+        0.09948180444965402,
+        0.06798172215804082
+      ],
+      "buffer": [
+        852,
+        1560
+      ],
+      "fixed": 2,
+      "adaptiveRatio": 2
+    },
+    {
+      "sceneName": "norman",
+      "draws": 281,
+      "triangles": 1126039,
+      "residentTextures": 30,
+      "nearTriangles": 1598229,
+      "cssEffects": [],
+      "eye": [
+        -1698.5071977581267,
+        27.187756687758174,
+        333.851904554057
+      ],
+      "quat": [
+        -0.05226908252501942,
+        -0.84745792382866,
+        -0.0849543774063645,
+        0.5214074837509592
+      ],
+      "buffer": [
+        852,
+        1560
+      ],
+      "fixed": 2,
+      "adaptiveRatio": 2
+    }
+  ],
+  "stamp": "d670865"
+}

@@ -1,0 +1,786 @@
+{
+  "motion": [
+    {
+      "build": "previous-medium",
+      "street": "abeckett",
+      "roi": [
+        98,
+        221,
+        167,
+        321
+      ],
+      "edgesMoving": 10.547648741838456,
+      "edgesStopped": 10.550289780647054,
+      "edgesAnisotropy8": 10.544200718949453,
+      "pctPixelsWithin2": 99.91304347826086,
+      "fixedMaxDiff": 0.0,
+      "speedMoving": 13.62169100022385,
+      "speedStopped": 0,
+      "buffers": {
+        "553x1014": 240
+      }
+    },
+    {
+      "build": "previous-medium",
+      "street": "cuttriss",
+      "roi": [
+        312,
+        262,
+        409,
+        332
+      ],
+      "edgesMoving": 8.32446134347275,
+      "edgesStopped": 8.32446134347275,
+      "edgesAnisotropy8": 8.32446134347275,
+      "pctPixelsWithin2": 100.0,
+      "fixedMaxDiff": 0.0,
+      "speedMoving": 13.619447275901308,
+      "speedStopped": 0,
+      "buffers": {
+        "553x1014": 242
+      }
+    },
+    {
+      "build": "previous-medium",
+      "street": "norman",
+      "roi": [
+        186,
+        309,
+        332,
+        367
+      ],
+      "edgesMoving": 12.583791537174276,
+      "edgesStopped": 12.636265837915373,
+      "edgesAnisotropy8": 12.636265837915373,
+      "pctPixelsWithin2": 98.5947094945678,
+      "fixedMaxDiff": 0.0,
+      "speedMoving": 13.624041224497546,
+      "speedStopped": 0,
+      "buffers": {
+        "553x1014": 241
+      }
+    },
+    {
+      "build": "current-medium-r2",
+      "street": "abeckett",
+      "roi": [
+        98,
+        221,
+        167,
+        321
+      ],
+      "edgesMoving": 10.665028244442814,
+      "edgesStopped": 10.659892891203874,
+      "edgesAnisotropy8": 10.654464089208423,
+      "pctPixelsWithin2": 99.91304347826086,
+      "fixedMaxDiff": 0.0,
+      "speedMoving": 13.62500483882409,
+      "speedStopped": 0,
+      "buffers": {
+        "553x1014": 243
+      }
+    },
+    {
+      "build": "current-medium-r2",
+      "street": "cuttriss",
+      "roi": [
+        312,
+        262,
+        409,
+        332
+      ],
+      "edgesMoving": 8.287855065980764,
+      "edgesStopped": 8.287855065980764,
+      "edgesAnisotropy8": 8.287855065980764,
+      "pctPixelsWithin2": 100.0,
+      "fixedMaxDiff": 0.0,
+      "speedMoving": 13.618346299924246,
+      "speedStopped": 0,
+      "buffers": {
+        "553x1014": 242
+      }
+    },
+    {
+      "build": "current-medium-r2",
+      "street": "norman",
+      "roi": [
+        186,
+        309,
+        332,
+        367
+      ],
+      "edgesMoving": 10.974659335405212,
+      "edgesStopped": 10.998983982787474,
+      "edgesAnisotropy8": 10.998983982787474,
+      "pctPixelsWithin2": 98.99622106754842,
+      "fixedMaxDiff": 0.0,
+      "speedMoving": 13.617803583452812,
+      "speedStopped": 0,
+      "buffers": {
+        "553x1014": 240
+      }
+    },
+    {
+      "build": "current-ultra",
+      "street": "abeckett",
+      "roi": [
+        152,
+        340,
+        257,
+        495
+      ],
+      "edgesMoving": 8.529885413440693,
+      "edgesStopped": 8.529420873335399,
+      "edgesAnisotropy8": 8.529420873335399,
+      "pctPixelsWithin2": 99.84639016897081,
+      "fixedMaxDiff": 0.0,
+      "speedMoving": 13.628068617011373,
+      "speedStopped": 0,
+      "buffers": {
+        "852x1560": 242
+      }
+    },
+    {
+      "build": "current-ultra",
+      "street": "cuttriss",
+      "roi": [
+        481,
+        402,
+        630,
+        510
+      ],
+      "edgesMoving": 5.828233156889153,
+      "edgesStopped": 5.828233156889153,
+      "edgesAnisotropy8": 5.828233156889153,
+      "pctPixelsWithin2": 100.0,
+      "fixedMaxDiff": 0.0,
+      "speedMoving": 13.619214886634412,
+      "speedStopped": 0,
+      "buffers": {
+        "852x1560": 242
+      }
+    },
+    {
+      "build": "current-ultra",
+      "street": "norman",
+      "roi": [
+        287,
+        476,
+        511,
+        565
+      ],
+      "edgesMoving": 9.000960590510378,
+      "edgesStopped": 9.00573826436462,
+      "edgesAnisotropy8": 9.00573826436462,
+      "pctPixelsWithin2": 98.89646869983949,
+      "fixedMaxDiff": 0.0,
+      "speedMoving": 13.624592938644337,
+      "speedStopped": 0,
+      "buffers": {
+        "852x1560": 241
+      }
+    }
+  ],
+  "roadImageMasks": [
+    {
+      "build": "previous-medium",
+      "shot": "depth-abeckett-0",
+      "footprintPixels": 7867,
+      "terrainInFrontPixels": 1791,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "previous-medium",
+      "shot": "depth-abeckett-1",
+      "footprintPixels": 7903,
+      "terrainInFrontPixels": 1823,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "previous-medium",
+      "shot": "depth-abeckett-2",
+      "footprintPixels": 7955,
+      "terrainInFrontPixels": 1850,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "previous-medium",
+      "shot": "depth-ocean-0",
+      "footprintPixels": 15051,
+      "terrainInFrontPixels": 11069,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "previous-medium",
+      "shot": "depth-ocean-1",
+      "footprintPixels": 15039,
+      "terrainInFrontPixels": 10994,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "previous-medium",
+      "shot": "depth-ocean-2",
+      "footprintPixels": 15010,
+      "terrainInFrontPixels": 10904,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "previous-medium",
+      "shot": "depth-paperbark-0",
+      "footprintPixels": 26511,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "previous-medium",
+      "shot": "depth-paperbark-1",
+      "footprintPixels": 26614,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "previous-medium",
+      "shot": "depth-paperbark-2",
+      "footprintPixels": 26734,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "previous-medium",
+      "shot": "depth-cape-0",
+      "footprintPixels": 24638,
+      "terrainInFrontPixels": 22470,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "previous-medium",
+      "shot": "depth-cape-1",
+      "footprintPixels": 24585,
+      "terrainInFrontPixels": 22919,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "previous-medium",
+      "shot": "depth-cape-2",
+      "footprintPixels": 24477,
+      "terrainInFrontPixels": 23300,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "current-medium-r2",
+      "shot": "depth-abeckett-0",
+      "footprintPixels": 7867,
+      "terrainInFrontPixels": 1791,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "current-medium-r2",
+      "shot": "depth-abeckett-1",
+      "footprintPixels": 7903,
+      "terrainInFrontPixels": 1823,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "current-medium-r2",
+      "shot": "depth-abeckett-2",
+      "footprintPixels": 7955,
+      "terrainInFrontPixels": 1850,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "current-medium-r2",
+      "shot": "depth-ocean-0",
+      "footprintPixels": 15051,
+      "terrainInFrontPixels": 11069,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "current-medium-r2",
+      "shot": "depth-ocean-1",
+      "footprintPixels": 15039,
+      "terrainInFrontPixels": 10994,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "current-medium-r2",
+      "shot": "depth-ocean-2",
+      "footprintPixels": 15010,
+      "terrainInFrontPixels": 10904,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "current-medium-r2",
+      "shot": "depth-paperbark-0",
+      "footprintPixels": 26511,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "current-medium-r2",
+      "shot": "depth-paperbark-1",
+      "footprintPixels": 26614,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "current-medium-r2",
+      "shot": "depth-paperbark-2",
+      "footprintPixels": 26734,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "current-medium-r2",
+      "shot": "depth-cape-0",
+      "footprintPixels": 24638,
+      "terrainInFrontPixels": 22470,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "current-medium-r2",
+      "shot": "depth-cape-1",
+      "footprintPixels": 24585,
+      "terrainInFrontPixels": 22919,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "current-medium-r2",
+      "shot": "depth-cape-2",
+      "footprintPixels": 24477,
+      "terrainInFrontPixels": 23300,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "current-ultra",
+      "shot": "depth-abeckett-0",
+      "footprintPixels": 31281,
+      "terrainInFrontPixels": 18511,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "current-ultra",
+      "shot": "depth-abeckett-1",
+      "footprintPixels": 31369,
+      "terrainInFrontPixels": 18593,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "current-ultra",
+      "shot": "depth-abeckett-2",
+      "footprintPixels": 31433,
+      "terrainInFrontPixels": 18634,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "current-ultra",
+      "shot": "depth-ocean-0",
+      "footprintPixels": 33374,
+      "terrainInFrontPixels": 22741,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "current-ultra",
+      "shot": "depth-ocean-1",
+      "footprintPixels": 34103,
+      "terrainInFrontPixels": 23375,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "current-ultra",
+      "shot": "depth-ocean-2",
+      "footprintPixels": 34826,
+      "terrainInFrontPixels": 24003,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "current-ultra",
+      "shot": "depth-paperbark-0",
+      "footprintPixels": 52458,
+      "terrainInFrontPixels": 27546,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "current-ultra",
+      "shot": "depth-paperbark-1",
+      "footprintPixels": 54798,
+      "terrainInFrontPixels": 26700,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "current-ultra",
+      "shot": "depth-paperbark-2",
+      "footprintPixels": 56435,
+      "terrainInFrontPixels": 25626,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "current-ultra",
+      "shot": "depth-cape-0",
+      "footprintPixels": 61067,
+      "terrainInFrontPixels": 57239,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "current-ultra",
+      "shot": "depth-cape-1",
+      "footprintPixels": 60926,
+      "terrainInFrontPixels": 57713,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "current-ultra",
+      "shot": "depth-cape-2",
+      "footprintPixels": 60683,
+      "terrainInFrontPixels": 58070,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "depth-final-medium",
+      "shot": "depth-abeckett-0",
+      "footprintPixels": 6076,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "depth-final-medium",
+      "shot": "depth-abeckett-1",
+      "footprintPixels": 6080,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "depth-final-medium",
+      "shot": "depth-abeckett-2",
+      "footprintPixels": 6105,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "depth-final-medium",
+      "shot": "depth-ocean-0",
+      "footprintPixels": 11861,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "depth-final-medium",
+      "shot": "depth-ocean-1",
+      "footprintPixels": 11024,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "depth-final-medium",
+      "shot": "depth-ocean-2",
+      "footprintPixels": 10342,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "depth-final-medium",
+      "shot": "depth-paperbark-0",
+      "footprintPixels": 26731,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "depth-final-medium",
+      "shot": "depth-paperbark-1",
+      "footprintPixels": 26828,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "depth-final-medium",
+      "shot": "depth-paperbark-2",
+      "footprintPixels": 26936,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "depth-final-medium",
+      "shot": "depth-cape-0",
+      "footprintPixels": 27359,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "depth-final-medium",
+      "shot": "depth-cape-1",
+      "footprintPixels": 27307,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "depth-final-medium",
+      "shot": "depth-cape-2",
+      "footprintPixels": 27235,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        553,
+        1014
+      ]
+    },
+    {
+      "build": "depth-final-ultra",
+      "shot": "depth-abeckett-0",
+      "footprintPixels": 12770,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "depth-final-ultra",
+      "shot": "depth-abeckett-1",
+      "footprintPixels": 12776,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "depth-final-ultra",
+      "shot": "depth-abeckett-2",
+      "footprintPixels": 12799,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "depth-final-ultra",
+      "shot": "depth-ocean-0",
+      "footprintPixels": 30156,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "depth-final-ultra",
+      "shot": "depth-ocean-1",
+      "footprintPixels": 27845,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "depth-final-ultra",
+      "shot": "depth-ocean-2",
+      "footprintPixels": 25938,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "depth-final-ultra",
+      "shot": "depth-paperbark-0",
+      "footprintPixels": 60593,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "depth-final-ultra",
+      "shot": "depth-paperbark-1",
+      "footprintPixels": 62254,
+      "terrainInFrontPixels": 12,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "depth-final-ultra",
+      "shot": "depth-paperbark-2",
+      "footprintPixels": 63974,
+      "terrainInFrontPixels": 529,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "depth-final-ultra",
+      "shot": "depth-cape-0",
+      "footprintPixels": 64117,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "depth-final-ultra",
+      "shot": "depth-cape-1",
+      "footprintPixels": 64018,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        852,
+        1560
+      ]
+    },
+    {
+      "build": "depth-final-ultra",
+      "shot": "depth-cape-2",
+      "footprintPixels": 63873,
+      "terrainInFrontPixels": 0,
+      "buffer": [
+        852,
+        1560
+      ]
+    }
+  ]
+}

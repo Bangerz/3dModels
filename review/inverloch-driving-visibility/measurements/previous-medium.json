@@ -1,0 +1,943 @@
+{
+  "label": "previous-medium",
+  "sha": "297e0eb58cec99e535279eeefb830e0bc4ab4712f33b3d25a4753e0dad636065",
+  "tier": "medium",
+  "browser": "158.0.8127.37",
+  "pageErrors": [],
+  "drives": [
+    {
+      "state": {
+        "id": [
+          -133.97489827263985,
+          -353.39856511689817
+        ],
+        "key": "-536_-1414",
+        "carShape": 3,
+        "quality": "medium",
+        "selection": {
+          "at": 2227.199999988079,
+          "first": "medium",
+          "best": "medium",
+          "direct": true
+        },
+        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "buffer": [
+          553,
+          1014
+        ],
+        "dpr": 3,
+        "pixelRatio": 1.3,
+        "viewport": [
+          426,
+          780
+        ],
+        "orientation": "portrait-primary",
+        "device": {
+          "brands": [
+            {
+              "brand": "Chromium",
+              "version": "158"
+            },
+            {
+              "brand": "Not.A/Brand",
+              "version": "24"
+            },
+            {
+              "brand": "Google Chrome",
+              "version": "158"
+            }
+          ],
+          "fullVersionList": [
+            {
+              "brand": "Chromium",
+              "version": "158.0.8127.37"
+            },
+            {
+              "brand": "Not.A/Brand",
+              "version": "24.0.0.0"
+            },
+            {
+              "brand": "Google Chrome",
+              "version": "158.0.8127.37"
+            }
+          ],
+          "mobile": true,
+          "model": "",
+          "platform": "Android",
+          "platformVersion": "17"
+        },
+        "ua": "Mozilla/5.0 (Linux; Android 17; Pixel 11 Pro) AppleWebKit/537.36 Chrome/158.0.8127.37 Mobile Safari/537.36",
+        "deviceMemory": 32,
+        "hardwareConcurrency": 16,
+        "placed": {
+          "x": -238.797,
+          "z": -360.288,
+          "heading": 1.4543452219110302
+        },
+        "nativeParked": {
+          "x": -133.97489827263985,
+          "z": -353.39856511689817,
+          "heading": 3.0088877235339293
+        },
+        "registryKey": "-536_-1414",
+        "stamp": "290fa80"
+      },
+      "name": "abeckett",
+      "distance": 33.131683935072985,
+      "speed": 13.62169100022385,
+      "pos": [
+        -214.6579073510331,
+        19.625566560365357,
+        -357.45941147223186
+      ],
+      "quat": [
+        0.06632343552950276,
+        0.7432630321684144,
+        0.07451896704638016,
+        -0.6615196070123085
+      ],
+      "frameTime": 4028,
+      "buffer": "553x1014",
+      "cssFilter": "none",
+      "cssTransform": "none",
+      "near": 0.4,
+      "far": 90000,
+      "fov": 60,
+      "stoppedSpeed": 0,
+      "frames": 240,
+      "buffers": {
+        "553x1014": 240
+      },
+      "ratio": 1.3,
+      "fixed": 1.3,
+      "textureOverrides": 36,
+      "frameMs": [
+        16.69999998807907,
+        17.700000017881393
+      ],
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "state": {
+        "id": [
+          -133.97489827263985,
+          -353.39856511689817
+        ],
+        "key": "-536_-1414",
+        "carShape": 3,
+        "quality": "medium",
+        "selection": {
+          "at": 1207,
+          "first": "medium",
+          "best": "medium",
+          "direct": true
+        },
+        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "buffer": [
+          553,
+          1014
+        ],
+        "dpr": 3,
+        "pixelRatio": 1.3,
+        "viewport": [
+          426,
+          780
+        ],
+        "orientation": "portrait-primary",
+        "device": {
+          "brands": [
+            {
+              "brand": "Chromium",
+              "version": "158"
+            },
+            {
+              "brand": "Not.A/Brand",
+              "version": "24"
+            },
+            {
+              "brand": "Google Chrome",
+              "version": "158"
+            }
+          ],
+          "fullVersionList": [
+            {
+              "brand": "Chromium",
+              "version": "158.0.8127.37"
+            },
+            {
+              "brand": "Not.A/Brand",
+              "version": "24.0.0.0"
+            },
+            {
+              "brand": "Google Chrome",
+              "version": "158.0.8127.37"
+            }
+          ],
+          "mobile": true,
+          "model": "",
+          "platform": "Android",
+          "platformVersion": "17"
+        },
+        "ua": "Mozilla/5.0 (Linux; Android 17; Pixel 11 Pro) AppleWebKit/537.36 Chrome/158.0.8127.37 Mobile Safari/537.36",
+        "deviceMemory": 32,
+        "hardwareConcurrency": 16,
+        "placed": {
+          "x": 957.1050152792752,
+          "z": -1140.9061898687921,
+          "heading": -0.13824299047772823
+        },
+        "nativeParked": {
+          "x": -133.97489827263985,
+          "z": -353.39856511689817,
+          "heading": 3.0088877235339293
+        },
+        "registryKey": "-536_-1414",
+        "stamp": "290fa80"
+      },
+      "name": "cuttriss",
+      "distance": 33.05922070595279,
+      "speed": 13.619447275901308,
+      "pos": [
+        953.7479371268796,
+        16.37711596959992,
+        -1116.907953604116
+      ],
+      "quat": [
+        -0.006812651850080365,
+        0.9926910766120657,
+        0.09948168506653898,
+        0.0679809423726194
+      ],
+      "frameTime": 4027.0999999940395,
+      "buffer": "553x1014",
+      "cssFilter": "none",
+      "cssTransform": "none",
+      "near": 0.4,
+      "far": 90000,
+      "fov": 60,
+      "stoppedSpeed": 0,
+      "frames": 242,
+      "buffers": {
+        "553x1014": 242
+      },
+      "ratio": 1.3,
+      "fixed": 1.3,
+      "textureOverrides": 36,
+      "frameMs": [
+        16.69999998807907,
+        17.5
+      ],
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    },
+    {
+      "state": {
+        "id": [
+          -133.97489827263985,
+          -353.39856511689817
+        ],
+        "key": "-536_-1414",
+        "carShape": 3,
+        "quality": "medium",
+        "selection": {
+          "at": 1003.1999999880791,
+          "first": "medium",
+          "best": "medium",
+          "direct": true
+        },
+        "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+        "buffer": [
+          553,
+          1014
+        ],
+        "dpr": 3,
+        "pixelRatio": 1.3,
+        "viewport": [
+          426,
+          780
+        ],
+        "orientation": "portrait-primary",
+        "device": {
+          "brands": [
+            {
+              "brand": "Chromium",
+              "version": "158"
+            },
+            {
+              "brand": "Not.A/Brand",
+              "version": "24"
+            },
+            {
+              "brand": "Google Chrome",
+              "version": "158"
+            }
+          ],
+          "fullVersionList": [
+            {
+              "brand": "Chromium",
+              "version": "158.0.8127.37"
+            },
+            {
+              "brand": "Not.A/Brand",
+              "version": "24.0.0.0"
+            },
+            {
+              "brand": "Google Chrome",
+              "version": "158.0.8127.37"
+            }
+          ],
+          "mobile": true,
+          "model": "",
+          "platform": "Android",
+          "platformVersion": "17"
+        },
+        "ua": "Mozilla/5.0 (Linux; Android 17; Pixel 11 Pro) AppleWebKit/537.36 Chrome/158.0.8127.37 Mobile Safari/537.36",
+        "deviceMemory": 32,
+        "hardwareConcurrency": 16,
+        "placed": {
+          "x": -1720.2618401688915,
+          "z": 322.84495864647215,
+          "heading": 1.1026372092740577
+        },
+        "nativeParked": {
+          "x": -133.97489827263985,
+          "z": -353.39856511689817,
+          "heading": 3.0088877235339293
+        },
+        "registryKey": "-536_-1414",
+        "stamp": "290fa80"
+      },
+      "name": "norman",
+      "distance": 33.19174449112863,
+      "speed": 13.624041224497546,
+      "pos": [
+        -1698.52241632153,
+        27.235180215365983,
+        333.8448280635217
+      ],
+      "quat": [
+        0.05226678217365123,
+        0.8474466836585453,
+        0.08494628318500039,
+        -0.5214273015583278
+      ],
+      "frameTime": 4036.5999999940395,
+      "buffer": "553x1014",
+      "cssFilter": "none",
+      "cssTransform": "none",
+      "near": 0.4,
+      "far": 90000,
+      "fov": 60,
+      "stoppedSpeed": 0,
+      "frames": 241,
+      "buffers": {
+        "553x1014": 241
+      },
+      "ratio": 1.3,
+      "fixed": 1.3,
+      "textureOverrides": 36,
+      "frameMs": [
+        16.69999998807907,
+        17.600000023841858
+      ],
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  ],
+  "views": [
+    {
+      "sceneName": "depth-abeckett-0",
+      "coord": {
+        "eye": [
+          -442.93,
+          35.94665749000648,
+          -385.91
+        ],
+        "target": [
+          -436,
+          32.56062692201974,
+          -385
+        ]
+      },
+      "draws": 224,
+      "triangles": 1304476,
+      "residentTextures": 45,
+      "eye": [
+        -442.93,
+        35.94665749000648,
+        -385.91
+      ],
+      "quat": [
+        -0.14749446247544007,
+        -0.7326871684070303,
+        -0.16812862093222206,
+        0.642765636615865
+      ],
+      "buffer": [
+        553,
+        1014
+      ],
+      "fixed": 1.3,
+      "adaptiveRatio": 1.3
+    },
+    {
+      "sceneName": "depth-abeckett-1",
+      "coord": {
+        "eye": [
+          -442.8936,
+          35.944569627425594,
+          -386.1872
+        ],
+        "target": [
+          -436,
+          32.56062692201974,
+          -385
+        ]
+      },
+      "draws": 224,
+      "triangles": 1303276,
+      "residentTextures": 45,
+      "eye": [
+        -442.8936,
+        35.944569627425594,
+        -386.1872
+      ],
+      "quat": [
+        -0.14393003828815507,
+        -0.7454358698829702,
+        -0.17083615027710805,
+        0.6280322585096145
+      ],
+      "buffer": [
+        553,
+        1014
+      ],
+      "fixed": 1.3,
+      "adaptiveRatio": 1.3
+    },
+    {
+      "sceneName": "depth-abeckett-2",
+      "coord": {
+        "eye": [
+          -442.85720000000003,
+          35.9424817648447,
+          -386.4644
+        ],
+        "target": [
+          -436,
+          32.56062692201974,
+          -385
+        ]
+      },
+      "draws": 223,
+      "triangles": 1282276,
+      "residentTextures": 45,
+      "eye": [
+        -442.85720000000003,
+        35.9424817648447,
+        -386.4644
+      ],
+      "quat": [
+        -0.14013657428525172,
+        -0.7579031717452668,
+        -0.17322359392798373,
+        0.6131379203023832
+      ],
+      "buffer": [
+        553,
+        1014
+      ],
+      "fixed": 1.3,
+      "adaptiveRatio": 1.3
+    },
+    {
+      "sceneName": "depth-ocean-0",
+      "coord": {
+        "eye": [
+          -594.49,
+          33.98770933469357,
+          155.53
+        ],
+        "target": [
+          -588.4,
+          30.738591854230265,
+          152.1
+        ]
+      },
+      "draws": 255,
+      "triangles": 1097266,
+      "residentTextures": 45,
+      "eye": [
+        -594.49,
+        33.98770933469357,
+        155.53
+      ],
+      "quat": [
+        -0.18636019799199074,
+        -0.4927141316939511,
+        -0.10892408127428846,
+        0.8429935975747467
+      ],
+      "buffer": [
+        553,
+        1014
+      ],
+      "fixed": 1.3,
+      "adaptiveRatio": 1.3
+    },
+    {
+      "sceneName": "depth-ocean-1",
+      "coord": {
+        "eye": [
+          -594.6272,
+          34.054678032804,
+          155.28640000000001
+        ],
+        "target": [
+          -588.4,
+          30.738591854230265,
+          152.1
+        ]
+      },
+      "draws": 247,
+      "triangles": 1031607,
+      "residentTextures": 45,
+      "eye": [
+        -594.6272,
+        34.054678032804,
+        155.28640000000001
+      ],
+      "quat": [
+        -0.18728496049327134,
+        -0.5090372168023006,
+        -0.11454726988310582,
+        0.8322766237529011
+      ],
+      "buffer": [
+        553,
+        1014
+      ],
+      "fixed": 1.3,
+      "adaptiveRatio": 1.3
+    },
+    {
+      "sceneName": "depth-ocean-2",
+      "coord": {
+        "eye": [
+          -594.7644,
+          34.12164673091431,
+          155.0428
+        ],
+        "target": [
+          -588.4,
+          30.738591854230265,
+          152.1
+        ]
+      },
+      "draws": 256,
+      "triangles": 971066,
+      "residentTextures": 45,
+      "eye": [
+        -594.7644,
+        34.12164673091431,
+        155.0428
+      ],
+      "quat": [
+        -0.18778035344754823,
+        -0.5251105129768071,
+        -0.12005570714203087,
+        0.8213306978330808
+      ],
+      "buffer": [
+        553,
+        1014
+      ],
+      "fixed": 1.3,
+      "adaptiveRatio": 1.3
+    },
+    {
+      "sceneName": "depth-paperbark-0",
+      "coord": {
+        "eye": [
+          -2795.6,
+          15.220231746969102,
+          688.8
+        ],
+        "target": [
+          -2790,
+          10.323048986084027,
+          693
+        ]
+      },
+      "draws": 79,
+      "triangles": 855514,
+      "residentTextures": 45,
+      "eye": [
+        -2795.6,
+        15.220231746969102,
+        688.8
+      ],
+      "quat": [
+        -0.13439240403619304,
+        -0.8530854159751493,
+        -0.2687848080723905,
+        0.4265427079875676
+      ],
+      "buffer": [
+        553,
+        1014
+      ],
+      "fixed": 1.3,
+      "adaptiveRatio": 1.3
+    },
+    {
+      "sceneName": "depth-paperbark-1",
+      "coord": {
+        "eye": [
+          -2795.432,
+          15.208160917847252,
+          688.5759999999999
+        ],
+        "target": [
+          -2790,
+          10.323048986084027,
+          693
+        ]
+      },
+      "draws": 76,
+      "triangles": 735490,
+      "residentTextures": 45,
+      "eye": [
+        -2795.432,
+        15.208160917847252,
+        688.5759999999999
+      ],
+      "quat": [
+        -0.12867907204851836,
+        -0.8616486222943535,
+        -0.27075663362942587,
+        0.4095048149419437
+      ],
+      "buffer": [
+        553,
+        1014
+      ],
+      "fixed": 1.3,
+      "adaptiveRatio": 1.3
+    },
+    {
+      "sceneName": "depth-paperbark-2",
+      "coord": {
+        "eye": [
+          -2795.264,
+          15.196090088725423,
+          688.352
+        ],
+        "target": [
+          -2790,
+          10.323048986084027,
+          693
+        ]
+      },
+      "draws": 74,
+      "triangles": 654626,
+      "residentTextures": 45,
+      "eye": [
+        -2795.264,
+        15.196090088725423,
+        688.352
+      ],
+      "quat": [
+        -0.12281156025220734,
+        -0.8699476950771493,
+        -0.2722750085923152,
+        0.39239603488622093
+      ],
+      "buffer": [
+        553,
+        1014
+      ],
+      "fixed": 1.3,
+      "adaptiveRatio": 1.3
+    },
+    {
+      "sceneName": "depth-cape-0",
+      "coord": {
+        "eye": [
+          -3877.32,
+          20.38922624442541,
+          1907.55
+        ],
+        "target": [
+          -3872,
+          14.14972747646713,
+          1903
+        ]
+      },
+      "draws": 63,
+      "triangles": 760550,
+      "residentTextures": 45,
+      "eye": [
+        -3877.32,
+        20.38922624442541,
+        1907.55
+      ],
+      "quat": [
+        -0.3233611726201811,
+        -0.3909396875167409,
+        -0.14893760272567913,
+        0.8487763564451724
+      ],
+      "buffer": [
+        553,
+        1014
+      ],
+      "fixed": 1.3,
+      "adaptiveRatio": 1.3
+    },
+    {
+      "sceneName": "depth-cape-1",
+      "coord": {
+        "eye": [
+          -3877.502,
+          20.37565717026985,
+          1907.3372
+        ],
+        "target": [
+          -3872,
+          14.14972747646713,
+          1903
+        ]
+      },
+      "draws": 61,
+      "triangles": 730014,
+      "residentTextures": 45,
+      "eye": [
+        -3877.502,
+        20.37565717026985,
+        1907.3372
+      ],
+      "quat": [
+        -0.31969810177548874,
+        -0.40794165861620735,
+        -0.15506973468596016,
+        0.8410291934713283
+      ],
+      "buffer": [
+        553,
+        1014
+      ],
+      "fixed": 1.3,
+      "adaptiveRatio": 1.3
+    },
+    {
+      "sceneName": "depth-cape-2",
+      "coord": {
+        "eye": [
+          -3877.684,
+          20.24832026002846,
+          1907.1244
+        ],
+        "target": [
+          -3872,
+          14.14972747646713,
+          1903
+        ]
+      },
+      "draws": 61,
+      "triangles": 730014,
+      "residentTextures": 45,
+      "eye": [
+        -3877.684,
+        20.24832026002846,
+        1907.1244
+      ],
+      "quat": [
+        -0.3117802342823449,
+        -0.42553323371084245,
+        -0.15897914309359643,
+        0.8345299183250804
+      ],
+      "buffer": [
+        553,
+        1014
+      ],
+      "fixed": 1.3,
+      "adaptiveRatio": 1.3
+    },
+    {
+      "sceneName": "distance-cuttriss-0",
+      "coord": {
+        "eye": [
+          892.5749999999999,
+          11.476181381596005,
+          -620.4250000000001
+        ],
+        "target": [
+          888.9,
+          9.63507812215487,
+          -585.6
+        ]
+      },
+      "draws": 99,
+      "triangles": 968004,
+      "residentTextures": 45,
+      "eye": [
+        892.5749999999999,
+        11.476181381596005,
+        -620.4250000000001
+      ],
+      "quat": [
+        -0.001379858028617895,
+        0.9982741654167258,
+        0.026224200023770024,
+        0.05252692629950699
+      ],
+      "buffer": [
+        553,
+        1014
+      ],
+      "fixed": 1.3,
+      "adaptiveRatio": 1.3
+    },
+    {
+      "sceneName": "distance-cashin-0",
+      "coord": {
+        "eye": [
+          -1228.825,
+          21.356933868505777,
+          -503.5
+        ],
+        "target": [
+          -1194,
+          21.04891627555857,
+          -500
+        ]
+      },
+      "draws": 351,
+      "triangles": 1454945,
+      "residentTextures": 45,
+      "eye": [
+        -1228.825,
+        21.356933868505777,
+        -503.5
+      ],
+      "quat": [
+        -0.0029516577573762623,
+        -0.7416122482079751,
+        -0.0032631763101560406,
+        0.6708143653088869
+      ],
+      "buffer": [
+        553,
+        1014
+      ],
+      "fixed": 1.3,
+      "adaptiveRatio": 1.3
+    },
+    {
+      "sceneName": "distance-bass-0",
+      "coord": {
+        "eye": [
+          973.175,
+          31.918211841018206,
+          -2282.5
+        ],
+        "target": [
+          1008,
+          29.745381853550782,
+          -2279
+        ]
+      },
+      "draws": 79,
+      "triangles": 483118,
+      "residentTextures": 45,
+      "eye": [
+        973.175,
+        31.918211841018206,
+        -2282.5
+      ],
+      "quat": [
+        -0.020792288305634055,
+        -0.741263101838961,
+        -0.022986710591132564,
+        0.6704985501366106
+      ],
+      "buffer": [
+        553,
+        1014
+      ],
+      "fixed": 1.3,
+      "adaptiveRatio": 1.3
+    },
+    {
+      "sceneName": "distance-abeckett-sign-0",
+      "coord": {
+        "eye": [
+          -257.685,
+          21.7618652326846,
+          -363.655
+        ],
+        "target": [
+          -223,
+          17.993278777231662,
+          -359
+        ]
+      },
+      "draws": 286,
+      "triangles": 1465282,
+      "residentTextures": 45,
+      "eye": [
+        -257.685,
+        21.7618652326846,
+        -363.655
+      ],
+      "quat": [
+        -0.03529738175976905,
+        -0.7515846212655156,
+        -0.04035103340210409,
+        0.6574545201163795
+      ],
+      "buffer": [
+        553,
+        1014
+      ],
+      "fixed": 1.3,
+      "adaptiveRatio": 1.3
+    },
+    {
+      "sceneName": "distance-norman-0",
+      "coord": {
+        "eye": [
+          -1616.325,
+          17.222413129972352,
+          377.355
+        ],
+        "target": [
+          -1585,
+          13.310965930413275,
+          393
+        ]
+      },
+      "draws": 304,
+      "triangles": 1150175,
+      "residentTextures": 45,
+      "eye": [
+        -1616.325,
+        17.222413129972352,
+        377.355
+      ],
+      "quat": [
+        -0.029238717625613694,
+        -0.8492178345595146,
+        -0.047285602690979534,
+        0.5251078352451135
+      ],
+      "buffer": [
+        553,
+        1014
+      ],
+      "fixed": 1.3,
+      "adaptiveRatio": 1.3
+    }
+  ],
+  "stamp": "290fa80"
+}

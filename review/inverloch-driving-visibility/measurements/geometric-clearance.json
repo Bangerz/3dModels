@@ -1,0 +1,242 @@
+{
+  "method": "Native triangle buffers, 45 barycentric samples per face, bridges and roundabouts excluded for the intersection sweep. All-road top surfaces included in ten independent 12 by 12 metre grids at 10 cm spacing. 7 interior points per original dash triangle compared against its own road and terrain. Benchmarks use Node v24 with explicit GC between paired complete native road builds on the laptop.",
+  "source": "bd39addb",
+  "tiers": {
+    "Medium": {
+      "baselineMesh": {
+        "faces": 155180,
+        "negative": 1563,
+        "samples": 6983100,
+        "below": 22011
+      },
+      "fixedMesh": {
+        "faces": 158554,
+        "negative": 0,
+        "samples": 7134930,
+        "below": 0
+      },
+      "visibility": [
+        {
+          "street": "Ocean View",
+          "beforeBelowSquareMetres": 6.15,
+          "afterBelowSquareMetres": 0,
+          "beforeLowestClearanceMetres": -0.544
+        },
+        {
+          "street": "St Kilda",
+          "beforeBelowSquareMetres": 0,
+          "afterBelowSquareMetres": 0,
+          "beforeLowestClearanceMetres": 0
+        },
+        {
+          "street": "Venus",
+          "beforeBelowSquareMetres": 0,
+          "afterBelowSquareMetres": 0,
+          "beforeLowestClearanceMetres": 0
+        },
+        {
+          "street": "Lees",
+          "beforeBelowSquareMetres": 7.69,
+          "afterBelowSquareMetres": 0,
+          "beforeLowestClearanceMetres": -0.959
+        },
+        {
+          "street": "Cape",
+          "beforeBelowSquareMetres": 30.9,
+          "afterBelowSquareMetres": 0,
+          "beforeLowestClearanceMetres": -0.718
+        },
+        {
+          "street": "Miller",
+          "beforeBelowSquareMetres": 0,
+          "afterBelowSquareMetres": 0,
+          "beforeLowestClearanceMetres": 0
+        },
+        {
+          "street": "A'Beckett",
+          "beforeBelowSquareMetres": 0,
+          "afterBelowSquareMetres": 0,
+          "beforeLowestClearanceMetres": 0
+        },
+        {
+          "street": "Ramsey",
+          "beforeBelowSquareMetres": 0,
+          "afterBelowSquareMetres": 0,
+          "beforeLowestClearanceMetres": 0
+        },
+        {
+          "street": "Surf Parade",
+          "beforeBelowSquareMetres": 0,
+          "afterBelowSquareMetres": 0,
+          "beforeLowestClearanceMetres": 0
+        },
+        {
+          "street": "Paperbark",
+          "beforeBelowSquareMetres": 10.25,
+          "afterBelowSquareMetres": 0,
+          "beforeLowestClearanceMetres": -0.202
+        }
+      ],
+      "highwayPaint": {
+        "step": 2,
+        "n": 26824,
+        "before": 327,
+        "after": 0,
+        "regression": 0,
+        "improvement": 327,
+        "worstBefore": -0.5372535705566399,
+        "worstAfter": 0,
+        "regressionSites": []
+      },
+      "allRoads": {
+        "original": {
+          "triangles": [
+            157726,
+            3840
+          ],
+          "buildMs": [
+            106,
+            86,
+            77,
+            81
+          ],
+          "medianMs": 83.5,
+          "routeHash": "c6ad6c91af396fa424947957504f279ae901fe2e7c72a0db73ea00e578127ea3"
+        },
+        "revised": {
+          "triangles": [
+            161100,
+            6305
+          ],
+          "buildMs": [
+            158,
+            139,
+            137,
+            135
+          ],
+          "medianMs": 138.0,
+          "routeHash": "c6ad6c91af396fa424947957504f279ae901fe2e7c72a0db73ea00e578127ea3"
+        }
+      }
+    },
+    "Ultra": {
+      "baselineMesh": {
+        "faces": 155180,
+        "negative": 2449,
+        "samples": 6983100,
+        "below": 35011
+      },
+      "fixedMesh": {
+        "faces": 163962,
+        "negative": 0,
+        "samples": 7378290,
+        "below": 0
+      },
+      "visibility": [
+        {
+          "street": "Ocean View",
+          "beforeBelowSquareMetres": 8.44,
+          "afterBelowSquareMetres": 0,
+          "beforeLowestClearanceMetres": -0.917
+        },
+        {
+          "street": "St Kilda",
+          "beforeBelowSquareMetres": 0,
+          "afterBelowSquareMetres": 0,
+          "beforeLowestClearanceMetres": 0
+        },
+        {
+          "street": "Venus",
+          "beforeBelowSquareMetres": 0,
+          "afterBelowSquareMetres": 0,
+          "beforeLowestClearanceMetres": 0
+        },
+        {
+          "street": "Lees",
+          "beforeBelowSquareMetres": 3.86,
+          "afterBelowSquareMetres": 0,
+          "beforeLowestClearanceMetres": -0.537
+        },
+        {
+          "street": "Cape",
+          "beforeBelowSquareMetres": 30.96,
+          "afterBelowSquareMetres": 0,
+          "beforeLowestClearanceMetres": -1.07
+        },
+        {
+          "street": "Miller",
+          "beforeBelowSquareMetres": 0,
+          "afterBelowSquareMetres": 0,
+          "beforeLowestClearanceMetres": 0
+        },
+        {
+          "street": "A'Beckett",
+          "beforeBelowSquareMetres": 0,
+          "afterBelowSquareMetres": 0,
+          "beforeLowestClearanceMetres": 0
+        },
+        {
+          "street": "Ramsey",
+          "beforeBelowSquareMetres": 0,
+          "afterBelowSquareMetres": 0,
+          "beforeLowestClearanceMetres": 0
+        },
+        {
+          "street": "Surf Parade",
+          "beforeBelowSquareMetres": 13.13,
+          "afterBelowSquareMetres": 0,
+          "beforeLowestClearanceMetres": -0.492
+        },
+        {
+          "street": "Paperbark",
+          "beforeBelowSquareMetres": 23.7,
+          "afterBelowSquareMetres": 0,
+          "beforeLowestClearanceMetres": -0.638
+        }
+      ],
+      "highwayPaint": {
+        "step": 1,
+        "n": 26824,
+        "before": 558,
+        "after": 0,
+        "regression": 0,
+        "improvement": 558,
+        "worstBefore": -0.46004295349121094,
+        "worstAfter": 0,
+        "regressionSites": []
+      },
+      "allRoads": {
+        "original": {
+          "triangles": [
+            157726,
+            3840
+          ],
+          "buildMs": [
+            80,
+            82,
+            82,
+            81
+          ],
+          "medianMs": 81.5,
+          "routeHash": "883ca781d0d5ad697ece690f679db9c53378bce9c323afd0108bcce5d805537d"
+        },
+        "revised": {
+          "triangles": [
+            166516,
+            7676
+          ],
+          "buildMs": [
+            145,
+            152,
+            148,
+            138
+          ],
+          "medianMs": 146.5,
+          "routeHash": "883ca781d0d5ad697ece690f679db9c53378bce9c323afd0108bcce5d805537d"
+        }
+      }
+    }
+  },
+  "bridgeRowCount": 9,
+  "bridgePositionsIdentical": true
+}
