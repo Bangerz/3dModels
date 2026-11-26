@@ -1,0 +1,4954 @@
+{
+  "methods": {
+    "transfer": "Compressed response-body bytes served by the actual harness on successful GETs, with headers and external requests excluded. The production figure re-encodes the same requested resources without the observation hooks, using gzip level 6 for text.",
+    "timing": "Intervals between main-scene render returns and independent browser animation-frame callbacks. Chrome mobile emulation uses the laptop GPU."
+  },
+  "drives": [
+    {
+      "label": "baseline-290fa80",
+      "host": "290fa80",
+      "hostSha": "8f05f1c0342be85e82b06c00f1c39be22489f428575d8a9d1ed48f111a128bf4",
+      "modelSha": "297e0eb58cec99e535279eeefb830e0bc4ab4712f33b3d25a4753e0dad636065",
+      "route": "A’Beckett–Reilly–Bayview–Sandy Mount circuit",
+      "routeHash": "00c2f0014e78ef7586f3d4eca01f506f4ab6eb0ff458a3791128605041b855ce",
+      "fixtureCar": "-536_-1414",
+      "browser": "158.0.8127.37",
+      "quality": "medium",
+      "targetFps": 60,
+      "profile": {
+        "browser": "158.0.8127.37",
+        "viewport": [
+          426,
+          780
+        ],
+        "deviceScaleFactor": 3,
+        "mobile": true,
+        "touch": true,
+        "quality": "medium",
+        "cpuThrottling": 1,
+        "gpuPerformance": "native desktop",
+        "serviceWorkers": "blocked"
+      },
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "modelRoute": "inverloch-model.js?v=32",
+      "timing": 300,
+      "laps": 3,
+      "routeMetres": 3411.1224112694076,
+      "distanceMetres": 3386.351456658978,
+      "meanKmh": 40.64,
+      "frameIntervals": {
+        "count": 17998,
+        "p50": 16.7,
+        "p95": 17.1,
+        "p99": 17.5
+      },
+      "callbackIntervals": {
+        "count": 17998,
+        "p50": 16.7,
+        "p95": 16.8,
+        "p99": 16.8
+      },
+      "renderHz": 60,
+      "callbackHz": 60,
+      "draws": {
+        "count": 17999,
+        "p50": 133,
+        "p95": 282,
+        "p99": 292
+      },
+      "triangles": {
+        "count": 17999,
+        "p50": 1070568,
+        "p95": 1451088,
+        "p99": 1463256
+      },
+      "buffers": {
+        "553x1014": 17999
+      },
+      "over33p4pct": 0.006,
+      "longIntervals": {
+        "thresholdMs": 25,
+        "count": 2,
+        "total": 17998
+      },
+      "visibleReady": null,
+      "minutes": [
+        {
+          "minute": 1,
+          "fromSec": 0,
+          "toSec": 60,
+          "utcStart": "2026-11-26T04:30:04.918Z",
+          "renders": 3598,
+          "renderHz": 59.97,
+          "renderIntervalMs": {
+            "count": 3597,
+            "p50": 16.7,
+            "p95": 17.1,
+            "p99": 17.6
+          },
+          "rafs": 3598,
+          "rafHz": 59.97,
+          "rafIntervalMs": {
+            "count": 3597,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3598,
+            "p50": 136,
+            "p95": 281,
+            "p99": 292
+          },
+          "trianglesPerRender": {
+            "count": 3598,
+            "p50": 1071064,
+            "p95": 1441150,
+            "p99": 1451636
+          },
+          "buffers": {
+            "553x1014": 3598
+          },
+          "routeStartM": 0,
+          "routeEndM": 640.0810705768972,
+          "routeProgressM": 640.08,
+          "distanceDrivenM": 633.9,
+          "meanKmh": 38.03,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.874,
+            "p95": 49.691,
+            "p99": 49.698
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.826,
+            "p99": 1.268
+          },
+          "cameraTravelM": 642.89
+        },
+        {
+          "minute": 2,
+          "fromSec": 60,
+          "toSec": 120,
+          "utcStart": "2026-11-26T04:31:04.918Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.1,
+            "p99": 17.6
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 208.5,
+            "p95": 286,
+            "p99": 293
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 1179608,
+            "p95": 1452770,
+            "p99": 1463642
+          },
+          "buffers": {
+            "553x1014": 3600
+          },
+          "routeStartM": 640.0810705768972,
+          "routeEndM": 1355.929762771665,
+          "routeProgressM": 715.85,
+          "distanceDrivenM": 712.73,
+          "meanKmh": 42.76,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.26,
+            "p95": 49.69,
+            "p99": 49.701
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.004,
+            "p95": 0.739,
+            "p99": 1.241
+          },
+          "cameraTravelM": 716.85
+        },
+        {
+          "minute": 3,
+          "fromSec": 120,
+          "toSec": 180,
+          "utcStart": "2026-11-26T04:32:04.918Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17,
+            "p99": 17.4
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.9
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 119,
+            "p95": 229,
+            "p99": 292
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 1001912,
+            "p95": 1326731,
+            "p99": 1350473
+          },
+          "buffers": {
+            "553x1014": 3600
+          },
+          "routeStartM": 1355.929762771665,
+          "routeEndM": 2019.481381770353,
+          "routeProgressM": 663.55,
+          "distanceDrivenM": 657.36,
+          "meanKmh": 39.44,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.881,
+            "p95": 49.67,
+            "p99": 49.697
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.012,
+            "p95": 0.857,
+            "p99": 1.254
+          },
+          "cameraTravelM": 665.65
+        },
+        {
+          "minute": 4,
+          "fromSec": 180,
+          "toSec": 240,
+          "utcStart": "2026-11-26T04:33:04.918Z",
+          "renders": 3601,
+          "renderHz": 60.02,
+          "renderIntervalMs": {
+            "count": 3601,
+            "p50": 16.7,
+            "p95": 17.1,
+            "p99": 17.6
+          },
+          "rafs": 3601,
+          "rafHz": 60.02,
+          "rafIntervalMs": {
+            "count": 3601,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3601,
+            "p50": 144,
+            "p95": 283,
+            "p99": 291
+          },
+          "trianglesPerRender": {
+            "count": 3601,
+            "p50": 1108687,
+            "p95": 1452430,
+            "p99": 1463302
+          },
+          "buffers": {
+            "553x1014": 3601
+          },
+          "routeStartM": 2019.481381770353,
+          "routeEndM": 2728.4477113691555,
+          "routeProgressM": 708.97,
+          "distanceDrivenM": 705.84,
+          "meanKmh": 42.35,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.569,
+            "p95": 49.692,
+            "p99": 49.701
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.708,
+            "p99": 1.239
+          },
+          "cameraTravelM": 711.14
+        },
+        {
+          "minute": 5,
+          "fromSec": 240,
+          "toSec": 300,
+          "utcStart": "2026-11-26T04:34:04.918Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17,
+            "p99": 17.4
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 223,
+            "p95": 286,
+            "p99": 292
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 1179608,
+            "p95": 1452384,
+            "p99": 1463256
+          },
+          "buffers": {
+            "553x1014": 3600
+          },
+          "routeStartM": 2728.4477113691555,
+          "routeEndM": 3404.226981254455,
+          "routeProgressM": 675.78,
+          "distanceDrivenM": 669.62,
+          "meanKmh": 40.18,
+          "speedKmh": {
+            "count": 120,
+            "p50": 48.587,
+            "p95": 49.683,
+            "p99": 49.702
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.009,
+            "p95": 0.922,
+            "p99": 1.274
+          },
+          "cameraTravelM": 676.84
+        }
+      ],
+      "modelBytes": 700147,
+      "modelGzipBytes": 194635,
+      "movingCars": 7,
+      "pageErrors": [],
+      "failedRequests": null,
+      "responseErrors": null,
+      "transfer": {
+        "requests": 11,
+        "servedBytes": 2763674,
+        "productionBytes": 2763319,
+        "uniqueResources": 11,
+        "resources": {
+          "inverloch/explore/": {
+            "requests": 1,
+            "servedBytes": 883825,
+            "productionBytes": 883485,
+            "queries": []
+          },
+          "town3d/inverloch-model.js": {
+            "requests": 1,
+            "servedBytes": 194650,
+            "productionBytes": 194635,
+            "queries": []
+          },
+          "town3d/town.json": {
+            "requests": 1,
+            "servedBytes": 366704,
+            "productionBytes": 366704,
+            "queries": []
+          },
+          "town3d/height.png": {
+            "requests": 1,
+            "servedBytes": 689479,
+            "productionBytes": 689479,
+            "queries": []
+          },
+          "town3d/ground-2k.webp": {
+            "requests": 1,
+            "servedBytes": 242526,
+            "productionBytes": 242526,
+            "queries": []
+          },
+          "_pixel/three.js": {
+            "requests": 1,
+            "servedBytes": 158243,
+            "productionBytes": 158243,
+            "queries": []
+          },
+          "inverloch/explore/version.json": {
+            "requests": 1,
+            "servedBytes": 45,
+            "productionBytes": 45,
+            "queries": []
+          },
+          "inverloch/explore/explore-icon.png": {
+            "requests": 1,
+            "servedBytes": 61365,
+            "productionBytes": 61365,
+            "queries": []
+          },
+          "town3d/detail.json": {
+            "requests": 1,
+            "servedBytes": 167,
+            "productionBytes": 167,
+            "queries": []
+          },
+          "town3d/detail-norman.webp": {
+            "requests": 1,
+            "servedBytes": 38970,
+            "productionBytes": 38970,
+            "queries": []
+          },
+          "town3d/detail-town.webp": {
+            "requests": 1,
+            "servedBytes": 127700,
+            "productionBytes": 127700,
+            "queries": []
+          }
+        }
+      }
+    },
+    {
+      "label": "stage1-medium60",
+      "host": "484f9d6",
+      "hostSha": "d63fea6c617fd364bf45d9b6ee7ffabf254408fa2a4663ebf1a0b4e099948847",
+      "modelSha": "a7e3114ded07b247791a6a42f243623169670fcc08382802efbac3dbb81fe8fc",
+      "route": "A’Beckett–Reilly–Bayview–Sandy Mount circuit",
+      "routeHash": "00c2f0014e78ef7586f3d4eca01f506f4ab6eb0ff458a3791128605041b855ce",
+      "fixtureCar": "-536_-1414",
+      "browser": "158.0.8127.37",
+      "quality": "medium",
+      "targetFps": 60,
+      "profile": {
+        "browser": "158.0.8127.37",
+        "viewport": [
+          426,
+          780
+        ],
+        "deviceScaleFactor": 3,
+        "mobile": true,
+        "touch": true,
+        "quality": "medium",
+        "targetFps": 60,
+        "cpuThrottling": 1,
+        "gpuPerformance": "native desktop",
+        "serviceWorkers": "blocked"
+      },
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "modelRoute": "inverloch-model.js?v=33",
+      "timing": 300,
+      "laps": 3,
+      "routeMetres": 3411.140034377682,
+      "distanceMetres": 3386.3482453978036,
+      "meanKmh": 40.64,
+      "frameIntervals": {
+        "count": 17994,
+        "p50": 16.7,
+        "p95": 17.2,
+        "p99": 17.6
+      },
+      "callbackIntervals": {
+        "count": 17996,
+        "p50": 16.7,
+        "p95": 16.8,
+        "p99": 16.8
+      },
+      "renderHz": 59.98,
+      "callbackHz": 59.99,
+      "draws": {
+        "count": 17995,
+        "p50": 133,
+        "p95": 282,
+        "p99": 292
+      },
+      "triangles": {
+        "count": 17995,
+        "p50": 1070568,
+        "p95": 1451078,
+        "p99": 1463256
+      },
+      "buffers": {
+        "553x1014": 17995
+      },
+      "over33p4pct": 0.011,
+      "longIntervals": {
+        "thresholdMs": 25,
+        "count": 4,
+        "total": 17994
+      },
+      "visibleReady": {
+        "selection": {
+          "at": 2190.399999976158,
+          "first": "medium",
+          "best": "medium",
+          "direct": true
+        },
+        "visibleAtMs": 5823.699999988079,
+        "visibility": "visible",
+        "timeOriginMs": 1795667707361.6,
+        "stamp": "484f9d6",
+        "responses": 11,
+        "bodyBytes": 2764827
+      },
+      "minutes": [
+        {
+          "minute": 1,
+          "fromSec": 0,
+          "toSec": 60,
+          "utcStart": "2026-11-26T04:35:16.122Z",
+          "renders": 3595,
+          "renderHz": 59.92,
+          "renderIntervalMs": {
+            "count": 3594,
+            "p50": 16.7,
+            "p95": 17.2,
+            "p99": 17.6
+          },
+          "rafs": 3596,
+          "rafHz": 59.93,
+          "rafIntervalMs": {
+            "count": 3595,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3595,
+            "p50": 135,
+            "p95": 281,
+            "p99": 292
+          },
+          "trianglesPerRender": {
+            "count": 3595,
+            "p50": 1071064,
+            "p95": 1441150,
+            "p99": 1451636
+          },
+          "buffers": {
+            "553x1014": 3595
+          },
+          "routeStartM": 0,
+          "routeEndM": 640.0893432416223,
+          "routeProgressM": 640.09,
+          "distanceDrivenM": 633.88,
+          "meanKmh": 38.03,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.849,
+            "p95": 49.69,
+            "p99": 49.701
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.826,
+            "p99": 1.253
+          },
+          "cameraTravelM": 642.88
+        },
+        {
+          "minute": 2,
+          "fromSec": 60,
+          "toSec": 120,
+          "utcStart": "2026-11-26T04:36:16.122Z",
+          "renders": 3599,
+          "renderHz": 59.98,
+          "renderIntervalMs": {
+            "count": 3599,
+            "p50": 16.7,
+            "p95": 17.2,
+            "p99": 17.7
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3599,
+            "p50": 208,
+            "p95": 286,
+            "p99": 293
+          },
+          "trianglesPerRender": {
+            "count": 3599,
+            "p50": 1179608,
+            "p95": 1452760,
+            "p99": 1463632
+          },
+          "buffers": {
+            "553x1014": 3599
+          },
+          "routeStartM": 640.0893432416223,
+          "routeEndM": 1356.199442918608,
+          "routeProgressM": 716.11,
+          "distanceDrivenM": 712.99,
+          "meanKmh": 42.78,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.264,
+            "p95": 49.692,
+            "p99": 49.702
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.004,
+            "p95": 0.724,
+            "p99": 1.243
+          },
+          "cameraTravelM": 717.12
+        },
+        {
+          "minute": 3,
+          "fromSec": 120,
+          "toSec": 180,
+          "utcStart": "2026-11-26T04:37:16.122Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.1,
+            "p99": 17.5
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 119,
+            "p95": 230,
+            "p99": 292
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 1001912,
+            "p95": 1326731,
+            "p99": 1354057
+          },
+          "buffers": {
+            "553x1014": 3600
+          },
+          "routeStartM": 1356.199442918608,
+          "routeEndM": 2019.522115382953,
+          "routeProgressM": 663.32,
+          "distanceDrivenM": 657.13,
+          "meanKmh": 39.43,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.888,
+            "p95": 49.66,
+            "p99": 49.691
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.012,
+            "p95": 0.864,
+            "p99": 1.241
+          },
+          "cameraTravelM": 665.42
+        },
+        {
+          "minute": 4,
+          "fromSec": 180,
+          "toSec": 240,
+          "utcStart": "2026-11-26T04:38:16.122Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.1,
+            "p99": 17.6
+          },
+          "rafs": 3601,
+          "rafHz": 60.02,
+          "rafIntervalMs": {
+            "count": 3601,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 144,
+            "p95": 283,
+            "p99": 291
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 1108687,
+            "p95": 1452430,
+            "p99": 1463302
+          },
+          "buffers": {
+            "553x1014": 3600
+          },
+          "routeStartM": 2019.522115382953,
+          "routeEndM": 2728.457261359277,
+          "routeProgressM": 708.94,
+          "distanceDrivenM": 705.81,
+          "meanKmh": 42.35,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.576,
+            "p95": 49.692,
+            "p99": 49.701
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.706,
+            "p99": 1.239
+          },
+          "cameraTravelM": 711.11
+        },
+        {
+          "minute": 5,
+          "fromSec": 240,
+          "toSec": 300,
+          "utcStart": "2026-11-26T04:39:16.122Z",
+          "renders": 3601,
+          "renderHz": 60.02,
+          "renderIntervalMs": {
+            "count": 3601,
+            "p50": 16.7,
+            "p95": 17.2,
+            "p99": 17.7
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3601,
+            "p50": 223,
+            "p95": 286,
+            "p99": 292
+          },
+          "trianglesPerRender": {
+            "count": 3601,
+            "p50": 1179608,
+            "p95": 1452384,
+            "p99": 1463256
+          },
+          "buffers": {
+            "553x1014": 3601
+          },
+          "routeStartM": 2728.457261359277,
+          "routeEndM": 3404.2458965314163,
+          "routeProgressM": 675.79,
+          "distanceDrivenM": 669.63,
+          "meanKmh": 40.18,
+          "speedKmh": {
+            "count": 120,
+            "p50": 48.592,
+            "p95": 49.684,
+            "p99": 49.703
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.009,
+            "p95": 0.926,
+            "p99": 1.274
+          },
+          "cameraTravelM": 676.85
+        }
+      ],
+      "modelBytes": 701351,
+      "modelGzipBytes": 195012,
+      "movingCars": 7,
+      "pageErrors": [],
+      "failedRequests": [
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400&family=Schibsted+Grotesk:wght@400..800&display=swap",
+          "failure": "csp",
+          "type": "stylesheet"
+        }
+      ],
+      "responseErrors": [],
+      "transfer": {
+        "requests": 11,
+        "servedBytes": 2764827,
+        "productionBytes": 2764412,
+        "uniqueResources": 11,
+        "resources": {
+          "inverloch/explore/": {
+            "requests": 1,
+            "servedBytes": 884602,
+            "productionBytes": 884201,
+            "queries": []
+          },
+          "town3d/inverloch-model.js": {
+            "requests": 1,
+            "servedBytes": 195026,
+            "productionBytes": 195012,
+            "queries": [
+              "?v=33"
+            ]
+          },
+          "town3d/height.png": {
+            "requests": 1,
+            "servedBytes": 689479,
+            "productionBytes": 689479,
+            "queries": []
+          },
+          "town3d/town.json": {
+            "requests": 1,
+            "servedBytes": 366704,
+            "productionBytes": 366704,
+            "queries": []
+          },
+          "town3d/ground-2k.webp": {
+            "requests": 1,
+            "servedBytes": 242526,
+            "productionBytes": 242526,
+            "queries": []
+          },
+          "_pixel/three.js": {
+            "requests": 1,
+            "servedBytes": 158243,
+            "productionBytes": 158243,
+            "queries": []
+          },
+          "inverloch/explore/version.json": {
+            "requests": 1,
+            "servedBytes": 45,
+            "productionBytes": 45,
+            "queries": [
+              "?t=1795667707607"
+            ]
+          },
+          "inverloch/explore/explore-icon.png": {
+            "requests": 1,
+            "servedBytes": 61365,
+            "productionBytes": 61365,
+            "queries": [
+              "?v=1"
+            ]
+          },
+          "town3d/detail.json": {
+            "requests": 1,
+            "servedBytes": 167,
+            "productionBytes": 167,
+            "queries": []
+          },
+          "town3d/detail-town.webp": {
+            "requests": 1,
+            "servedBytes": 127700,
+            "productionBytes": 127700,
+            "queries": []
+          },
+          "town3d/detail-norman.webp": {
+            "requests": 1,
+            "servedBytes": 38970,
+            "productionBytes": 38970,
+            "queries": []
+          }
+        }
+      }
+    },
+    {
+      "label": "stage1-low30",
+      "host": "484f9d6",
+      "hostSha": "d63fea6c617fd364bf45d9b6ee7ffabf254408fa2a4663ebf1a0b4e099948847",
+      "modelSha": "a7e3114ded07b247791a6a42f243623169670fcc08382802efbac3dbb81fe8fc",
+      "route": "A’Beckett–Reilly–Bayview–Sandy Mount circuit",
+      "routeHash": "00c2f0014e78ef7586f3d4eca01f506f4ab6eb0ff458a3791128605041b855ce",
+      "fixtureCar": "-536_-1414",
+      "browser": "158.0.8127.37",
+      "quality": "low",
+      "targetFps": 30,
+      "profile": {
+        "browser": "158.0.8127.37",
+        "viewport": [
+          426,
+          780
+        ],
+        "deviceScaleFactor": 3,
+        "mobile": true,
+        "touch": true,
+        "quality": "low",
+        "targetFps": 30,
+        "cpuThrottling": 1,
+        "gpuPerformance": "native desktop",
+        "serviceWorkers": "blocked"
+      },
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "modelRoute": "inverloch-model.js?v=33",
+      "timing": 300,
+      "laps": 3,
+      "routeMetres": 3411.330484397783,
+      "distanceMetres": 3386.557005707649,
+      "meanKmh": 40.64,
+      "frameIntervals": {
+        "count": 8998,
+        "p50": 33.3,
+        "p95": 33.9,
+        "p99": 49.6
+      },
+      "callbackIntervals": {
+        "count": 17997,
+        "p50": 16.7,
+        "p95": 16.9,
+        "p99": 17
+      },
+      "renderHz": 30,
+      "callbackHz": 59.99,
+      "draws": {
+        "count": 8999,
+        "p50": 81,
+        "p95": 179,
+        "p99": 239
+      },
+      "triangles": {
+        "count": 8999,
+        "p50": 672408,
+        "p95": 913134,
+        "p99": 930742
+      },
+      "buffers": {
+        "426x780": 8999
+      },
+      "over33p4pct": 44.61,
+      "longIntervals": {
+        "thresholdMs": 50,
+        "count": 24,
+        "total": 8998
+      },
+      "visibleReady": {
+        "selection": {
+          "at": 2272.199999988079,
+          "first": "low",
+          "best": "medium",
+          "direct": true
+        },
+        "visibleAtMs": 5714.299999982119,
+        "visibility": "visible",
+        "timeOriginMs": 1795668018307.7,
+        "stamp": "484f9d6",
+        "responses": 11,
+        "bodyBytes": 2673209
+      },
+      "minutes": [
+        {
+          "minute": 1,
+          "fromSec": 0,
+          "toSec": 60,
+          "utcStart": "2026-11-26T04:40:27.083Z",
+          "renders": 1799,
+          "renderHz": 29.98,
+          "renderIntervalMs": {
+            "count": 1798,
+            "p50": 33.3,
+            "p95": 34.1,
+            "p99": 50.1
+          },
+          "rafs": 3598,
+          "rafHz": 59.97,
+          "rafIntervalMs": {
+            "count": 3597,
+            "p50": 16.7,
+            "p95": 16.9,
+            "p99": 17
+          },
+          "drawsPerRender": {
+            "count": 1799,
+            "p50": 81,
+            "p95": 149,
+            "p99": 182
+          },
+          "trianglesPerRender": {
+            "count": 1799,
+            "p50": 672758,
+            "p95": 852776,
+            "p99": 864130
+          },
+          "buffers": {
+            "426x780": 1799
+          },
+          "routeStartM": 0,
+          "routeEndM": 640.291467606793,
+          "routeProgressM": 640.29,
+          "distanceDrivenM": 634.11,
+          "meanKmh": 38.05,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.878,
+            "p95": 49.688,
+            "p99": 49.703
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.825,
+            "p99": 1.253
+          },
+          "cameraTravelM": 643.12
+        },
+        {
+          "minute": 2,
+          "fromSec": 60,
+          "toSec": 120,
+          "utcStart": "2026-11-26T04:41:27.083Z",
+          "renders": 1800,
+          "renderHz": 30,
+          "renderIntervalMs": {
+            "count": 1800,
+            "p50": 33.3,
+            "p95": 34,
+            "p99": 49.8
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.9,
+            "p99": 17
+          },
+          "drawsPerRender": {
+            "count": 1800,
+            "p50": 101,
+            "p95": 183,
+            "p99": 229
+          },
+          "trianglesPerRender": {
+            "count": 1800,
+            "p50": 696692,
+            "p95": 922690,
+            "p99": 930806
+          },
+          "buffers": {
+            "426x780": 1800
+          },
+          "routeStartM": 640.291467606793,
+          "routeEndM": 1356.1563599488607,
+          "routeProgressM": 715.86,
+          "distanceDrivenM": 712.75,
+          "meanKmh": 42.76,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.232,
+            "p95": 49.691,
+            "p99": 49.701
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.004,
+            "p95": 0.726,
+            "p99": 1.241
+          },
+          "cameraTravelM": 716.87
+        },
+        {
+          "minute": 3,
+          "fromSec": 120,
+          "toSec": 180,
+          "utcStart": "2026-11-26T04:42:27.083Z",
+          "renders": 1800,
+          "renderHz": 30,
+          "renderIntervalMs": {
+            "count": 1800,
+            "p50": 33.3,
+            "p95": 33.9,
+            "p99": 34.3
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.9,
+            "p99": 17
+          },
+          "drawsPerRender": {
+            "count": 1800,
+            "p50": 74,
+            "p95": 183,
+            "p99": 247
+          },
+          "trianglesPerRender": {
+            "count": 1800,
+            "p50": 594988,
+            "p95": 922314,
+            "p99": 930430
+          },
+          "buffers": {
+            "426x780": 1800
+          },
+          "routeStartM": 1356.1563599488607,
+          "routeEndM": 2019.4602632459819,
+          "routeProgressM": 663.3,
+          "distanceDrivenM": 657.11,
+          "meanKmh": 39.43,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.828,
+            "p95": 49.673,
+            "p99": 49.696
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.012,
+            "p95": 0.871,
+            "p99": 1.241
+          },
+          "cameraTravelM": 665.4
+        },
+        {
+          "minute": 4,
+          "fromSec": 180,
+          "toSec": 240,
+          "utcStart": "2026-11-26T04:43:27.083Z",
+          "renders": 1800,
+          "renderHz": 30,
+          "renderIntervalMs": {
+            "count": 1800,
+            "p50": 33.3,
+            "p95": 33.9,
+            "p99": 35.7
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.9
+          },
+          "drawsPerRender": {
+            "count": 1800,
+            "p50": 83,
+            "p95": 167,
+            "p99": 173
+          },
+          "trianglesPerRender": {
+            "count": 1800,
+            "p50": 686386,
+            "p95": 899378,
+            "p99": 907652
+          },
+          "buffers": {
+            "426x780": 1800
+          },
+          "routeStartM": 2019.4602632459819,
+          "routeEndM": 2728.439187295527,
+          "routeProgressM": 708.98,
+          "distanceDrivenM": 705.86,
+          "meanKmh": 42.35,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.589,
+            "p95": 49.688,
+            "p99": 49.701
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.709,
+            "p99": 1.238
+          },
+          "cameraTravelM": 711.15
+        },
+        {
+          "minute": 5,
+          "fromSec": 240,
+          "toSec": 300,
+          "utcStart": "2026-11-26T04:44:27.083Z",
+          "renders": 1800,
+          "renderHz": 30,
+          "renderIntervalMs": {
+            "count": 1800,
+            "p50": 33.3,
+            "p95": 34,
+            "p99": 36.3
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 1800,
+            "p50": 105,
+            "p95": 185,
+            "p99": 246
+          },
+          "trianglesPerRender": {
+            "count": 1800,
+            "p50": 706340,
+            "p95": 922644,
+            "p99": 930806
+          },
+          "buffers": {
+            "426x780": 1800
+          },
+          "routeStartM": 2728.439187295527,
+          "routeEndM": 3404.205864716962,
+          "routeProgressM": 675.77,
+          "distanceDrivenM": 669.61,
+          "meanKmh": 40.18,
+          "speedKmh": {
+            "count": 120,
+            "p50": 48.587,
+            "p95": 49.683,
+            "p99": 49.698
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.009,
+            "p95": 0.921,
+            "p99": 1.282
+          },
+          "cameraTravelM": 676.82
+        }
+      ],
+      "modelBytes": 701351,
+      "modelGzipBytes": 195012,
+      "movingCars": 5,
+      "pageErrors": [],
+      "failedRequests": [
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400&family=Schibsted+Grotesk:wght@400..800&display=swap",
+          "failure": "csp",
+          "type": "stylesheet"
+        }
+      ],
+      "responseErrors": [],
+      "transfer": {
+        "requests": 11,
+        "servedBytes": 2673209,
+        "productionBytes": 2672794,
+        "uniqueResources": 11,
+        "resources": {
+          "inverloch/explore/": {
+            "requests": 1,
+            "servedBytes": 884602,
+            "productionBytes": 884201,
+            "queries": []
+          },
+          "town3d/inverloch-model.js": {
+            "requests": 1,
+            "servedBytes": 195026,
+            "productionBytes": 195012,
+            "queries": [
+              "?v=33"
+            ]
+          },
+          "town3d/ground-2k.webp": {
+            "requests": 1,
+            "servedBytes": 242526,
+            "productionBytes": 242526,
+            "queries": []
+          },
+          "town3d/height.png": {
+            "requests": 1,
+            "servedBytes": 689479,
+            "productionBytes": 689479,
+            "queries": []
+          },
+          "town3d/town.json": {
+            "requests": 1,
+            "servedBytes": 366704,
+            "productionBytes": 366704,
+            "queries": []
+          },
+          "_pixel/three.js": {
+            "requests": 1,
+            "servedBytes": 158243,
+            "productionBytes": 158243,
+            "queries": []
+          },
+          "inverloch/explore/version.json": {
+            "requests": 1,
+            "servedBytes": 45,
+            "productionBytes": 45,
+            "queries": [
+              "?t=1795668018569"
+            ]
+          },
+          "inverloch/explore/explore-icon.png": {
+            "requests": 1,
+            "servedBytes": 61365,
+            "productionBytes": 61365,
+            "queries": [
+              "?v=1"
+            ]
+          },
+          "town3d/detail.json": {
+            "requests": 1,
+            "servedBytes": 167,
+            "productionBytes": 167,
+            "queries": []
+          },
+          "town3d/detail-town-lo.webp": {
+            "requests": 1,
+            "servedBytes": 57298,
+            "productionBytes": 57298,
+            "queries": []
+          },
+          "town3d/detail-norman-lo.webp": {
+            "requests": 1,
+            "servedBytes": 17754,
+            "productionBytes": 17754,
+            "queries": []
+          }
+        }
+      }
+    },
+    {
+      "label": "stage2-medium60",
+      "host": "e8fa226",
+      "hostSha": "0c65035511a7dd7ae1453f58da7636d177cd0390038e0435deffd44d5d767daa",
+      "modelSha": "0a58bfd1a76af324a0748188195502c62bb4f3a6b00fb2d89056af779ea85d08",
+      "route": "A’Beckett–Reilly–Bayview–Sandy Mount circuit",
+      "routeHash": "00c2f0014e78ef7586f3d4eca01f506f4ab6eb0ff458a3791128605041b855ce",
+      "fixtureCar": "-536_-1414",
+      "browser": "158.0.8127.37",
+      "quality": "medium",
+      "targetFps": 60,
+      "profile": {
+        "browser": "158.0.8127.37",
+        "viewport": [
+          426,
+          780
+        ],
+        "deviceScaleFactor": 3,
+        "mobile": true,
+        "touch": true,
+        "quality": "medium",
+        "targetFps": 60,
+        "cpuThrottling": 1,
+        "gpuPerformance": "native desktop",
+        "serviceWorkers": "blocked"
+      },
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "modelRoute": "inverloch-model.js?v=34",
+      "timing": 300,
+      "laps": 3,
+      "routeMetres": 3411.107727139684,
+      "distanceMetres": 3386.333091033179,
+      "meanKmh": 40.64,
+      "frameIntervals": {
+        "count": 17989,
+        "p50": 16.7,
+        "p95": 17.4,
+        "p99": 23.8
+      },
+      "callbackIntervals": {
+        "count": 17997,
+        "p50": 16.7,
+        "p95": 16.8,
+        "p99": 16.8
+      },
+      "renderHz": 59.97,
+      "callbackHz": 59.99,
+      "draws": {
+        "count": 17990,
+        "p50": 144,
+        "p95": 289,
+        "p99": 299
+      },
+      "triangles": {
+        "count": 17990,
+        "p50": 799592,
+        "p95": 1000722,
+        "p99": 1036038
+      },
+      "buffers": {
+        "553x1014": 17990
+      },
+      "over33p4pct": 0.017,
+      "longIntervals": {
+        "thresholdMs": 25,
+        "count": 47,
+        "total": 17989
+      },
+      "visibleReady": {
+        "selection": {
+          "at": 2391.5,
+          "first": "medium",
+          "best": "medium",
+          "direct": true
+        },
+        "visibleAtMs": 5932.9000000059605,
+        "visibility": "visible",
+        "timeOriginMs": 1795668336878.1,
+        "stamp": "e8fa226",
+        "responses": 11,
+        "bodyBytes": 2765410
+      },
+      "minutes": [
+        {
+          "minute": 1,
+          "fromSec": 0,
+          "toSec": 60,
+          "utcStart": "2026-11-26T04:45:45.615Z",
+          "renders": 3595,
+          "renderHz": 59.92,
+          "renderIntervalMs": {
+            "count": 3594,
+            "p50": 16.7,
+            "p95": 17.4,
+            "p99": 21.2
+          },
+          "rafs": 3597,
+          "rafHz": 59.95,
+          "rafIntervalMs": {
+            "count": 3596,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3595,
+            "p50": 144,
+            "p95": 298,
+            "p99": 311
+          },
+          "trianglesPerRender": {
+            "count": 3595,
+            "p50": 804136,
+            "p95": 1006491,
+            "p99": 1046791
+          },
+          "buffers": {
+            "553x1014": 3595
+          },
+          "routeStartM": 0,
+          "routeEndM": 640.2828011900064,
+          "routeProgressM": 640.28,
+          "distanceDrivenM": 634.1,
+          "meanKmh": 38.05,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.874,
+            "p95": 49.691,
+            "p99": 49.699
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.826,
+            "p99": 1.268
+          },
+          "cameraTravelM": 643.11
+        },
+        {
+          "minute": 2,
+          "fromSec": 60,
+          "toSec": 120,
+          "utcStart": "2026-11-26T04:46:45.615Z",
+          "renders": 3596,
+          "renderHz": 59.93,
+          "renderIntervalMs": {
+            "count": 3596,
+            "p50": 16.7,
+            "p95": 17.5,
+            "p99": 24.2
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3596,
+            "p50": 201.5,
+            "p95": 288,
+            "p99": 293
+          },
+          "trianglesPerRender": {
+            "count": 3596,
+            "p50": 852739,
+            "p95": 1000969,
+            "p99": 1037234
+          },
+          "buffers": {
+            "553x1014": 3596
+          },
+          "routeStartM": 640.2828011900064,
+          "routeEndM": 1356.1547854779185,
+          "routeProgressM": 715.87,
+          "distanceDrivenM": 712.75,
+          "meanKmh": 42.77,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.259,
+            "p95": 49.688,
+            "p99": 49.701
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.004,
+            "p95": 0.726,
+            "p99": 1.246
+          },
+          "cameraTravelM": 716.87
+        },
+        {
+          "minute": 3,
+          "fromSec": 120,
+          "toSec": 180,
+          "utcStart": "2026-11-26T04:47:45.615Z",
+          "renders": 3598,
+          "renderHz": 59.97,
+          "renderIntervalMs": {
+            "count": 3598,
+            "p50": 16.7,
+            "p95": 17.6,
+            "p99": 24.3
+          },
+          "rafs": 3601,
+          "rafHz": 60.02,
+          "rafIntervalMs": {
+            "count": 3601,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.9
+          },
+          "drawsPerRender": {
+            "count": 3598,
+            "p50": 133,
+            "p95": 243,
+            "p99": 301
+          },
+          "trianglesPerRender": {
+            "count": 3598,
+            "p50": 745364,
+            "p95": 862908,
+            "p99": 887685
+          },
+          "buffers": {
+            "553x1014": 3598
+          },
+          "routeStartM": 1356.1547854779185,
+          "routeEndM": 2019.4627308724425,
+          "routeProgressM": 663.31,
+          "distanceDrivenM": 657.11,
+          "meanKmh": 39.43,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.831,
+            "p95": 49.665,
+            "p99": 49.692
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.012,
+            "p95": 0.871,
+            "p99": 1.241
+          },
+          "cameraTravelM": 665.41
+        },
+        {
+          "minute": 4,
+          "fromSec": 180,
+          "toSec": 240,
+          "utcStart": "2026-11-26T04:48:45.615Z",
+          "renders": 3601,
+          "renderHz": 60.02,
+          "renderIntervalMs": {
+            "count": 3601,
+            "p50": 16.7,
+            "p95": 17.4,
+            "p99": 24.1
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.9
+          },
+          "drawsPerRender": {
+            "count": 3601,
+            "p50": 155,
+            "p95": 288,
+            "p99": 294
+          },
+          "trianglesPerRender": {
+            "count": 3601,
+            "p50": 839699,
+            "p95": 1001015,
+            "p99": 1030194
+          },
+          "buffers": {
+            "553x1014": 3601
+          },
+          "routeStartM": 2019.4627308724425,
+          "routeEndM": 2728.4423601448693,
+          "routeProgressM": 708.98,
+          "distanceDrivenM": 705.86,
+          "meanKmh": 42.35,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.579,
+            "p95": 49.691,
+            "p99": 49.701
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.709,
+            "p99": 1.238
+          },
+          "cameraTravelM": 711.15
+        },
+        {
+          "minute": 5,
+          "fromSec": 240,
+          "toSec": 300,
+          "utcStart": "2026-11-26T04:49:45.615Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.2,
+            "p99": 17.8
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 230,
+            "p95": 292,
+            "p99": 299
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 846125,
+            "p95": 1001345,
+            "p99": 1030248
+          },
+          "buffers": {
+            "553x1014": 3600
+          },
+          "routeStartM": 2728.4423601448693,
+          "routeEndM": 3404.2121697041102,
+          "routeProgressM": 675.77,
+          "distanceDrivenM": 669.61,
+          "meanKmh": 40.18,
+          "speedKmh": {
+            "count": 120,
+            "p50": 48.586,
+            "p95": 49.689,
+            "p99": 49.701
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.009,
+            "p95": 0.921,
+            "p99": 1.273
+          },
+          "cameraTravelM": 676.83
+        }
+      ],
+      "modelBytes": 702944,
+      "modelGzipBytes": 195595,
+      "movingCars": 7,
+      "pageErrors": [],
+      "failedRequests": [
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400&family=Schibsted+Grotesk:wght@400..800&display=swap",
+          "failure": "csp",
+          "type": "stylesheet"
+        }
+      ],
+      "responseErrors": [],
+      "transfer": {
+        "requests": 11,
+        "servedBytes": 2765410,
+        "productionBytes": 2764994,
+        "uniqueResources": 11,
+        "resources": {
+          "inverloch/explore/": {
+            "requests": 1,
+            "servedBytes": 884601,
+            "productionBytes": 884200,
+            "queries": []
+          },
+          "town3d/inverloch-model.js": {
+            "requests": 1,
+            "servedBytes": 195610,
+            "productionBytes": 195595,
+            "queries": [
+              "?v=34"
+            ]
+          },
+          "town3d/ground-2k.webp": {
+            "requests": 1,
+            "servedBytes": 242526,
+            "productionBytes": 242526,
+            "queries": []
+          },
+          "town3d/height.png": {
+            "requests": 1,
+            "servedBytes": 689479,
+            "productionBytes": 689479,
+            "queries": []
+          },
+          "town3d/town.json": {
+            "requests": 1,
+            "servedBytes": 366704,
+            "productionBytes": 366704,
+            "queries": []
+          },
+          "_pixel/three.js": {
+            "requests": 1,
+            "servedBytes": 158243,
+            "productionBytes": 158243,
+            "queries": []
+          },
+          "inverloch/explore/version.json": {
+            "requests": 1,
+            "servedBytes": 45,
+            "productionBytes": 45,
+            "queries": [
+              "?t=1795668337150"
+            ]
+          },
+          "inverloch/explore/explore-icon.png": {
+            "requests": 1,
+            "servedBytes": 61365,
+            "productionBytes": 61365,
+            "queries": [
+              "?v=1"
+            ]
+          },
+          "town3d/detail.json": {
+            "requests": 1,
+            "servedBytes": 167,
+            "productionBytes": 167,
+            "queries": []
+          },
+          "town3d/detail-town.webp": {
+            "requests": 1,
+            "servedBytes": 127700,
+            "productionBytes": 127700,
+            "queries": []
+          },
+          "town3d/detail-norman.webp": {
+            "requests": 1,
+            "servedBytes": 38970,
+            "productionBytes": 38970,
+            "queries": []
+          }
+        }
+      }
+    },
+    {
+      "label": "stage2-medium60-repeat",
+      "host": "e8fa226",
+      "hostSha": "0c65035511a7dd7ae1453f58da7636d177cd0390038e0435deffd44d5d767daa",
+      "modelSha": "0a58bfd1a76af324a0748188195502c62bb4f3a6b00fb2d89056af779ea85d08",
+      "route": "A’Beckett–Reilly–Bayview–Sandy Mount circuit",
+      "routeHash": "00c2f0014e78ef7586f3d4eca01f506f4ab6eb0ff458a3791128605041b855ce",
+      "fixtureCar": "-536_-1414",
+      "browser": "158.0.8127.37",
+      "quality": "medium",
+      "targetFps": 60,
+      "profile": {
+        "browser": "158.0.8127.37",
+        "viewport": [
+          426,
+          780
+        ],
+        "deviceScaleFactor": 3,
+        "mobile": true,
+        "touch": true,
+        "quality": "medium",
+        "targetFps": 60,
+        "cpuThrottling": 1,
+        "gpuPerformance": "native desktop",
+        "serviceWorkers": "blocked"
+      },
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "modelRoute": "inverloch-model.js?v=34",
+      "timing": 300,
+      "laps": 3,
+      "routeMetres": 3411.149009618818,
+      "distanceMetres": 3386.375460536003,
+      "meanKmh": 40.64,
+      "frameIntervals": {
+        "count": 17993,
+        "p50": 16.7,
+        "p95": 17.7,
+        "p99": 18.3
+      },
+      "callbackIntervals": {
+        "count": 17997,
+        "p50": 16.7,
+        "p95": 17,
+        "p99": 17.2
+      },
+      "renderHz": 59.98,
+      "callbackHz": 59.99,
+      "draws": {
+        "count": 17994,
+        "p50": 144,
+        "p95": 290,
+        "p99": 299
+      },
+      "triangles": {
+        "count": 17994,
+        "p50": 799592,
+        "p95": 1000742,
+        "p99": 1036292
+      },
+      "buffers": {
+        "553x1014": 17994
+      },
+      "over33p4pct": 0.006,
+      "longIntervals": {
+        "thresholdMs": 25,
+        "count": 7,
+        "total": 17993
+      },
+      "visibleReady": {
+        "selection": {
+          "at": 2350,
+          "first": "medium",
+          "best": "medium",
+          "direct": true
+        },
+        "visibleAtMs": 5872.0999999940395,
+        "visibility": "visible",
+        "timeOriginMs": 1795670778441.3,
+        "stamp": "e8fa226",
+        "responses": 11,
+        "bodyBytes": 2765410
+      },
+      "minutes": [
+        {
+          "minute": 1,
+          "fromSec": 0,
+          "toSec": 60,
+          "utcStart": "2026-11-26T05:26:27.337Z",
+          "renders": 3594,
+          "renderHz": 59.9,
+          "renderIntervalMs": {
+            "count": 3593,
+            "p50": 16.7,
+            "p95": 17.3,
+            "p99": 18.2
+          },
+          "rafs": 3598,
+          "rafHz": 59.97,
+          "rafIntervalMs": {
+            "count": 3597,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.9
+          },
+          "drawsPerRender": {
+            "count": 3594,
+            "p50": 144,
+            "p95": 298,
+            "p99": 311
+          },
+          "trianglesPerRender": {
+            "count": 3594,
+            "p50": 804136,
+            "p95": 1006491,
+            "p99": 1046791
+          },
+          "buffers": {
+            "553x1014": 3594
+          },
+          "routeStartM": 0,
+          "routeEndM": 640.295944644174,
+          "routeProgressM": 640.3,
+          "distanceDrivenM": 634.11,
+          "meanKmh": 38.05,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.878,
+            "p95": 49.689,
+            "p99": 49.701
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.826,
+            "p99": 1.253
+          },
+          "cameraTravelM": 643.11
+        },
+        {
+          "minute": 2,
+          "fromSec": 60,
+          "toSec": 120,
+          "utcStart": "2026-11-26T05:27:27.337Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.2,
+            "p99": 18.1
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.9
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 203,
+            "p95": 288,
+            "p99": 293
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 852751,
+            "p95": 1000969,
+            "p99": 1030248
+          },
+          "buffers": {
+            "553x1014": 3600
+          },
+          "routeStartM": 640.295944644174,
+          "routeEndM": 1356.17937158148,
+          "routeProgressM": 715.88,
+          "distanceDrivenM": 712.76,
+          "meanKmh": 42.77,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.26,
+            "p95": 49.688,
+            "p99": 49.702
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.004,
+            "p95": 0.724,
+            "p99": 1.241
+          },
+          "cameraTravelM": 716.89
+        },
+        {
+          "minute": 3,
+          "fromSec": 120,
+          "toSec": 180,
+          "utcStart": "2026-11-26T05:28:27.337Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.2,
+            "p99": 17.8
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.9
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 133,
+            "p95": 241,
+            "p99": 300
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 745364,
+            "p95": 862908,
+            "p99": 887309
+          },
+          "buffers": {
+            "553x1014": 3600
+          },
+          "routeStartM": 1356.17937158148,
+          "routeEndM": 2019.4961092757853,
+          "routeProgressM": 663.32,
+          "distanceDrivenM": 657.13,
+          "meanKmh": 39.43,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.83,
+            "p95": 49.681,
+            "p99": 49.701
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.012,
+            "p95": 0.867,
+            "p99": 1.239
+          },
+          "cameraTravelM": 665.41
+        },
+        {
+          "minute": 4,
+          "fromSec": 180,
+          "toSec": 240,
+          "utcStart": "2026-11-26T05:29:27.337Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 18,
+            "p99": 18.4
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.1,
+            "p99": 17.4
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 155,
+            "p95": 290,
+            "p99": 296
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 839489,
+            "p95": 1001365,
+            "p99": 1030917
+          },
+          "buffers": {
+            "553x1014": 3600
+          },
+          "routeStartM": 2019.4961092757853,
+          "routeEndM": 2728.4505303037204,
+          "routeProgressM": 708.95,
+          "distanceDrivenM": 705.83,
+          "meanKmh": 42.35,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.572,
+            "p95": 49.693,
+            "p99": 49.7
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.707,
+            "p99": 1.239
+          },
+          "cameraTravelM": 711.12
+        },
+        {
+          "minute": 5,
+          "fromSec": 240,
+          "toSec": 300,
+          "utcStart": "2026-11-26T05:30:27.337Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 18,
+            "p99": 18.4
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.1,
+            "p99": 17.3
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 228.5,
+            "p95": 290,
+            "p99": 299
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 846125,
+            "p95": 1000969,
+            "p99": 1030634
+          },
+          "buffers": {
+            "553x1014": 3600
+          },
+          "routeStartM": 2728.4505303037204,
+          "routeEndM": 3404.254898267266,
+          "routeProgressM": 675.8,
+          "distanceDrivenM": 669.65,
+          "meanKmh": 40.18,
+          "speedKmh": {
+            "count": 120,
+            "p50": 48.552,
+            "p95": 49.689,
+            "p99": 49.703
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.009,
+            "p95": 0.922,
+            "p99": 1.284
+          },
+          "cameraTravelM": 676.86
+        }
+      ],
+      "modelBytes": 702944,
+      "modelGzipBytes": 195595,
+      "movingCars": 7,
+      "pageErrors": [],
+      "failedRequests": [
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400&family=Schibsted+Grotesk:wght@400..800&display=swap",
+          "failure": "csp",
+          "type": "stylesheet"
+        }
+      ],
+      "responseErrors": [],
+      "transfer": {
+        "requests": 11,
+        "servedBytes": 2765410,
+        "productionBytes": 2764994,
+        "uniqueResources": 11,
+        "resources": {
+          "inverloch/explore/": {
+            "requests": 1,
+            "servedBytes": 884601,
+            "productionBytes": 884200,
+            "queries": []
+          },
+          "town3d/inverloch-model.js": {
+            "requests": 1,
+            "servedBytes": 195610,
+            "productionBytes": 195595,
+            "queries": [
+              "?v=34"
+            ]
+          },
+          "town3d/ground-2k.webp": {
+            "requests": 1,
+            "servedBytes": 242526,
+            "productionBytes": 242526,
+            "queries": []
+          },
+          "town3d/town.json": {
+            "requests": 1,
+            "servedBytes": 366704,
+            "productionBytes": 366704,
+            "queries": []
+          },
+          "town3d/height.png": {
+            "requests": 1,
+            "servedBytes": 689479,
+            "productionBytes": 689479,
+            "queries": []
+          },
+          "_pixel/three.js": {
+            "requests": 1,
+            "servedBytes": 158243,
+            "productionBytes": 158243,
+            "queries": []
+          },
+          "inverloch/explore/version.json": {
+            "requests": 1,
+            "servedBytes": 45,
+            "productionBytes": 45,
+            "queries": [
+              "?t=1795670778710"
+            ]
+          },
+          "inverloch/explore/explore-icon.png": {
+            "requests": 1,
+            "servedBytes": 61365,
+            "productionBytes": 61365,
+            "queries": [
+              "?v=1"
+            ]
+          },
+          "town3d/detail.json": {
+            "requests": 1,
+            "servedBytes": 167,
+            "productionBytes": 167,
+            "queries": []
+          },
+          "town3d/detail-norman.webp": {
+            "requests": 1,
+            "servedBytes": 38970,
+            "productionBytes": 38970,
+            "queries": []
+          },
+          "town3d/detail-town.webp": {
+            "requests": 1,
+            "servedBytes": 127700,
+            "productionBytes": 127700,
+            "queries": []
+          }
+        }
+      }
+    },
+    {
+      "label": "stage2-high60",
+      "host": "e8fa226",
+      "hostSha": "0c65035511a7dd7ae1453f58da7636d177cd0390038e0435deffd44d5d767daa",
+      "modelSha": "0a58bfd1a76af324a0748188195502c62bb4f3a6b00fb2d89056af779ea85d08",
+      "route": "A’Beckett–Reilly–Bayview–Sandy Mount circuit",
+      "routeHash": "00c2f0014e78ef7586f3d4eca01f506f4ab6eb0ff458a3791128605041b855ce",
+      "fixtureCar": "-536_-1414",
+      "browser": "158.0.8127.37",
+      "quality": "high",
+      "targetFps": 60,
+      "profile": {
+        "browser": "158.0.8127.37",
+        "viewport": [
+          426,
+          780
+        ],
+        "deviceScaleFactor": 3,
+        "mobile": true,
+        "touch": true,
+        "quality": "high",
+        "targetFps": 60,
+        "cpuThrottling": 1,
+        "gpuPerformance": "native desktop",
+        "serviceWorkers": "blocked"
+      },
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "modelRoute": "inverloch-model.js?v=34",
+      "timing": 300,
+      "laps": 3,
+      "routeMetres": 3411.067570413289,
+      "distanceMetres": 3386.3025419084247,
+      "meanKmh": 40.64,
+      "frameIntervals": {
+        "count": 17995,
+        "p50": 16.7,
+        "p95": 17.1,
+        "p99": 17.7
+      },
+      "callbackIntervals": {
+        "count": 17998,
+        "p50": 16.7,
+        "p95": 16.8,
+        "p99": 16.8
+      },
+      "renderHz": 59.99,
+      "callbackHz": 60,
+      "draws": {
+        "count": 17996,
+        "p50": 160,
+        "p95": 306,
+        "p99": 313
+      },
+      "triangles": {
+        "count": 17996,
+        "p50": 1034593,
+        "p95": 1251210,
+        "p99": 1324215
+      },
+      "buffers": {
+        "852x1560": 17996
+      },
+      "over33p4pct": 0.017,
+      "longIntervals": {
+        "thresholdMs": 25,
+        "count": 17,
+        "total": 17995
+      },
+      "visibleReady": {
+        "selection": {
+          "at": 2348.2000000178814,
+          "first": "high",
+          "best": "medium",
+          "direct": true
+        },
+        "visibleAtMs": 6029.200000017881,
+        "visibility": "visible",
+        "timeOriginMs": 1795668647968.1,
+        "stamp": "e8fa226",
+        "responses": 11,
+        "bodyBytes": 2765410
+      },
+      "minutes": [
+        {
+          "minute": 1,
+          "fromSec": 0,
+          "toSec": 60,
+          "utcStart": "2026-11-26T04:50:56.648Z",
+          "renders": 3597,
+          "renderHz": 59.95,
+          "renderIntervalMs": {
+            "count": 3596,
+            "p50": 16.7,
+            "p95": 17.2,
+            "p99": 17.8
+          },
+          "rafs": 3598,
+          "rafHz": 59.97,
+          "rafIntervalMs": {
+            "count": 3597,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3597,
+            "p50": 160,
+            "p95": 310,
+            "p99": 332
+          },
+          "trianglesPerRender": {
+            "count": 3597,
+            "p50": 1034593,
+            "p95": 1273435,
+            "p99": 1335160
+          },
+          "buffers": {
+            "852x1560": 3597
+          },
+          "routeStartM": 0,
+          "routeEndM": 640.2753654363698,
+          "routeProgressM": 640.28,
+          "distanceDrivenM": 634.1,
+          "meanKmh": 38.05,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.846,
+            "p95": 49.688,
+            "p99": 49.701
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.826,
+            "p99": 1.253
+          },
+          "cameraTravelM": 643.09
+        },
+        {
+          "minute": 2,
+          "fromSec": 60,
+          "toSec": 120,
+          "utcStart": "2026-11-26T04:51:56.648Z",
+          "renders": 3599,
+          "renderHz": 59.98,
+          "renderIntervalMs": {
+            "count": 3599,
+            "p50": 16.7,
+            "p95": 17.1,
+            "p99": 17.7
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3599,
+            "p50": 222,
+            "p95": 308,
+            "p99": 311
+          },
+          "trianglesPerRender": {
+            "count": 3599,
+            "p50": 1100270,
+            "p95": 1251208,
+            "p99": 1323655
+          },
+          "buffers": {
+            "852x1560": 3599
+          },
+          "routeStartM": 640.2753654363698,
+          "routeEndM": 1356.130128379505,
+          "routeProgressM": 715.85,
+          "distanceDrivenM": 712.74,
+          "meanKmh": 42.76,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.254,
+            "p95": 49.688,
+            "p99": 49.7
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.004,
+            "p95": 0.728,
+            "p99": 1.242
+          },
+          "cameraTravelM": 716.86
+        },
+        {
+          "minute": 3,
+          "fromSec": 120,
+          "toSec": 180,
+          "utcStart": "2026-11-26T04:52:56.648Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17,
+            "p99": 17.4
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 148,
+            "p95": 251,
+            "p99": 312
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 974050,
+            "p95": 1092139,
+            "p99": 1158782
+          },
+          "buffers": {
+            "852x1560": 3600
+          },
+          "routeStartM": 1356.130128379505,
+          "routeEndM": 2019.432873928066,
+          "routeProgressM": 663.3,
+          "distanceDrivenM": 657.11,
+          "meanKmh": 39.43,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.817,
+            "p95": 49.666,
+            "p99": 49.692
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.013,
+            "p95": 0.876,
+            "p99": 1.244
+          },
+          "cameraTravelM": 665.4
+        },
+        {
+          "minute": 4,
+          "fromSec": 180,
+          "toSec": 240,
+          "utcStart": "2026-11-26T04:53:56.648Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.3,
+            "p99": 18.4
+          },
+          "rafs": 3601,
+          "rafHz": 60.02,
+          "rafIntervalMs": {
+            "count": 3601,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 170,
+            "p95": 305,
+            "p99": 310
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 1088825,
+            "p95": 1250866,
+            "p99": 1323655
+          },
+          "buffers": {
+            "852x1560": 3600
+          },
+          "routeStartM": 2019.432873928066,
+          "routeEndM": 2728.436211697268,
+          "routeProgressM": 709,
+          "distanceDrivenM": 705.88,
+          "meanKmh": 42.35,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.578,
+            "p95": 49.688,
+            "p99": 49.701
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.711,
+            "p99": 1.238
+          },
+          "cameraTravelM": 711.17
+        },
+        {
+          "minute": 5,
+          "fromSec": 240,
+          "toSec": 300,
+          "utcStart": "2026-11-26T04:54:56.648Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.1,
+            "p99": 17.8
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 236.5,
+            "p95": 307,
+            "p99": 310
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 1085449,
+            "p95": 1250822,
+            "p99": 1322110
+          },
+          "buffers": {
+            "852x1560": 3600
+          },
+          "routeStartM": 2728.436211697268,
+          "routeEndM": 3404.171892668811,
+          "routeProgressM": 675.74,
+          "distanceDrivenM": 669.58,
+          "meanKmh": 40.17,
+          "speedKmh": {
+            "count": 120,
+            "p50": 48.59,
+            "p95": 49.683,
+            "p99": 49.702
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.009,
+            "p95": 0.92,
+            "p99": 1.272
+          },
+          "cameraTravelM": 676.79
+        }
+      ],
+      "modelBytes": 702944,
+      "modelGzipBytes": 195595,
+      "movingCars": 6,
+      "pageErrors": [],
+      "failedRequests": [
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400&family=Schibsted+Grotesk:wght@400..800&display=swap",
+          "failure": "csp",
+          "type": "stylesheet"
+        }
+      ],
+      "responseErrors": [],
+      "transfer": {
+        "requests": 11,
+        "servedBytes": 2765410,
+        "productionBytes": 2764994,
+        "uniqueResources": 11,
+        "resources": {
+          "inverloch/explore/": {
+            "requests": 1,
+            "servedBytes": 884601,
+            "productionBytes": 884200,
+            "queries": []
+          },
+          "town3d/inverloch-model.js": {
+            "requests": 1,
+            "servedBytes": 195610,
+            "productionBytes": 195595,
+            "queries": [
+              "?v=34"
+            ]
+          },
+          "town3d/ground-2k.webp": {
+            "requests": 1,
+            "servedBytes": 242526,
+            "productionBytes": 242526,
+            "queries": []
+          },
+          "town3d/height.png": {
+            "requests": 1,
+            "servedBytes": 689479,
+            "productionBytes": 689479,
+            "queries": []
+          },
+          "town3d/town.json": {
+            "requests": 1,
+            "servedBytes": 366704,
+            "productionBytes": 366704,
+            "queries": []
+          },
+          "_pixel/three.js": {
+            "requests": 1,
+            "servedBytes": 158243,
+            "productionBytes": 158243,
+            "queries": []
+          },
+          "inverloch/explore/version.json": {
+            "requests": 1,
+            "servedBytes": 45,
+            "productionBytes": 45,
+            "queries": [
+              "?t=1795668648228"
+            ]
+          },
+          "inverloch/explore/explore-icon.png": {
+            "requests": 1,
+            "servedBytes": 61365,
+            "productionBytes": 61365,
+            "queries": [
+              "?v=1"
+            ]
+          },
+          "town3d/detail.json": {
+            "requests": 1,
+            "servedBytes": 167,
+            "productionBytes": 167,
+            "queries": []
+          },
+          "town3d/detail-norman.webp": {
+            "requests": 1,
+            "servedBytes": 38970,
+            "productionBytes": 38970,
+            "queries": []
+          },
+          "town3d/detail-town.webp": {
+            "requests": 1,
+            "servedBytes": 127700,
+            "productionBytes": 127700,
+            "queries": []
+          }
+        }
+      }
+    },
+    {
+      "label": "stage3-ultra60",
+      "host": "ee76077",
+      "hostSha": "f466c1e2473c9db215ede6b683af02f3085d441193cce37ee558ef23bd87e094",
+      "modelSha": "e9c5a71eb6f38dc5dc44655b1984f20d7d597050453d1091a7585e59e5e64a1b",
+      "route": "A’Beckett–Reilly–Bayview–Sandy Mount circuit",
+      "routeHash": "00c2f0014e78ef7586f3d4eca01f506f4ab6eb0ff458a3791128605041b855ce",
+      "fixtureCar": "-536_-1414",
+      "browser": "158.0.8127.37",
+      "quality": "ultra",
+      "targetFps": 60,
+      "profile": {
+        "browser": "158.0.8127.37",
+        "viewport": [
+          426,
+          780
+        ],
+        "deviceScaleFactor": 3,
+        "mobile": true,
+        "touch": true,
+        "quality": "ultra",
+        "targetFps": 60,
+        "cpuThrottling": 1,
+        "gpuPerformance": "native desktop",
+        "serviceWorkers": "blocked"
+      },
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "modelRoute": "inverloch-model.js?v=35",
+      "timing": 300,
+      "laps": 3,
+      "routeMetres": 3411.0885326194,
+      "distanceMetres": 3386.320347872289,
+      "meanKmh": 40.64,
+      "frameIntervals": {
+        "count": 17996,
+        "p50": 16.7,
+        "p95": 17.2,
+        "p99": 17.7
+      },
+      "callbackIntervals": {
+        "count": 17998,
+        "p50": 16.7,
+        "p95": 16.8,
+        "p99": 16.8
+      },
+      "renderHz": 59.99,
+      "callbackHz": 60,
+      "draws": {
+        "count": 17997,
+        "p50": 171,
+        "p95": 328,
+        "p99": 338
+      },
+      "triangles": {
+        "count": 17997,
+        "p50": 1037556,
+        "p95": 1268284,
+        "p99": 1330991
+      },
+      "buffers": {
+        "852x1560": 17997
+      },
+      "over33p4pct": 0.006,
+      "longIntervals": {
+        "thresholdMs": 25,
+        "count": 11,
+        "total": 17996
+      },
+      "visibleReady": {
+        "selection": {
+          "at": 2306.800000011921,
+          "first": "ultra",
+          "best": "medium",
+          "direct": true
+        },
+        "visibleAtMs": 5895,
+        "visibility": "visible",
+        "timeOriginMs": 1795668965889,
+        "stamp": "ee76077",
+        "responses": 12,
+        "bodyBytes": 2767661
+      },
+      "minutes": [
+        {
+          "minute": 1,
+          "fromSec": 0,
+          "toSec": 60,
+          "utcStart": "2026-11-26T04:56:14.738Z",
+          "renders": 3597,
+          "renderHz": 59.95,
+          "renderIntervalMs": {
+            "count": 3596,
+            "p50": 16.7,
+            "p95": 17.1,
+            "p99": 17.7
+          },
+          "rafs": 3598,
+          "rafHz": 59.97,
+          "rafIntervalMs": {
+            "count": 3597,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3597,
+            "p50": 172,
+            "p95": 328,
+            "p99": 353
+          },
+          "trianglesPerRender": {
+            "count": 3597,
+            "p50": 1037906,
+            "p95": 1280495,
+            "p99": 1351004
+          },
+          "buffers": {
+            "852x1560": 3597
+          },
+          "routeStartM": 0,
+          "routeEndM": 640.288338256715,
+          "routeProgressM": 640.29,
+          "distanceDrivenM": 634.11,
+          "meanKmh": 38.05,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.848,
+            "p95": 49.69,
+            "p99": 49.702
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.826,
+            "p99": 1.269
+          },
+          "cameraTravelM": 643.11
+        },
+        {
+          "minute": 2,
+          "fromSec": 60,
+          "toSec": 120,
+          "utcStart": "2026-11-26T04:57:14.738Z",
+          "renders": 3599,
+          "renderHz": 59.98,
+          "renderIntervalMs": {
+            "count": 3599,
+            "p50": 16.7,
+            "p95": 17.1,
+            "p99": 17.4
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3599,
+            "p50": 240,
+            "p95": 332,
+            "p99": 338
+          },
+          "trianglesPerRender": {
+            "count": 3599,
+            "p50": 1115269,
+            "p95": 1269020,
+            "p99": 1329409
+          },
+          "buffers": {
+            "852x1560": 3599
+          },
+          "routeStartM": 640.288338256715,
+          "routeEndM": 1356.1500622840651,
+          "routeProgressM": 715.86,
+          "distanceDrivenM": 712.74,
+          "meanKmh": 42.76,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.23,
+            "p95": 49.686,
+            "p99": 49.702
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.004,
+            "p95": 0.726,
+            "p99": 1.241
+          },
+          "cameraTravelM": 716.87
+        },
+        {
+          "minute": 3,
+          "fromSec": 120,
+          "toSec": 180,
+          "utcStart": "2026-11-26T04:58:14.738Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.2,
+            "p99": 17.7
+          },
+          "rafs": 3601,
+          "rafHz": 60.02,
+          "rafIntervalMs": {
+            "count": 3601,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 158.5,
+            "p95": 268,
+            "p99": 330
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 979224,
+            "p95": 1117383,
+            "p99": 1167526
+          },
+          "buffers": {
+            "852x1560": 3600
+          },
+          "routeStartM": 1356.1500622840651,
+          "routeEndM": 2019.454702797505,
+          "routeProgressM": 663.3,
+          "distanceDrivenM": 657.11,
+          "meanKmh": 39.43,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.83,
+            "p95": 49.666,
+            "p99": 49.693
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.012,
+            "p95": 0.872,
+            "p99": 1.241
+          },
+          "cameraTravelM": 665.4
+        },
+        {
+          "minute": 4,
+          "fromSec": 180,
+          "toSec": 240,
+          "utcStart": "2026-11-26T04:59:14.738Z",
+          "renders": 3601,
+          "renderHz": 60.02,
+          "renderIntervalMs": {
+            "count": 3601,
+            "p50": 16.7,
+            "p95": 17.4,
+            "p99": 18
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3601,
+            "p50": 183,
+            "p95": 327,
+            "p99": 334
+          },
+          "trianglesPerRender": {
+            "count": 3601,
+            "p50": 1102819,
+            "p95": 1267954,
+            "p99": 1329409
+          },
+          "buffers": {
+            "852x1560": 3601
+          },
+          "routeStartM": 2019.454702797505,
+          "routeEndM": 2728.439863240538,
+          "routeProgressM": 708.99,
+          "distanceDrivenM": 705.86,
+          "meanKmh": 42.35,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.589,
+            "p95": 49.692,
+            "p99": 49.701
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.71,
+            "p99": 1.238
+          },
+          "cameraTravelM": 711.15
+        },
+        {
+          "minute": 5,
+          "fromSec": 240,
+          "toSec": 300,
+          "utcStart": "2026-11-26T05:00:14.738Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.2,
+            "p99": 17.7
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 260,
+            "p95": 331,
+            "p99": 338
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 1103973,
+            "p95": 1268284,
+            "p99": 1327905
+          },
+          "buffers": {
+            "852x1560": 3600
+          },
+          "routeStartM": 2728.439863240538,
+          "routeEndM": 3404.194120883439,
+          "routeProgressM": 675.75,
+          "distanceDrivenM": 669.6,
+          "meanKmh": 40.18,
+          "speedKmh": {
+            "count": 120,
+            "p50": 48.591,
+            "p95": 49.681,
+            "p99": 49.703
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.009,
+            "p95": 0.921,
+            "p99": 1.273
+          },
+          "cameraTravelM": 676.81
+        }
+      ],
+      "modelBytes": 708146,
+      "modelGzipBytes": 197554,
+      "movingCars": 7,
+      "pageErrors": [],
+      "failedRequests": [
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400&family=Schibsted+Grotesk:wght@400..800&display=swap",
+          "failure": "csp",
+          "type": "stylesheet"
+        }
+      ],
+      "responseErrors": [],
+      "transfer": {
+        "requests": 12,
+        "servedBytes": 2767661,
+        "productionBytes": 2767239,
+        "uniqueResources": 12,
+        "resources": {
+          "inverloch/explore/": {
+            "requests": 1,
+            "servedBytes": 884608,
+            "productionBytes": 884201,
+            "queries": []
+          },
+          "town3d/inverloch-model.js": {
+            "requests": 1,
+            "servedBytes": 197569,
+            "productionBytes": 197554,
+            "queries": [
+              "?v=35"
+            ]
+          },
+          "town3d/ground-2k.webp": {
+            "requests": 1,
+            "servedBytes": 242526,
+            "productionBytes": 242526,
+            "queries": []
+          },
+          "town3d/height.png": {
+            "requests": 1,
+            "servedBytes": 689479,
+            "productionBytes": 689479,
+            "queries": []
+          },
+          "town3d/town.json": {
+            "requests": 1,
+            "servedBytes": 366704,
+            "productionBytes": 366704,
+            "queries": []
+          },
+          "_pixel/three.js": {
+            "requests": 1,
+            "servedBytes": 158243,
+            "productionBytes": 158243,
+            "queries": []
+          },
+          "inverloch/explore/version.json": {
+            "requests": 1,
+            "servedBytes": 45,
+            "productionBytes": 45,
+            "queries": [
+              "?t=1795668966138"
+            ]
+          },
+          "inverloch/explore/explore-icon.png": {
+            "requests": 1,
+            "servedBytes": 61365,
+            "productionBytes": 61365,
+            "queries": [
+              "?v=1"
+            ]
+          },
+          "town3d/detail.json": {
+            "requests": 1,
+            "servedBytes": 167,
+            "productionBytes": 167,
+            "queries": []
+          },
+          "town3d/detail-norman.webp": {
+            "requests": 1,
+            "servedBytes": 38970,
+            "productionBytes": 38970,
+            "queries": []
+          },
+          "town3d/detail-town.webp": {
+            "requests": 1,
+            "servedBytes": 127700,
+            "productionBytes": 127700,
+            "queries": []
+          },
+          "town3d/detail-abeckett-ultra-v1.json": {
+            "requests": 1,
+            "servedBytes": 285,
+            "productionBytes": 285,
+            "queries": []
+          }
+        }
+      }
+    },
+    {
+      "label": "stage4-ultra60",
+      "host": "c11b7a9",
+      "hostSha": "95d8c1253af2da9865e42f1f40fab3a40dff86ef1b83da8c928931b87a49ee6c",
+      "modelSha": "076cadda8699a0646943be725f77c0ba1a299cc4447896bf17e50e082b94ef38",
+      "route": "A’Beckett–Reilly–Bayview–Sandy Mount circuit",
+      "routeHash": "00c2f0014e78ef7586f3d4eca01f506f4ab6eb0ff458a3791128605041b855ce",
+      "fixtureCar": "-536_-1414",
+      "browser": "158.0.8127.37",
+      "quality": "ultra",
+      "targetFps": 60,
+      "profile": {
+        "browser": "158.0.8127.37",
+        "viewport": [
+          426,
+          780
+        ],
+        "deviceScaleFactor": 3,
+        "mobile": true,
+        "touch": true,
+        "quality": "ultra",
+        "targetFps": 60,
+        "cpuThrottling": 1,
+        "gpuPerformance": "native desktop",
+        "serviceWorkers": "blocked"
+      },
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "modelRoute": "inverloch-model.js?v=36",
+      "timing": 300,
+      "laps": 3,
+      "routeMetres": 3411.359202252189,
+      "distanceMetres": 3386.5930008699866,
+      "meanKmh": 40.64,
+      "frameIntervals": {
+        "count": 17996,
+        "p50": 16.7,
+        "p95": 17.2,
+        "p99": 17.8
+      },
+      "callbackIntervals": {
+        "count": 17997,
+        "p50": 16.7,
+        "p95": 16.8,
+        "p99": 16.8
+      },
+      "renderHz": 59.99,
+      "callbackHz": 59.99,
+      "draws": {
+        "count": 17997,
+        "p50": 172,
+        "p95": 326,
+        "p99": 335
+      },
+      "triangles": {
+        "count": 17997,
+        "p50": 1037556,
+        "p95": 1267908,
+        "p99": 1330911
+      },
+      "buffers": {
+        "852x1560": 17997
+      },
+      "over33p4pct": 0.017,
+      "longIntervals": {
+        "thresholdMs": 25,
+        "count": 15,
+        "total": 17996
+      },
+      "visibleReady": {
+        "selection": {
+          "at": 2372.199999988079,
+          "first": "ultra",
+          "best": "medium",
+          "direct": true
+        },
+        "visibleAtMs": 5975.800000011921,
+        "visibility": "visible",
+        "timeOriginMs": 1795669332244.4,
+        "stamp": "c11b7a9",
+        "responses": 11,
+        "bodyBytes": 2735741
+      },
+      "minutes": [
+        {
+          "minute": 1,
+          "fromSec": 0,
+          "toSec": 60,
+          "utcStart": "2026-11-26T05:02:21.166Z",
+          "renders": 3598,
+          "renderHz": 59.97,
+          "renderIntervalMs": {
+            "count": 3597,
+            "p50": 16.7,
+            "p95": 17.1,
+            "p99": 17.8
+          },
+          "rafs": 3598,
+          "rafHz": 59.97,
+          "rafIntervalMs": {
+            "count": 3597,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3598,
+            "p50": 173,
+            "p95": 329,
+            "p99": 353
+          },
+          "trianglesPerRender": {
+            "count": 3598,
+            "p50": 1038256,
+            "p95": 1280845,
+            "p99": 1351004
+          },
+          "buffers": {
+            "852x1560": 3598
+          },
+          "routeStartM": 0,
+          "routeEndM": 640.2900218118606,
+          "routeProgressM": 640.29,
+          "distanceDrivenM": 634.11,
+          "meanKmh": 38.05,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.879,
+            "p95": 49.69,
+            "p99": 49.7
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.825,
+            "p99": 1.253
+          },
+          "cameraTravelM": 643.11
+        },
+        {
+          "minute": 2,
+          "fromSec": 60,
+          "toSec": 120,
+          "utcStart": "2026-11-26T05:03:21.166Z",
+          "renders": 3599,
+          "renderHz": 59.98,
+          "renderIntervalMs": {
+            "count": 3599,
+            "p50": 16.7,
+            "p95": 17.2,
+            "p99": 18
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3599,
+            "p50": 240,
+            "p95": 326,
+            "p99": 333
+          },
+          "trianglesPerRender": {
+            "count": 3599,
+            "p50": 1115243,
+            "p95": 1267908,
+            "p99": 1329409
+          },
+          "buffers": {
+            "852x1560": 3599
+          },
+          "routeStartM": 640.2900218118606,
+          "routeEndM": 1356.17178434131,
+          "routeProgressM": 715.88,
+          "distanceDrivenM": 712.76,
+          "meanKmh": 42.77,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.26,
+            "p95": 49.686,
+            "p99": 49.703
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.004,
+            "p95": 0.725,
+            "p99": 1.241
+          },
+          "cameraTravelM": 716.89
+        },
+        {
+          "minute": 3,
+          "fromSec": 120,
+          "toSec": 180,
+          "utcStart": "2026-11-26T05:04:21.166Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.2,
+            "p99": 17.7
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 159,
+            "p95": 268,
+            "p99": 328
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 979224,
+            "p95": 1117383,
+            "p99": 1166718
+          },
+          "buffers": {
+            "852x1560": 3600
+          },
+          "routeStartM": 1356.17178434131,
+          "routeEndM": 2019.7048916722713,
+          "routeProgressM": 663.53,
+          "distanceDrivenM": 657.34,
+          "meanKmh": 39.44,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.856,
+            "p95": 49.666,
+            "p99": 49.691
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.012,
+            "p95": 0.869,
+            "p99": 1.24
+          },
+          "cameraTravelM": 665.63
+        },
+        {
+          "minute": 4,
+          "fromSec": 180,
+          "toSec": 240,
+          "utcStart": "2026-11-26T05:05:21.166Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.1,
+            "p99": 17.5
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 182.5,
+            "p95": 327,
+            "p99": 334
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 1102819,
+            "p95": 1267954,
+            "p99": 1327905
+          },
+          "buffers": {
+            "852x1560": 3600
+          },
+          "routeStartM": 2019.7048916722713,
+          "routeEndM": 2728.5186541316275,
+          "routeProgressM": 708.81,
+          "distanceDrivenM": 705.69,
+          "meanKmh": 42.34,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.585,
+            "p95": 49.692,
+            "p99": 49.702
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.708,
+            "p99": 1.241
+          },
+          "cameraTravelM": 710.99
+        },
+        {
+          "minute": 5,
+          "fromSec": 240,
+          "toSec": 300,
+          "utcStart": "2026-11-26T05:06:21.166Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.3,
+            "p99": 18.1
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 254.5,
+            "p95": 327,
+            "p99": 334
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 1105591,
+            "p95": 1267908,
+            "p99": 1328339
+          },
+          "buffers": {
+            "852x1560": 3600
+          },
+          "routeStartM": 2728.5186541316275,
+          "routeEndM": 3404.46185529473,
+          "routeProgressM": 675.94,
+          "distanceDrivenM": 669.79,
+          "meanKmh": 40.19,
+          "speedKmh": {
+            "count": 120,
+            "p50": 48.587,
+            "p95": 49.675,
+            "p99": 49.693
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.008,
+            "p95": 0.925,
+            "p99": 1.283
+          },
+          "cameraTravelM": 676.99
+        }
+      ],
+      "modelBytes": 721489,
+      "modelGzipBytes": 204607,
+      "movingCars": 7,
+      "pageErrors": [],
+      "failedRequests": [
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400&family=Schibsted+Grotesk:wght@400..800&display=swap",
+          "failure": "csp",
+          "type": "stylesheet"
+        }
+      ],
+      "responseErrors": [],
+      "transfer": {
+        "requests": 11,
+        "servedBytes": 2735741,
+        "productionBytes": 2735322,
+        "uniqueResources": 11,
+        "resources": {
+          "inverloch/explore/": {
+            "requests": 1,
+            "servedBytes": 884606,
+            "productionBytes": 884201,
+            "queries": []
+          },
+          "town3d/inverloch-model.js": {
+            "requests": 1,
+            "servedBytes": 204621,
+            "productionBytes": 204607,
+            "queries": [
+              "?v=36"
+            ]
+          },
+          "town3d/town.json": {
+            "requests": 1,
+            "servedBytes": 366704,
+            "productionBytes": 366704,
+            "queries": []
+          },
+          "town3d/height.png": {
+            "requests": 1,
+            "servedBytes": 689479,
+            "productionBytes": 689479,
+            "queries": []
+          },
+          "town3d/ground-2k.webp": {
+            "requests": 1,
+            "servedBytes": 242526,
+            "productionBytes": 242526,
+            "queries": []
+          },
+          "_pixel/three.js": {
+            "requests": 1,
+            "servedBytes": 158243,
+            "productionBytes": 158243,
+            "queries": []
+          },
+          "inverloch/explore/version.json": {
+            "requests": 1,
+            "servedBytes": 45,
+            "productionBytes": 45,
+            "queries": [
+              "?t=1795669332502"
+            ]
+          },
+          "inverloch/explore/explore-icon.png": {
+            "requests": 1,
+            "servedBytes": 61365,
+            "productionBytes": 61365,
+            "queries": [
+              "?v=1"
+            ]
+          },
+          "town3d/detail.json": {
+            "requests": 1,
+            "servedBytes": 167,
+            "productionBytes": 167,
+            "queries": []
+          },
+          "town3d/detail-abeckett-ultra-v1.json": {
+            "requests": 1,
+            "servedBytes": 285,
+            "productionBytes": 285,
+            "queries": []
+          },
+          "town3d/detail-town.webp": {
+            "requests": 1,
+            "servedBytes": 127700,
+            "productionBytes": 127700,
+            "queries": []
+          }
+        }
+      }
+    },
+    {
+      "label": "stage5a-ultra60",
+      "host": "11f5101",
+      "hostSha": "a4f7b53f40d506d82ed301b61098755e318d533b2ad8269f2d03e9fe0b79ff25",
+      "modelSha": "d204e7741ee5f7f04d0611c4d9b66b16ee195d367f94db50444510a4d01a6939",
+      "route": "A’Beckett–Reilly–Bayview–Sandy Mount circuit",
+      "routeHash": "00c2f0014e78ef7586f3d4eca01f506f4ab6eb0ff458a3791128605041b855ce",
+      "fixtureCar": "-536_-1414",
+      "browser": "158.0.8127.37",
+      "quality": "ultra",
+      "targetFps": 60,
+      "profile": {
+        "browser": "158.0.8127.37",
+        "viewport": [
+          426,
+          780
+        ],
+        "deviceScaleFactor": 3,
+        "mobile": true,
+        "touch": true,
+        "quality": "ultra",
+        "targetFps": 60,
+        "cpuThrottling": 1,
+        "gpuPerformance": "native desktop",
+        "serviceWorkers": "blocked"
+      },
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "modelRoute": "inverloch-model.js?v=37",
+      "timing": 300,
+      "laps": 3,
+      "routeMetres": 3411.3485197015216,
+      "distanceMetres": 3386.564370907062,
+      "meanKmh": 40.64,
+      "frameIntervals": {
+        "count": 17995,
+        "p50": 16.7,
+        "p95": 17.6,
+        "p99": 18.5
+      },
+      "callbackIntervals": {
+        "count": 17996,
+        "p50": 16.7,
+        "p95": 17,
+        "p99": 17.3
+      },
+      "renderHz": 59.99,
+      "callbackHz": 59.99,
+      "draws": {
+        "count": 17996,
+        "p50": 171,
+        "p95": 328,
+        "p99": 338
+      },
+      "triangles": {
+        "count": 17996,
+        "p50": 1037556,
+        "p95": 1268048,
+        "p99": 1330759
+      },
+      "buffers": {
+        "852x1560": 17996
+      },
+      "over33p4pct": 0.017,
+      "longIntervals": {
+        "thresholdMs": 25,
+        "count": 17,
+        "total": 17995
+      },
+      "visibleReady": {
+        "selection": {
+          "at": 2455.5,
+          "first": "ultra",
+          "best": "medium",
+          "direct": true
+        },
+        "visibleAtMs": 6475.199999988079,
+        "visibility": "visible",
+        "timeOriginMs": 1795669659514.4,
+        "stamp": "11f5101",
+        "responses": 11,
+        "bodyBytes": 2737744
+      },
+      "minutes": [
+        {
+          "minute": 1,
+          "fromSec": 0,
+          "toSec": 60,
+          "utcStart": "2026-11-26T05:07:48.636Z",
+          "renders": 3597,
+          "renderHz": 59.95,
+          "renderIntervalMs": {
+            "count": 3596,
+            "p50": 16.7,
+            "p95": 17.3,
+            "p99": 23.2
+          },
+          "rafs": 3597,
+          "rafHz": 59.95,
+          "rafIntervalMs": {
+            "count": 3596,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3597,
+            "p50": 172,
+            "p95": 330,
+            "p99": 353
+          },
+          "trianglesPerRender": {
+            "count": 3597,
+            "p50": 1037906,
+            "p95": 1281185,
+            "p99": 1350968
+          },
+          "buffers": {
+            "852x1560": 3597
+          },
+          "routeStartM": 0,
+          "routeEndM": 640.2970299498973,
+          "routeProgressM": 640.3,
+          "distanceDrivenM": 634.1,
+          "meanKmh": 38.05,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.878,
+            "p95": 49.69,
+            "p99": 49.7
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.825,
+            "p99": 1.253
+          },
+          "cameraTravelM": 643.1
+        },
+        {
+          "minute": 2,
+          "fromSec": 60,
+          "toSec": 120,
+          "utcStart": "2026-11-26T05:08:48.636Z",
+          "renders": 3599,
+          "renderHz": 59.98,
+          "renderIntervalMs": {
+            "count": 3599,
+            "p50": 16.7,
+            "p95": 17.8,
+            "p99": 18.5
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.1,
+            "p99": 17.4
+          },
+          "drawsPerRender": {
+            "count": 3599,
+            "p50": 239,
+            "p95": 330,
+            "p99": 337
+          },
+          "trianglesPerRender": {
+            "count": 3599,
+            "p50": 1114893,
+            "p95": 1268634,
+            "p99": 1329409
+          },
+          "buffers": {
+            "852x1560": 3599
+          },
+          "routeStartM": 640.2970299498973,
+          "routeEndM": 1356.1808231060058,
+          "routeProgressM": 715.88,
+          "distanceDrivenM": 712.77,
+          "meanKmh": 42.77,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.234,
+            "p95": 49.688,
+            "p99": 49.703
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.004,
+            "p95": 0.724,
+            "p99": 1.24
+          },
+          "cameraTravelM": 716.89
+        },
+        {
+          "minute": 3,
+          "fromSec": 120,
+          "toSec": 180,
+          "utcStart": "2026-11-26T05:09:48.636Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.9,
+            "p99": 18.6
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.1,
+            "p99": 17.4
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 159,
+            "p95": 268,
+            "p99": 326
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 979224,
+            "p95": 1117383,
+            "p99": 1166718
+          },
+          "buffers": {
+            "852x1560": 3600
+          },
+          "routeStartM": 1356.1808231060058,
+          "routeEndM": 2019.7153802167118,
+          "routeProgressM": 663.53,
+          "distanceDrivenM": 657.34,
+          "meanKmh": 39.44,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.874,
+            "p95": 49.671,
+            "p99": 49.698
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.012,
+            "p95": 0.868,
+            "p99": 1.239
+          },
+          "cameraTravelM": 665.63
+        },
+        {
+          "minute": 4,
+          "fromSec": 180,
+          "toSec": 240,
+          "utcStart": "2026-11-26T05:10:48.636Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.3,
+            "p99": 18.3
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.9
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 182,
+            "p95": 331,
+            "p99": 338
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 1103169,
+            "p95": 1268410,
+            "p99": 1327905
+          },
+          "buffers": {
+            "852x1560": 3600
+          },
+          "routeStartM": 2019.7153802167118,
+          "routeEndM": 2728.5212170599298,
+          "routeProgressM": 708.81,
+          "distanceDrivenM": 705.68,
+          "meanKmh": 42.34,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.573,
+            "p95": 49.693,
+            "p99": 49.701
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.696,
+            "p99": 1.241
+          },
+          "cameraTravelM": 710.98
+        },
+        {
+          "minute": 5,
+          "fromSec": 240,
+          "toSec": 300,
+          "utcStart": "2026-11-26T05:11:48.636Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.3,
+            "p99": 18.2
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.9
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 257.5,
+            "p95": 327,
+            "p99": 334
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 1105977,
+            "p95": 1267908,
+            "p99": 1328371
+          },
+          "buffers": {
+            "852x1560": 3600
+          },
+          "routeStartM": 2728.5212170599298,
+          "routeEndM": 3404.452568215384,
+          "routeProgressM": 675.93,
+          "distanceDrivenM": 669.78,
+          "meanKmh": 40.19,
+          "speedKmh": {
+            "count": 120,
+            "p50": 48.589,
+            "p95": 49.675,
+            "p99": 49.7
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.008,
+            "p95": 0.925,
+            "p99": 1.282
+          },
+          "cameraTravelM": 676.98
+        }
+      ],
+      "modelBytes": 725177,
+      "modelGzipBytes": 206043,
+      "movingCars": 7,
+      "pageErrors": [],
+      "failedRequests": [
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400&family=Schibsted+Grotesk:wght@400..800&display=swap",
+          "failure": "csp",
+          "type": "stylesheet"
+        }
+      ],
+      "responseErrors": [],
+      "transfer": {
+        "requests": 11,
+        "servedBytes": 2737744,
+        "productionBytes": 2737306,
+        "uniqueResources": 11,
+        "resources": {
+          "inverloch/explore/": {
+            "requests": 1,
+            "servedBytes": 885173,
+            "productionBytes": 884749,
+            "queries": []
+          },
+          "town3d/inverloch-model.js": {
+            "requests": 1,
+            "servedBytes": 206057,
+            "productionBytes": 206043,
+            "queries": [
+              "?v=37"
+            ]
+          },
+          "town3d/ground-2k.webp": {
+            "requests": 1,
+            "servedBytes": 242526,
+            "productionBytes": 242526,
+            "queries": []
+          },
+          "town3d/height.png": {
+            "requests": 1,
+            "servedBytes": 689479,
+            "productionBytes": 689479,
+            "queries": []
+          },
+          "town3d/town.json": {
+            "requests": 1,
+            "servedBytes": 366704,
+            "productionBytes": 366704,
+            "queries": []
+          },
+          "_pixel/three.js": {
+            "requests": 1,
+            "servedBytes": 158243,
+            "productionBytes": 158243,
+            "queries": []
+          },
+          "inverloch/explore/version.json": {
+            "requests": 1,
+            "servedBytes": 45,
+            "productionBytes": 45,
+            "queries": [
+              "?t=1795669659785"
+            ]
+          },
+          "inverloch/explore/explore-icon.png": {
+            "requests": 1,
+            "servedBytes": 61365,
+            "productionBytes": 61365,
+            "queries": [
+              "?v=1"
+            ]
+          },
+          "town3d/detail.json": {
+            "requests": 1,
+            "servedBytes": 167,
+            "productionBytes": 167,
+            "queries": []
+          },
+          "town3d/detail-abeckett-ultra-v1.json": {
+            "requests": 1,
+            "servedBytes": 285,
+            "productionBytes": 285,
+            "queries": []
+          },
+          "town3d/detail-town.webp": {
+            "requests": 1,
+            "servedBytes": 127700,
+            "productionBytes": 127700,
+            "queries": []
+          }
+        }
+      }
+    },
+    {
+      "label": "stage5b-ultra60",
+      "host": "9e76ed9",
+      "hostSha": "ad2350a5dc061886853368e87f3f21d71caec95902556df53dd29d7b83a183d3",
+      "modelSha": "a92ad3ad1b167c18e32b9d922277bc971971f20a91d879bf55caae7fbc1f76f0",
+      "route": "A’Beckett–Reilly–Bayview–Sandy Mount circuit",
+      "routeHash": "00c2f0014e78ef7586f3d4eca01f506f4ab6eb0ff458a3791128605041b855ce",
+      "fixtureCar": "-536_-1414",
+      "browser": "158.0.8127.37",
+      "quality": "ultra",
+      "targetFps": 60,
+      "profile": {
+        "browser": "158.0.8127.37",
+        "viewport": [
+          426,
+          780
+        ],
+        "deviceScaleFactor": 3,
+        "mobile": true,
+        "touch": true,
+        "quality": "ultra",
+        "targetFps": 60,
+        "cpuThrottling": 1,
+        "gpuPerformance": "native desktop",
+        "serviceWorkers": "blocked"
+      },
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "modelRoute": "inverloch-model.js?v=38",
+      "timing": 300,
+      "laps": 3,
+      "routeMetres": 3411.1222223514665,
+      "distanceMetres": 3386.351794967511,
+      "meanKmh": 40.64,
+      "frameIntervals": {
+        "count": 17993,
+        "p50": 16.7,
+        "p95": 17.6,
+        "p99": 18.5
+      },
+      "callbackIntervals": {
+        "count": 17997,
+        "p50": 16.7,
+        "p95": 17.1,
+        "p99": 17.3
+      },
+      "renderHz": 59.98,
+      "callbackHz": 59.99,
+      "draws": {
+        "count": 17994,
+        "p50": 172,
+        "p95": 326,
+        "p99": 335
+      },
+      "triangles": {
+        "count": 17994,
+        "p50": 1037556,
+        "p95": 1267908,
+        "p99": 1330909
+      },
+      "buffers": {
+        "852x1560": 17994
+      },
+      "over33p4pct": 0.017,
+      "longIntervals": {
+        "thresholdMs": 25,
+        "count": 18,
+        "total": 17993
+      },
+      "visibleReady": {
+        "selection": {
+          "at": 2312.2000000178814,
+          "first": "ultra",
+          "best": "medium",
+          "direct": true
+        },
+        "visibleAtMs": 6112.5,
+        "visibility": "visible",
+        "timeOriginMs": 1795669986346.6,
+        "stamp": "9e76ed9",
+        "responses": 11,
+        "bodyBytes": 2739360
+      },
+      "minutes": [
+        {
+          "minute": 1,
+          "fromSec": 0,
+          "toSec": 60,
+          "utcStart": "2026-11-26T05:13:15.294Z",
+          "renders": 3594,
+          "renderHz": 59.9,
+          "renderIntervalMs": {
+            "count": 3593,
+            "p50": 16.7,
+            "p95": 18,
+            "p99": 18.7
+          },
+          "rafs": 3597,
+          "rafHz": 59.95,
+          "rafIntervalMs": {
+            "count": 3596,
+            "p50": 16.7,
+            "p95": 17.2,
+            "p99": 17.5
+          },
+          "drawsPerRender": {
+            "count": 3594,
+            "p50": 173,
+            "p95": 328,
+            "p99": 353
+          },
+          "trianglesPerRender": {
+            "count": 3594,
+            "p50": 1037906,
+            "p95": 1280845,
+            "p99": 1351004
+          },
+          "buffers": {
+            "852x1560": 3594
+          },
+          "routeStartM": 0,
+          "routeEndM": 640.1019675422659,
+          "routeProgressM": 640.1,
+          "distanceDrivenM": 633.92,
+          "meanKmh": 38.04,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.849,
+            "p95": 49.692,
+            "p99": 49.702
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.827,
+            "p99": 1.267
+          },
+          "cameraTravelM": 642.91
+        },
+        {
+          "minute": 2,
+          "fromSec": 60,
+          "toSec": 120,
+          "utcStart": "2026-11-26T05:14:15.294Z",
+          "renders": 3599,
+          "renderHz": 59.98,
+          "renderIntervalMs": {
+            "count": 3599,
+            "p50": 16.7,
+            "p95": 17.9,
+            "p99": 18.6
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.2,
+            "p99": 17.4
+          },
+          "drawsPerRender": {
+            "count": 3599,
+            "p50": 239,
+            "p95": 328,
+            "p99": 335
+          },
+          "trianglesPerRender": {
+            "count": 3599,
+            "p50": 1115269,
+            "p95": 1268284,
+            "p99": 1329409
+          },
+          "buffers": {
+            "852x1560": 3599
+          },
+          "routeStartM": 640.1019675422659,
+          "routeEndM": 1356.1740668694347,
+          "routeProgressM": 716.07,
+          "distanceDrivenM": 712.95,
+          "meanKmh": 42.78,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.256,
+            "p95": 49.685,
+            "p99": 49.703
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.004,
+            "p95": 0.724,
+            "p99": 1.241
+          },
+          "cameraTravelM": 717.08
+        },
+        {
+          "minute": 3,
+          "fromSec": 120,
+          "toSec": 180,
+          "utcStart": "2026-11-26T05:15:15.294Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.2,
+            "p99": 17.9
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 158.5,
+            "p95": 268,
+            "p99": 328
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 979224,
+            "p95": 1117383,
+            "p99": 1166718
+          },
+          "buffers": {
+            "852x1560": 3600
+          },
+          "routeStartM": 1356.1740668694347,
+          "routeEndM": 2019.47948777677,
+          "routeProgressM": 663.31,
+          "distanceDrivenM": 657.11,
+          "meanKmh": 39.43,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.88,
+            "p95": 49.663,
+            "p99": 49.692
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.012,
+            "p95": 0.859,
+            "p99": 1.239
+          },
+          "cameraTravelM": 665.4
+        },
+        {
+          "minute": 4,
+          "fromSec": 180,
+          "toSec": 240,
+          "utcStart": "2026-11-26T05:16:15.294Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.2,
+            "p99": 17.9
+          },
+          "rafs": 3601,
+          "rafHz": 60.02,
+          "rafIntervalMs": {
+            "count": 3601,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.8
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 182.5,
+            "p95": 327,
+            "p99": 334
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 1102819,
+            "p95": 1267954,
+            "p99": 1327905
+          },
+          "buffers": {
+            "852x1560": 3600
+          },
+          "routeStartM": 2019.47948777677,
+          "routeEndM": 2728.447996358457,
+          "routeProgressM": 708.97,
+          "distanceDrivenM": 705.85,
+          "meanKmh": 42.35,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.57,
+            "p95": 49.692,
+            "p99": 49.701
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.708,
+            "p99": 1.239
+          },
+          "cameraTravelM": 711.14
+        },
+        {
+          "minute": 5,
+          "fromSec": 240,
+          "toSec": 300,
+          "utcStart": "2026-11-26T05:17:15.294Z",
+          "renders": 3601,
+          "renderHz": 60.02,
+          "renderIntervalMs": {
+            "count": 3601,
+            "p50": 16.7,
+            "p95": 17.3,
+            "p99": 18.2
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.9
+          },
+          "drawsPerRender": {
+            "count": 3601,
+            "p50": 254,
+            "p95": 327,
+            "p99": 334
+          },
+          "trianglesPerRender": {
+            "count": 3601,
+            "p50": 1105591,
+            "p95": 1267908,
+            "p99": 1327985
+          },
+          "buffers": {
+            "852x1560": 3601
+          },
+          "routeStartM": 2728.447996358457,
+          "routeEndM": 3404.2282252639543,
+          "routeProgressM": 675.78,
+          "distanceDrivenM": 669.62,
+          "meanKmh": 40.18,
+          "speedKmh": {
+            "count": 120,
+            "p50": 48.589,
+            "p95": 49.677,
+            "p99": 49.693
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.009,
+            "p95": 0.922,
+            "p99": 1.274
+          },
+          "cameraTravelM": 676.84
+        }
+      ],
+      "modelBytes": 730369,
+      "modelGzipBytes": 207657,
+      "movingCars": 7,
+      "pageErrors": [],
+      "failedRequests": [
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400&family=Schibsted+Grotesk:wght@400..800&display=swap",
+          "failure": "csp",
+          "type": "stylesheet"
+        }
+      ],
+      "responseErrors": [],
+      "transfer": {
+        "requests": 11,
+        "servedBytes": 2739360,
+        "productionBytes": 2738921,
+        "uniqueResources": 11,
+        "resources": {
+          "inverloch/explore/": {
+            "requests": 1,
+            "servedBytes": 885174,
+            "productionBytes": 884750,
+            "queries": []
+          },
+          "town3d/inverloch-model.js": {
+            "requests": 1,
+            "servedBytes": 207672,
+            "productionBytes": 207657,
+            "queries": [
+              "?v=38"
+            ]
+          },
+          "town3d/ground-2k.webp": {
+            "requests": 1,
+            "servedBytes": 242526,
+            "productionBytes": 242526,
+            "queries": []
+          },
+          "town3d/town.json": {
+            "requests": 1,
+            "servedBytes": 366704,
+            "productionBytes": 366704,
+            "queries": []
+          },
+          "town3d/height.png": {
+            "requests": 1,
+            "servedBytes": 689479,
+            "productionBytes": 689479,
+            "queries": []
+          },
+          "_pixel/three.js": {
+            "requests": 1,
+            "servedBytes": 158243,
+            "productionBytes": 158243,
+            "queries": []
+          },
+          "inverloch/explore/version.json": {
+            "requests": 1,
+            "servedBytes": 45,
+            "productionBytes": 45,
+            "queries": [
+              "?t=1795669986604"
+            ]
+          },
+          "inverloch/explore/explore-icon.png": {
+            "requests": 1,
+            "servedBytes": 61365,
+            "productionBytes": 61365,
+            "queries": [
+              "?v=1"
+            ]
+          },
+          "town3d/detail.json": {
+            "requests": 1,
+            "servedBytes": 167,
+            "productionBytes": 167,
+            "queries": []
+          },
+          "town3d/detail-abeckett-ultra-v1.json": {
+            "requests": 1,
+            "servedBytes": 285,
+            "productionBytes": 285,
+            "queries": []
+          },
+          "town3d/detail-town.webp": {
+            "requests": 1,
+            "servedBytes": 127700,
+            "productionBytes": 127700,
+            "queries": []
+          }
+        }
+      }
+    },
+    {
+      "label": "stage5b-medium60",
+      "host": "9e76ed9",
+      "hostSha": "ad2350a5dc061886853368e87f3f21d71caec95902556df53dd29d7b83a183d3",
+      "modelSha": "a92ad3ad1b167c18e32b9d922277bc971971f20a91d879bf55caae7fbc1f76f0",
+      "route": "A’Beckett–Reilly–Bayview–Sandy Mount circuit",
+      "routeHash": "00c2f0014e78ef7586f3d4eca01f506f4ab6eb0ff458a3791128605041b855ce",
+      "fixtureCar": "-536_-1414",
+      "browser": "158.0.8127.37",
+      "quality": "medium",
+      "targetFps": 60,
+      "profile": {
+        "browser": "158.0.8127.37",
+        "viewport": [
+          426,
+          780
+        ],
+        "deviceScaleFactor": 3,
+        "mobile": true,
+        "touch": true,
+        "quality": "medium",
+        "targetFps": 60,
+        "cpuThrottling": 1,
+        "gpuPerformance": "native desktop",
+        "serviceWorkers": "blocked"
+      },
+      "gpu": "ANGLE (NVIDIA, NVIDIA GeForce RTX 5070 Laptop GPU (0x00002D18) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "modelRoute": "inverloch-model.js?v=38",
+      "timing": 300,
+      "laps": 3,
+      "routeMetres": 3411.1335879777166,
+      "distanceMetres": 3386.356877719177,
+      "meanKmh": 40.64,
+      "frameIntervals": {
+        "count": 17995,
+        "p50": 16.7,
+        "p95": 17.7,
+        "p99": 18.3
+      },
+      "callbackIntervals": {
+        "count": 17997,
+        "p50": 16.7,
+        "p95": 17,
+        "p99": 17.3
+      },
+      "renderHz": 59.99,
+      "callbackHz": 59.99,
+      "draws": {
+        "count": 17996,
+        "p50": 145,
+        "p95": 289,
+        "p99": 300
+      },
+      "triangles": {
+        "count": 17996,
+        "p50": 799978,
+        "p95": 1000696,
+        "p99": 1035942
+      },
+      "buffers": {
+        "553x1014": 17996
+      },
+      "over33p4pct": 0.011,
+      "longIntervals": {
+        "thresholdMs": 25,
+        "count": 7,
+        "total": 17995
+      },
+      "visibleReady": {
+        "selection": {
+          "at": 2318.5,
+          "first": "medium",
+          "best": "medium",
+          "direct": true
+        },
+        "visibleAtMs": 5974.299999982119,
+        "visibility": "visible",
+        "timeOriginMs": 1795670312787.7,
+        "stamp": "9e76ed9",
+        "responses": 10,
+        "bodyBytes": 2739073
+      },
+      "minutes": [
+        {
+          "minute": 1,
+          "fromSec": 0,
+          "toSec": 60,
+          "utcStart": "2026-11-26T05:18:41.705Z",
+          "renders": 3596,
+          "renderHz": 59.93,
+          "renderIntervalMs": {
+            "count": 3595,
+            "p50": 16.7,
+            "p95": 17.3,
+            "p99": 18.1
+          },
+          "rafs": 3598,
+          "rafHz": 59.97,
+          "rafIntervalMs": {
+            "count": 3597,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 17
+          },
+          "drawsPerRender": {
+            "count": 3596,
+            "p50": 147,
+            "p95": 294,
+            "p99": 311
+          },
+          "trianglesPerRender": {
+            "count": 3596,
+            "p50": 804526,
+            "p95": 1006465,
+            "p99": 1047115
+          },
+          "buffers": {
+            "553x1014": 3596
+          },
+          "routeStartM": 0,
+          "routeEndM": 640.2921129449045,
+          "routeProgressM": 640.29,
+          "distanceDrivenM": 634.1,
+          "meanKmh": 38.05,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.878,
+            "p95": 49.69,
+            "p99": 49.7
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.826,
+            "p99": 1.253
+          },
+          "cameraTravelM": 643.11
+        },
+        {
+          "minute": 2,
+          "fromSec": 60,
+          "toSec": 120,
+          "utcStart": "2026-11-26T05:19:41.705Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.2,
+            "p99": 18
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 17
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 205,
+            "p95": 290,
+            "p99": 295
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 853164,
+            "p95": 1001319,
+            "p99": 1030078
+          },
+          "buffers": {
+            "553x1014": 3600
+          },
+          "routeStartM": 640.2921129449045,
+          "routeEndM": 1356.154117571646,
+          "routeProgressM": 715.86,
+          "distanceDrivenM": 712.74,
+          "meanKmh": 42.76,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.231,
+            "p95": 49.688,
+            "p99": 49.702
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.004,
+            "p95": 0.727,
+            "p99": 1.242
+          },
+          "cameraTravelM": 716.87
+        },
+        {
+          "minute": 3,
+          "fromSec": 120,
+          "toSec": 180,
+          "utcStart": "2026-11-26T05:20:41.705Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.8,
+            "p99": 18.3
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.1,
+            "p99": 17.3
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 133,
+            "p95": 239,
+            "p99": 298
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 745364,
+            "p95": 862558,
+            "p99": 887309
+          },
+          "buffers": {
+            "553x1014": 3600
+          },
+          "routeStartM": 1356.154117571646,
+          "routeEndM": 2019.4806421025246,
+          "routeProgressM": 663.33,
+          "distanceDrivenM": 657.14,
+          "meanKmh": 39.43,
+          "speedKmh": {
+            "count": 120,
+            "p50": 47.881,
+            "p95": 49.671,
+            "p99": 49.699
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.012,
+            "p95": 0.868,
+            "p99": 1.241
+          },
+          "cameraTravelM": 665.42
+        },
+        {
+          "minute": 4,
+          "fromSec": 180,
+          "toSec": 240,
+          "utcStart": "2026-11-26T05:21:41.705Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 18,
+            "p99": 18.4
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.1,
+            "p99": 17.4
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 155,
+            "p95": 288,
+            "p99": 294
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 839489,
+            "p95": 1001015,
+            "p99": 1030917
+          },
+          "buffers": {
+            "553x1014": 3600
+          },
+          "routeStartM": 2019.4806421025246,
+          "routeEndM": 2728.449233637537,
+          "routeProgressM": 708.97,
+          "distanceDrivenM": 705.85,
+          "meanKmh": 42.35,
+          "speedKmh": {
+            "count": 120,
+            "p50": 49.577,
+            "p95": 49.695,
+            "p99": 49.701
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.001,
+            "p95": 0.707,
+            "p99": 1.239
+          },
+          "cameraTravelM": 711.14
+        },
+        {
+          "minute": 5,
+          "fromSec": 240,
+          "toSec": 300,
+          "utcStart": "2026-11-26T05:22:41.705Z",
+          "renders": 3600,
+          "renderHz": 60,
+          "renderIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.9,
+            "p99": 18.4
+          },
+          "rafs": 3600,
+          "rafHz": 60,
+          "rafIntervalMs": {
+            "count": 3600,
+            "p50": 16.7,
+            "p95": 17.1,
+            "p99": 17.4
+          },
+          "drawsPerRender": {
+            "count": 3600,
+            "p50": 229,
+            "p95": 290,
+            "p99": 300
+          },
+          "trianglesPerRender": {
+            "count": 3600,
+            "p50": 846125,
+            "p95": 1000969,
+            "p99": 1030248
+          },
+          "buffers": {
+            "553x1014": 3600
+          },
+          "routeStartM": 2728.449233637537,
+          "routeEndM": 3404.2345808476625,
+          "routeProgressM": 675.79,
+          "distanceDrivenM": 669.63,
+          "meanKmh": 40.18,
+          "speedKmh": {
+            "count": 120,
+            "p50": 48.582,
+            "p95": 49.675,
+            "p99": 49.697
+          },
+          "routeDeviationM": {
+            "count": 120,
+            "p50": 0.009,
+            "p95": 0.922,
+            "p99": 1.283
+          },
+          "cameraTravelM": 676.84
+        }
+      ],
+      "modelBytes": 730369,
+      "modelGzipBytes": 207657,
+      "movingCars": 6,
+      "pageErrors": [],
+      "failedRequests": [
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400&family=Schibsted+Grotesk:wght@400..800&display=swap",
+          "failure": "csp",
+          "type": "stylesheet"
+        }
+      ],
+      "responseErrors": [],
+      "transfer": {
+        "requests": 10,
+        "servedBytes": 2739073,
+        "productionBytes": 2738636,
+        "uniqueResources": 10,
+        "resources": {
+          "inverloch/explore/": {
+            "requests": 1,
+            "servedBytes": 885172,
+            "productionBytes": 884750,
+            "queries": []
+          },
+          "town3d/inverloch-model.js": {
+            "requests": 1,
+            "servedBytes": 207672,
+            "productionBytes": 207657,
+            "queries": [
+              "?v=38"
+            ]
+          },
+          "town3d/ground-2k.webp": {
+            "requests": 1,
+            "servedBytes": 242526,
+            "productionBytes": 242526,
+            "queries": []
+          },
+          "town3d/height.png": {
+            "requests": 1,
+            "servedBytes": 689479,
+            "productionBytes": 689479,
+            "queries": []
+          },
+          "town3d/town.json": {
+            "requests": 1,
+            "servedBytes": 366704,
+            "productionBytes": 366704,
+            "queries": []
+          },
+          "_pixel/three.js": {
+            "requests": 1,
+            "servedBytes": 158243,
+            "productionBytes": 158243,
+            "queries": []
+          },
+          "inverloch/explore/version.json": {
+            "requests": 1,
+            "servedBytes": 45,
+            "productionBytes": 45,
+            "queries": [
+              "?t=1795670313040"
+            ]
+          },
+          "inverloch/explore/explore-icon.png": {
+            "requests": 1,
+            "servedBytes": 61365,
+            "productionBytes": 61365,
+            "queries": [
+              "?v=1"
+            ]
+          },
+          "town3d/detail.json": {
+            "requests": 1,
+            "servedBytes": 167,
+            "productionBytes": 167,
+            "queries": []
+          },
+          "town3d/detail-town.webp": {
+            "requests": 1,
+            "servedBytes": 127700,
+            "productionBytes": 127700,
+            "queries": []
+          }
+        }
+      }
+    }
+  ]
+}

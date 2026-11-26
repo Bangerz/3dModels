@@ -1,0 +1,290 @@
+{
+  "town": "inverloch",
+  "stamp": "9e76ed9",
+  "viewport": [
+    390,
+    844
+  ],
+  "dpr": 2,
+  "isMobile": true,
+  "hasTouch": true,
+  "tests": [
+    {
+      "round": "startup",
+      "target": "view",
+      "elapsedMs": 776,
+      "initial": "translate(4px, -19px)",
+      "both": "translate(4px, -19px)",
+      "retained": "translate(4px, -19px)",
+      "released": "",
+      "log": [
+        {
+          "type": "touchstart",
+          "ids": [
+            1
+          ],
+          "changed": [
+            1
+          ],
+          "on": "move",
+          "trusted": true
+        },
+        {
+          "type": "touchmove",
+          "ids": [
+            1
+          ],
+          "changed": [
+            1
+          ],
+          "on": "move",
+          "trusted": true
+        },
+        {
+          "type": "touchstart",
+          "ids": [
+            1,
+            2
+          ],
+          "changed": [
+            2
+          ],
+          "on": "CANVAS",
+          "trusted": true
+        },
+        {
+          "type": "touchmove",
+          "ids": [
+            1,
+            2
+          ],
+          "changed": [
+            2
+          ],
+          "on": "CANVAS",
+          "trusted": true
+        },
+        {
+          "type": "touchend",
+          "ids": [
+            1
+          ],
+          "changed": [
+            2
+          ],
+          "on": "CANVAS",
+          "trusted": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "round": "startup",
+      "target": "look",
+      "elapsedMs": 1510,
+      "initial": "translate(4px, -19px)",
+      "both": "translate(4px, -19px)",
+      "retained": "translate(4px, -19px)",
+      "released": "",
+      "log": [
+        {
+          "type": "touchstart",
+          "ids": [
+            1
+          ],
+          "changed": [
+            1
+          ],
+          "on": "move",
+          "trusted": true
+        },
+        {
+          "type": "touchmove",
+          "ids": [
+            1
+          ],
+          "changed": [
+            1
+          ],
+          "on": "move",
+          "trusted": true
+        },
+        {
+          "type": "touchstart",
+          "ids": [
+            1,
+            2
+          ],
+          "changed": [
+            2
+          ],
+          "on": "look",
+          "trusted": true
+        },
+        {
+          "type": "touchmove",
+          "ids": [
+            1,
+            2
+          ],
+          "changed": [
+            2
+          ],
+          "on": "look",
+          "trusted": true
+        },
+        {
+          "type": "touchend",
+          "ids": [
+            1
+          ],
+          "changed": [
+            2
+          ],
+          "on": "look",
+          "trusted": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "round": "after-30s",
+      "target": "view",
+      "elapsedMs": 30740,
+      "initial": "translate(4px, -19px)",
+      "both": "translate(4px, -19px)",
+      "retained": "translate(4px, -19px)",
+      "released": "",
+      "log": [
+        {
+          "type": "touchstart",
+          "ids": [
+            1
+          ],
+          "changed": [
+            1
+          ],
+          "on": "move",
+          "trusted": true
+        },
+        {
+          "type": "touchmove",
+          "ids": [
+            1
+          ],
+          "changed": [
+            1
+          ],
+          "on": "move",
+          "trusted": true
+        },
+        {
+          "type": "touchstart",
+          "ids": [
+            1,
+            2
+          ],
+          "changed": [
+            2
+          ],
+          "on": "CANVAS",
+          "trusted": true
+        },
+        {
+          "type": "touchmove",
+          "ids": [
+            1,
+            2
+          ],
+          "changed": [
+            2
+          ],
+          "on": "CANVAS",
+          "trusted": true
+        },
+        {
+          "type": "touchend",
+          "ids": [
+            1
+          ],
+          "changed": [
+            2
+          ],
+          "on": "CANVAS",
+          "trusted": true
+        }
+      ],
+      "passed": true
+    },
+    {
+      "round": "after-30s",
+      "target": "look",
+      "elapsedMs": 31475,
+      "initial": "translate(4px, -19px)",
+      "both": "translate(4px, -19px)",
+      "retained": "translate(4px, -19px)",
+      "released": "",
+      "log": [
+        {
+          "type": "touchstart",
+          "ids": [
+            1
+          ],
+          "changed": [
+            1
+          ],
+          "on": "move",
+          "trusted": true
+        },
+        {
+          "type": "touchmove",
+          "ids": [
+            1
+          ],
+          "changed": [
+            1
+          ],
+          "on": "move",
+          "trusted": true
+        },
+        {
+          "type": "touchstart",
+          "ids": [
+            1,
+            2
+          ],
+          "changed": [
+            2
+          ],
+          "on": "look",
+          "trusted": true
+        },
+        {
+          "type": "touchmove",
+          "ids": [
+            1,
+            2
+          ],
+          "changed": [
+            2
+          ],
+          "on": "look",
+          "trusted": true
+        },
+        {
+          "type": "touchend",
+          "ids": [
+            1
+          ],
+          "changed": [
+            2
+          ],
+          "on": "look",
+          "trusted": true
+        }
+      ],
+      "passed": true
+    }
+  ],
+  "errors": []
+}

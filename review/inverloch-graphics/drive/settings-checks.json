@@ -1,0 +1,211 @@
+{
+  "stage1-controls-retry": {
+    "hostSha": "279a456bd4d68cd9704efdc1377b1c0914fafabb48fb18e896067f3eb19cc348",
+    "modelSha": "a7e3114ded07b247791a6a42f243623169670fcc08382802efbac3dbb81fe8fc",
+    "errors": [],
+    "status": "complete",
+    "controls": {
+      "initial": {
+        "preset": "medium",
+        "available": [
+          "auto",
+          "low",
+          "medium",
+          "high"
+        ],
+        "quality": "medium",
+        "target": 60,
+        "saved": {
+          "preset": "medium",
+          "frameTarget": 60
+        },
+        "sameScene": true,
+        "loading": false
+      },
+      "changedRate": {
+        "preset": "medium",
+        "available": [
+          "auto",
+          "low",
+          "medium",
+          "high"
+        ],
+        "quality": "medium",
+        "target": 30,
+        "saved": {
+          "preset": "medium",
+          "frameTarget": 30
+        },
+        "sameScene": true,
+        "loading": false
+      },
+      "stagedQuality": {
+        "preset": "medium",
+        "available": [
+          "auto",
+          "low",
+          "medium",
+          "high"
+        ],
+        "quality": "medium",
+        "target": 30,
+        "saved": {
+          "preset": "low",
+          "frameTarget": 30
+        },
+        "sameScene": true,
+        "loading": false
+      },
+      "restartState": {
+        "preset": "low",
+        "available": [
+          "auto",
+          "low",
+          "medium",
+          "high"
+        ],
+        "quality": "low",
+        "target": 30,
+        "saved": {
+          "preset": "low",
+          "frameTarget": 30
+        },
+        "sameScene": false,
+        "loading": false
+      },
+      "reopenSelections": {
+        "preset": "low",
+        "fps": "30",
+        "restartVisible": false
+      },
+      "restoredRate": {
+        "preset": "low",
+        "available": [
+          "auto",
+          "low",
+          "medium",
+          "high"
+        ],
+        "quality": "low",
+        "target": 60,
+        "saved": {
+          "preset": "low",
+          "frameTarget": 60
+        },
+        "sameScene": false,
+        "loading": false
+      },
+      "options": [
+        {
+          "label": "Auto",
+          "value": "auto"
+        },
+        {
+          "label": "Low",
+          "value": "low"
+        },
+        {
+          "label": "Medium",
+          "value": "medium"
+        },
+        {
+          "label": "High",
+          "value": "high"
+        }
+      ],
+      "images": [
+        "stage1-controls-retry-staged.png",
+        "stage1-controls-retry-reopened.png"
+      ]
+    }
+  },
+  "stage5b-ultra-controls": {
+    "hostSha": "ad2350a5dc061886853368e87f3f21d71caec95902556df53dd29d7b83a183d3",
+    "modelSha": "a92ad3ad1b167c18e32b9d922277bc971971f20a91d879bf55caae7fbc1f76f0",
+    "errors": [],
+    "status": "complete",
+    "ultraControls": {
+      "pose": {
+        "eye": [
+          366,
+          9,
+          -138
+        ],
+        "target": [
+          1262.5439999973669,
+          3,
+          466.23569999970215
+        ],
+        "minutes": 720
+      },
+      "initial": {
+        "quality": "ultra",
+        "mist": true,
+        "shaderMist": 1,
+        "saved": null,
+        "target": 60,
+        "buffer": [
+          852,
+          1560
+        ],
+        "eye": [
+          366,
+          9,
+          -138
+        ]
+      },
+      "off": {
+        "quality": "ultra",
+        "mist": false,
+        "shaderMist": 0,
+        "saved": "0",
+        "target": 60,
+        "buffer": [
+          852,
+          1560
+        ],
+        "eye": [
+          366,
+          9,
+          -138
+        ]
+      },
+      "restored": {
+        "quality": "ultra",
+        "mist": true,
+        "shaderMist": 1,
+        "saved": "1",
+        "target": 60,
+        "buffer": [
+          852,
+          1560
+        ],
+        "eye": [
+          366,
+          9,
+          -138
+        ]
+      },
+      "withMist": {
+        "filename": "stage5b-ultra-controls-mist-on.png",
+        "suggestedName": "Inverloch.png",
+        "bytes": 757053,
+        "dimensions": [
+          852,
+          1560
+        ],
+        "sha256": "59c2b6372cb3fbfe54605b8b06e0e4f80d42ea5db47cd73c2f1d26a6b7c4c197"
+      },
+      "withoutMist": {
+        "filename": "stage5b-ultra-controls-mist-off.png",
+        "suggestedName": "Inverloch.png",
+        "bytes": 762757,
+        "dimensions": [
+          852,
+          1560
+        ],
+        "sha256": "9c01c293ac2ff4069c5d72d642ab9fd3b4d2e47393ce6eff913b8535432ca21a"
+      }
+    }
+  }
+}
