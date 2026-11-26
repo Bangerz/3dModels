@@ -9599,6 +9599,11 @@ const handle = async (m, post) => {
           onError: msg => fail(msg) });
       return m.ready.then(() => {
         if (T.dead || BS.fly !== F) { try { m.dispose(); } catch {} return; }
+        if (inv && T.pair.initialPreset === "ultra" && m.setCoastalMist) {
+          T.coastalMist = true;
+          try { T.coastalMist = localStorage.getItem("an3d-inv-mist") !== "0"; } catch {}
+          m.setCoastalMist(T.coastalMist);
+        }
         const EYE = 2.4,  /* (Ash, 24 November 2026: "Starting height to 2.4"; 2.6 till then: Ash, 16 November 2026, "Set starting height to 2.6m") */ touch = matchMedia("(pointer: coarse)").matches;  // walking: your eyes 2.8 m up to start (Ash, 16 November 2026: "Set my start height to 2.8"; was 3), for a clear view over the cars and fences (Up and Down change it)
         F.eye = EYE;
         // the ground, or the water over it: the sea and the inlet (Inverloch), or a flood that's on the map (Logan)
@@ -18681,6 +18686,46 @@ const handle = async (m, post) => {
       TOPS.forEach((col, i) => { const bn = el("button"); bn.type = "button"; bn.style.background = col; bn.setAttribute("aria-label", `Top colour ${i + 1}`); bn.setAttribute("aria-pressed", String(myColour() === i));
         bn.onclick = () => { try { localStorage.setItem("an-player-colour", String(i)); } catch {} tell(); meDraw(); meBox.querySelector(`.bs-me-tops button:nth-child(${i + 1})`)?.focus(); }; row.append(bn); });
       you.append(lab, inp, el("span", "bs-me-lbl", "Top colour"), row, el("p", "", "Your name shows over you. Pick one you are happy for anyone to see."));
+      if (place === "inv" && T.pair.initialPreset === "ultra" && m.setCoastalMist) {
+        const effects = el("div", "bs-me-sec"), mist = el("button", "bs-me-show");
+        effects.append(el("span", "bs-me-lbl", "Ultra effects"));
+        mist.type = "button"; mist.setAttribute("role", "switch");
+        mist.setAttribute("aria-checked", String(T.coastalMist));
+        mist.append(el("span", "", "Coastal mist"), el("i"));
+        mist.onclick = () => {
+          T.coastalMist = !T.coastalMist;
+          m.setCoastalMist(T.coastalMist);
+          mist.setAttribute("aria-checked", String(T.coastalMist));
+          try { localStorage.setItem("an3d-inv-mist", T.coastalMist ? "1" : "0"); } catch {}
+        };
+        effects.append(mist);
+        if (m.captureStill) {
+          const photo = el("button", "bs-me-go", "Save antialiased photo");
+          const download = el("a", "bs-me-go", "Download last photo");
+          photo.type = "button"; photo.disabled = !!T.capturingStill;
+          download.download = "Inverloch.png"; download.hidden = !T.photoUrl;
+          if (T.photoUrl) download.href = T.photoUrl;
+          photo.onclick = async () => {
+            if (T.capturingStill) return;
+            T.capturingStill = true; photo.disabled = true;
+            try {
+              const blob = await m.captureStill();
+              if (T.dead) return;
+              if (T.photoUrl) URL.revokeObjectURL(T.photoUrl);
+              T.photoUrl = URL.createObjectURL(blob);
+              download.href = T.photoUrl; download.hidden = false;
+              if (download.isConnected) download.click();
+            } catch {
+              if (!T.dead) toast("The photo could not be saved. Hold the view still and try again.");
+            } finally {
+              T.capturingStill = false; photo.disabled = false;
+              if (!T.dead && !meBox.hidden && !photo.isConnected) meDraw();
+            }
+          };
+          effects.append(photo, download);
+        }
+        you.prepend(effects);
+      }
       // play as an explorer or a construction worker (who sees themselves from behind and can suggest changes to the ground)
       // Standard or Google Maps style, here too, for once the welcome card has gone (Ash, 19 November 2026). Standard is "Play as explorer"
       // now (Ash, 24 November 2026: "Make play as explorer - relabel standard. This should be the default"), and the welcome card starts on it
@@ -23069,6 +23114,7 @@ const handle = async (m, post) => {
   }
   function townModelFrame() {
     const T = BS.town, F = BS.fly, m = T.model;
+    if (T.capturingStill) return;
     // gliding between walking and flying
     if (T.tween) { const w = T.tween, k = Math.min(1, (performance.now() - w.t0) / w.ms), e = k * k * (3 - 2 * k), L = (a, b) => a + (b - a) * e, dy = w.b.yaw - w.a.yaw;
       F.pos.set(L(w.a.x, w.b.x), L(w.a.y, w.b.y) + (w.arc || 0) * Math.sin(Math.PI * e), L(w.a.z, w.b.z)); F.yaw = w.a.yaw + Math.atan2(Math.sin(dy), Math.cos(dy)) * e; F.pitch = L(w.a.pitch, w.b.pitch);
@@ -23099,6 +23145,7 @@ const handle = async (m, post) => {
     try { sessionStorage.removeItem("an-ex-town"); } catch {}
     const T = BS.town; if (!T) return;
     BS.town = null; T.dead = true; T.on = false; T.ungest?.(); T.unlay?.(); T.unflood?.();
+    if (T.photoUrl) URL.revokeObjectURL(T.photoUrl);
     T.streets?.dispose(); T.streets = null; $("bsNamesBtn").hidden = true;
     T.admin?.dispose(); T.admin = null;
     if (T.listOut) { document.removeEventListener("pointerdown", T.listOut, true); T.listOut = null; } T.race?.dispose(); T.race = null; T.gps?.dispose(); T.gps = null; { const gb = document.getElementById("bsGpsBtn"); if (gb) { gb.hidden = true; gb.onclick = null; gb.setAttribute("aria-pressed", "false"); } } T.car?.dispose(); T.car = null; T.peers?.dispose(); T.peers = null; T.me?.dispose(); T.me = null; T.here?.dispose(); T.here = null; T.yards?.dispose(); T.yards = null; T.bowls?.dispose(); T.bowls = null; T.walkers?.dispose(); T.walkers = null; T.traffic?.dispose(); T.traffic = null; T.mayor?.dispose(); T.mayor = null; T.council?.dispose(); T.council = null; T.critter?.dispose(); T.critter = null; T.home6?.dispose(); T.home6 = null; T.bal6?.dispose(); T.bal6 = null; T.locals?.dispose(); T.locals = null; T.mail?.dispose(); T.mail = null;
