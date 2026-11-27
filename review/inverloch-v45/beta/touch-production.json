@@ -1,0 +1,50 @@
+[
+  {
+    "town": "moorooka",
+    "source": {
+      "url": "https://ashley-pettit.github.io/3dModels/moorooka/explore/",
+      "htmlSha256": "01d71a7a6537736471d0e166f5839a66f15656b331dbe278fc47d209b51b2fb9",
+      "etag": "W/\"6b0a144e-30ffaf\"",
+      "version": {
+        "build": "67fd8a2629db"
+      },
+      "assets": {
+        "town3d/inverloch-model-v45.js": {
+          "sha256": "c382f415132b8fe0bfc493b7c7562e140080ebc173cf2dc5f164be3145cf6891",
+          "bytes": 777902,
+          "etag": "W/\"6b0a144e-bdeae\""
+        },
+        "town3d/town-v45.json": {
+          "sha256": "1bef586b06efcbd72992c36188d0e1b8c0ebde9ab1b2c6241acc7c8784d92ca1",
+          "bytes": 673849,
+          "etag": "W/\"6b0a144e-a4839\""
+        }
+      }
+    },
+    "status": "complete",
+    "summary": {
+      "trusted": true,
+      "cancels": 0,
+      "bothAtSelection": true,
+      "bothAtRibbon": true,
+      "bothAtHoldEnd": true,
+      "continuedHoldSec": 5.185599999999628,
+      "touchEventsDuringRoute": 50,
+      "stableTouchIds": true,
+      "gpsSelectionToRibbonMs": 20.5,
+      "routeMetres": 767.4367893331655,
+      "routePoints": 265,
+      "routeLabel": "Yeronga Park Café",
+      "gpsNearbyMaxRafMs": 88.70000000000073,
+      "beforeGpsMaxRafMs": 55.400000000001455,
+      "gpsNearbyLongTasks": [
+        {
+          "start": 20401.5,
+          "duration": 53
+        }
+      ],
+      "passed": true
+    },
+    "pageErrors": []
+  }
+]

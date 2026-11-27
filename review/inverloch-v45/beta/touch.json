@@ -1,0 +1,1041 @@
+[
+  {
+    "town": "inverloch",
+    "device": {
+      "device": {
+        "brands": [
+          {
+            "brand": "Not-A.Brand",
+            "version": "99"
+          },
+          {
+            "brand": "Google Chrome",
+            "version": "157"
+          },
+          {
+            "brand": "Chromium",
+            "version": "157"
+          }
+        ],
+        "fullVersionList": [
+          {
+            "brand": "Not-A.Brand",
+            "version": "99.0.0.0"
+          },
+          {
+            "brand": "Google Chrome",
+            "version": "157.0.8103.78"
+          },
+          {
+            "brand": "Chromium",
+            "version": "157.0.8103.78"
+          }
+        ],
+        "mobile": true,
+        "model": "Pixel 7",
+        "platform": "Android",
+        "platformVersion": "17.0.0"
+      },
+      "viewport": [
+        411,
+        758
+      ],
+      "dpr": 2.625,
+      "touchPoints": 5,
+      "wake": true,
+      "resources": [
+        "https://ashley-pettit.github.io/3dModels/town3d/inverloch-model-v45.js?v=45",
+        "https://ashley-pettit.github.io/3dModels/town3d/town-v45.json?v=1bef586b"
+      ],
+      "serviceWorker": "https://ashley-pettit.github.io/3dModels/sw.js"
+    },
+    "checks": {
+      "initialBoth": {
+        "label": "both sticks at start",
+        "at": 11441.800000000745,
+        "ids": [
+          1,
+          2
+        ],
+        "sticks": {
+          "move": "translate(4px, -23px)",
+          "look": "translate(16px, 7px)"
+        },
+        "gpsPressed": "false",
+        "routePoints": 0,
+        "visible": "visible"
+      },
+      "initialOne": {
+        "label": "look lifted while move held",
+        "at": 12443.900000000373,
+        "ids": [
+          1
+        ],
+        "sticks": {
+          "move": "translate(4px, -23px)",
+          "look": ""
+        },
+        "gpsPressed": "false",
+        "routePoints": 0,
+        "visible": "visible"
+      },
+      "initialReleased": {
+        "label": "both released",
+        "at": 12590.100000000559,
+        "ids": [],
+        "sticks": {
+          "move": "",
+          "look": ""
+        },
+        "gpsPressed": "false",
+        "routePoints": 0,
+        "visible": "visible"
+      },
+      "beforeGps": {
+        "label": "both sticks before initial GPS open",
+        "at": 12942.5,
+        "ids": [
+          1,
+          2
+        ],
+        "sticks": {
+          "move": "translate(4px, -23px)",
+          "look": "translate(16px, 7px)"
+        },
+        "gpsPressed": "false",
+        "routePoints": 0,
+        "visible": "visible"
+      },
+      "afterGpsHold": {
+        "label": "both held after initial route",
+        "at": 44180.800000000745,
+        "ids": [
+          1,
+          2
+        ],
+        "sticks": {
+          "move": "translate(5px, -23px)",
+          "look": "translate(16px, 8px)"
+        },
+        "gpsPressed": "true",
+        "routePoints": 460,
+        "visible": "visible"
+      },
+      "afterGpsOne": {
+        "label": "look lifted after route while move held",
+        "at": 44344.700000000186,
+        "ids": [
+          1
+        ],
+        "sticks": {
+          "move": "translate(5px, -23px)",
+          "look": ""
+        },
+        "gpsPressed": "true",
+        "routePoints": 460,
+        "visible": "visible"
+      },
+      "afterGpsReleased": {
+        "label": "both released after route",
+        "at": 44525.40000000037,
+        "ids": [],
+        "sticks": {
+          "move": "",
+          "look": ""
+        },
+        "gpsPressed": "true",
+        "routePoints": 460,
+        "visible": "visible"
+      },
+      "freshAfterGps": {
+        "label": "fresh independent pair after initial route",
+        "at": 44880.200000000186,
+        "ids": [
+          1,
+          2
+        ],
+        "sticks": {
+          "move": "translate(4px, -23px)",
+          "look": "translate(16px, 7px)"
+        },
+        "gpsPressed": "true",
+        "routePoints": 460,
+        "visible": "visible"
+      }
+    },
+    "status": "complete",
+    "pageErrors": [],
+    "started": "2026-11-27T23:47:20.658Z",
+    "finished": "2026-11-27T23:48:06.510Z",
+    "channel": "beta",
+    "source": {
+      "url": "https://ashley-pettit.github.io/3dModels/beta/inverloch/",
+      "htmlSha256": "ef8877abf90659fde2d8f6a13ed123049e75802330d9c2097367ae594c2f4f0e",
+      "etag": "W/\"6b0a144e-3118ac\"",
+      "version": {
+        "build": "c5aa354a8838"
+      },
+      "assets": {
+        "town3d/inverloch-model-v45.js": {
+          "sha256": "c382f415132b8fe0bfc493b7c7562e140080ebc173cf2dc5f164be3145cf6891",
+          "bytes": 777902,
+          "etag": "W/\"6b0a144e-bdeae\""
+        },
+        "town3d/town-v45.json": {
+          "sha256": "1bef586b06efcbd72992c36188d0e1b8c0ebde9ab1b2c6241acc7c8784d92ca1",
+          "bytes": 673849,
+          "etag": "W/\"6b0a144e-a4839\""
+        }
+      }
+    },
+    "destination": "Tennis Club & Oval\n1.1 km",
+    "net": {
+      "nodes": 2178,
+      "pieces": 2301,
+      "ms": 175
+    },
+    "result": {
+      "trusted": true,
+      "cancels": 0,
+      "bothAtSelection": true,
+      "bothAtRibbon": true,
+      "bothAtHoldEnd": true,
+      "continuedHoldSec": 31.224800000000744,
+      "touchEventsDuringRoute": 312,
+      "stableTouchIds": true,
+      "gpsSelectionToRibbonMs": 40.200000000186265,
+      "routeMetres": 1344.5819282507134,
+      "routePoints": 460,
+      "routeLabel": "Tennis Club & Oval",
+      "passed": true
+    },
+    "timing": {
+      "routeSelectAtPageMs": 12956.2,
+      "routeActiveAtPageMs": 12996.4,
+      "selectionToGpsActiveMs": 40.2,
+      "longTasksBeforeThroughAfterGps": [
+        {
+          "startedRelativeMs": -10.3,
+          "durationMs": 50
+        }
+      ],
+      "callbackGapsSpanningRouteWindow": [
+        {
+          "startRelativeMs": -12.5,
+          "endRelativeMs": 40.6,
+          "callbackGapMs": 53.1,
+          "rafTimestampGapMs": 11.2
+        }
+      ],
+      "nearbyCallbackGaps": [
+        {
+          "startRelativeMs": -12.5,
+          "endRelativeMs": 40.6,
+          "callbackGapMs": 53.1,
+          "rafTimestampGapMs": 11.2
+        },
+        {
+          "startRelativeMs": 40.6,
+          "endRelativeMs": 81.5,
+          "callbackGapMs": 40.9,
+          "rafTimestampGapMs": 77.6
+        },
+        {
+          "startRelativeMs": -156.9,
+          "endRelativeMs": -131.4,
+          "callbackGapMs": 25.5,
+          "rafTimestampGapMs": 22.3
+        },
+        {
+          "startRelativeMs": -389.6,
+          "endRelativeMs": -374.2,
+          "callbackGapMs": 15.4,
+          "rafTimestampGapMs": 11.1
+        },
+        {
+          "startRelativeMs": -278.7,
+          "endRelativeMs": -265.4,
+          "callbackGapMs": 13.3,
+          "rafTimestampGapMs": 11.2
+        }
+      ],
+      "nearbyMaxCallbackGapMs": 53.1,
+      "nearbyMaxRafTimestampGapMs": 77.6
+    }
+  },
+  {
+    "town": "moorooka",
+    "device": {
+      "device": {
+        "brands": [
+          {
+            "brand": "Not-A.Brand",
+            "version": "99"
+          },
+          {
+            "brand": "Google Chrome",
+            "version": "157"
+          },
+          {
+            "brand": "Chromium",
+            "version": "157"
+          }
+        ],
+        "fullVersionList": [
+          {
+            "brand": "Not-A.Brand",
+            "version": "99.0.0.0"
+          },
+          {
+            "brand": "Google Chrome",
+            "version": "157.0.8103.78"
+          },
+          {
+            "brand": "Chromium",
+            "version": "157.0.8103.78"
+          }
+        ],
+        "mobile": true,
+        "model": "Pixel 7",
+        "platform": "Android",
+        "platformVersion": "17.0.0"
+      },
+      "viewport": [
+        411,
+        758
+      ],
+      "dpr": 2.625,
+      "touchPoints": 5,
+      "wake": true,
+      "resources": [
+        "https://ashley-pettit.github.io/3dModels/town3d/moorooka/moorooka-model.js?v=80"
+      ],
+      "serviceWorker": "https://ashley-pettit.github.io/3dModels/sw.js"
+    },
+    "checks": {
+      "initialBoth": {
+        "label": "both sticks at start",
+        "at": 17031.599999999627,
+        "ids": [
+          1,
+          2
+        ],
+        "sticks": {
+          "move": "translate(4px, -23px)",
+          "look": "translate(16px, 7px)"
+        },
+        "gpsPressed": "false",
+        "routePoints": 0,
+        "visible": "visible"
+      },
+      "initialOne": {
+        "label": "look lifted while move held",
+        "at": 18941.200000000186,
+        "ids": [
+          1
+        ],
+        "sticks": {
+          "move": "translate(4px, -23px)",
+          "look": ""
+        },
+        "gpsPressed": "false",
+        "routePoints": 0,
+        "visible": "visible"
+      },
+      "initialReleased": {
+        "label": "both released",
+        "at": 19160.900000000373,
+        "ids": [],
+        "sticks": {
+          "move": "",
+          "look": ""
+        },
+        "gpsPressed": "false",
+        "routePoints": 0,
+        "visible": "visible"
+      },
+      "beforeGps": {
+        "label": "both sticks before initial GPS open",
+        "at": 19770.200000000186,
+        "ids": [
+          1,
+          2
+        ],
+        "sticks": {
+          "move": "translate(4px, -23px)",
+          "look": "translate(16px, 7px)"
+        },
+        "gpsPressed": "false",
+        "routePoints": 0,
+        "visible": "visible"
+      },
+      "afterGpsHold": {
+        "label": "both held after initial route",
+        "at": 25633.400000000373,
+        "ids": [
+          1,
+          2
+        ],
+        "sticks": {
+          "move": "translate(3px, -23px)",
+          "look": "translate(16px, 6px)"
+        },
+        "gpsPressed": "true",
+        "routePoints": 258,
+        "visible": "visible"
+      },
+      "afterGpsOne": {
+        "label": "look lifted after route while move held",
+        "at": 25790.299999999814,
+        "ids": [
+          1
+        ],
+        "sticks": {
+          "move": "translate(3px, -23px)",
+          "look": ""
+        },
+        "gpsPressed": "true",
+        "routePoints": 258,
+        "visible": "visible"
+      },
+      "afterGpsReleased": {
+        "label": "both released after route",
+        "at": 25932.099999999627,
+        "ids": [],
+        "sticks": {
+          "move": "",
+          "look": ""
+        },
+        "gpsPressed": "true",
+        "routePoints": 258,
+        "visible": "visible"
+      },
+      "freshAfterGps": {
+        "label": "fresh independent pair after initial route",
+        "at": 26276.700000000186,
+        "ids": [
+          1,
+          2
+        ],
+        "sticks": {
+          "move": "translate(4px, -23px)",
+          "look": "translate(16px, 7px)"
+        },
+        "gpsPressed": "true",
+        "routePoints": 258,
+        "visible": "visible"
+      }
+    },
+    "status": "complete",
+    "pageErrors": [],
+    "started": "2026-11-27T23:48:07.477Z",
+    "finished": "2026-11-27T23:48:34.820Z",
+    "channel": "beta",
+    "source": {
+      "url": "https://ashley-pettit.github.io/3dModels/beta/moorooka/",
+      "htmlSha256": "b13693f7a825d1db1d53b62e5ad02cc6ccd46c73e9978714205282cc9b114604",
+      "etag": "W/\"6b0a144e-3118ac\"",
+      "version": {
+        "build": "5d8586f32225"
+      },
+      "assets": {
+        "town3d/inverloch-model-v45.js": {
+          "sha256": "c382f415132b8fe0bfc493b7c7562e140080ebc173cf2dc5f164be3145cf6891",
+          "bytes": 777902,
+          "etag": "W/\"6b0a144e-bdeae\""
+        },
+        "town3d/town-v45.json": {
+          "sha256": "1bef586b06efcbd72992c36188d0e1b8c0ebde9ab1b2c6241acc7c8784d92ca1",
+          "bytes": 673849,
+          "etag": "W/\"6b0a144e-a4839\""
+        }
+      }
+    },
+    "destination": "Yeronga Park Café\n540 m · Cafe",
+    "net": {
+      "nodes": 2088,
+      "pieces": 2409,
+      "ms": 1878
+    },
+    "result": {
+      "trusted": true,
+      "cancels": 0,
+      "bothAtSelection": true,
+      "bothAtRibbon": true,
+      "bothAtHoldEnd": true,
+      "continuedHoldSec": 5.2505,
+      "touchEventsDuringRoute": 42,
+      "stableTouchIds": true,
+      "gpsSelectionToRibbonMs": 135.3999999994412,
+      "routeMetres": 744.4027462790464,
+      "routePoints": 258,
+      "routeLabel": "Yeronga Park Café",
+      "passed": true
+    },
+    "timing": {
+      "routeSelectAtPageMs": 20392.7,
+      "routeActiveAtPageMs": 20528.1,
+      "selectionToGpsActiveMs": 135.4,
+      "longTasksBeforeThroughAfterGps": [
+        {
+          "startedRelativeMs": -427.1,
+          "durationMs": 576
+        },
+        {
+          "startedRelativeMs": 153.6,
+          "durationMs": 715
+        }
+      ],
+      "callbackGapsSpanningRouteWindow": [
+        {
+          "startRelativeMs": -604.6,
+          "endRelativeMs": 160.8,
+          "callbackGapMs": 765.4,
+          "rafTimestampGapMs": 210.6
+        }
+      ],
+      "nearbyCallbackGaps": [
+        {
+          "startRelativeMs": -604.6,
+          "endRelativeMs": 160.8,
+          "callbackGapMs": 765.4,
+          "rafTimestampGapMs": 210.6
+        },
+        {
+          "startRelativeMs": 160.8,
+          "endRelativeMs": 921.5,
+          "callbackGapMs": 760.7,
+          "rafTimestampGapMs": 1307.8
+        }
+      ],
+      "nearbyMaxCallbackGapMs": 765.4,
+      "nearbyMaxRafTimestampGapMs": 1307.8
+    }
+  },
+  {
+    "town": "logan",
+    "device": {
+      "device": {
+        "brands": [
+          {
+            "brand": "Not-A.Brand",
+            "version": "99"
+          },
+          {
+            "brand": "Google Chrome",
+            "version": "157"
+          },
+          {
+            "brand": "Chromium",
+            "version": "157"
+          }
+        ],
+        "fullVersionList": [
+          {
+            "brand": "Not-A.Brand",
+            "version": "99.0.0.0"
+          },
+          {
+            "brand": "Google Chrome",
+            "version": "157.0.8103.78"
+          },
+          {
+            "brand": "Chromium",
+            "version": "157.0.8103.78"
+          }
+        ],
+        "mobile": true,
+        "model": "Pixel 7",
+        "platform": "Android",
+        "platformVersion": "17.0.0"
+      },
+      "viewport": [
+        411,
+        758
+      ],
+      "dpr": 2.625,
+      "touchPoints": 5,
+      "wake": true,
+      "resources": [
+        "https://ashley-pettit.github.io/3dModels/town3d/logan/logan-model.js?v=46"
+      ],
+      "serviceWorker": "https://ashley-pettit.github.io/3dModels/sw.js"
+    },
+    "checks": {
+      "initialBoth": {
+        "label": "both sticks at start",
+        "at": 18271.400000000373,
+        "ids": [
+          1,
+          2
+        ],
+        "sticks": {
+          "move": "translate(4px, -23px)",
+          "look": "translate(16px, 7px)"
+        },
+        "gpsPressed": "false",
+        "routePoints": 0,
+        "visible": "visible"
+      },
+      "initialOne": {
+        "label": "look lifted while move held",
+        "at": 18417.60000000056,
+        "ids": [
+          1
+        ],
+        "sticks": {
+          "move": "translate(4px, -23px)",
+          "look": ""
+        },
+        "gpsPressed": "false",
+        "routePoints": 0,
+        "visible": "visible"
+      },
+      "initialReleased": {
+        "label": "both released",
+        "at": 18573.5,
+        "ids": [],
+        "sticks": {
+          "move": "",
+          "look": ""
+        },
+        "gpsPressed": "false",
+        "routePoints": 0,
+        "visible": "visible"
+      },
+      "beforeGps": {
+        "label": "both sticks before initial GPS open",
+        "at": 18998.10000000056,
+        "ids": [
+          1,
+          2
+        ],
+        "sticks": {
+          "move": "translate(4px, -23px)",
+          "look": "translate(16px, 7px)"
+        },
+        "gpsPressed": "false",
+        "routePoints": 0,
+        "visible": "visible"
+      },
+      "afterGpsHold": {
+        "label": "both held after initial route",
+        "at": 24110.5,
+        "ids": [
+          1,
+          2
+        ],
+        "sticks": {
+          "move": "translate(5px, -23px)",
+          "look": "translate(16px, 8px)"
+        },
+        "gpsPressed": "true",
+        "routePoints": 186,
+        "visible": "visible"
+      },
+      "afterGpsOne": {
+        "label": "look lifted after route while move held",
+        "at": 24276.5,
+        "ids": [
+          1
+        ],
+        "sticks": {
+          "move": "translate(5px, -23px)",
+          "look": ""
+        },
+        "gpsPressed": "true",
+        "routePoints": 186,
+        "visible": "visible"
+      },
+      "afterGpsReleased": {
+        "label": "both released after route",
+        "at": 24426.5,
+        "ids": [],
+        "sticks": {
+          "move": "",
+          "look": ""
+        },
+        "gpsPressed": "true",
+        "routePoints": 186,
+        "visible": "visible"
+      },
+      "freshAfterGps": {
+        "label": "fresh independent pair after initial route",
+        "at": 24844.900000000373,
+        "ids": [
+          1,
+          2
+        ],
+        "sticks": {
+          "move": "translate(4px, -23px)",
+          "look": "translate(16px, 7px)"
+        },
+        "gpsPressed": "true",
+        "routePoints": 186,
+        "visible": "visible"
+      }
+    },
+    "status": "complete",
+    "pageErrors": [],
+    "started": "2026-11-27T23:48:35.373Z",
+    "finished": "2026-11-27T23:49:01.260Z",
+    "channel": "beta",
+    "source": {
+      "url": "https://ashley-pettit.github.io/3dModels/beta/logan/",
+      "htmlSha256": "3f484f42f2d23f1eeaffc3d1e5d1ec98a79332e1c6ec18d2d4f080a781c8445c",
+      "etag": "W/\"6b0a144e-3118ae\"",
+      "version": {
+        "build": "8e97e2b7c69c"
+      },
+      "assets": {
+        "town3d/inverloch-model-v45.js": {
+          "sha256": "c382f415132b8fe0bfc493b7c7562e140080ebc173cf2dc5f164be3145cf6891",
+          "bytes": 777902,
+          "etag": "W/\"6b0a144e-bdeae\""
+        },
+        "town3d/town-v45.json": {
+          "sha256": "1bef586b06efcbd72992c36188d0e1b8c0ebde9ab1b2c6241acc7c8784d92ca1",
+          "bytes": 673849,
+          "etag": "W/\"6b0a144e-a4839\""
+        }
+      }
+    },
+    "destination": "The plane\n330 m · On the big lawn in Civic Centre Park",
+    "net": {
+      "nodes": 65770,
+      "pieces": 68078,
+      "ms": 5684
+    },
+    "result": {
+      "trusted": true,
+      "cancels": 0,
+      "bothAtSelection": true,
+      "bothAtRibbon": true,
+      "bothAtHoldEnd": true,
+      "continuedHoldSec": 5.096700000000186,
+      "touchEventsDuringRoute": 48,
+      "stableTouchIds": true,
+      "gpsSelectionToRibbonMs": 25.100000000558794,
+      "routeMetres": 523.480960686066,
+      "routePoints": 186,
+      "routeLabel": "The plane",
+      "passed": true
+    },
+    "timing": {
+      "routeSelectAtPageMs": 19014,
+      "routeActiveAtPageMs": 19039.1,
+      "selectionToGpsActiveMs": 25.1,
+      "longTasksBeforeThroughAfterGps": [
+        {
+          "startedRelativeMs": 25.6,
+          "durationMs": 85
+        }
+      ],
+      "callbackGapsSpanningRouteWindow": [
+        {
+          "startRelativeMs": -27.1,
+          "endRelativeMs": 25.7,
+          "callbackGapMs": 52.8,
+          "rafTimestampGapMs": 22.2
+        }
+      ],
+      "nearbyCallbackGaps": [
+        {
+          "startRelativeMs": 25.7,
+          "endRelativeMs": 111.9,
+          "callbackGapMs": 86.2,
+          "rafTimestampGapMs": 110.8
+        },
+        {
+          "startRelativeMs": 194.5,
+          "endRelativeMs": 257.6,
+          "callbackGapMs": 63.1,
+          "rafTimestampGapMs": 55.5
+        },
+        {
+          "startRelativeMs": -27.1,
+          "endRelativeMs": 25.7,
+          "callbackGapMs": 52.8,
+          "rafTimestampGapMs": 22.2
+        },
+        {
+          "startRelativeMs": 405,
+          "endRelativeMs": 456.1,
+          "callbackGapMs": 51.1,
+          "rafTimestampGapMs": 44.3
+        },
+        {
+          "startRelativeMs": -160.2,
+          "endRelativeMs": -131.3,
+          "callbackGapMs": 28.9,
+          "rafTimestampGapMs": 22.1
+        }
+      ],
+      "nearbyMaxCallbackGapMs": 86.2,
+      "nearbyMaxRafTimestampGapMs": 110.8
+    }
+  },
+  {
+    "town": "moorooka",
+    "device": {
+      "device": {
+        "brands": [
+          {
+            "brand": "Not-A.Brand",
+            "version": "99"
+          },
+          {
+            "brand": "Google Chrome",
+            "version": "157"
+          },
+          {
+            "brand": "Chromium",
+            "version": "157"
+          }
+        ],
+        "fullVersionList": [
+          {
+            "brand": "Not-A.Brand",
+            "version": "99.0.0.0"
+          },
+          {
+            "brand": "Google Chrome",
+            "version": "157.0.8103.78"
+          },
+          {
+            "brand": "Chromium",
+            "version": "157.0.8103.78"
+          }
+        ],
+        "mobile": true,
+        "model": "Pixel 7",
+        "platform": "Android",
+        "platformVersion": "17.0.0"
+      },
+      "viewport": [
+        411,
+        758
+      ],
+      "dpr": 2.625,
+      "touchPoints": 5,
+      "wake": true,
+      "resources": [
+        "https://ashley-pettit.github.io/3dModels/town3d/moorooka/moorooka-model.js?v=80"
+      ],
+      "serviceWorker": "https://ashley-pettit.github.io/3dModels/sw.js"
+    },
+    "checks": {
+      "initialBoth": {
+        "label": "both sticks at start",
+        "at": 14170.600000000559,
+        "ids": [
+          1,
+          2
+        ],
+        "sticks": {
+          "move": "translate(4px, -23px)",
+          "look": "translate(16px, 7px)"
+        },
+        "gpsPressed": "false",
+        "routePoints": 0,
+        "visible": "visible"
+      },
+      "initialOne": {
+        "label": "look lifted while move held",
+        "at": 15293.800000000745,
+        "ids": [
+          1
+        ],
+        "sticks": {
+          "move": "translate(4px, -23px)",
+          "look": ""
+        },
+        "gpsPressed": "false",
+        "routePoints": 0,
+        "visible": "visible"
+      },
+      "initialReleased": {
+        "label": "both released",
+        "at": 15436.800000000745,
+        "ids": [],
+        "sticks": {
+          "move": "",
+          "look": ""
+        },
+        "gpsPressed": "false",
+        "routePoints": 0,
+        "visible": "visible"
+      },
+      "beforeGps": {
+        "label": "both sticks before initial GPS open",
+        "at": 15791.100000000559,
+        "ids": [
+          1,
+          2
+        ],
+        "sticks": {
+          "move": "translate(4px, -23px)",
+          "look": "translate(16px, 7px)"
+        },
+        "gpsPressed": "false",
+        "routePoints": 0,
+        "visible": "visible"
+      },
+      "afterGpsHold": {
+        "label": "both held after initial route",
+        "at": 25619.900000000373,
+        "ids": [
+          1,
+          2
+        ],
+        "sticks": {
+          "move": "translate(3px, -23px)",
+          "look": "translate(16px, 6px)"
+        },
+        "gpsPressed": "true",
+        "routePoints": 265,
+        "visible": "visible"
+      },
+      "afterGpsOne": {
+        "label": "look lifted after route while move held",
+        "at": 25754.60000000056,
+        "ids": [
+          1
+        ],
+        "sticks": {
+          "move": "translate(3px, -23px)",
+          "look": ""
+        },
+        "gpsPressed": "true",
+        "routePoints": 265,
+        "visible": "visible"
+      },
+      "afterGpsReleased": {
+        "label": "both released after route",
+        "at": 25900,
+        "ids": [],
+        "sticks": {
+          "move": "",
+          "look": ""
+        },
+        "gpsPressed": "true",
+        "routePoints": 265,
+        "visible": "visible"
+      },
+      "freshAfterGps": {
+        "label": "fresh independent pair after initial route",
+        "at": 26241,
+        "ids": [
+          1,
+          2
+        ],
+        "sticks": {
+          "move": "translate(4px, -23px)",
+          "look": "translate(16px, 7px)"
+        },
+        "gpsPressed": "true",
+        "routePoints": 265,
+        "visible": "visible"
+      }
+    },
+    "status": "complete",
+    "pageErrors": [],
+    "started": "2026-11-27T23:50:06.759Z",
+    "finished": "2026-11-27T23:50:33.860Z",
+    "channel": "production",
+    "source": {
+      "url": "https://ashley-pettit.github.io/3dModels/moorooka/explore/",
+      "htmlSha256": "01d71a7a6537736471d0e166f5839a66f15656b331dbe278fc47d209b51b2fb9",
+      "etag": "W/\"6b0a144e-30ffaf\"",
+      "version": {
+        "build": "67fd8a2629db"
+      },
+      "assets": {
+        "town3d/inverloch-model-v45.js": {
+          "sha256": "c382f415132b8fe0bfc493b7c7562e140080ebc173cf2dc5f164be3145cf6891",
+          "bytes": 777902,
+          "etag": "W/\"6b0a144e-bdeae\""
+        },
+        "town3d/town-v45.json": {
+          "sha256": "1bef586b06efcbd72992c36188d0e1b8c0ebde9ab1b2c6241acc7c8784d92ca1",
+          "bytes": 673849,
+          "etag": "W/\"6b0a144e-a4839\""
+        }
+      }
+    },
+    "destination": "Yeronga Park Café\n560 m · Cafe",
+    "net": {
+      "nodes": 2088,
+      "pieces": 2409,
+      "ms": 1082
+    },
+    "result": {
+      "trusted": true,
+      "cancels": 0,
+      "bothAtSelection": true,
+      "bothAtRibbon": true,
+      "bothAtHoldEnd": true,
+      "continuedHoldSec": 5.185599999999628,
+      "touchEventsDuringRoute": 50,
+      "stableTouchIds": true,
+      "gpsSelectionToRibbonMs": 20.5,
+      "routeMetres": 767.4367893331655,
+      "routePoints": 265,
+      "routeLabel": "Yeronga Park Café",
+      "passed": true
+    },
+    "timing": {
+      "routeSelectAtPageMs": 20434.5,
+      "routeActiveAtPageMs": 20455,
+      "selectionToGpsActiveMs": 20.5,
+      "longTasksBeforeThroughAfterGps": [
+        {
+          "startedRelativeMs": -33.0,
+          "durationMs": 53
+        }
+      ],
+      "callbackGapsSpanningRouteWindow": [
+        {
+          "startRelativeMs": -57.8,
+          "endRelativeMs": 21.0,
+          "callbackGapMs": 78.8,
+          "rafTimestampGapMs": 22.1
+        }
+      ],
+      "nearbyCallbackGaps": [
+        {
+          "startRelativeMs": -57.8,
+          "endRelativeMs": 21.0,
+          "callbackGapMs": 78.8,
+          "rafTimestampGapMs": 22.1
+        },
+        {
+          "startRelativeMs": 132.3,
+          "endRelativeMs": 198.5,
+          "callbackGapMs": 66.2,
+          "rafTimestampGapMs": 66.5
+        },
+        {
+          "startRelativeMs": 92.8,
+          "endRelativeMs": 132.3,
+          "callbackGapMs": 39.5,
+          "rafTimestampGapMs": 33.3
+        },
+        {
+          "startRelativeMs": 356.1,
+          "endRelativeMs": 385.9,
+          "callbackGapMs": 29.8,
+          "rafTimestampGapMs": 22.1
+        },
+        {
+          "startRelativeMs": -307.1,
+          "endRelativeMs": -277.9,
+          "callbackGapMs": 29.2,
+          "rafTimestampGapMs": 22.2
+        }
+      ],
+      "nearbyMaxCallbackGapMs": 78.8,
+      "nearbyMaxRafTimestampGapMs": 88.7
+    }
+  }
+]
