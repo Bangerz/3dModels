@@ -1,0 +1,1262 @@
+{
+  "scope": "Matched Medium clear-weather drives in Chrome mobile emulation on BenLaptop. Separate fixed-camera High screenshots. No physical device measurements.",
+  "publicBaseline": "883a8adda2067895118c08f1d15f42a080fca89b",
+  "publicCandidate": "9c49a7c2bb1381a236895eb0152b3331e207eb30",
+  "nativeCandidate": "7f2379b6c384b712819137f5aafb4932bdbe0a92",
+  "gpu": "NVIDIA GeForce RTX 5070 Laptop GPU, ANGLE D3D11",
+  "drives": {
+    "v44": {
+      "renderer": {
+        "bundleBytes": 753067,
+        "bundleGzipBytes": 214847,
+        "modelRoute": "inverloch-model.js?v=44"
+      },
+      "sha256": "ffaddec4afec92b659246acd01798568350d76dcaaa3c9cc0078cbe1c9de8525",
+      "routes": [
+        {
+          "street": "abeckett",
+          "routeHash": "00c2f0014e78ef7586f3d4eca01f506f4ab6eb0ff458a3791128605041b855ce",
+          "seconds": 40,
+          "renders": 2265,
+          "renderHz": 56.63,
+          "frameIntervalMs": {
+            "count": 2264,
+            "p50": 17.6,
+            "p95": 18.8,
+            "p99": 19.5
+          },
+          "draws": {
+            "count": 2265,
+            "p50": 170,
+            "p95": 299,
+            "p99": 321
+          },
+          "triangles": {
+            "count": 2265,
+            "p50": 855291,
+            "p95": 1045530,
+            "p99": 1069100
+          },
+          "buffers": {
+            "553x1014": 2265
+          },
+          "drivenMetres": 414.11,
+          "encodedTransferBytes": 2846648,
+          "requests": 10,
+          "pageErrors": [],
+          "responseErrors": []
+        },
+        {
+          "street": "cuttriss",
+          "routeHash": "7df647ff69c23e08c245b8f33eeac6c833fa32886e4e4ab34503fad0d50155e1",
+          "seconds": 17,
+          "renders": 964,
+          "renderHz": 56.71,
+          "frameIntervalMs": {
+            "count": 963,
+            "p50": 17.6,
+            "p95": 18.6,
+            "p99": 19.3
+          },
+          "draws": {
+            "count": 964,
+            "p50": 121,
+            "p95": 123,
+            "p99": 123
+          },
+          "triangles": {
+            "count": 964,
+            "p50": 755736,
+            "p95": 769928,
+            "p99": 769928
+          },
+          "buffers": {
+            "553x1014": 964
+          },
+          "drivenMetres": 205.27,
+          "encodedTransferBytes": 2846648,
+          "requests": 10,
+          "pageErrors": [],
+          "responseErrors": []
+        }
+      ]
+    },
+    "v45": {
+      "renderer": {
+        "bundleBytes": 777898,
+        "bundleGzipBytes": 225339,
+        "modelRoute": "inverloch-model.js?v=45"
+      },
+      "sha256": "64d2d38caa4aff7c36ec6fb790c840be69a8b2e8767f6156fca7a5a10e97ce45",
+      "routes": [
+        {
+          "street": "abeckett",
+          "routeHash": "00c2f0014e78ef7586f3d4eca01f506f4ab6eb0ff458a3791128605041b855ce",
+          "seconds": 40,
+          "renders": 2399,
+          "renderHz": 59.98,
+          "frameIntervalMs": {
+            "count": 2398,
+            "p50": 16.7,
+            "p95": 17.7,
+            "p99": 18.3
+          },
+          "draws": {
+            "count": 2399,
+            "p50": 182,
+            "p95": 301,
+            "p99": 324
+          },
+          "triangles": {
+            "count": 2399,
+            "p50": 878836,
+            "p95": 1047599,
+            "p99": 1068729
+          },
+          "buffers": {
+            "553x1014": 2399
+          },
+          "drivenMetres": 345.88,
+          "encodedTransferBytes": 2862344,
+          "requests": 10,
+          "pageErrors": [],
+          "responseErrors": []
+        },
+        {
+          "street": "cuttriss",
+          "routeHash": "7df647ff69c23e08c245b8f33eeac6c833fa32886e4e4ab34503fad0d50155e1",
+          "seconds": 17,
+          "renders": 1020,
+          "renderHz": 60,
+          "frameIntervalMs": {
+            "count": 1019,
+            "p50": 16.7,
+            "p95": 18,
+            "p99": 18.7
+          },
+          "draws": {
+            "count": 1020,
+            "p50": 130,
+            "p95": 272,
+            "p99": 278
+          },
+          "triangles": {
+            "count": 1020,
+            "p50": 754596,
+            "p95": 800283,
+            "p99": 875927
+          },
+          "buffers": {
+            "553x1014": 1020
+          },
+          "drivenMetres": 138.71,
+          "encodedTransferBytes": 2862344,
+          "requests": 10,
+          "pageErrors": [],
+          "responseErrors": []
+        }
+      ]
+    }
+  },
+  "profile": {
+    "browserVersion": "158.0.8127.37",
+    "viewport": [
+      426,
+      780
+    ],
+    "deviceScaleFactor": 3,
+    "isMobile": true,
+    "hasTouch": true,
+    "reducedMotion": "no-preference",
+    "nativeGpu": true
+  },
+  "bridge": {
+    "medium": {
+      "tyreClearance": {
+        "count": 44,
+        "min": 0.01429788717959024,
+        "median": 0.060823873993002486,
+        "max": 0.09189652027546291
+      },
+      "guideSamples": 90,
+      "guideMissing": 0,
+      "guideBuried": 0,
+      "intrusions": 0,
+      "boatOnPath": 0
+    },
+    "low": {
+      "tyreClearance": {
+        "count": 44,
+        "min": 0.01429788717959024,
+        "median": 0.060823873993002486,
+        "max": 0.09189652027546291
+      },
+      "guideSamples": 90,
+      "guideMissing": 0,
+      "guideBuried": 0,
+      "intrusions": 0,
+      "boatOnPath": 0
+    },
+    "ultra": {
+      "tyreClearance": {
+        "count": 44,
+        "min": 0.007200633647417298,
+        "median": 0.06539870263157521,
+        "max": 0.10886947448776407
+      },
+      "guideSamples": 90,
+      "guideMissing": 0,
+      "guideBuried": 0,
+      "intrusions": 0,
+      "boatOnPath": 0
+    }
+  },
+  "confirmedGradePercent": {
+    "metric": "Rendered Medium pavement gradient at the matched survey window. Lees has consecutive 10m windows, Hillside and western Cape use 20m. The separate reference is a 5m LiDAR bare-earth DEM.",
+    "Lees Road": {
+      "v44": [
+        -11.04,
+        17.62
+      ],
+      "v45": [
+        -1.34,
+        2.48
+      ],
+      "DEM": [
+        -1.43,
+        2.63
+      ]
+    },
+    "Hillside Avenue": {
+      "v44": -27.9,
+      "v45": -17.56,
+      "DEM": -17.47
+    },
+    "Cape Patersonâ€“Inverloch Road": {
+      "v44": 45.5,
+      "v45": 12.12,
+      "DEM": 12.3
+    }
+  },
+  "normalDriveInterpretation": "The timed Autodrive routes use the same inputs. Both versions encounter the same street geometry; v45 steers around indexed parked vehicles and covers less distance. Compare the identical-pose replay for rendering cost.",
+  "firstAvoidance": [
+    {
+      "street": "abeckett",
+      "elapsedSeconds": 20.31709999996424,
+      "routeMetres": 204.76921544249518,
+      "parkedQuarterMetreKey": "-599,-2011",
+      "vehicleOverlapMetres": 0.0019065948217397155,
+      "plannedLateralMetres": 3.3
+    },
+    {
+      "street": "cuttriss",
+      "elapsedSeconds": 6.551699999988079,
+      "routeMetres": 67.35494556796374,
+      "parkedQuarterMetreKey": "3785,-4218",
+      "vehicleOverlapMetres": 0.7801839985573211,
+      "plannedLateralMetres": 3.3
+    }
+  ],
+  "touch": {
+    "inverloch": {
+      "stamp": "9c49a7c",
+      "tests": [
+        {
+          "round": "startup",
+          "target": "view",
+          "elapsedMs": 971,
+          "initial": "translate(4px, -19px)",
+          "both": "translate(4px, -19px)",
+          "retained": "translate(4px, -19px)",
+          "released": "",
+          "log": [
+            {
+              "type": "touchstart",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchstart",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "CANVAS",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "CANVAS",
+              "trusted": true
+            },
+            {
+              "type": "touchend",
+              "ids": [
+                1
+              ],
+              "changed": [
+                2
+              ],
+              "on": "CANVAS",
+              "trusted": true
+            }
+          ],
+          "passed": true
+        },
+        {
+          "round": "startup",
+          "target": "look",
+          "elapsedMs": 1689,
+          "initial": "translate(4px, -19px)",
+          "both": "translate(4px, -19px)",
+          "retained": "translate(4px, -19px)",
+          "released": "",
+          "log": [
+            {
+              "type": "touchstart",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchstart",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "look",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "look",
+              "trusted": true
+            },
+            {
+              "type": "touchend",
+              "ids": [
+                1
+              ],
+              "changed": [
+                2
+              ],
+              "on": "look",
+              "trusted": true
+            }
+          ],
+          "passed": true
+        },
+        {
+          "round": "after-30s",
+          "target": "view",
+          "elapsedMs": 30743,
+          "initial": "translate(4px, -19px)",
+          "both": "translate(4px, -19px)",
+          "retained": "translate(4px, -19px)",
+          "released": "",
+          "log": [
+            {
+              "type": "touchstart",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchstart",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "CANVAS",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "CANVAS",
+              "trusted": true
+            },
+            {
+              "type": "touchend",
+              "ids": [
+                1
+              ],
+              "changed": [
+                2
+              ],
+              "on": "CANVAS",
+              "trusted": true
+            }
+          ],
+          "passed": true
+        },
+        {
+          "round": "after-30s",
+          "target": "look",
+          "elapsedMs": 31487,
+          "initial": "translate(4px, -19px)",
+          "both": "translate(4px, -19px)",
+          "retained": "translate(4px, -19px)",
+          "released": "",
+          "log": [
+            {
+              "type": "touchstart",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchstart",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "look",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "look",
+              "trusted": true
+            },
+            {
+              "type": "touchend",
+              "ids": [
+                1
+              ],
+              "changed": [
+                2
+              ],
+              "on": "look",
+              "trusted": true
+            }
+          ],
+          "passed": true
+        }
+      ],
+      "pageErrors": []
+    },
+    "logan": {
+      "stamp": "9c49a7c",
+      "tests": [
+        {
+          "round": "startup",
+          "target": "view",
+          "elapsedMs": 769,
+          "initial": "translate(4px, -19px)",
+          "both": "translate(4px, -19px)",
+          "retained": "translate(4px, -19px)",
+          "released": "",
+          "log": [
+            {
+              "type": "touchstart",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchstart",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "CANVAS",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "CANVAS",
+              "trusted": true
+            },
+            {
+              "type": "touchend",
+              "ids": [
+                1
+              ],
+              "changed": [
+                2
+              ],
+              "on": "CANVAS",
+              "trusted": true
+            }
+          ],
+          "passed": true
+        },
+        {
+          "round": "startup",
+          "target": "look",
+          "elapsedMs": 1493,
+          "initial": "translate(4px, -19px)",
+          "both": "translate(4px, -19px)",
+          "retained": "translate(4px, -19px)",
+          "released": "",
+          "log": [
+            {
+              "type": "touchstart",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchstart",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "look",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "look",
+              "trusted": true
+            },
+            {
+              "type": "touchend",
+              "ids": [
+                1
+              ],
+              "changed": [
+                2
+              ],
+              "on": "look",
+              "trusted": true
+            }
+          ],
+          "passed": true
+        },
+        {
+          "round": "after-30s",
+          "target": "view",
+          "elapsedMs": 30733,
+          "initial": "translate(4px, -19px)",
+          "both": "translate(4px, -19px)",
+          "retained": "translate(4px, -19px)",
+          "released": "",
+          "log": [
+            {
+              "type": "touchstart",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchstart",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "CANVAS",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "CANVAS",
+              "trusted": true
+            },
+            {
+              "type": "touchend",
+              "ids": [
+                1
+              ],
+              "changed": [
+                2
+              ],
+              "on": "CANVAS",
+              "trusted": true
+            }
+          ],
+          "passed": true
+        },
+        {
+          "round": "after-30s",
+          "target": "look",
+          "elapsedMs": 31467,
+          "initial": "translate(4px, -19px)",
+          "both": "translate(4px, -19px)",
+          "retained": "translate(4px, -19px)",
+          "released": "",
+          "log": [
+            {
+              "type": "touchstart",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchstart",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "look",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "look",
+              "trusted": true
+            },
+            {
+              "type": "touchend",
+              "ids": [
+                1
+              ],
+              "changed": [
+                2
+              ],
+              "on": "look",
+              "trusted": true
+            }
+          ],
+          "passed": true
+        }
+      ],
+      "pageErrors": []
+    },
+    "moorooka": {
+      "stamp": "9c49a7c",
+      "tests": [
+        {
+          "round": "startup",
+          "target": "view",
+          "elapsedMs": 840,
+          "initial": "translate(4px, -19px)",
+          "both": "translate(4px, -19px)",
+          "retained": "translate(4px, -19px)",
+          "released": "",
+          "log": [
+            {
+              "type": "touchstart",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchstart",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "CANVAS",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "CANVAS",
+              "trusted": true
+            },
+            {
+              "type": "touchend",
+              "ids": [
+                1
+              ],
+              "changed": [
+                2
+              ],
+              "on": "CANVAS",
+              "trusted": true
+            }
+          ],
+          "passed": true
+        },
+        {
+          "round": "startup",
+          "target": "look",
+          "elapsedMs": 1582,
+          "initial": "translate(4px, -19px)",
+          "both": "translate(4px, -19px)",
+          "retained": "translate(4px, -19px)",
+          "released": "",
+          "log": [
+            {
+              "type": "touchstart",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchstart",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "look",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "look",
+              "trusted": true
+            },
+            {
+              "type": "touchend",
+              "ids": [
+                1
+              ],
+              "changed": [
+                2
+              ],
+              "on": "look",
+              "trusted": true
+            }
+          ],
+          "passed": true
+        },
+        {
+          "round": "after-30s",
+          "target": "view",
+          "elapsedMs": 30739,
+          "initial": "translate(4px, -19px)",
+          "both": "translate(4px, -19px)",
+          "retained": "translate(4px, -19px)",
+          "released": "",
+          "log": [
+            {
+              "type": "touchstart",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchstart",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "CANVAS",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "CANVAS",
+              "trusted": true
+            },
+            {
+              "type": "touchend",
+              "ids": [
+                1
+              ],
+              "changed": [
+                2
+              ],
+              "on": "CANVAS",
+              "trusted": true
+            }
+          ],
+          "passed": true
+        },
+        {
+          "round": "after-30s",
+          "target": "look",
+          "elapsedMs": 31482,
+          "initial": "translate(4px, -19px)",
+          "both": "translate(4px, -19px)",
+          "retained": "translate(4px, -19px)",
+          "released": "",
+          "log": [
+            {
+              "type": "touchstart",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1
+              ],
+              "changed": [
+                1
+              ],
+              "on": "move",
+              "trusted": true
+            },
+            {
+              "type": "touchstart",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "look",
+              "trusted": true
+            },
+            {
+              "type": "touchmove",
+              "ids": [
+                1,
+                2
+              ],
+              "changed": [
+                2
+              ],
+              "on": "look",
+              "trusted": true
+            },
+            {
+              "type": "touchend",
+              "ids": [
+                1
+              ],
+              "changed": [
+                2
+              ],
+              "on": "look",
+              "trusted": true
+            }
+          ],
+          "passed": true
+        }
+      ],
+      "pageErrors": []
+    }
+  },
+  "identicalPoseReplay": {
+    "v44": [
+      {
+        "street": "abeckett",
+        "seconds": 40,
+        "traceHash": "1ee2fa26b28eb8147a106be5e5043b1805170387fe5739df047780f49749733b",
+        "metrics": {
+          "renderIntervalMs": {
+            "count": 2398,
+            "p50": 16.7,
+            "p95": 17.5,
+            "p99": 18.2
+          },
+          "rAFIntervalMs": {
+            "count": 2399,
+            "p50": 16.7,
+            "p95": 17.5,
+            "p99": 18.2
+          },
+          "rendersPerSecond": 59.95,
+          "draws": {
+            "count": 2398,
+            "p50": 170,
+            "p95": 298,
+            "p99": 321
+          },
+          "triangles": {
+            "count": 2398,
+            "p50": 863251,
+            "p95": 1045686,
+            "p99": 1069212
+          },
+          "buffers": [
+            "553x1014"
+          ]
+        },
+        "errors": [],
+        "responses": []
+      },
+      {
+        "street": "cuttriss",
+        "seconds": 17,
+        "traceHash": "42218694005df724b8cffd317fc290d51f10c4438efc5d7edeca8631a095d36d",
+        "metrics": {
+          "renderIntervalMs": {
+            "count": 1018,
+            "p50": 16.7,
+            "p95": 17.2,
+            "p99": 17.7
+          },
+          "rAFIntervalMs": {
+            "count": 1019,
+            "p50": 16.7,
+            "p95": 17.2,
+            "p99": 17.8
+          },
+          "rendersPerSecond": 59.88235294117647,
+          "draws": {
+            "count": 1018,
+            "p50": 120,
+            "p95": 123,
+            "p99": 123
+          },
+          "triangles": {
+            "count": 1018,
+            "p50": 748538,
+            "p95": 769928,
+            "p99": 770088
+          },
+          "buffers": [
+            "553x1014"
+          ]
+        },
+        "errors": [],
+        "responses": []
+      }
+    ],
+    "v45": [
+      {
+        "street": "abeckett",
+        "seconds": 40,
+        "traceHash": "1ee2fa26b28eb8147a106be5e5043b1805170387fe5739df047780f49749733b",
+        "metrics": {
+          "renderIntervalMs": {
+            "count": 2397,
+            "p50": 16.7,
+            "p95": 17.7,
+            "p99": 18.4
+          },
+          "rAFIntervalMs": {
+            "count": 2399,
+            "p50": 16.7,
+            "p95": 17.7,
+            "p99": 18.4
+          },
+          "rendersPerSecond": 59.925,
+          "draws": {
+            "count": 2397,
+            "p50": 177,
+            "p95": 303,
+            "p99": 328
+          },
+          "triangles": {
+            "count": 2397,
+            "p50": 879299,
+            "p95": 1048554,
+            "p99": 1067817
+          },
+          "buffers": [
+            "553x1014"
+          ]
+        },
+        "errors": [],
+        "responses": []
+      },
+      {
+        "street": "cuttriss",
+        "seconds": 17,
+        "traceHash": "42218694005df724b8cffd317fc290d51f10c4438efc5d7edeca8631a095d36d",
+        "metrics": {
+          "renderIntervalMs": {
+            "count": 1019,
+            "p50": 16.7,
+            "p95": 17.9,
+            "p99": 18.7
+          },
+          "rAFIntervalMs": {
+            "count": 1019,
+            "p50": 16.7,
+            "p95": 17.9,
+            "p99": 18.7
+          },
+          "rendersPerSecond": 59.94117647058823,
+          "draws": {
+            "count": 1019,
+            "p50": 130,
+            "p95": 133,
+            "p99": 133
+          },
+          "triangles": {
+            "count": 1019,
+            "p50": 749732,
+            "p95": 763630,
+            "p99": 763810
+          },
+          "buffers": [
+            "553x1014"
+          ]
+        },
+        "errors": [],
+        "responses": []
+      }
+    ]
+  }
+}
