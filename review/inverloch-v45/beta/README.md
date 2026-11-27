@@ -25,4 +25,18 @@ BenLaptop Chrome ran with a 393 × 851 touch viewport. We first loaded the publi
 - On foot the Powlett house stopped forward input. The walking and driving controls both stopped at a staged sedan. The 11 Norman driveway sample stayed open.
 - A borrowed car remained in place at 29 and 31 simulated minutes while watched. Moving the camera away allowed it to return by 31.5 minutes. Its home pose, collision and all four parked LODs returned, and the driven slot became available.
 - High showed the Marion Court gum, Surf Parade roadside scrub and an A’Beckett sedan with visible seats through depth-tested panes at opacity 0.34.
-- The first Beaudesert Road GPS route in Moorooka (2.77 km) and Kingston Road route in Logan (9.37 km) both showed the blue line at the start and through bends. Stopping each GPS route removed the geometry and cleared navigation state. The measured mesh assembly took 1.2 and 2.6 ms respectively on the laptop.
+- The first Beaudesert Road GPS route in Moorooka (2.77 km) and Kingston Road route in Logan (9.37 km) both showed the blue line at the start and through bends. Stopping each GPS route removed the geometry and cleared navigation state. In the final phone-emulated laptop runs, tapping the result to displaying the mesh took 13 ms and 31 ms respectively.
+
+## Logan GPS exceptions already present in production
+
+The Moorooka route had all 69 sampled centers inside the road corridor. On Logan, 69 of 70 sampled centers were within the expanded road fill. Two targeted views on the Kingston Road route showed a blue guide crossing a grass shoulder around 676 m and a locally invisible segment around 4.87 km. We repeated both on production host `e5753a7` with the same 3,187 route points, native Logan renderer and camera poses. Both artifacts were visible there. At the latter point the guide rose from approximately 49 cm below the nominal production road layer to 2 cm below it on beta. The median clearance across the route rose from −29 cm to +18 cm.
+
+![Logan beta GPS and guide-hidden camera pairs at both affected locations](logan-gps-exceptions.jpg)
+
+## Matched Moorooka repeat on the physical phone
+
+We repeated production first and beta second. At selection the starting positions were 4.3 cm apart, page age was 20.49 versus 20.47 seconds, and both routes contained 257 points over 742.5 m. Production and beta activated GPS in 15.7 and 12.1 ms respectively. The largest nearby animation callback gaps were 47.3 and 35.6 ms. Neither had a nearby main-thread task of 50 ms or longer. Each retained both controls across 52 trusted input events. The original beta pause did not recur.
+
+Both pages had substantial startup stalls **before** touch or GPS, at approximately 10–16 seconds of page age. The longest callback gaps were 3.87 s on production and 4.01 s on beta. Chrome attributed almost all this time to animation callbacks in the same Moorooka v80 native bundle. The first beta interaction was captured without script attribution, so its underlying cause remains undetermined.
+
+[Matched beta and production views of both Logan exceptions](logan-production-comparison.png)
