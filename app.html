@@ -9708,7 +9708,7 @@ const handle = async (m, post) => {
     // Ordinary native cars use their surveyed home position as a stable identity across presets.
     const driven = cfg.place === "inv" ? new Map() : null;
     let replaying = null;
-    const log = [], last = {}, LAST = ["setLabelObstacles", "setTide", "setFlood", "setFloodLevel", "setMinutes", "setCamera", "setGroundEdits", "setRemoved", "setMore", "driveCar"];
+    const log = [], last = {}, LAST = ["setLabelObstacles", "setTide", "setFlood", "setFloodLevel", "setMinutes", "setCamera", "setGroundEdits", "setRemoved", "setMore", "driveCar", "setControlledCar"];
     const make = (q, own) => { const t0 = performance.now(); let mm = null;
       mm = lib.create(box, { ...opts, quality: q, ...(graphics ? { frameTarget: graphics.frameTarget } : {}), onProgress: own ? cb.onProgress : undefined,
         ...(graphics ? { onThunder: strength => { if (mm === cur && T.on && !T.dead && !document.hidden) T.snd?.thunder(strength); } } : {}),
@@ -9718,7 +9718,7 @@ const handle = async (m, post) => {
     // a handle Inverloch's town centre moves things with: always the one in the model that's showing
     const handle = real => { const H = { real, calls: new Map() };
       H.proxy = new Proxy(H, { get: (h, k) => { const v = h.real[k]; if (typeof v !== "function") return v;
-        return (...a) => { h.calls.set(k + ":" + (k === "setSignal" ? "" : a[0]), a); return h.real[k](...a); }; } });
+        return (...a) => { h.calls.set(k + ":" + (k === "setSignal" || k === "setCabin" ? "" : a[0]), a); return h.real[k](...a); }; } });
       return H; };
     const handles = [];
     let ids = 0; const tag = mm => { mm.id = ++ids; const el = box.lastElementChild; if (el) el.dataset.anModel = String(mm.id); };
@@ -9740,6 +9740,7 @@ const handle = async (m, post) => {
           }
           return r;
         }
+        if (k === "setControlledCar" && replaying) replaying.setControlledCar?.(...a);
         if (k === "setRemoved" && T.invStatic) T.invStatic.hideCars(a[0]?.cars || []);
         if (k === "addParts" || k === "addTrafficCar") { const H = handle(r); handles.push(H); log.push([k, a, H]); return H.proxy; }
         if (k === "addPad" || k === "addCars") log.push([k, a]); else if (LAST.includes(k)) last[k] = a;
@@ -18697,7 +18698,7 @@ const handle = async (m, post) => {
     if (!N) return P;  // nothing to load or draw
     let roads = null, nodes = null, dead = false, last = 0, reroad = null, moveAt = 0;
     const contact = cfg.place === "inv";
-    let playerStart = null;
+    let playerStart = null, cabinCheck = 0, closeCabin = null;
     if (contact) {
       // Only live traffic owns these footprints. take() removes its car before the player can drive it.
       const limit = (kind, from, to) => {
@@ -18813,6 +18814,19 @@ const handle = async (m, post) => {
       const me = T.car?.in ? T.car.pose?.() : T.walk ? { x: F.pos.x, z: F.pos.z } : null;
       const kind = contact && me && (T.car?.in ? (me.k === "gold" || me.k === "hotrod" || me.k?.startsWith("car~") ? "car" : me.k) : "walk");
       const player = townTrafficBodies[kind] ? { x: me.x, z: me.z, h: me.h || 0, y: me.y ?? ground(me.x, me.z) + (F.jumpH || 0) } : null;
+      if (contact && now >= cabinCheck) {
+        cabinCheck = now+350;
+        let closest = null, d2 = 12*12;
+        const eye = me || F.pos;
+        for (const npc of P.cars) {
+          if (npc.away || npc.y == null || !npc.parts.setCabin) continue;
+          const d = (eye.x-npc.x)**2 + ((eye.y ?? F.pos.y)-npc.y)**2 + (eye.z-npc.z)**2;
+          if (d < d2) { d2 = d; closest = npc; }
+        }
+        if (closest !== closeCabin) {
+          closeCabin?.parts.setCabin(false); closest?.parts.setCabin(true); closeCabin = closest;
+        }
+      }
       const previous = playerStart?.kind === kind ? playerStart : player;
       playerStart = null;
       // gone 450 m from where the traffic is centred: centre it on you, and bring the cars that are now out of sight round to you
@@ -18886,6 +18900,7 @@ const handle = async (m, post) => {
         if (!C.bus) { if (C.spin === undefined) C.spin = townSpinner(m, "new", contact && m.addTrafficCar && !m.roadSurfaceAt ? 0.25 : 0); C.spin?.at(M.elements.slice(), rolled); } }); };  // (its hubcaps turning)
     // hand a car over to be driven: it leaves the traffic, and the driving code (townCar) keeps it as one of its own
     P.take = C => { const i = P.cars.indexOf(C); if (i < 0) return null; P.cars.splice(i, 1); showSignal(C, 0); C.spin?.hide();
+      if (closeCabin === C) closeCabin = null;
       return { x: C.x, z: C.z, h: C.h ?? 0, y: C.y ?? ground(C.x, C.z), p: C.p || 0, r: C.rl || 0, gold: false, bus: false, parts: C.parts, trafficCar: contact ? C : null }; };
     if (contact) P.rejoin = actor => {
       const npc = actor.trafficCar;
@@ -24210,6 +24225,7 @@ const handle = async (m, post) => {
         P.v = 0; P.spin = 0; const [y, p, r] = lie(P, 2, 1.2); P.y = y; P.p = p; P.r = r;
         if (step) { F.pos.x = P.x + Math.cos(P.h) * 1.9; F.pos.z = P.z - Math.sin(P.h) * 1.9; F.yaw = P.h + Math.PI; F.pitch = -0.04; }  // out of the left door
         plane = null; showPlane(P); }
+      if (was === "car") selectCabin(null);
       if (was === "car" && car.id) T.invStatic?.park(car.id,car.x,car.z,car.h,car.y,car.p,car.r);
       if (was === "car" && car.own) T.invStatic?.own(car.own, !!car.own.takenBy || !!car.own.rescue);
       if (was === "car" && !car.own?.goHome) returns?.leave(car);
@@ -24670,7 +24686,23 @@ const handle = async (m, post) => {
     const nearOwn = () => { let best = null, far = Infinity; for (const G of [...owns.filter(G => !G.takenBy), ...(T.traffic?.cars || []).filter(D => D.x != null && !D.away && !D.bus)]) { const d = Math.hypot(G.x - F.pos.x, G.z - F.pos.z); if (d < far) { far = d; best = G; } } return [best, far]; };
     // (cars from 5.6 m, 30% closer than the 8 they were: Ash, 17 November 2026, "Make get in the car only work from a closer radius. Not too
     // close but about 30% less")
-    const reach = () => { const c0 = parked(F.pos.x, F.pos.z, 5.6), [G, dg] = nearOwn(), c = G && dg < (G.bus ? 15 : 5.6) && (!c0 || dg < c0.distance) ? { own: G, gold: G.gold, distance: dg } : c0, [P, d] = nearPlane(), r = d < 11 && (!c || d - 2 < c.distance) ? { plane: P } : c;
+    let cabinId = null, cabinHandle = null;
+    const selectCabin = (id, handle = null) => {
+      if (cabinHandle !== handle) {
+        cabinHandle?.setCabin?.(false); handle?.setCabin?.(true); cabinHandle = handle;
+      }
+      if (cabinId?.[0] !== id?.[0] || cabinId?.[1] !== id?.[1]) {
+        m.setControlledCar?.(id?.[0] ?? null,id?.[1]); cabinId = id;
+      }
+    };
+    const reach = (inspect = false) => {
+      const native = parked(F.pos.x,F.pos.z,inspect && m.setControlledCar ? 10 : 5.6), c0 = native?.distance <= 5.6 ? native : null;
+      const [G, dg] = nearOwn();
+      if (inspect && m.setControlledCar) {
+        const other = G?.trafficCar && dg <= 10 && dg < (native?.distance ?? Infinity) ? G : null;
+        selectCabin(other ? null : native?.id,other?.parts);
+      }
+      const c = G && dg < (G.bus ? 15 : 5.6) && (!c0 || dg < c0.distance) ? { own: G, gold: G.gold, distance: dg } : c0, [P, d] = nearPlane(), r = d < 11 && (!c || d - 2 < c.distance) ? { plane: P } : c;
       const dp0 = possumMesh && !pos.takenBy ? Math.hypot(pos.x - F.pos.x, pos.z - F.pos.z) : Infinity, r1 = dp0 < 6 && (!r || r.plane || dp0 < r.distance) ? { possum: pos, distance: dp0 } : r;  // the possum, within 6 m
       const dd0 = remoteMesh && !dr.takenBy ? Math.hypot(remoteAt.x - F.pos.x, remoteAt.z - F.pos.z) : Infinity, r0 = dd0 < 3.5 && (!r1 || r1.plane || dd0 < r1.distance) ? { remote: true, distance: dd0 } : null;
       const dq = pigeonMesh && !pg.takenBy ? Math.hypot(pg.x - F.pos.x, pg.z - F.pos.z) : Infinity, r2 = dq < 4.5 && pg.y - ground(pg.x, pg.z) < 8 && (!r1 || r1.plane || dq < r1.distance) ? { pigeon: pg, distance: dq } : r0 || r1;  // the pigeon, within 4.5 m (or the drone's remote, within 3.5 m)
@@ -25046,6 +25078,7 @@ const handle = async (m, post) => {
       else { if (c.own && !owns.includes(c.own)) { const G = T.traffic?.take?.(c.own); if (!G) return true; owns.push(G); c.own = G; }
         car = c.own ? { own: c.own, gold: c.own.gold, bus: c.own.bus, hotrod: !!c.own.hotrod, x: c.own.x, z: c.own.z, h: c.own.h, dir: c.own.h, y: c.own.y, p: c.own.p, r: c.own.r, v: 0, steer: 0 } : { id: c.id, bus: !!c.bus, x: c.x, z: c.z, h: c.heading, dir: c.heading, y: ground(c.x, c.z) + 0.05, p: 0, r: 0, v: 0, steer: 0 };
         if (!car.own && !m.driveCar(c.id[0], c.id[1], car.x, car.y, car.z, car.h, 0, 0)) { car = null; toast("That car won't start. Try another one."); return true; }
+        selectCabin(car.id,car.own?.trafficCar ? car.own.parts : null);
         returns?.take(car);
         if (car.id) T.invStatic?.take(car.id); else if (car.own) T.invStatic?.own(car.own,true);
         if (pos?.grip) { const r = pos.grip.ref; if (r === c.own || (r && Math.hypot(r.x - car.x, r.z - car.z) < 1.5)) { pos.grip.ref = car; toast("You're holding on to the roof. Off you go!", 2600); } }
@@ -25068,7 +25101,8 @@ const handle = async (m, post) => {
       if (touch && veh !== "ride" && veh !== "possum" && veh !== "pigeon" && veh !== "drone" && !T.race?.active?.() && !rexRole) toast(veh === "plane" && plane.heli ? "Hold Up to lift off. Left stick: forward to go, sideways to turn. Down lands it." : veh === "plane" ? "Left stick: push up to go, and it lifts off once it's fast. In the air, up climbs, down dives, sideways turns. Faster and Slower set the power." : "Left stick to drive, right stick to look around. Hold Boost for the mega boost.", 5500);
       return true; };
     // the Get in button: there while something is in reach of where you are walking (looked for a few times a second)
-    C.frame = () => { returns?.tick(); followGrip(); if (veh) return; const now = performance.now(); if (now - at < 300) return; at = now;
+    C.frame = () => { returns?.tick(); followGrip();
+      if (veh) { if (veh !== "car" && (cabinId || cabinHandle)) selectCabin(null); return; } const now = performance.now(); if (now - at < 300) return; at = now;
       if (place === "inv") rememberWalk(now);
       if (pos) { const d = Math.hypot(pos.x - F.pos.x, pos.z - F.pos.z), dh = Math.hypot(PS.x - F.pos.x, PS.z - F.pos.z);
         if (!possumMesh && Math.min(d, dh) < 400) wake(); if (d < 80) { loadRoofs(); loadTrees(); }
@@ -25077,7 +25111,7 @@ const handle = async (m, post) => {
       if (pg) { const d = Math.hypot(pg.x - F.pos.x, pg.z - F.pos.z), dh = Math.hypot(PG.x - F.pos.x, PG.z - F.pos.z); if (!pigeonMesh && Math.min(d, dh) < 400) wakePigeon();
         if (pigeonMesh && pg.x === PG.x && pg.z === PG.z) { const pk = T.flickFeed ? (Math.floor(now / 300) % 2 ? -0.5 : 0) : 0; if (pk !== pg.p) { pg.p = pk; showPigeon(); } }  // pecking at Flick's crumbs
         if ((pg.x !== PG.x || pg.z !== PG.z) && d > 150) pigeonHome(); }  // and the pigeon back to the shops
-      const near = T.walk && !T.tween ? reach() : null; shownRide = near?.ride ? { id: near.ride.id, t: now } : null; const say = near?.ride ? `Ride with ${near.ride.name}` : near?.possum ? "Be the possum" : near?.pigeon ? "Be the pigeon" : near?.remote ? "Fly the drone" : near?.plane ? (near.plane.heli ? (near.plane.gold ? "Get in the golden helicopter" : "Get in the helicopter") : "Get in the plane") : near?.bus?.x != null ? (near.bus.v > 1.5 ? "Bus coming: wait for it to stop" : "Get on the bus") : near?.own?.bus || near?.bus ? "Get in the bus" : near?.gold ? "Get in the golden car" : "Get in the car";
+      const near = T.walk && !T.tween ? reach(true) : null; if ((!T.walk || T.tween) && (cabinId || cabinHandle)) selectCabin(null); shownRide = near?.ride ? { id: near.ride.id, t: now } : null; const say = near?.ride ? `Ride with ${near.ride.name}` : near?.possum ? "Be the possum" : near?.pigeon ? "Be the pigeon" : near?.remote ? "Fly the drone" : near?.plane ? (near.plane.heli ? (near.plane.gold ? "Get in the golden helicopter" : "Get in the helicopter") : "Get in the plane") : near?.bus?.x != null ? (near.bus.v > 1.5 ? "Bus coming: wait for it to stop" : "Get on the bus") : near?.own?.bus || near?.bus ? "Get in the bus" : near?.gold ? "Get in the golden car" : "Get in the car";
       if (btn.hidden !== !near) btn.hidden = !near; if (near && btn.textContent !== say) btn.textContent = say; };
     btn.onclick = () => { C.enter(); btn.blur(); };
     const hold = on => e => { F.boost = on && !!veh; boostBtn.classList.toggle("on", F.boost); e.preventDefault(); };
