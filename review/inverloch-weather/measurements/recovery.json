@@ -1,0 +1,113 @@
+[
+  {
+    "condition": "showers",
+    "street": "cuttriss",
+    "recovery": {
+      "wet": {
+        "epoch": 1782000460,
+        "cover": 0.78,
+        "offset": [
+          -0.412109375,
+          0.412109375
+        ],
+        "flash": 0,
+        "shadowStrength": 0.64,
+        "sunDir": [
+          0.12464159026172364,
+          0.9235351829182038,
+          -0.3626944166778261
+        ],
+        "sharedFields": true,
+        "age": 25.793962836265564,
+        "wetness": 1,
+        "storm": false,
+        "lines": 652,
+        "rainVisible": true,
+        "rain": 0.6439376130118035,
+        "rainShaderValue": 0.6439376130118035,
+        "dropCount": 640
+      },
+      "drying": {
+        "epoch": 1782000534,
+        "cover": 0.38630979178416025,
+        "offset": [
+          -0.4482421875,
+          0.4482421875
+        ],
+        "flash": 0,
+        "shadowStrength": 0.64,
+        "sunDir": [
+          0.12464159026172364,
+          0.9235351829182038,
+          -0.3626944166778261
+        ],
+        "sharedFields": true,
+        "age": 99.79396283626556,
+        "wetness": 0.5149474660847105,
+        "storm": false,
+        "lines": 12,
+        "rainVisible": false,
+        "rain": 0,
+        "rainShaderValue": 0.6439376130118035,
+        "dropCount": 640
+      },
+      "dry": {
+        "epoch": 1782000570,
+        "cover": 0.38,
+        "offset": [
+          -0.4658203125,
+          0.4658203125
+        ],
+        "flash": 0,
+        "shadowStrength": 0.64,
+        "sunDir": [
+          0.12464159026172364,
+          0.9235351829182038,
+          -0.3626944166778261
+        ],
+        "sharedFields": true,
+        "age": 135.79396283626556,
+        "wetness": 0,
+        "storm": false,
+        "lines": 12,
+        "rainVisible": false,
+        "rain": 0,
+        "rainShaderValue": 0.6439376130118035,
+        "dropCount": 640
+      }
+    },
+    "pageErrors": [],
+    "consoleErrors": [
+      "Loading the stylesheet 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400&family=Schibsted+Grotesk:wght@400..800&display=swap' violates the following Content Security Policy directive: \"style-src 'self' 'unsafe-inline'\". Note that 'style-src-elem' was not explicitly set, so 'style-src' is used as a fallback. The action has been blocked.",
+      "Connecting to 'https://raw.githubusercontent.com/Ashley-Pettit/awesome-news/chat/chat/mail.json?t=14964513' violates the following Content Security Policy directive: \"connect-src 'self' blob: data:\". The action has been blocked.",
+      "Fetch API cannot load https://raw.githubusercontent.com/Ashley-Pettit/awesome-news/chat/chat/mail.json?t=14964513. Refused to connect because it violates the document's Content Security Policy.",
+      "Connecting to 'https://ntfy.sh/awesome-news-town-mail-k4p9/json?poll=1&since=all' violates the following Content Security Policy directive: \"connect-src 'self' blob: data:\". The action has been blocked.",
+      "Fetch API cannot load https://ntfy.sh/awesome-news-town-mail-k4p9/json?poll=1&since=all. Refused to connect because it violates the document's Content Security Policy."
+    ],
+    "responseErrors": [],
+    "weatherEnd": {
+      "epoch": 1782000570,
+      "cover": 0.38,
+      "offset": [
+        -0.4658203125,
+        0.4658203125
+      ],
+      "flash": 0,
+      "shadowStrength": 0.64,
+      "sunDir": [
+        0.12464159026172364,
+        0.9235351829182038,
+        -0.3626944166778261
+      ],
+      "sharedFields": true,
+      "age": 135.79396283626556,
+      "wetness": 0,
+      "storm": false,
+      "lines": 12,
+      "rainVisible": false,
+      "rain": 0,
+      "rainShaderValue": 0.6439376130118035,
+      "dropCount": 640
+    }
+  }
+]

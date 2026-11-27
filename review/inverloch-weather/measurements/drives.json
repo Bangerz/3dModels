@@ -1,0 +1,1669 @@
+[
+  {
+    "tier": "medium",
+    "hostSha": "5f21ef9fd3bc3b1c93ab071e09696f35d5a4e2b901eb556ed92e9b0199e875e6",
+    "bundleSha": "c538e4f53dd63f64be30cec68146649baf16bc5d8f341622f59d6415fe0e0af7",
+    "profile": {
+      "browserVersion": "158.0.8127.37",
+      "viewport": [
+        426,
+        780
+      ],
+      "deviceScaleFactor": 3,
+      "isMobile": true,
+      "hasTouch": true,
+      "reducedMotion": "no-preference",
+      "nativeGpu": true
+    },
+    "assets": {
+      "bundleBytes": 733909,
+      "bundleGzipBytes": 209003,
+      "modelRoute": "inverloch-model.js?v=41"
+    },
+    "fps": 60,
+    "runs": [
+      {
+        "street": "abeckett",
+        "condition": "baseline",
+        "routeHash": "00c2f0014e78ef7586f3d4eca01f506f4ab6eb0ff458a3791128605041b855ce",
+        "reasons": [],
+        "pageErrors": [],
+        "summary": {
+          "elapsedSeconds": 40,
+          "minutes": [
+            {
+              "minute": 1,
+              "fromSec": 0,
+              "toSec": 40,
+              "utcStart": "2026-11-27T00:56:11.605Z",
+              "renders": 2400,
+              "renderHz": 60,
+              "renderIntervalMs": {
+                "count": 2399,
+                "p50": 16.7,
+                "p95": 17.5,
+                "p99": 18.1
+              },
+              "rafs": 2400,
+              "rafHz": 60,
+              "rafIntervalMs": {
+                "count": 2399,
+                "p50": 16.7,
+                "p95": 16.9,
+                "p99": 17.3
+              },
+              "drawsPerRender": {
+                "count": 2400,
+                "p50": 170,
+                "p95": 304,
+                "p99": 325
+              },
+              "trianglesPerRender": {
+                "count": 2400,
+                "p50": 855750,
+                "p95": 1045839,
+                "p99": 1069522
+              },
+              "buffers": {
+                "553x1014": 2400
+              },
+              "routeStartM": 0,
+              "routeEndM": 417.4949893808318,
+              "routeProgressM": 417.49,
+              "distanceDrivenM": 414.39,
+              "meanKmh": 37.3,
+              "speedKmh": {
+                "count": 80,
+                "p50": 48.389,
+                "p95": 49.692,
+                "p99": 49.7
+              },
+              "routeDeviationM": {
+                "count": 80,
+                "p50": 0,
+                "p95": 0.931,
+                "p99": 1.34
+              },
+              "cameraTravelM": 419.24
+            }
+          ],
+          "routeMetres": 424.38776931103564,
+          "distanceDrivenM": 421.2832700568881,
+          "lapsCompleted": 0,
+          "meanKmh": 37.92,
+          "renderedFrameIntervalMs": {
+            "count": 2399,
+            "p50": 16.7,
+            "p95": 17.5,
+            "p99": 18.1
+          },
+          "rAFIntervalMs": {
+            "count": 2399,
+            "p50": 16.7,
+            "p95": 16.9,
+            "p99": 17.3
+          }
+        },
+        "requests": [
+          [
+            "inverloch/explore/",
+            "GET",
+            964395,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/inverloch-model.js",
+            "GET",
+            209017,
+            "?v=41",
+            "gzip"
+          ],
+          [
+            "town3d/town.json",
+            "GET",
+            366704,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/ground-2k.webp",
+            "GET",
+            242526,
+            "",
+            "identity"
+          ],
+          [
+            "town3d/height.png",
+            "GET",
+            689479,
+            "",
+            "identity"
+          ],
+          [
+            "_pixel/three.js",
+            "GET",
+            158243,
+            "",
+            "gzip"
+          ],
+          [
+            "inverloch/explore/version.json",
+            "GET",
+            45,
+            "?t=1795740962824",
+            "gzip"
+          ],
+          [
+            "inverloch/explore/explore-icon.png",
+            "GET",
+            61365,
+            "?v=1",
+            "identity"
+          ],
+          [
+            "town3d/detail.json",
+            "GET",
+            167,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/detail-town.webp",
+            "GET",
+            127700,
+            "",
+            "identity"
+          ]
+        ],
+        "transferBytes": 2819641
+      },
+      {
+        "street": "cuttriss",
+        "condition": "baseline",
+        "routeHash": "7df647ff69c23e08c245b8f33eeac6c833fa32886e4e4ab34503fad0d50155e1",
+        "reasons": [],
+        "pageErrors": [],
+        "summary": {
+          "elapsedSeconds": 17,
+          "minutes": [
+            {
+              "minute": 1,
+              "fromSec": 0,
+              "toSec": 17,
+              "utcStart": "2026-11-27T00:56:58.499Z",
+              "renders": 1016,
+              "renderHz": 59.76,
+              "renderIntervalMs": {
+                "count": 1015,
+                "p50": 16.7,
+                "p95": 18.3,
+                "p99": 21.2
+              },
+              "rafs": 1017,
+              "rafHz": 59.82,
+              "rafIntervalMs": {
+                "count": 1016,
+                "p50": 16.7,
+                "p95": 16.9,
+                "p99": 17.5
+              },
+              "drawsPerRender": {
+                "count": 1016,
+                "p50": 121,
+                "p95": 123,
+                "p99": 123
+              },
+              "trianglesPerRender": {
+                "count": 1016,
+                "p50": 755736,
+                "p95": 769928,
+                "p99": 769928
+              },
+              "buffers": {
+                "553x1014": 1016
+              },
+              "routeStartM": 0,
+              "routeEndM": 205.0390229890275,
+              "routeProgressM": 205.04,
+              "distanceDrivenM": 205.04,
+              "meanKmh": 43.42,
+              "speedKmh": {
+                "count": 34,
+                "p50": 49.636,
+                "p95": 49.704,
+                "p99": 49.706
+              },
+              "routeDeviationM": {
+                "count": 34,
+                "p50": 0,
+                "p95": 0,
+                "p99": 0
+              },
+              "cameraTravelM": 213.26
+            }
+          ],
+          "routeMetres": 212.1217521195007,
+          "distanceDrivenM": 212.12175211950077,
+          "lapsCompleted": 0,
+          "meanKmh": 44.92,
+          "renderedFrameIntervalMs": {
+            "count": 1015,
+            "p50": 16.7,
+            "p95": 18.3,
+            "p99": 21.2
+          },
+          "rAFIntervalMs": {
+            "count": 1016,
+            "p50": 16.7,
+            "p95": 16.9,
+            "p99": 17.5
+          }
+        },
+        "requests": [
+          [
+            "inverloch/explore/",
+            "GET",
+            964395,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/inverloch-model.js",
+            "GET",
+            209017,
+            "?v=41",
+            "gzip"
+          ],
+          [
+            "town3d/ground-2k.webp",
+            "GET",
+            242526,
+            "",
+            "identity"
+          ],
+          [
+            "town3d/height.png",
+            "GET",
+            689479,
+            "",
+            "identity"
+          ],
+          [
+            "town3d/town.json",
+            "GET",
+            366704,
+            "",
+            "gzip"
+          ],
+          [
+            "_pixel/three.js",
+            "GET",
+            158243,
+            "",
+            "gzip"
+          ],
+          [
+            "inverloch/explore/version.json",
+            "GET",
+            45,
+            "?t=1795741012154",
+            "gzip"
+          ],
+          [
+            "inverloch/explore/explore-icon.png",
+            "GET",
+            61365,
+            "?v=1",
+            "identity"
+          ],
+          [
+            "town3d/detail.json",
+            "GET",
+            167,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/detail-town.webp",
+            "GET",
+            127700,
+            "",
+            "identity"
+          ]
+        ],
+        "transferBytes": 2819641
+      }
+    ]
+  },
+  {
+    "tier": "medium",
+    "hostSha": "2683584545dd02d593dce5f75877fdb6f5d90606c584fe63149f88d3d2310e8e",
+    "bundleSha": "90ce4b56e843dc7bb92c28d7d442bd2e1653c77c8f3953189acad04647b2c844",
+    "profile": {
+      "browserVersion": "158.0.8127.37",
+      "viewport": [
+        426,
+        780
+      ],
+      "deviceScaleFactor": 3,
+      "isMobile": true,
+      "hasTouch": true,
+      "reducedMotion": "no-preference",
+      "nativeGpu": true
+    },
+    "assets": {
+      "bundleBytes": 750161,
+      "bundleGzipBytes": 213573,
+      "modelRoute": "inverloch-model.js?v=42"
+    },
+    "fps": 60,
+    "runs": [
+      {
+        "street": "abeckett",
+        "condition": "clear",
+        "routeHash": "00c2f0014e78ef7586f3d4eca01f506f4ab6eb0ff458a3791128605041b855ce",
+        "reasons": [],
+        "pageErrors": [],
+        "summary": {
+          "elapsedSeconds": 40,
+          "minutes": [
+            {
+              "minute": 1,
+              "fromSec": 0,
+              "toSec": 40,
+              "utcStart": "2026-11-27T01:01:45.992Z",
+              "renders": 2400,
+              "renderHz": 60,
+              "renderIntervalMs": {
+                "count": 2399,
+                "p50": 16.7,
+                "p95": 17.8,
+                "p99": 18.7
+              },
+              "rafs": 2400,
+              "rafHz": 60,
+              "rafIntervalMs": {
+                "count": 2399,
+                "p50": 16.7,
+                "p95": 16.8,
+                "p99": 16.9
+              },
+              "drawsPerRender": {
+                "count": 2400,
+                "p50": 170,
+                "p95": 302,
+                "p99": 321
+              },
+              "trianglesPerRender": {
+                "count": 2400,
+                "p50": 855751,
+                "p95": 1045719,
+                "p99": 1069522
+              },
+              "buffers": {
+                "553x1014": 2400
+              },
+              "routeStartM": 0,
+              "routeEndM": 417.4967239256963,
+              "routeProgressM": 417.5,
+              "distanceDrivenM": 414.39,
+              "meanKmh": 37.3,
+              "speedKmh": {
+                "count": 80,
+                "p50": 48.389,
+                "p95": 49.692,
+                "p99": 49.7
+              },
+              "routeDeviationM": {
+                "count": 80,
+                "p50": 0,
+                "p95": 0.932,
+                "p99": 1.341
+              },
+              "cameraTravelM": 419.24
+            }
+          ],
+          "routeMetres": 424.3926483948758,
+          "distanceDrivenM": 421.2880124661136,
+          "lapsCompleted": 0,
+          "meanKmh": 37.92,
+          "renderedFrameIntervalMs": {
+            "count": 2399,
+            "p50": 16.7,
+            "p95": 17.8,
+            "p99": 18.7
+          },
+          "rAFIntervalMs": {
+            "count": 2399,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.9
+          }
+        },
+        "requests": [
+          [
+            "inverloch/explore/",
+            "GET",
+            964695,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/inverloch-model.js",
+            "GET",
+            213587,
+            "?v=42",
+            "gzip"
+          ],
+          [
+            "town3d/town.json",
+            "GET",
+            366704,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/ground-2k.webp",
+            "GET",
+            242526,
+            "",
+            "identity"
+          ],
+          [
+            "town3d/height.png",
+            "GET",
+            689479,
+            "",
+            "identity"
+          ],
+          [
+            "_pixel/three.js",
+            "GET",
+            158243,
+            "",
+            "gzip"
+          ],
+          [
+            "inverloch/explore/version.json",
+            "GET",
+            45,
+            "?t=1795741295688",
+            "gzip"
+          ],
+          [
+            "inverloch/explore/explore-icon.png",
+            "GET",
+            61365,
+            "?v=1",
+            "identity"
+          ],
+          [
+            "town3d/detail.json",
+            "GET",
+            167,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/detail-town.webp",
+            "GET",
+            127700,
+            "",
+            "identity"
+          ]
+        ],
+        "transferBytes": 2824511
+      },
+      {
+        "street": "cuttriss",
+        "condition": "clear",
+        "routeHash": "7df647ff69c23e08c245b8f33eeac6c833fa32886e4e4ab34503fad0d50155e1",
+        "reasons": [],
+        "pageErrors": [],
+        "summary": {
+          "elapsedSeconds": 17,
+          "minutes": [
+            {
+              "minute": 1,
+              "fromSec": 0,
+              "toSec": 17,
+              "utcStart": "2026-11-27T01:02:33.350Z",
+              "renders": 1019,
+              "renderHz": 59.94,
+              "renderIntervalMs": {
+                "count": 1018,
+                "p50": 16.7,
+                "p95": 17.6,
+                "p99": 18.4
+              },
+              "rafs": 1020,
+              "rafHz": 60,
+              "rafIntervalMs": {
+                "count": 1019,
+                "p50": 16.7,
+                "p95": 16.8,
+                "p99": 17
+              },
+              "drawsPerRender": {
+                "count": 1019,
+                "p50": 121,
+                "p95": 123,
+                "p99": 123
+              },
+              "trianglesPerRender": {
+                "count": 1019,
+                "p50": 755736,
+                "p95": 769928,
+                "p99": 769928
+              },
+              "buffers": {
+                "553x1014": 1019
+              },
+              "routeStartM": 0,
+              "routeEndM": 205.04561581332308,
+              "routeProgressM": 205.05,
+              "distanceDrivenM": 205.05,
+              "meanKmh": 43.42,
+              "speedKmh": {
+                "count": 34,
+                "p50": 49.637,
+                "p95": 49.705,
+                "p99": 49.706
+              },
+              "routeDeviationM": {
+                "count": 34,
+                "p50": 0,
+                "p95": 0,
+                "p99": 0
+              },
+              "cameraTravelM": 213.27
+            }
+          ],
+          "routeMetres": 212.12761433264868,
+          "distanceDrivenM": 212.12761433264873,
+          "lapsCompleted": 0,
+          "meanKmh": 44.92,
+          "renderedFrameIntervalMs": {
+            "count": 1018,
+            "p50": 16.7,
+            "p95": 17.6,
+            "p99": 18.4
+          },
+          "rAFIntervalMs": {
+            "count": 1019,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 17
+          }
+        },
+        "requests": [
+          [
+            "inverloch/explore/",
+            "GET",
+            964695,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/inverloch-model.js",
+            "GET",
+            213587,
+            "?v=42",
+            "gzip"
+          ],
+          [
+            "town3d/ground-2k.webp",
+            "GET",
+            242526,
+            "",
+            "identity"
+          ],
+          [
+            "town3d/town.json",
+            "GET",
+            366704,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/height.png",
+            "GET",
+            689479,
+            "",
+            "identity"
+          ],
+          [
+            "_pixel/three.js",
+            "GET",
+            158243,
+            "",
+            "gzip"
+          ],
+          [
+            "inverloch/explore/version.json",
+            "GET",
+            45,
+            "?t=1795741346707",
+            "gzip"
+          ],
+          [
+            "inverloch/explore/explore-icon.png",
+            "GET",
+            61365,
+            "?v=1",
+            "identity"
+          ],
+          [
+            "town3d/detail.json",
+            "GET",
+            167,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/detail-town.webp",
+            "GET",
+            127700,
+            "",
+            "identity"
+          ]
+        ],
+        "transferBytes": 2824511
+      },
+      {
+        "street": "abeckett",
+        "condition": "showers",
+        "routeHash": "00c2f0014e78ef7586f3d4eca01f506f4ab6eb0ff458a3791128605041b855ce",
+        "reasons": [],
+        "pageErrors": [],
+        "summary": {
+          "elapsedSeconds": 40,
+          "minutes": [
+            {
+              "minute": 1,
+              "fromSec": 0,
+              "toSec": 40,
+              "utcStart": "2026-11-27T01:02:57.506Z",
+              "renders": 2400,
+              "renderHz": 60,
+              "renderIntervalMs": {
+                "count": 2399,
+                "p50": 16.7,
+                "p95": 17.7,
+                "p99": 18.2
+              },
+              "rafs": 2400,
+              "rafHz": 60,
+              "rafIntervalMs": {
+                "count": 2399,
+                "p50": 16.7,
+                "p95": 16.8,
+                "p99": 17.1
+              },
+              "drawsPerRender": {
+                "count": 2400,
+                "p50": 171,
+                "p95": 300,
+                "p99": 324
+              },
+              "trianglesPerRender": {
+                "count": 2400,
+                "p50": 855751,
+                "p95": 1045369,
+                "p99": 1069558
+              },
+              "buffers": {
+                "553x1014": 2400
+              },
+              "routeStartM": 0,
+              "routeEndM": 417.5004338569815,
+              "routeProgressM": 417.5,
+              "distanceDrivenM": 414.4,
+              "meanKmh": 37.3,
+              "speedKmh": {
+                "count": 80,
+                "p50": 48.389,
+                "p95": 49.693,
+                "p99": 49.704
+              },
+              "routeDeviationM": {
+                "count": 80,
+                "p50": 0,
+                "p95": 0.932,
+                "p99": 1.341
+              },
+              "cameraTravelM": 419.25
+            }
+          ],
+          "routeMetres": 424.6218960517202,
+          "distanceDrivenM": 421.5173630596521,
+          "lapsCompleted": 0,
+          "meanKmh": 37.94,
+          "renderedFrameIntervalMs": {
+            "count": 2399,
+            "p50": 16.7,
+            "p95": 17.7,
+            "p99": 18.2
+          },
+          "rAFIntervalMs": {
+            "count": 2399,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 17.1
+          }
+        },
+        "requests": [
+          [
+            "inverloch/explore/",
+            "GET",
+            964695,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/inverloch-model.js",
+            "GET",
+            213587,
+            "?v=42",
+            "gzip"
+          ],
+          [
+            "town3d/ground-2k.webp",
+            "GET",
+            242526,
+            "",
+            "identity"
+          ],
+          [
+            "town3d/height.png",
+            "GET",
+            689479,
+            "",
+            "identity"
+          ],
+          [
+            "town3d/town.json",
+            "GET",
+            366704,
+            "",
+            "gzip"
+          ],
+          [
+            "_pixel/three.js",
+            "GET",
+            158243,
+            "",
+            "gzip"
+          ],
+          [
+            "inverloch/explore/version.json",
+            "GET",
+            45,
+            "?t=1795741370935",
+            "gzip"
+          ],
+          [
+            "inverloch/explore/explore-icon.png",
+            "GET",
+            61365,
+            "?v=1",
+            "identity"
+          ],
+          [
+            "town3d/detail.json",
+            "GET",
+            167,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/detail-town.webp",
+            "GET",
+            127700,
+            "",
+            "identity"
+          ]
+        ],
+        "transferBytes": 2824511
+      },
+      {
+        "street": "cuttriss",
+        "condition": "showers",
+        "routeHash": "7df647ff69c23e08c245b8f33eeac6c833fa32886e4e4ab34503fad0d50155e1",
+        "reasons": [],
+        "pageErrors": [],
+        "summary": {
+          "elapsedSeconds": 17,
+          "minutes": [
+            {
+              "minute": 1,
+              "fromSec": 0,
+              "toSec": 17,
+              "utcStart": "2026-11-27T01:03:44.751Z",
+              "renders": 1020,
+              "renderHz": 60,
+              "renderIntervalMs": {
+                "count": 1019,
+                "p50": 16.7,
+                "p95": 17.5,
+                "p99": 18.2
+              },
+              "rafs": 1021,
+              "rafHz": 60.06,
+              "rafIntervalMs": {
+                "count": 1020,
+                "p50": 16.7,
+                "p95": 16.8,
+                "p99": 17.1
+              },
+              "drawsPerRender": {
+                "count": 1020,
+                "p50": 122,
+                "p95": 124,
+                "p99": 124
+              },
+              "trianglesPerRender": {
+                "count": 1020,
+                "p50": 755736,
+                "p95": 769928,
+                "p99": 769928
+              },
+              "buffers": {
+                "553x1014": 1020
+              },
+              "routeStartM": 0,
+              "routeEndM": 205.2748035467441,
+              "routeProgressM": 205.27,
+              "distanceDrivenM": 205.27,
+              "meanKmh": 43.47,
+              "speedKmh": {
+                "count": 34,
+                "p50": 49.638,
+                "p95": 49.705,
+                "p99": 49.705
+              },
+              "routeDeviationM": {
+                "count": 34,
+                "p50": 0,
+                "p95": 0,
+                "p99": 0
+              },
+              "cameraTravelM": 213.5
+            }
+          ],
+          "routeMetres": 212.12659256350858,
+          "distanceDrivenM": 212.1265925635086,
+          "lapsCompleted": 0,
+          "meanKmh": 44.92,
+          "renderedFrameIntervalMs": {
+            "count": 1019,
+            "p50": 16.7,
+            "p95": 17.5,
+            "p99": 18.2
+          },
+          "rAFIntervalMs": {
+            "count": 1020,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 17.1
+          }
+        },
+        "requests": [
+          [
+            "inverloch/explore/",
+            "GET",
+            964695,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/inverloch-model.js",
+            "GET",
+            213587,
+            "?v=42",
+            "gzip"
+          ],
+          [
+            "town3d/ground-2k.webp",
+            "GET",
+            242526,
+            "",
+            "identity"
+          ],
+          [
+            "town3d/height.png",
+            "GET",
+            689479,
+            "",
+            "identity"
+          ],
+          [
+            "town3d/town.json",
+            "GET",
+            366704,
+            "",
+            "gzip"
+          ],
+          [
+            "_pixel/three.js",
+            "GET",
+            158243,
+            "",
+            "gzip"
+          ],
+          [
+            "inverloch/explore/version.json",
+            "GET",
+            45,
+            "?t=1795741418224",
+            "gzip"
+          ],
+          [
+            "inverloch/explore/explore-icon.png",
+            "GET",
+            61365,
+            "?v=1",
+            "identity"
+          ],
+          [
+            "town3d/detail.json",
+            "GET",
+            167,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/detail-town.webp",
+            "GET",
+            127700,
+            "",
+            "identity"
+          ]
+        ],
+        "transferBytes": 2824511
+      },
+      {
+        "street": "abeckett",
+        "condition": "storm",
+        "routeHash": "00c2f0014e78ef7586f3d4eca01f506f4ab6eb0ff458a3791128605041b855ce",
+        "reasons": [],
+        "pageErrors": [],
+        "summary": {
+          "elapsedSeconds": 40,
+          "minutes": [
+            {
+              "minute": 1,
+              "fromSec": 0,
+              "toSec": 40,
+              "utcStart": "2026-11-27T01:04:09.000Z",
+              "renders": 2398,
+              "renderHz": 59.95,
+              "renderIntervalMs": {
+                "count": 2397,
+                "p50": 16.7,
+                "p95": 17.7,
+                "p99": 18.2
+              },
+              "rafs": 2400,
+              "rafHz": 60,
+              "rafIntervalMs": {
+                "count": 2399,
+                "p50": 16.7,
+                "p95": 16.8,
+                "p99": 17.1
+              },
+              "drawsPerRender": {
+                "count": 2398,
+                "p50": 171,
+                "p95": 300,
+                "p99": 324
+              },
+              "trianglesPerRender": {
+                "count": 2398,
+                "p50": 855750,
+                "p95": 1045369,
+                "p99": 1069558
+              },
+              "buffers": {
+                "553x1014": 2398
+              },
+              "routeStartM": 0,
+              "routeEndM": 417.49178739578304,
+              "routeProgressM": 417.49,
+              "distanceDrivenM": 414.39,
+              "meanKmh": 37.29,
+              "speedKmh": {
+                "count": 80,
+                "p50": 48.388,
+                "p95": 49.691,
+                "p99": 49.702
+              },
+              "routeDeviationM": {
+                "count": 80,
+                "p50": 0,
+                "p95": 0.933,
+                "p99": 1.34
+              },
+              "cameraTravelM": 419.24
+            }
+          ],
+          "routeMetres": 424.38770385939904,
+          "distanceDrivenM": 421.28313071198,
+          "lapsCompleted": 0,
+          "meanKmh": 37.92,
+          "renderedFrameIntervalMs": {
+            "count": 2397,
+            "p50": 16.7,
+            "p95": 17.7,
+            "p99": 18.2
+          },
+          "rAFIntervalMs": {
+            "count": 2399,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 17.1
+          }
+        },
+        "requests": [
+          [
+            "inverloch/explore/",
+            "GET",
+            964695,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/inverloch-model.js",
+            "GET",
+            213587,
+            "?v=42",
+            "gzip"
+          ],
+          [
+            "town3d/ground-2k.webp",
+            "GET",
+            242526,
+            "",
+            "identity"
+          ],
+          [
+            "town3d/height.png",
+            "GET",
+            689479,
+            "",
+            "identity"
+          ],
+          [
+            "town3d/town.json",
+            "GET",
+            366704,
+            "",
+            "gzip"
+          ],
+          [
+            "_pixel/three.js",
+            "GET",
+            158243,
+            "",
+            "gzip"
+          ],
+          [
+            "inverloch/explore/version.json",
+            "GET",
+            45,
+            "?t=1795741442372",
+            "gzip"
+          ],
+          [
+            "inverloch/explore/explore-icon.png",
+            "GET",
+            61365,
+            "?v=1",
+            "identity"
+          ],
+          [
+            "town3d/detail.json",
+            "GET",
+            167,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/detail-town.webp",
+            "GET",
+            127700,
+            "",
+            "identity"
+          ]
+        ],
+        "transferBytes": 2824511
+      },
+      {
+        "street": "cuttriss",
+        "condition": "storm",
+        "routeHash": "7df647ff69c23e08c245b8f33eeac6c833fa32886e4e4ab34503fad0d50155e1",
+        "reasons": [],
+        "pageErrors": [],
+        "summary": {
+          "elapsedSeconds": 17,
+          "minutes": [
+            {
+              "minute": 1,
+              "fromSec": 0,
+              "toSec": 17,
+              "utcStart": "2026-11-27T01:04:56.280Z",
+              "renders": 1019,
+              "renderHz": 59.94,
+              "renderIntervalMs": {
+                "count": 1018,
+                "p50": 16.7,
+                "p95": 17.5,
+                "p99": 18
+              },
+              "rafs": 1020,
+              "rafHz": 60,
+              "rafIntervalMs": {
+                "count": 1019,
+                "p50": 16.7,
+                "p95": 16.8,
+                "p99": 16.9
+              },
+              "drawsPerRender": {
+                "count": 1019,
+                "p50": 122,
+                "p95": 124,
+                "p99": 124
+              },
+              "trianglesPerRender": {
+                "count": 1019,
+                "p50": 755736,
+                "p95": 769928,
+                "p99": 769928
+              },
+              "buffers": {
+                "553x1014": 1019
+              },
+              "routeStartM": 0,
+              "routeEndM": 205.27602806261578,
+              "routeProgressM": 205.28,
+              "distanceDrivenM": 205.28,
+              "meanKmh": 43.47,
+              "speedKmh": {
+                "count": 34,
+                "p50": 49.636,
+                "p95": 49.704,
+                "p99": 49.705
+              },
+              "routeDeviationM": {
+                "count": 34,
+                "p50": 0,
+                "p95": 0,
+                "p99": 0
+              },
+              "cameraTravelM": 213.5
+            }
+          ],
+          "routeMetres": 212.12916839265105,
+          "distanceDrivenM": 212.12916839265108,
+          "lapsCompleted": 0,
+          "meanKmh": 44.92,
+          "renderedFrameIntervalMs": {
+            "count": 1018,
+            "p50": 16.7,
+            "p95": 17.5,
+            "p99": 18
+          },
+          "rAFIntervalMs": {
+            "count": 1019,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.9
+          }
+        },
+        "requests": [
+          [
+            "inverloch/explore/",
+            "GET",
+            964695,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/inverloch-model.js",
+            "GET",
+            213587,
+            "?v=42",
+            "gzip"
+          ],
+          [
+            "town3d/ground-2k.webp",
+            "GET",
+            242526,
+            "",
+            "identity"
+          ],
+          [
+            "town3d/town.json",
+            "GET",
+            366704,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/height.png",
+            "GET",
+            689479,
+            "",
+            "identity"
+          ],
+          [
+            "_pixel/three.js",
+            "GET",
+            158243,
+            "",
+            "gzip"
+          ],
+          [
+            "inverloch/explore/version.json",
+            "GET",
+            45,
+            "?t=1795741489691",
+            "gzip"
+          ],
+          [
+            "inverloch/explore/explore-icon.png",
+            "GET",
+            61365,
+            "?v=1",
+            "identity"
+          ],
+          [
+            "town3d/detail.json",
+            "GET",
+            167,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/detail-town.webp",
+            "GET",
+            127700,
+            "",
+            "identity"
+          ]
+        ],
+        "transferBytes": 2824511
+      }
+    ]
+  },
+  {
+    "tier": "low",
+    "hostSha": "2683584545dd02d593dce5f75877fdb6f5d90606c584fe63149f88d3d2310e8e",
+    "bundleSha": "90ce4b56e843dc7bb92c28d7d442bd2e1653c77c8f3953189acad04647b2c844",
+    "profile": {
+      "browserVersion": "158.0.8127.37",
+      "viewport": [
+        426,
+        780
+      ],
+      "deviceScaleFactor": 3,
+      "isMobile": true,
+      "hasTouch": true,
+      "reducedMotion": "no-preference",
+      "nativeGpu": true
+    },
+    "assets": {
+      "bundleBytes": 750161,
+      "bundleGzipBytes": 213573,
+      "modelRoute": "inverloch-model.js?v=42"
+    },
+    "fps": 30,
+    "runs": [
+      {
+        "street": "cuttriss",
+        "condition": "showers",
+        "routeHash": "7df647ff69c23e08c245b8f33eeac6c833fa32886e4e4ab34503fad0d50155e1",
+        "reasons": [],
+        "pageErrors": [],
+        "summary": {
+          "elapsedSeconds": 12,
+          "minutes": [
+            {
+              "minute": 1,
+              "fromSec": 0,
+              "toSec": 12,
+              "utcStart": "2026-11-27T01:06:59.833Z",
+              "renders": 360,
+              "renderHz": 30,
+              "renderIntervalMs": {
+                "count": 359,
+                "p50": 33.3,
+                "p95": 34,
+                "p99": 34.4
+              },
+              "rafs": 720,
+              "rafHz": 60,
+              "rafIntervalMs": {
+                "count": 719,
+                "p50": 16.7,
+                "p95": 16.8,
+                "p99": 16.9
+              },
+              "drawsPerRender": {
+                "count": 360,
+                "p50": 77,
+                "p95": 80,
+                "p99": 80
+              },
+              "trianglesPerRender": {
+                "count": 360,
+                "p50": 537162,
+                "p95": 541872,
+                "p99": 541882
+              },
+              "buffers": {
+                "426x780": 360
+              },
+              "routeStartM": 0,
+              "routeEndM": 136.0827427664551,
+              "routeProgressM": 136.08,
+              "distanceDrivenM": 136.08,
+              "meanKmh": 40.82,
+              "speedKmh": {
+                "count": 24,
+                "p50": 49.607,
+                "p95": 49.695,
+                "p99": 49.695
+              },
+              "routeDeviationM": {
+                "count": 24,
+                "p50": 0,
+                "p95": 0,
+                "p99": 0
+              },
+              "cameraTravelM": 144.31
+            }
+          ],
+          "routeMetres": 142.97965023383904,
+          "distanceDrivenM": 142.979650233839,
+          "lapsCompleted": 0,
+          "meanKmh": 42.89,
+          "renderedFrameIntervalMs": {
+            "count": 359,
+            "p50": 33.3,
+            "p95": 34,
+            "p99": 34.4
+          },
+          "rAFIntervalMs": {
+            "count": 719,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 16.9
+          }
+        },
+        "requests": [
+          [
+            "inverloch/explore/",
+            "GET",
+            964693,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/inverloch-model.js",
+            "GET",
+            213587,
+            "?v=42",
+            "gzip"
+          ],
+          [
+            "town3d/ground-2k.webp",
+            "GET",
+            242526,
+            "",
+            "identity"
+          ],
+          [
+            "town3d/town.json",
+            "GET",
+            366704,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/height.png",
+            "GET",
+            689479,
+            "",
+            "identity"
+          ],
+          [
+            "_pixel/three.js",
+            "GET",
+            158243,
+            "",
+            "gzip"
+          ],
+          [
+            "inverloch/explore/version.json",
+            "GET",
+            45,
+            "?t=1795741610197",
+            "gzip"
+          ],
+          [
+            "inverloch/explore/explore-icon.png",
+            "GET",
+            61365,
+            "?v=1",
+            "identity"
+          ],
+          [
+            "town3d/detail.json",
+            "GET",
+            167,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/detail-town-lo.webp",
+            "GET",
+            57298,
+            "",
+            "identity"
+          ]
+        ],
+        "transferBytes": 2754107
+      }
+    ]
+  },
+  {
+    "tier": "ultra",
+    "hostSha": "2683584545dd02d593dce5f75877fdb6f5d90606c584fe63149f88d3d2310e8e",
+    "bundleSha": "90ce4b56e843dc7bb92c28d7d442bd2e1653c77c8f3953189acad04647b2c844",
+    "profile": {
+      "browserVersion": "158.0.8127.37",
+      "viewport": [
+        426,
+        780
+      ],
+      "deviceScaleFactor": 3,
+      "isMobile": true,
+      "hasTouch": true,
+      "reducedMotion": "no-preference",
+      "nativeGpu": true
+    },
+    "assets": {
+      "bundleBytes": 750161,
+      "bundleGzipBytes": 213573,
+      "modelRoute": "inverloch-model.js?v=42"
+    },
+    "fps": 60,
+    "runs": [
+      {
+        "street": "cuttriss",
+        "condition": "showers",
+        "routeHash": "7df647ff69c23e08c245b8f33eeac6c833fa32886e4e4ab34503fad0d50155e1",
+        "reasons": [],
+        "pageErrors": [],
+        "summary": {
+          "elapsedSeconds": 12,
+          "minutes": [
+            {
+              "minute": 1,
+              "fromSec": 0,
+              "toSec": 12,
+              "utcStart": "2026-11-27T01:07:25.265Z",
+              "renders": 720,
+              "renderHz": 60,
+              "renderIntervalMs": {
+                "count": 719,
+                "p50": 16.6,
+                "p95": 17.5,
+                "p99": 18.2
+              },
+              "rafs": 720,
+              "rafHz": 60,
+              "rafIntervalMs": {
+                "count": 719,
+                "p50": 16.7,
+                "p95": 16.8,
+                "p99": 17
+              },
+              "drawsPerRender": {
+                "count": 720,
+                "p50": 140,
+                "p95": 142,
+                "p99": 142
+              },
+              "trianglesPerRender": {
+                "count": 720,
+                "p50": 1035817,
+                "p95": 1045123,
+                "p99": 1054016
+              },
+              "buffers": {
+                "852x1560": 720
+              },
+              "routeStartM": 0,
+              "routeEndM": 136.08353417339103,
+              "routeProgressM": 136.08,
+              "distanceDrivenM": 136.08,
+              "meanKmh": 40.83,
+              "speedKmh": {
+                "count": 24,
+                "p50": 49.614,
+                "p95": 49.697,
+                "p99": 49.708
+              },
+              "routeDeviationM": {
+                "count": 24,
+                "p50": 0,
+                "p95": 0,
+                "p99": 0
+              },
+              "cameraTravelM": 144.31
+            }
+          ],
+          "routeMetres": 142.97636244061235,
+          "distanceDrivenM": 142.97636244061232,
+          "lapsCompleted": 0,
+          "meanKmh": 42.89,
+          "renderedFrameIntervalMs": {
+            "count": 719,
+            "p50": 16.6,
+            "p95": 17.5,
+            "p99": 18.2
+          },
+          "rAFIntervalMs": {
+            "count": 719,
+            "p50": 16.7,
+            "p95": 16.8,
+            "p99": 17
+          }
+        },
+        "requests": [
+          [
+            "inverloch/explore/",
+            "GET",
+            964696,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/inverloch-model.js",
+            "GET",
+            213587,
+            "?v=42",
+            "gzip"
+          ],
+          [
+            "town3d/ground-2k.webp",
+            "GET",
+            242526,
+            "",
+            "identity"
+          ],
+          [
+            "town3d/height.png",
+            "GET",
+            689479,
+            "",
+            "identity"
+          ],
+          [
+            "town3d/town.json",
+            "GET",
+            366704,
+            "",
+            "gzip"
+          ],
+          [
+            "_pixel/three.js",
+            "GET",
+            158243,
+            "",
+            "gzip"
+          ],
+          [
+            "inverloch/explore/version.json",
+            "GET",
+            45,
+            "?t=1795741633749",
+            "gzip"
+          ],
+          [
+            "inverloch/explore/explore-icon.png",
+            "GET",
+            61365,
+            "?v=1",
+            "identity"
+          ],
+          [
+            "town3d/detail.json",
+            "GET",
+            167,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/detail-abeckett-ultra-v1.json",
+            "GET",
+            285,
+            "",
+            "gzip"
+          ],
+          [
+            "town3d/detail-town.webp",
+            "GET",
+            127700,
+            "",
+            "identity"
+          ]
+        ],
+        "transferBytes": 2824797
+      }
+    ]
+  }
+]

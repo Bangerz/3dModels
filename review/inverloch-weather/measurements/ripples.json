@@ -1,0 +1,66 @@
+[
+  {
+    "condition": "showers",
+    "street": "cuttriss",
+    "ripples": {
+      "view": {
+        "eye": [
+          1260.5439999973669,
+          1.55,
+          449.23569999970215
+        ],
+        "target": [
+          1262.5439999973669,
+          0.30000000000000004,
+          454.23569999970215
+        ],
+        "minutes": 720,
+        "x": 1262.5439999973669,
+        "z": 454.23569999970215,
+        "dist": 1,
+        "depth": 0.6227161393421408,
+        "exposure": 0
+      },
+      "inletRain": 0.6439376130118035,
+      "buffer": [
+        852,
+        1560
+      ],
+      "waveTime": 5.233100000000007,
+      "rainStreaks": true
+    },
+    "pageErrors": [],
+    "consoleErrors": [
+      "Loading the stylesheet 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400&family=Schibsted+Grotesk:wght@400..800&display=swap' violates the following Content Security Policy directive: \"style-src 'self' 'unsafe-inline'\". Note that 'style-src-elem' was not explicitly set, so 'style-src' is used as a fallback. The action has been blocked.",
+      "Connecting to 'https://raw.githubusercontent.com/Ashley-Pettit/awesome-news/chat/chat/mail.json?t=14964515' violates the following Content Security Policy directive: \"connect-src 'self' blob: data:\". The action has been blocked.",
+      "Fetch API cannot load https://raw.githubusercontent.com/Ashley-Pettit/awesome-news/chat/chat/mail.json?t=14964515. Refused to connect because it violates the document's Content Security Policy.",
+      "Connecting to 'https://ntfy.sh/awesome-news-town-mail-k4p9/json?poll=1&since=all' violates the following Content Security Policy directive: \"connect-src 'self' blob: data:\". The action has been blocked.",
+      "Fetch API cannot load https://ntfy.sh/awesome-news-town-mail-k4p9/json?poll=1&since=all. Refused to connect because it violates the document's Content Security Policy."
+    ],
+    "responseErrors": [],
+    "weatherEnd": {
+      "epoch": 1782000452.8998,
+      "cover": 0.78,
+      "offset": [
+        -0.4086367675336078,
+        0.4086367675336078
+      ],
+      "flash": 0,
+      "shadowStrength": 0.64,
+      "sunDir": [
+        0.12660215492651028,
+        0.9230789449503227,
+        -0.36317648018196746
+      ],
+      "sharedFields": true,
+      "age": 18.6820627450943,
+      "wetness": 0.907498652432953,
+      "storm": false,
+      "lines": 1532,
+      "rainVisible": true,
+      "rain": 0.6439376130118035,
+      "rainShaderValue": 0.6439376130118035,
+      "dropCount": 1520
+    }
+  }
+]

@@ -1,0 +1,80 @@
+[
+  {
+    "condition": "storm",
+    "street": "cuttriss",
+    "event": {
+      "events": [
+        {
+          "kind": "flash",
+          "epoch": 1782000154.564,
+          "eye": [
+            1230.5439999973669,
+            9.583749899863196,
+            -333.76430000029785
+          ],
+          "center": [
+            1263.720947265625,
+            222,
+            370.85325622558594
+          ],
+          "ndc": [
+            -0.021611850548021082,
+            0.19626629756088584,
+            0.9974210674855947
+          ],
+          "tip": [
+            1287.57568359375,
+            22,
+            374.5963439941406
+          ],
+          "opacity": 0.9789257650263608
+        },
+        {
+          "kind": "thunder",
+          "epoch": 1782000156.6201,
+          "strength": 0.8993570102667555,
+          "audioSources": [
+            {
+              "context": "running",
+              "when": 6.261333333333333
+            }
+          ]
+        }
+      ],
+      "elapsedMs": 14004.199999988079
+    },
+    "pageErrors": [],
+    "consoleErrors": [
+      "Loading the stylesheet 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400&family=Schibsted+Grotesk:wght@400..800&display=swap' violates the following Content Security Policy directive: \"style-src 'self' 'unsafe-inline'\". Note that 'style-src-elem' was not explicitly set, so 'style-src' is used as a fallback. The action has been blocked.",
+      "Connecting to 'https://raw.githubusercontent.com/Ashley-Pettit/awesome-news/chat/chat/mail.json?t=14964513' violates the following Content Security Policy directive: \"connect-src 'self' blob: data:\". The action has been blocked.",
+      "Fetch API cannot load https://raw.githubusercontent.com/Ashley-Pettit/awesome-news/chat/chat/mail.json?t=14964513. Refused to connect because it violates the document's Content Security Policy.",
+      "Connecting to 'https://ntfy.sh/awesome-news-town-mail-k4p9/json?poll=1&since=all' violates the following Content Security Policy directive: \"connect-src 'self' blob: data:\". The action has been blocked.",
+      "Fetch API cannot load https://ntfy.sh/awesome-news-town-mail-k4p9/json?poll=1&since=all. Refused to connect because it violates the document's Content Security Policy."
+    ],
+    "responseErrors": [],
+    "weatherEnd": {
+      "epoch": 1782000166.5395,
+      "cover": 0.98,
+      "offset": [
+        -0.2688160155666992,
+        0.2688160155666992
+      ],
+      "flash": 0,
+      "shadowStrength": 0.64,
+      "sunDir": [
+        0.12464159026172364,
+        0.9235351829182038,
+        -0.3626944166778261
+      ],
+      "sharedFields": true,
+      "age": 30.006143655627966,
+      "wetness": 1,
+      "storm": true,
+      "lines": 652,
+      "rainVisible": true,
+      "rain": 0.97,
+      "rainShaderValue": 0.97,
+      "dropCount": 640
+    }
+  }
+]
