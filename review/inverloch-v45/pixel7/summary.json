@@ -1,0 +1,776 @@
+[
+  {
+    "label": "A1",
+    "version": "v44",
+    "hostSha": "f33e2ce3bce3e24381d422f6a4180bbc2cee55b443c43af4279bed885a73e7bf",
+    "modelSha": "ffaddec4afec92b659246acd01798568350d76dcaaa3c9cc0078cbe1c9de8525",
+    "traceSha": "d7bdf2112e9ed0ed273a87d0f48a6e7d53483b4f91c7b993250132c3895fd6dd",
+    "measuredSec": 171,
+    "replayedMetres": 1899.62,
+    "combined": {
+      "renderFps": 57.04,
+      "renderIntervalMs": [
+        16.45,
+        24.2,
+        49.1
+      ],
+      "rafFps": 82.69,
+      "rafIntervalMs": [
+        11.1,
+        22.1,
+        33.3
+      ],
+      "drawCallsP50": 149,
+      "trianglesP50": 811537,
+      "bufferCounts": {
+        "534\u00d7985": 7273,
+        "534\u00d71047": 206,
+        "411\u00d7758": 2274
+      },
+      "renderCount": 9753
+    },
+    "streetCycles": [
+      {
+        "cycle": 1,
+        "street": "A\u2019Beckett",
+        "startSec": 0.0,
+        "endSec": 40.0,
+        "renderFps": 57.28,
+        "renderIntervalMs": [
+          15.7,
+          23.6,
+          35.767
+        ],
+        "rafFps": 84.9,
+        "rafIntervalMs": [
+          11.1,
+          11.2,
+          22.2
+        ],
+        "drawCallsP50": 170,
+        "trianglesP50": 863415,
+        "bufferCounts": {
+          "534\u00d7985": 2234
+        },
+        "renderCount": 2234
+      },
+      {
+        "cycle": 1,
+        "street": "Cuttriss",
+        "startSec": 40.0,
+        "endSec": 57.0,
+        "renderFps": 58.56,
+        "renderIntervalMs": [
+          16.9,
+          23.7,
+          43.068
+        ],
+        "rafFps": 86.88,
+        "rafIntervalMs": [
+          11.1,
+          11.2,
+          22.211
+        ],
+        "drawCallsP50": 119,
+        "trianglesP50": 755596,
+        "bufferCounts": {
+          "534\u00d7985": 937
+        },
+        "renderCount": 937
+      },
+      {
+        "cycle": 2,
+        "street": "A\u2019Beckett",
+        "startSec": 57.0,
+        "endSec": 97.0,
+        "renderFps": 56.95,
+        "renderIntervalMs": [
+          16.0,
+          24.2,
+          52.42
+        ],
+        "rafFps": 82.08,
+        "rafIntervalMs": [
+          11.1,
+          22.1,
+          44.3
+        ],
+        "drawCallsP50": 178,
+        "trianglesP50": 867600,
+        "bufferCounts": {
+          "534\u00d7985": 1995,
+          "534\u00d71047": 206,
+          "411\u00d7758": 20
+        },
+        "renderCount": 2221
+      },
+      {
+        "cycle": 2,
+        "street": "Cuttriss",
+        "startSec": 97.0,
+        "endSec": 114.0,
+        "renderFps": 46.88,
+        "renderIntervalMs": [
+          19.0,
+          50.755,
+          59.751
+        ],
+        "rafFps": 65.94,
+        "rafIntervalMs": [
+          11.1,
+          44.4,
+          55.6
+        ],
+        "drawCallsP50": 119,
+        "trianglesP50": 755690,
+        "bufferCounts": {
+          "411\u00d7758": 750
+        },
+        "renderCount": 750
+      },
+      {
+        "cycle": 3,
+        "street": "A\u2019Beckett",
+        "startSec": 114.0,
+        "endSec": 154.0,
+        "renderFps": 59.0,
+        "renderIntervalMs": [
+          16.3,
+          23.3,
+          28.5
+        ],
+        "rafFps": 83.23,
+        "rafIntervalMs": [
+          11.1,
+          22.2,
+          22.2
+        ],
+        "drawCallsP50": 179,
+        "trianglesP50": 865844,
+        "bufferCounts": {
+          "411\u00d7758": 1391,
+          "534\u00d7985": 910
+        },
+        "renderCount": 2301
+      },
+      {
+        "cycle": 3,
+        "street": "Cuttriss",
+        "startSec": 154.0,
+        "endSec": 171.0,
+        "renderFps": 60.0,
+        "renderIntervalMs": [
+          18.5,
+          23.5,
+          24.5
+        ],
+        "rafFps": 90.19,
+        "rafIntervalMs": [
+          11.1,
+          11.2,
+          11.2
+        ],
+        "drawCallsP50": 119,
+        "trianglesP50": 755616,
+        "bufferCounts": {
+          "534\u00d7985": 960
+        },
+        "renderCount": 960
+      }
+    ],
+    "pageErrors": [],
+    "device": {
+      "stamp": "883a8ad",
+      "quality": "medium",
+      "actualFrameTarget": 60,
+      "gpu": "ANGLE (ARM, Mali-G710, OpenGL ES 3.2)",
+      "viewport": [
+        411,
+        758
+      ],
+      "buffer": [
+        534,
+        985
+      ],
+      "dpr": 2.625
+    }
+  },
+  {
+    "label": "B1",
+    "version": "v45",
+    "hostSha": "bbddbd2e1394f10f38f7af8994ac436f92391a33d1a0ee18b4cfd98acdfb8da8",
+    "modelSha": "64d2d38caa4aff7c36ec6fb790c840be69a8b2e8767f6156fca7a5a10e97ce45",
+    "traceSha": "d7bdf2112e9ed0ed273a87d0f48a6e7d53483b4f91c7b993250132c3895fd6dd",
+    "measuredSec": 171,
+    "replayedMetres": 1899.62,
+    "combined": {
+      "renderFps": 58.55,
+      "renderIntervalMs": [
+        16.6,
+        23.3,
+        31.99
+      ],
+      "rafFps": 86.02,
+      "rafIntervalMs": [
+        11.1,
+        11.2,
+        22.2
+      ],
+      "drawCallsP50": 155,
+      "trianglesP50": 826723,
+      "bufferCounts": {
+        "534\u00d7985": 6696,
+        "411\u00d7758": 3316
+      },
+      "renderCount": 10012
+    },
+    "streetCycles": [
+      {
+        "cycle": 1,
+        "street": "A\u2019Beckett",
+        "startSec": 0.0,
+        "endSec": 40.0,
+        "renderFps": 58.28,
+        "renderIntervalMs": [
+          17.4,
+          23.2,
+          38.052
+        ],
+        "rafFps": 86.62,
+        "rafIntervalMs": [
+          11.1,
+          11.2,
+          33.2
+        ],
+        "drawCallsP50": 177,
+        "trianglesP50": 879747,
+        "bufferCounts": {
+          "534\u00d7985": 1790,
+          "411\u00d7758": 483
+        },
+        "renderCount": 2273
+      },
+      {
+        "cycle": 1,
+        "street": "Cuttriss",
+        "startSec": 40.0,
+        "endSec": 57.0,
+        "renderFps": 59.56,
+        "renderIntervalMs": [
+          17.0,
+          23.2,
+          25.344
+        ],
+        "rafFps": 89.19,
+        "rafIntervalMs": [
+          11.1,
+          11.2,
+          11.2
+        ],
+        "drawCallsP50": 129,
+        "trianglesP50": 749686,
+        "bufferCounts": {
+          "411\u00d7758": 953
+        },
+        "renderCount": 953
+      },
+      {
+        "cycle": 2,
+        "street": "A\u2019Beckett",
+        "startSec": 57.0,
+        "endSec": 97.0,
+        "renderFps": 59.62,
+        "renderIntervalMs": [
+          16.0,
+          22.8,
+          25.7
+        ],
+        "rafFps": 89.0,
+        "rafIntervalMs": [
+          11.1,
+          11.2,
+          22.1
+        ],
+        "drawCallsP50": 185,
+        "trianglesP50": 881964,
+        "bufferCounts": {
+          "411\u00d7758": 43,
+          "534\u00d7985": 2282
+        },
+        "renderCount": 2325
+      },
+      {
+        "cycle": 2,
+        "street": "Cuttriss",
+        "startSec": 97.0,
+        "endSec": 114.0,
+        "renderFps": 59.94,
+        "renderIntervalMs": [
+          17.4,
+          23.2,
+          24.342
+        ],
+        "rafFps": 90.06,
+        "rafIntervalMs": [
+          11.1,
+          11.2,
+          11.2
+        ],
+        "drawCallsP50": 129,
+        "trianglesP50": 749702,
+        "bufferCounts": {
+          "534\u00d7985": 959
+        },
+        "renderCount": 959
+      },
+      {
+        "cycle": 3,
+        "street": "A\u2019Beckett",
+        "startSec": 114.0,
+        "endSec": 154.0,
+        "renderFps": 56.21,
+        "renderIntervalMs": [
+          16.5,
+          26.5,
+          37.581
+        ],
+        "rafFps": 77.74,
+        "rafIntervalMs": [
+          11.1,
+          22.2,
+          33.3
+        ],
+        "drawCallsP50": 185,
+        "trianglesP50": 882077,
+        "bufferCounts": {
+          "534\u00d7985": 1482,
+          "411\u00d7758": 710
+        },
+        "renderCount": 2192
+      },
+      {
+        "cycle": 3,
+        "street": "Cuttriss",
+        "startSec": 154.0,
+        "endSec": 171.0,
+        "renderFps": 59.56,
+        "renderIntervalMs": [
+          16.7,
+          23.04,
+          25.144
+        ],
+        "rafFps": 89.38,
+        "rafIntervalMs": [
+          11.1,
+          11.2,
+          11.2
+        ],
+        "drawCallsP50": 129,
+        "trianglesP50": 749686,
+        "bufferCounts": {
+          "411\u00d7758": 948,
+          "534\u00d7985": 5
+        },
+        "renderCount": 953
+      }
+    ],
+    "pageErrors": [],
+    "device": {
+      "stamp": "26cf50f",
+      "quality": "medium",
+      "actualFrameTarget": 60,
+      "gpu": "ANGLE (ARM, Mali-G710, OpenGL ES 3.2)",
+      "viewport": [
+        411,
+        758
+      ],
+      "buffer": [
+        534,
+        985
+      ],
+      "dpr": 2.625
+    }
+  },
+  {
+    "label": "B2",
+    "version": "v45",
+    "hostSha": "bbddbd2e1394f10f38f7af8994ac436f92391a33d1a0ee18b4cfd98acdfb8da8",
+    "modelSha": "64d2d38caa4aff7c36ec6fb790c840be69a8b2e8767f6156fca7a5a10e97ce45",
+    "traceSha": "d7bdf2112e9ed0ed273a87d0f48a6e7d53483b4f91c7b993250132c3895fd6dd",
+    "measuredSec": 171,
+    "replayedMetres": 1899.62,
+    "combined": {
+      "renderFps": 59.78,
+      "renderIntervalMs": [
+        16.6,
+        23.3,
+        24.6
+      ],
+      "rafFps": 89.42,
+      "rafIntervalMs": [
+        11.1,
+        11.2,
+        11.2
+      ],
+      "drawCallsP50": 156,
+      "trianglesP50": 826723,
+      "bufferCounts": {
+        "534\u00d7985": 10222
+      },
+      "renderCount": 10222
+    },
+    "streetCycles": [
+      {
+        "cycle": 1,
+        "street": "A\u2019Beckett",
+        "startSec": 0.0,
+        "endSec": 40.0,
+        "renderFps": 59.56,
+        "renderIntervalMs": [
+          15.9,
+          23.2,
+          26.8
+        ],
+        "rafFps": 87.56,
+        "rafIntervalMs": [
+          11.1,
+          11.2,
+          22.2
+        ],
+        "drawCallsP50": 177,
+        "trianglesP50": 879299,
+        "bufferCounts": {
+          "534\u00d7985": 2323
+        },
+        "renderCount": 2323
+      },
+      {
+        "cycle": 1,
+        "street": "Cuttriss",
+        "startSec": 40.0,
+        "endSec": 57.0,
+        "renderFps": 60.0,
+        "renderIntervalMs": [
+          18.4,
+          24.0,
+          24.6
+        ],
+        "rafFps": 90.25,
+        "rafIntervalMs": [
+          11.1,
+          11.2,
+          11.2
+        ],
+        "drawCallsP50": 129,
+        "trianglesP50": 749686,
+        "bufferCounts": {
+          "534\u00d7985": 960
+        },
+        "renderCount": 960
+      },
+      {
+        "cycle": 2,
+        "street": "A\u2019Beckett",
+        "startSec": 57.0,
+        "endSec": 97.0,
+        "renderFps": 59.95,
+        "renderIntervalMs": [
+          17.8,
+          22.9,
+          24.0
+        ],
+        "rafFps": 90.18,
+        "rafIntervalMs": [
+          11.1,
+          11.2,
+          11.2
+        ],
+        "drawCallsP50": 185,
+        "trianglesP50": 881964,
+        "bufferCounts": {
+          "534\u00d7985": 2338
+        },
+        "renderCount": 2338
+      },
+      {
+        "cycle": 2,
+        "street": "Cuttriss",
+        "startSec": 97.0,
+        "endSec": 114.0,
+        "renderFps": 59.44,
+        "renderIntervalMs": [
+          17.6,
+          23.7,
+          25.05
+        ],
+        "rafFps": 89.44,
+        "rafIntervalMs": [
+          11.1,
+          11.2,
+          11.2
+        ],
+        "drawCallsP50": 129,
+        "trianglesP50": 749702,
+        "bufferCounts": {
+          "534\u00d7985": 951
+        },
+        "renderCount": 951
+      },
+      {
+        "cycle": 3,
+        "street": "A\u2019Beckett",
+        "startSec": 114.0,
+        "endSec": 154.0,
+        "renderFps": 59.92,
+        "renderIntervalMs": [
+          17.5,
+          22.8,
+          24.1
+        ],
+        "rafFps": 90.18,
+        "rafIntervalMs": [
+          11.1,
+          11.2,
+          11.2
+        ],
+        "drawCallsP50": 187,
+        "trianglesP50": 882314,
+        "bufferCounts": {
+          "534\u00d7985": 2337
+        },
+        "renderCount": 2337
+      },
+      {
+        "cycle": 3,
+        "street": "Cuttriss",
+        "startSec": 154.0,
+        "endSec": 171.0,
+        "renderFps": 60.0,
+        "renderIntervalMs": [
+          18.25,
+          23.705,
+          24.6
+        ],
+        "rafFps": 90.25,
+        "rafIntervalMs": [
+          11.1,
+          11.2,
+          11.2
+        ],
+        "drawCallsP50": 129,
+        "trianglesP50": 749686,
+        "bufferCounts": {
+          "534\u00d7985": 960
+        },
+        "renderCount": 960
+      }
+    ],
+    "pageErrors": [],
+    "device": {
+      "stamp": "26cf50f",
+      "quality": "medium",
+      "actualFrameTarget": 60,
+      "gpu": "ANGLE (ARM, Mali-G710, OpenGL ES 3.2)",
+      "viewport": [
+        411,
+        758
+      ],
+      "buffer": [
+        534,
+        985
+      ],
+      "dpr": 2.625
+    }
+  },
+  {
+    "label": "A2",
+    "version": "v44",
+    "hostSha": "f33e2ce3bce3e24381d422f6a4180bbc2cee55b443c43af4279bed885a73e7bf",
+    "modelSha": "ffaddec4afec92b659246acd01798568350d76dcaaa3c9cc0078cbe1c9de8525",
+    "traceSha": "d7bdf2112e9ed0ed273a87d0f48a6e7d53483b4f91c7b993250132c3895fd6dd",
+    "measuredSec": 171,
+    "replayedMetres": 1899.62,
+    "combined": {
+      "renderFps": 59.92,
+      "renderIntervalMs": [
+        17.6,
+        23.2,
+        24.4
+      ],
+      "rafFps": 90.08,
+      "rafIntervalMs": [
+        11.1,
+        11.2,
+        11.2
+      ],
+      "drawCallsP50": 147,
+      "trianglesP50": 810829,
+      "bufferCounts": {
+        "534\u00d7985": 10246
+      },
+      "renderCount": 10246
+    },
+    "streetCycles": [
+      {
+        "cycle": 1,
+        "street": "A\u2019Beckett",
+        "startSec": 0.0,
+        "endSec": 40.0,
+        "renderFps": 59.87,
+        "renderIntervalMs": [
+          17.4,
+          23.3,
+          24.6
+        ],
+        "rafFps": 89.85,
+        "rafIntervalMs": [
+          11.1,
+          11.2,
+          11.2
+        ],
+        "drawCallsP50": 170,
+        "trianglesP50": 863204,
+        "bufferCounts": {
+          "534\u00d7985": 2335
+        },
+        "renderCount": 2335
+      },
+      {
+        "cycle": 1,
+        "street": "Cuttriss",
+        "startSec": 40.0,
+        "endSec": 57.0,
+        "renderFps": 60.0,
+        "renderIntervalMs": [
+          17.65,
+          23.4,
+          24.541
+        ],
+        "rafFps": 90.31,
+        "rafIntervalMs": [
+          11.1,
+          11.2,
+          11.2
+        ],
+        "drawCallsP50": 120,
+        "trianglesP50": 755596,
+        "bufferCounts": {
+          "534\u00d7985": 960
+        },
+        "renderCount": 960
+      },
+      {
+        "cycle": 2,
+        "street": "A\u2019Beckett",
+        "startSec": 57.0,
+        "endSec": 97.0,
+        "renderFps": 59.82,
+        "renderIntervalMs": [
+          17.8,
+          23.1,
+          24.3
+        ],
+        "rafFps": 89.95,
+        "rafIntervalMs": [
+          11.1,
+          11.2,
+          11.2
+        ],
+        "drawCallsP50": 178,
+        "trianglesP50": 865869,
+        "bufferCounts": {
+          "534\u00d7985": 2333
+        },
+        "renderCount": 2333
+      },
+      {
+        "cycle": 2,
+        "street": "Cuttriss",
+        "startSec": 97.0,
+        "endSec": 114.0,
+        "renderFps": 60.06,
+        "renderIntervalMs": [
+          18.4,
+          23.5,
+          24.3
+        ],
+        "rafFps": 90.25,
+        "rafIntervalMs": [
+          11.1,
+          11.2,
+          11.2
+        ],
+        "drawCallsP50": 119,
+        "trianglesP50": 755550,
+        "bufferCounts": {
+          "534\u00d7985": 961
+        },
+        "renderCount": 961
+      },
+      {
+        "cycle": 3,
+        "street": "A\u2019Beckett",
+        "startSec": 114.0,
+        "endSec": 154.0,
+        "renderFps": 59.97,
+        "renderIntervalMs": [
+          17.3,
+          23.0,
+          24.1
+        ],
+        "rafFps": 90.21,
+        "rafIntervalMs": [
+          11.1,
+          11.2,
+          11.2
+        ],
+        "drawCallsP50": 179,
+        "trianglesP50": 865869,
+        "bufferCounts": {
+          "534\u00d7985": 2339
+        },
+        "renderCount": 2339
+      },
+      {
+        "cycle": 3,
+        "street": "Cuttriss",
+        "startSec": 154.0,
+        "endSec": 171.0,
+        "renderFps": 60.0,
+        "renderIntervalMs": [
+          18.0,
+          23.405,
+          24.2
+        ],
+        "rafFps": 90.31,
+        "rafIntervalMs": [
+          11.1,
+          11.2,
+          11.2
+        ],
+        "drawCallsP50": 119,
+        "trianglesP50": 755550,
+        "bufferCounts": {
+          "534\u00d7985": 960
+        },
+        "renderCount": 960
+      }
+    ],
+    "pageErrors": [],
+    "device": {
+      "stamp": "883a8ad",
+      "quality": "medium",
+      "actualFrameTarget": 60,
+      "gpu": "ANGLE (ARM, Mali-G710, OpenGL ES 3.2)",
+      "viewport": [
+        411,
+        758
+      ],
+      "buffer": [
+        534,
+        985
+      ],
+      "dpr": 2.625
+    }
+  }
+]
