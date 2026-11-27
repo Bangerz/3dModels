@@ -9595,7 +9595,7 @@ const handle = async (m, post) => {
   // latitude, longitude, metres back, tilt and bearing). A model with floods can also set floodOf (what its flooded area is a share
   // of: "Logan"), floodNote (the line under the list) and floodWarn (show the not-official notice first, and a banner while a flood is on).
   const TOWNS = {
-    inv: { lib: "InverlochModel", src: TOWN3D + "inverloch-model.js?v=44", assets: TOWN3D, place: "inv", pre: ["town.json", "height.png", "ground.webp"], up: () => !!BS.W?.invSpot, air: [300, 620, 2350, 0.04, -0.4] },
+    inv: { lib: "InverlochModel", src: TOWN3D + "inverloch-model.js?v=44", assets: TOWN3D, place: "inv", pre: ["town.json?v=1bef586b", "height.png", "ground.webp"], up: () => !!BS.W?.invSpot, air: [300, 620, 2350, 0.04, -0.4] },
     moo: { lib: "MoorookaModel", src: TOWN3D + "moorooka/moorooka-model.js?v=78", assets: TOWN3D + "moorooka/", place: "moo", pre: ["town.json", "height.png", "ground.webp"], up: () => !!BS.W?.moo, air: [-150, 620, 1350, 0, -0.5],
       walkStart: { x: -269.8, z: -991.4, yaw: -1.623 },  // Ash's pick for where Moorooka starts: the Beaudesert Road footpath, looking at the house he chose
       // its floods: widest over the Oxley Creek flats along the model's western edge, seen from the east. floodWarn: the not-official notice has to be accepted
@@ -9805,7 +9805,9 @@ const handle = async (m, post) => {
     if (inv && BS.W.invTG && BS.W.invClock) TOWN_BLOCK.forEach(P => clearPolygons.push({ latLon: P.map(([x, z]) => townLL(x, z)), roads: true }));  // the town centre comes across whole
     townModelLoad(cfg).then(lib => {
       if (T.dead) return;
-      const m = T.model = townModelPair(T, lib, box, cfg, { assets: cfg.assets, clearLatLon, clearPolygons, detailLatLon },
+      const assets = inv ? { town: cfg.assets + cfg.pre[0], height: cfg.assets + "height.png",
+        ground: cfg.assets + (window.anSmallGround ? "ground-2k.webp" : "ground.webp"), detail: cfg.assets + "detail.json" } : cfg.assets;
+      const m = T.model = townModelPair(T, lib, box, cfg, { assets, clearLatLon, clearPolygons, detailLatLon, ...(inv ? { roadGrounding: true } : {}) },
         { onProgress: (f, label) => { if (!T.on && !T.dead) tip.textContent = `Loading the town model: ${String(label).toLowerCase()}…`; },
           onFloodLevel: v => T.onFlood?.(v),
           onError: msg => fail(msg) });
@@ -9823,11 +9825,13 @@ const handle = async (m, post) => {
         // model's ground, so the helicopter behind it, you and anything else there stand on the lawn rather than sink into it)
         // (Logan's council precinct lays its ground 25 cm over the terrain (precinct.ts GROUND): cars and people stand on that, not in it.
         // Ash, 16 November 2026: "The golden car is still too low in Logan, sitting inside the road")
-        const LIFT = cfg.lift, b = m.bounds(), ground = (x = F.pos.x, z = F.pos.z) => { const fo = T.floorOver?.(x, z); if (fo != null) return fo;  /* (Dino Land's island, up in the sky) */ let g = Math.max(m.groundAt(x, z), m.waterAt ? m.waterAt(x, z) : m.waterLevel());
+        const bed = (x, z) => (inv ? T.pair.cur.roadSurfaceAt?.(x, z) : null) ?? m.groundAt(x, z);
+        const LIFT = cfg.lift, b = m.bounds(), ground = (x = F.pos.x, z = F.pos.z) => { const fo = T.floorOver?.(x, z); if (fo != null) return fo;  /* (Dino Land's island, up in the sky) */ let g = Math.max(bed(x, z), m.waterAt ? m.waterAt(x, z) : m.waterLevel());
           if (LIFT && x > LIFT[0] && x < LIFT[2] && z > LIFT[1] && z < LIFT[3]) g += LIFT[4];
           if (T.pads) { const g0 = g; for (const P of T.pads) g = Math.max(g, padGround(P, x, z, g0)); }
           if (T.bal6) g = T.bal6.top(x, z, g);  // number 6's floor, decks and stairs, where you can step up onto them
           return g; };
+        ground.bed = bed;
         const { ceil = 4000, fast = 30, far = 7000, out = 9000, stride = 0, pad = 0, stand = [1, 30] } = cfg;  // a town's limits, unless the model is bigger (Logan)
         // where you can go: inside the model (flying over Logan, far enough outside it to see the whole city); flying, above the ground and the water, and faster the higher you are
         const inner = [b[0] + 30, b[1] - 30, b[2] + 30, b[3] - 30], outer = pad ? [b[0] - pad, b[1] + pad, b[2] - pad, b[3] + pad] : inner;
@@ -17645,7 +17649,7 @@ const handle = async (m, post) => {
       }
       return { names: map.roadNames, roads };
     }
-    const t = await fetch(townAsset(cfg, "town.json")).then(r => { if (!r.ok) throw new Error("town"); return r.json(); });
+    const t = await fetch(cfg.place === "inv" ? cfg.assets + cfg.pre[0] : townAsset(cfg, "town.json")).then(r => { if (!r.ok) throw new Error("town"); return r.json(); });
     return { names: t.names, roads: t.roads.map(r => ({ cls: r[0], name: r[4], one: !!(r[2] & 4), ring: !!(r[2] & 2), pts: Float32Array.from(r[5], v => v / 10) })), town: t };  // one: a one-way carriageway, its points in the direction of travel
   }
   // What can stand between you and a street when you're down near the ground: each building's outline (Moorooka; Inverloch's
@@ -18760,7 +18764,7 @@ const handle = async (m, post) => {
         const y = (yf + yb + yr + yl) / 4 + 0.05, pt = Math.atan2(yf - yb, 2.6), rl = Math.atan2(yl - yr, 1.6), e = C.y == null ? 1 : Math.min(1, dt * 10);
         C.y = C.y == null ? y : C.y + (y - C.y) * e; C.p = C.p == null ? pt : C.p + (pt - C.p) * e; C.rl = C.rl == null ? rl : C.rl + (rl - C.rl) * e;
         M.compose(V.set(x, C.y, z), Q.setFromEuler(E.set(-C.p, C.h, C.rl, "YXZ")), ONE); C.parts.setMatrix(0, M.elements.slice());
-        if (!C.bus) { if (C.spin === undefined) C.spin = townSpinner(m, "new", contact && m.addTrafficCar ? 0.25 : 0); C.spin?.at(M.elements.slice(), rolled); } }); };  // (its hubcaps turning)
+        if (!C.bus) { if (C.spin === undefined) C.spin = townSpinner(m, "new", contact && m.addTrafficCar && !m.roadSurfaceAt ? 0.25 : 0); C.spin?.at(M.elements.slice(), rolled); } }); };  // (its hubcaps turning)
     // hand a car over to be driven: it leaves the traffic, and the driving code (townCar) keeps it as one of its own
     P.take = C => { const i = P.cars.indexOf(C); if (i < 0) return null; P.cars.splice(i, 1); showSignal(C, 0);
       return { x: C.x, z: C.z, h: C.h ?? 0, y: C.y ?? ground(C.x, C.z), p: C.p || 0, r: C.rl || 0, gold: false, bus: false, parts: C.parts }; };
@@ -22308,7 +22312,7 @@ const handle = async (m, post) => {
     const fits = (pts, x, z, h) => { const s = Math.sin(h), c = Math.cos(h);
       if (T.invStatic && (pts === CAR || pts === BUS) && T.invStatic.depth(x,z,h,pts[0][0],pts[0][1])) return false;
       for (const [a, b] of pts) if (solid(x + s * a - c * b, z + c * a + s * b)) return false;
-      return ground(x, z) - m.groundAt(x, z) < 0.35 || pts === CAR; };  // (out of deep water, except a car: it goes in and becomes a boat. Ash, 26 November 2026: "Car to boat doesn't work": this stopped it at the water's edge)
+      return ground(x, z) - ground.bed(x, z) < 0.35 || pts === CAR; };  // (out of deep water, except a car: it goes in and becomes a boat. Ash, 26 November 2026: "Car to boat doesn't work": this stopped it at the water's edge)
     const inside = (x, z) => x >= F.lim[0] && x <= F.lim[1] && z >= F.lim[2] && z <= F.lim[3];  // the edge of the model: nothing goes past it
     // how the ground lies under something: its height, and how far the nose is up and the right side down
     const lie = (o, half, wide) => { const s = Math.sin(o.h), c = Math.cos(o.h), g = (a, b) => ground(o.x + s * a - c * b, o.z + c * a + s * b), yf = g(half, 0), yb = g(-half, 0), yr = g(0, wide), yl = g(0, -wide);
@@ -22345,7 +22349,7 @@ const handle = async (m, post) => {
       const t = performance.now() / 1000, bob = Math.sin(t * 2.1) * 0.06 - 0.32, rl = (car.r || 0) + Math.sin(t * 1.6) * 0.03 + bsClamp((car.yr || 0) * 0.08, -0.12, 0.12);
       M.compose(V.set(car.x, car.y + bob, car.z), Q.setFromEuler(E.set(-(car.p || 0) - bsClamp(car.v / 60, -0.05, 0.12), car.h + (car.spinY || 0), rl, "YXZ")), ONE); boatP.setMatrix(0, M.elements); };
     const boatCheck = () => { if (car.bus || !m.groundAt) return false; const w = m.waterAt ? m.waterAt(car.x, car.z) : m.waterLevel?.(); if (!(w > -1e4)) return car.boat = false;
-      const d = w - m.groundAt(car.x, car.z), on = car.boat ? d > 0.15 : d > 0.5;
+      const d = w - ground.bed(car.x, car.z), on = car.boat ? d > 0.15 : d > 0.5;
       if (on !== !!car.boat) { car.boat = on; fxBurst(car, false); snd.whoosh?.(); if (!rexRole) toast(on ? "\ud83d\udea4 Boat mode! Drive back onto land to be a car again." : "\ud83d\ude97 Back on the road.", 2200); if (!on) boatDraw(false); }
       return on; };
     const sit = (dt, signal = 0) => { const [y, p, r] = car.bus ? lie(car, 3.6, 1.1) : lie(car, 1.3, 0.8), e = dt ? Math.min(1, dt * 12) : 1; car.y += (y + 0.05 + (car.hop || 0) - car.y) * (car.flip || car.trick ? 1 : e); car.p += (p - car.p) * e; car.r += (r - car.r) * e; const rd = car.r + (car.roll || 0), hd = car.h + (car.spinY || 0);
@@ -22360,7 +22364,7 @@ const handle = async (m, post) => {
       if (!car.bus && T.cfg?.place !== "inv" && (signal || mySig)) { if (!mySig) mySig = townSignals(m, car.own ? (car.own.carKind ?? "own") : T.cfg?.place === "moo" ? 0 : -1);
         M.compose(V.set(car.x, cy, car.z), Q.setFromEuler(E.set(-car.p, hd, rd, "YXZ")), ONE); mySig.at(M.elements.slice()); mySig.set(signal); }
       // its hubcaps, turning (not a bus's): your own car is the older shape; a parked car you've taken is the new one (Inverloch's sit 0.25 m up)
-      if (!car.bus && !car.hotrod && !car.own?.boatLook) { const lay = car.own && car.own.carKind == null ? "old" : "new", lift = !car.own && T.cfg?.place === "inv" ? 0.25 : 0; if (mySpin && (mySpin.lay !== lay || mySpin.lift !== lift)) { mySpin.remove(); mySpin = null; }
+      if (!car.bus && !car.hotrod && !car.own?.boatLook) { const lay = car.own && car.own.carKind == null ? "old" : "new", lift = !car.own && T.cfg?.place === "inv" && !m.roadSurfaceAt ? 0.25 : 0; if (mySpin && (mySpin.lay !== lay || mySpin.lift !== lift)) { mySpin.remove(); mySpin = null; }
         if (!mySpin) mySpin = townSpinner(m, lay, lift); if (mySpin) { M.compose(V.set(car.x, cy, car.z), Q.setFromEuler(E.set(-car.p, hd, rd, "YXZ")), ONE); mySpin.at(M.elements.slice(), (car.v || 0) * (dt || 0)); } } };
     let mySpin = null, mySig = null;
     // the hotrod's wheels: their tread is in stripes 24 degrees apart, so a turn of more than half that in a frame reads as rolling
@@ -22378,7 +22382,7 @@ const handle = async (m, post) => {
       P.parts.setMatrix(1, fast ? M2.clone().scale(V.set(0, 0, 0)).elements : M2.clone().multiply(P.heli ? new THREE.Matrix4().makeRotationY(P.ang || 0) : new THREE.Matrix4().makeRotationZ(P.ang || 0)).elements);  // the blades, or the blur they make
       P.parts.setMatrix(2, fast ? M2.elements.slice() : M2.clone().scale(V.set(0, 0, 0)).elements); };
     // the golden plane with no place of its own stands on open ground picked for this visit (dry, if any of it is)
-    const roam = (RIDES.roam || []).filter(([x, z]) => ground(x, z) - m.groundAt(x, z) < 0.35), spot = roam.length ? roam[Math.floor(Math.random() * roam.length)] : null;
+    const roam = (RIDES.roam || []).filter(([x, z]) => ground(x, z) - ground.bed(x, z) < 0.35), spot = roam.length ? roam[Math.floor(Math.random() * roam.length)] : null;
     const homes = RIDES.planes.some(q => q.gold) || !spot ? RIDES.planes : [...RIDES.planes, { x: spot[0], z: spot[1], h: Math.random() * Math.PI * 2, gold: true, name: "The golden plane", at: "" }];
     // the golden helicopter (Ash, 15 November 2026: "Add a golden helicopter. Random location no go to btn unless name is ash. 40%
     // faster"): on open ground picked at random each visit, from the town's open spots,
@@ -22387,7 +22391,7 @@ const handle = async (m, post) => {
     // 2026, "Look through Inverloch for buses or cars placed inappropriately")
     // where a town has no open spots of its own (Moorooka), the grass beside its planes, which all stand in parks
     { const near = roam.length > 1 ? [] : homes.flatMap(q => [18, -18].map(d => [q.x + Math.cos(q.h) * d, q.z - Math.sin(q.h) * d])), all = [...roam, ...near]
-        .filter(([x, z]) => (!spot || Math.hypot(x - spot[0], z - spot[1]) > 40) && ground(x, z) - m.groundAt(x, z) < 0.35 && inside(x, z) && fits(CAR, x, z, 0) && fits(CAR, x, z, Math.PI / 2));
+        .filter(([x, z]) => (!spot || Math.hypot(x - spot[0], z - spot[1]) > 40) && ground(x, z) - ground.bed(x, z) < 0.35 && inside(x, z) && fits(CAR, x, z, 0) && fits(CAR, x, z, Math.PI / 2));
       if (all.length) { const [x, z] = all[Math.floor(Math.random() * all.length)]; homes.push({ x, z, h: Math.random() * Math.PI * 2, heli: true, gold: true, name: "The golden helicopter", at: "" }); } }
     const planes = homes.map(home => { const P = { home, x: home.x, z: home.z, h: home.h, y: 0, p: 0, r: 0, v: 0, air: false, spin: 0, turn: 0, ang: 0 };
       const [y, p, r] = lie(P, 2, 1.2); P.y = y; P.p = p; P.r = r;
@@ -22982,7 +22986,7 @@ const handle = async (m, post) => {
     // Always on dry ground inside the map (it came up behind The Hub, out of sight, the first time)
     const rexSpot = () => { const view = F.yaw + Math.PI, free = (x, z) => ![[0, 0], [6, 0], [-6, 0], [0, 6], [0, -6]].some(([a, b]) => solid(x + a, z + b)),
         clear = (x, z) => { const n = Math.ceil(Math.hypot(x - car.x, z - car.z) / 3); for (let i = 2; i <= n; i++) if (solid(car.x + (x - car.x) * i / n, car.z + (z - car.z) * i / n)) return false; return true; },
-        at = (a, d) => { const h = view + a, x = car.x + Math.sin(h) * d, z = car.z + Math.cos(h) * d; return inside(x, z) && ground(x, z) - m.groundAt(x, z) < 0.5 && free(x, z) ? [x, z] : null; };
+        at = (a, d) => { const h = view + a, x = car.x + Math.sin(h) * d, z = car.z + Math.cos(h) * d; return inside(x, z) && ground(x, z) - ground.bed(x, z) < 0.5 && free(x, z) ? [x, z] : null; };
       const ahead = [[0, 60], [0.25, 60], [-0.25, 60], [0, 45], [0.25, 45], [-0.25, 45], [0, 80], [0.2, 80], [-0.2, 80]], wide = [[0.7, 55], [-0.7, 55], [1.2, 50], [-1.2, 50], [Math.PI / 2, 45], [-Math.PI / 2, 45], [Math.PI, 50], [0, 35]];
       for (const [a, d] of ahead) { const q = at(a, d); if (q && clear(...q)) return q; }
       for (const [a, d] of ahead) { const q = at(a, d); if (q) return q; }
@@ -22993,7 +22997,7 @@ const handle = async (m, post) => {
     // Failing that (Logan has no water), dry ground about 650 m off. Its door faces back the way you came. (Further from where she knocks you
     // out of the sky: it was 40 m past the far shore, and Logan's 400 m off. Ash, 27 November 2026: "Move the bunker further away from where
     // I get hit out of the sky")
-    const bunkerSpot = () => { const R = rex, wet = (x, z) => ground(x, z) - m.groundAt(x, z) > 0.5, ok = (x, z) => ![[0, 0], [9, 0], [-9, 0], [0, 9], [0, -9]].some(([a, b]) => solid(x + a, z + b) || wet(x + a, z + b) || !inside(x + a, z + b));
+    const bunkerSpot = () => { const R = rex, wet = (x, z) => ground(x, z) - ground.bed(x, z) > 0.5, ok = (x, z) => ![[0, 0], [9, 0], [-9, 0], [0, 9], [0, -9]].some(([a, b]) => solid(x + a, z + b) || wet(x + a, z + b) || !inside(x + a, z + b));
       let best = null;
       for (let i = 0; i < 36; i++) { const a = i / 36 * Math.PI * 2, sx = Math.sin(a), sz = Math.cos(a); let water = 0, land = 0;
         for (let d = 10; d < 3000; d += 10) { const x = R.x + sx * d, z = R.z + sz * d; if (!inside(x, z)) break; if (wet(x, z)) { water += 10; land = 0; continue; }
@@ -23136,7 +23140,7 @@ const handle = async (m, post) => {
     // the fight move the hotrod back to its starting location"
     const ownHome = G => { if (!G?.home0) return; if (car?.own === G) { G.goHome = true; return; } G.goHome = false; [G.x, G.z, G.h] = G.home0; const [y, p, r] = lie(G, 1.3, 0.8); G.y = y; G.p = p; G.r = r; if (G.spin) G.steer = 0; showOwn(G); };
     const rexMumma = () => { const B = rex, tg = rexTarget(), from = tg ? Math.atan2(B.x - tg.x, B.z - tg.z) : B.h + Math.PI; let spot = null;
-      for (const da of [0, 0.5, -0.5, 1, -1, Math.PI]) for (const d of [45, 35, 60]) { if (spot) break; const x = B.x + Math.sin(from + da) * d, z = B.z + Math.cos(from + da) * d; if (inside(x, z) && ground(x, z) - m.groundAt(x, z) < 0.5) spot = [x, z]; }
+      for (const da of [0, 0.5, -0.5, 1, -1, Math.PI]) for (const d of [45, 35, 60]) { if (spot) break; const x = B.x + Math.sin(from + da) * d, z = B.z + Math.cos(from + da) * d; if (inside(x, z) && ground(x, z) - ground.bed(x, z) < 0.5) spot = [x, z]; }
       spot ||= [B.x, B.z]; if (!mumUp(spot[0], spot[1], tg ? Math.atan2(tg.x - spot[0], tg.z - spot[1]) : B.h, true)) { rex.live = false; rexEnter("dead"); rexWon(); return; } rexEnter("rise"); };
     // Mumma at no health: the bunker comes up across the water
     // health packs: dropped round the town during a fight, 220 to 480 m from where you are when each is dropped, at least 150 m apart: the
@@ -23443,7 +23447,7 @@ const handle = async (m, post) => {
       const rr = t < 2.6 ? 10 + 500 * up(t / 2.6) : 0; nukeP.setMatrix(5, rr > 0 ? RT.compose(RV.set(x, y + 0.3, z), Q.identity(), V.set(rr, 1 + rr * 0.05, rr)).elements.slice() : NONE.slice());
       if (t > 14) { hideAllOf(nukeP, 6); R.nuke = "done"; } };
     const rexWrap = a => Math.atan2(Math.sin(a), Math.cos(a));
-    const wetAt = (x, z) => ground(x, z) - m.groundAt(x, z) > 0.5, up0 = q => q.y != null ? q.y - m.groundAt(q.x, q.z) : 0;
+    const wetAt = (x, z) => ground(x, z) - ground.bed(x, z) > 0.5, up0 = q => q.y != null ? q.y - m.groundAt(q.x, q.z) : 0;
     // water within 90 m ahead of a flier, or under it
     const waterAhead = (q, far = 90) => { const h = q.dir ?? q.h ?? 0; for (let k = 0; k <= far; k += 15) if (wetAt(q.x + Math.sin(h) * k, q.z + Math.cos(h) * k)) return true; return false; };
     // (knocked out of the sky: flying to the bunker with the water close ahead (or under you), and not once you're at the bunker)
@@ -23474,7 +23478,7 @@ const handle = async (m, post) => {
     // front of where you are by then and turns to chase you. Ash, 27 November 2026: "She needs to jump further forward predicting where
     // I'll be and go way infront then chase me")
     const leapSpot = (tg, far = 1) => { const dir = tg.dir ?? tg.h, ahead = (rex?.mum ? 48 + Math.max(12, tg.v || 22) * 3 : 40 + Math.max(12, tg.v || 22) * 2.6) * far;
-      for (const k of [1, 0.75, 1.3, 0.5]) { const x = tg.x + Math.sin(dir) * ahead * k, z = tg.z + Math.cos(dir) * ahead * k; if (inside(x, z) && ground(x, z) - m.groundAt(x, z) < 0.5) return [x, z]; } return null; };
+      for (const k of [1, 0.75, 1.3, 0.5]) { const x = tg.x + Math.sin(dir) * ahead * k, z = tg.z + Math.cos(dir) * ahead * k; if (inside(x, z) && ground(x, z) - ground.bed(x, z) < 0.5) return [x, z]; } return null; };
     // a leap to a spot, taking secs in the air (a long one, from far off, higher)
     const leapTo = (L, secs, far = 0) => { const R = rex; R.from = [R.x, R.z]; R.land = L; R.leapT = secs; R.leapFar = far; rexEnter("leap"); };
     // where you'll be in t seconds, going the way you are
@@ -23840,7 +23844,7 @@ const handle = async (m, post) => {
         if (veh === "ride") { if (!already) { rex = rexNew(x, z, H.raw[5], false, mum); rexNet(H.raw); rexHudMake(); hudK = ""; } rexSend(["join", fid, me0], H.id); rexAway = false; rexSay(`RIDING WITH ${String(hn || "THEM").toUpperCase().slice(0, 16)}!`, 2000); rexLoop(); return; }
         if (!already) { rexRole = ""; rexFid = ""; rexHost = null; } }
       let spot = null; for (const da of [0.5, -0.5, 1, -1, 0, 1.6, -1.6, Math.PI]) for (const r of mum ? [80, 100, 60] : [40, 55, 30]) { const a = base + da, sx = x + Math.sin(a) * r, sz = z + Math.cos(a) * r, h = Math.atan2(x - sx, z - sz);
-        if (!spot && inside(sx, sz) && ground(sx, sz) - m.groundAt(sx, sz) < 0.35 && fits(CAR, sx, sz, h)) spot = [sx, sz, h]; }
+        if (!spot && inside(sx, sz) && ground(sx, sz) - ground.bed(sx, sz) < 0.35 && fits(CAR, sx, sz, h)) spot = [sx, sz, h]; }
       if (!spot || !rexMake() || (mum && !mumMake())) { toast("Couldn't find a car near the T-rex. Try again in a moment.", 3000, true); return; }
       rexRole = "guest"; rexFid = fid; rexHost = H.id; rexOut = false; rexHeard = rexMs();
       if (!T.toStart?.(spot[0], spot[1], spot[2]) || veh !== "car") { if (!already) { rexRole = ""; rexFid = ""; rexHost = null; } toast("Couldn't find a car near the T-rex. Try again in a moment.", 3000, true); return; }
@@ -23877,7 +23881,7 @@ const handle = async (m, post) => {
     // a car of your own, beside or behind theirs and facing the same way
     const lobCar = id => { const q = (T.peers?.list?.() || []).find(v => v.id === id); if (!q || q.x == null) return false; const h = q.h || 0, rx = Math.cos(h), rz = -Math.sin(h), fx = Math.sin(h), fz = Math.cos(h);
       for (const [a, b] of [[-4.5, -1], [4.5, -1], [-4.5, -8], [4.5, -8], [0, -10], [-9, 2], [9, 2], [0, -17], [-9, -12], [9, -12]]) { const x = q.x + rx * a + fx * b, z = q.z + rz * a + fz * b;
-        if (inside(x, z) && ground(x, z) - m.groundAt(x, z) < 0.35 && fits(CAR, x, z, h)) { if (T.toStart?.(x, z, h) && veh === "car") return true; } } return false; };
+        if (inside(x, z) && ground(x, z) - ground.bed(x, z) < 0.35 && fits(CAR, x, z, h)) { if (T.toStart?.(x, z, h) && veh === "car") return true; } } return false; };
     // a friend's copy, told what the host's is doing
     const rexNet = raw => { const [, , hn, x, z, h, st, t, hp, mx, ph, v, lock, spin, n, mum, bx, bz, bh, nt, live, lost, all, jh, rg, wg, lt, lx, lz, ha, chp, cn] = raw; rexHeard = rexMs(); const R = rex; if (!R) return;
       if (mum && !R.mum) { if (!mumUp(+x || 0, +z || 0, +h || 0, false)) return; }  // (the T-rex is down, and here's Mumma)
@@ -24949,7 +24953,7 @@ const handle = async (m, post) => {
     const dryInside = (x, z) => {
       if (!inside(x, z)) return false;
       const surface = ground(x, z), water = m.waterAt ? m.waterAt(x, z) : m.waterLevel();
-      return Number.isFinite(surface) && !(water >= surface && water - m.groundAt(x, z) >= 0.35);
+      return Number.isFinite(surface) && !(water >= surface && water - (ground.bed?.(x, z) ?? m.groundAt(x, z)) >= 0.35);
     };
     const walkRadius = 0.35;
     const walkClear = (x, z) => {
@@ -25117,7 +25121,7 @@ const handle = async (m, post) => {
       peerGold = null;
       peerRk = null; };
     let peerShown = false;
-    C.pose = () => veh === "ride" ? null : veh === "possum" ? { k: "possum", x: pos.x, y: pos.y, z: pos.z, h: pos.h, p: pos.p, r: 0 } : veh === "drone" ? { k: "drone", x: dr.x, y: dr.y, z: dr.z, h: dr.h, p: dr.p, r: dr.r } : veh === "pigeon" ? { k: pg.gold ? "goldpigeon" : "pigeon", x: pg.x, y: pg.y, z: pg.z, h: pg.h, p: pg.p, r: pg.r } : veh === "car" ? { k: car.bus ? "bus" : car.gold ? "gold" : car.hotrod ? "hotrod" : car.own?.carHex ? "car~" + (car.own.carKind | 0) + car.own.carHex.slice(1) : car.own ? "car~o" : "car~m" + (T.cfg?.place === "inv" ? "u" : ""), x: car.x, y: car.y, z: car.z, h: car.h + (car.spinY || 0), p: car.p, r: car.r + (car.roll || 0) }
+    C.pose = () => veh === "ride" ? null : veh === "possum" ? { k: "possum", x: pos.x, y: pos.y, z: pos.z, h: pos.h, p: pos.p, r: 0 } : veh === "drone" ? { k: "drone", x: dr.x, y: dr.y, z: dr.z, h: dr.h, p: dr.p, r: dr.r } : veh === "pigeon" ? { k: pg.gold ? "goldpigeon" : "pigeon", x: pg.x, y: pg.y, z: pg.z, h: pg.h, p: pg.p, r: pg.r } : veh === "car" ? { k: car.bus ? "bus" : car.gold ? "gold" : car.hotrod ? "hotrod" : car.own?.carHex ? "car~" + (car.own.carKind | 0) + car.own.carHex.slice(1) : car.own ? "car~o" : "car~m" + (T.cfg?.place === "inv" && !m.roadSurfaceAt ? "u" : ""), x: car.x, y: car.y, z: car.z, h: car.h + (car.spinY || 0), p: car.p, r: car.r + (car.roll || 0) }
       : veh ? { k: plane.heli ? (plane.gold ? "goldheli" : "heli") : plane.gold ? "goldplane" : "plane", x: plane.x, y: plane.y, z: plane.z, h: plane.h, p: plane.p, r: plane.r + (plane.roll || 0) } : null;
     C.where = () => veh === "ride" ? { kind: "ride", with: ride.name } : veh === "pigeon" ? { kind: "pigeon", x: pg.x, y: pg.y, z: pg.z, heading: pg.h, speed: pg.v } /* (it fell through to the plane's, and threw) */ : veh === "drone" ? { kind: "drone", x: dr.x, y: dr.y, z: dr.z, heading: dr.h, speed: dr.v } /* (so did the drone) */ : veh === "possum" ? { kind: "possum", x: pos.x, y: pos.y, z: pos.z, heading: pos.h, speed: pos.v, mode: pos.mode, up: pos.y - ground(pos.x, pos.z) } : veh === "car" ? { kind: "car", gold: !!car.gold, bus: !!car.bus, hotrod: !!car.hotrod, x: car.x, z: car.z, heading: car.h, dir: car.dir, speed: car.v, charge } : veh ? { kind: "plane", heli: !!plane.heli, x: plane.x, y: plane.y, z: plane.z, heading: plane.h, pitch: plane.p, speed: plane.v, air: plane.air } : null;  // for checking
     C.reread = () => { Object.assign(R, townPerkRide(rideSettings())); if (BS.raceRide && C.spdK) R.carAccel /= C.spdK; };

@@ -130,6 +130,9 @@ def inverloch_preloads():
     model = re.search(r'lib: "InverlochModel", src: TOWN3D \+ "(inverloch-model\.js\?v=\d+)"', body)
     if not model:
         raise ValueError("Cannot find the Inverloch renderer URL for the Explore head")
+    town_map = re.search(r'place: "inv", pre: \["(town\.json(?:\?v=[a-z0-9]+)?)"', body)
+    if not town_map:
+        raise ValueError("Cannot find the Inverloch road map URL for the Explore head")
     return """<script>
 (() => {
   // A reload after switching towns restores the other town even on the Inverloch URL.
@@ -138,7 +141,7 @@ def inverloch_preloads():
         ["moo", "logan"].includes(sessionStorage.getItem("an-ex-town"))) return;
   } catch {}
   const ground = matchMedia("(pointer: coarse)").matches ? "ground-2k.webp" : "ground.webp";
-  for (const [file, type] of [[MODEL, "script"], ["town.json", "fetch"], ["height.png", "fetch"], [ground, "image"]]) {
+  for (const [file, type] of [[MODEL, "script"], [TOWN_MAP, "fetch"], ["height.png", "fetch"], [ground, "image"]]) {
     const hint = document.createElement("link");
     hint.rel = "preload"; hint.as = type; hint.href = "town3d/" + file;
     if (type !== "script") hint.crossOrigin = "anonymous";
@@ -146,7 +149,7 @@ def inverloch_preloads():
     document.head.appendChild(hint);
   }
 })();
-</script>""".replace("MODEL", json.dumps(model[1]))
+</script>""".replace("MODEL", json.dumps(model[1])).replace("TOWN_MAP", json.dumps(town_map[1]))
 
 
 # A build stamp: the app checks version.json against it and reloads itself when the site has a newer app
