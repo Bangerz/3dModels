@@ -9705,6 +9705,9 @@ const handle = async (m, post) => {
     const first = manual ? initialPreset : direct && !seen.slow ? best : "low";
     const hiBox = $("bsHiRes");
     let cur = null, next = null, dead = false;
+    // Ordinary native cars use their surveyed home position as a stable identity across presets.
+    const driven = cfg.place === "inv" ? new Map() : null;
+    let replaying = null;
     const log = [], last = {}, LAST = ["setLabelObstacles", "setTide", "setFlood", "setFloodLevel", "setMinutes", "setCamera", "setGroundEdits", "setRemoved", "setMore", "driveCar"];
     const make = (q, own) => { const t0 = performance.now(); let mm = null;
       mm = lib.create(box, { ...opts, quality: q, ...(graphics ? { frameTarget: graphics.frameTarget } : {}), onProgress: own ? cb.onProgress : undefined,
@@ -9729,6 +9732,14 @@ const handle = async (m, post) => {
       if (k === "dispose") return () => { dead = true; hiBox.hidden = true; try { cur.dispose(); } catch {} try { next?.dispose(); } catch {} };
       const v = cur[k]; if (typeof v !== "function") return v;
       return (...a) => { if (flat && k === "addParts" && Array.isArray(a[0])) a = [townFlatParts(a[0]), ...a.slice(1)]; const r = v.apply(cur, a);
+        if (driven && (k === "driveCar" || k === "resetCar")) {
+          if (r) {
+            const id = a[0]+","+a[1];
+            if (k === "driveCar") driven.set(id,a); else driven.delete(id);
+            replaying?.[k]?.(...a);
+          }
+          return r;
+        }
         if (k === "setRemoved" && T.invStatic) T.invStatic.hideCars(a[0]?.cars || []);
         if (k === "addParts" || k === "addTrafficCar") { const H = handle(r); handles.push(H); log.push([k, a, H]); return H.proxy; }
         if (k === "addPad" || k === "addCars") log.push([k, a]); else if (LAST.includes(k)) last[k] = a;
@@ -9742,12 +9753,15 @@ const handle = async (m, post) => {
     const swapTo = async (to, q) => { bsNote("sharper model swapped in");
       for (const [name, a, H] of log) { if (H) H.real = to[name](...a); else to[name]?.(...a); }
       for (const H of handles) for (const [ck, a] of H.calls) { const fn = ck.split(":")[0]; try { H.real[fn](...a); } catch {} }
-      T.invStatic?.restoreCars(to);
+      if (driven) {
+        replaying = to;
+        for (const pose of driven.values()) to.driveCar(...pose);
+      } else T.invStatic?.restoreCars(to);
       for (const k of LAST) if (last[k]) { try { const r = to[k](...last[k]); if (r?.then) await r; } catch {} }
       await new Promise(ok => requestAnimationFrame(() => requestAnimationFrame(ok)));
       if (dead || BS.town !== T) return;
       const old = cur, oldEl = rootOf(old), el = rootOf(to);
-      cur = to; next = null; if (el) el.style.visibility = ""; if (oldEl) oldEl.style.visibility = "hidden";
+      cur = to; next = null; replaying = null; if (el) el.style.visibility = ""; if (oldEl) oldEl.style.visibility = "hidden";
       try { old.dispose(); } catch {}
       hiBox.hidden = true;
       try { T.bowls?.swapped?.(); } catch {}  // what was shaped to the old model's ground is made again on this one's (Moorooka's road medians)
@@ -17097,6 +17111,7 @@ const handle = async (m, post) => {
   // Ground-level collision in model metres. Authored guest shapes use their local transform.
   function invCivicCollision(at, inPilot) {
     const dimensions = new Map(), owned = new WeakMap(), identity = (x,z) => [x,z];
+    let hiddenCars = new Set();
     let wholeTown = false;
     const cells = new Map(), parked = new Map(), moved = new Map(), cell = v => Math.floor(v / 16), key = (a, b) => a * 65536 + b;
     let stamp = 0, minX = Infinity, maxX = -Infinity, minZ = Infinity, maxZ = -Infinity;
@@ -17134,7 +17149,7 @@ const handle = async (m, post) => {
     }
     // For circles use signed distance to the real boundary (including concave recesses). For a
     // rectangle, test every boundary segment against both body axes and the segment normal.
-    function contact(x,z,h,hl,hw,normal) {
+    function contact(x,z,h,hl,hw,normal,ignore) {
       if (!nearby(x,z,hl+hw)) return 0;
       const c = Math.cos(h), s = Math.sin(h), ex = hl ? Math.abs(c)*hw + Math.abs(s)*hl : hw, ez = hl ? Math.abs(s)*hw + Math.abs(c)*hl : hw;
       let deepest = 0;
@@ -17143,7 +17158,7 @@ const handle = async (m, post) => {
         const bucket = cells.get(k);
         if (!bucket) return;
         for (const B of bucket) {
-          if (B.stamp === id || B.hidden || x+ex < B.x0 || x-ex > B.x1 || z+ez < B.z0 || z-ez > B.z1) continue;
+          if (B.stamp === id || B.hidden || B === ignore || x+ex < B.x0 || x-ex > B.x1 || z+ez < B.z0 || z-ez > B.z1) continue;
           B.stamp = id;
           let inside = false, distance2 = Infinity, vx = 0, vz = 0, rim = 0;
           for (const e of B.edges) {
@@ -17220,7 +17235,7 @@ const handle = async (m, post) => {
       if (y != null) moved.set(k,[...id,x,y,z,h,pitch,roll]);
       if (!wholeTown && !inPilot(x,z)) return;
       const [w,l] = dimensions.get(k) || [1.85,4.55];
-      parked.set(k,worldBox(x,z,h,w,l));
+      const shape = worldBox(x,z,h,w,l); shape.hidden = hiddenCars.has(k); parked.set(k,shape);
     }
     function addCars(cars) {
       for (const {x,z,heading} of cars) { const id=[x,z]; take(id); parked.set(carKey(x,z),null); park(id,x,z,heading); }
@@ -17235,7 +17250,7 @@ const handle = async (m, post) => {
       for (const [x,z,r] of buildings.circles) post(x,z,r,identity);
       for (const {id,x,z,heading,halfWidth,halfLength} of cars) {
         const k = carKey(...id);
-        dimensions.set(k,[halfWidth*2,halfLength*2]); parked.set(k,null); park(id,x,z,heading);
+        dimensions.set(k,[halfWidth*2,halfLength*2,heading]); parked.set(k,null); park(id,x,z,heading);
       }
     }
     function own(actor, occupied) {
@@ -17249,12 +17264,20 @@ const handle = async (m, post) => {
       }
     }
     function hideCars(ids) {
-      const hidden = new Set(ids.map(([x,z]) => carKey(x,z)));
-      for (const [key,B] of parked) if (B) B.hidden = hidden.has(key);
+      hiddenCars = new Set(ids.map(([x,z]) => carKey(x,z)));
+      for (const [key,B] of parked) if (B) B.hidden = hiddenCars.has(key);
+    }
+    function originalBay(id) {
+      const d = dimensions.get(carKey(...id));
+      return d && {x:id[0],z:id[1],h:d[2],w:d[0]/2,l:d[1]/2};
+    }
+    function bayFree(bay, id, actor) {
+      const self = id ? parked.get(carKey(...id)) : owned.get(actor)?.shape;
+      return !contact(bay.x,bay.z,bay.h,bay.l,bay.w,null,self);
     }
     // A quality swap reconstructs the renderer (including the cars in their original bays).
     const restoreCars = model => { for (const pose of moved.values()) model.driveCar?.(...pose); };
-    return { polygon, box, worldBox, post, depth, slide, canDrive, take, park, addCars, addTown, own, hideCars, restoreCars, get wholeTown() { return wholeTown; } };
+    return { polygon, box, worldBox, post, depth, slide, canDrive, take, park, addCars, addTown, own, originalBay, bayFree, hideCars, restoreCars, get wholeTown() { return wholeTown; } };
   }
 
   // Native wall rings are already in model metres. Register individual masses so open
@@ -18697,7 +18720,7 @@ const handle = async (m, post) => {
           const [w,l] = townTrafficBodies[C.bus ? "bus" : "car"];
           if (T.invStatic.depth(sx,sz,h,l,w) || Math.hypot(sx-player.x,sz-player.z) < 14 ||
               P.cars.some(D => D !== C && D.x != null && Math.hypot(D.x-sx,D.z-sz) < 12) ||
-              (hiddenOnly && !unobserved(sx,sz))) continue;
+              (hiddenOnly && (!unobserved(sx,sz) || T.peers?.list?.().some(p => Math.hypot(sx-p.x,sz-p.z) < 100)))) continue;
         }
         Object.assign(C, { r, i:a, d, s:0, v:0, y:null, p:null, rl:null, ln:null, still:0, blocked:0, x:sx, z:sz, h:null });
         C.turnPlan = null; C.turnUntil = 0; showSignal(C, 0); return true; }
@@ -18842,8 +18865,14 @@ const handle = async (m, post) => {
         M.compose(V.set(x, C.y, z), Q.setFromEuler(E.set(-C.p, C.h, C.rl, "YXZ")), ONE); C.parts.setMatrix(0, M.elements.slice());
         if (!C.bus) { if (C.spin === undefined) C.spin = townSpinner(m, "new", contact && m.addTrafficCar && !m.roadSurfaceAt ? 0.25 : 0); C.spin?.at(M.elements.slice(), rolled); } }); };  // (its hubcaps turning)
     // hand a car over to be driven: it leaves the traffic, and the driving code (townCar) keeps it as one of its own
-    P.take = C => { const i = P.cars.indexOf(C); if (i < 0) return null; P.cars.splice(i, 1); showSignal(C, 0);
-      return { x: C.x, z: C.z, h: C.h ?? 0, y: C.y ?? ground(C.x, C.z), p: C.p || 0, r: C.rl || 0, gold: false, bus: false, parts: C.parts }; };
+    P.take = C => { const i = P.cars.indexOf(C); if (i < 0) return null; P.cars.splice(i, 1); showSignal(C, 0); C.spin?.hide();
+      return { x: C.x, z: C.z, h: C.h ?? 0, y: C.y ?? ground(C.x, C.z), p: C.p || 0, r: C.rl || 0, gold: false, bus: false, parts: C.parts, trafficCar: contact ? C : null }; };
+    if (contact) P.rejoin = actor => {
+      const npc = actor.trafficCar;
+      if (!npc || !roads || P.cars.includes(npc) || !start(npc,true)) return false;
+      npc.parts.setMatrix(0,NONE.slice()); npc.away = false; P.cars.push(npc);
+      return true;
+    };
     P.dispose = () => { dead = true; for (const C of P.cars) try { C.parts.remove(); } catch {} P.cars = []; };
     return P;
   }
@@ -22357,6 +22386,33 @@ const handle = async (m, post) => {
     { const segs = 48, D0 = townLin("#f6e2bf"), D1 = townLin("#ffffff"), inner = [], outer = []; for (let j = 0; j < segs; j++) { const q = j / segs * Math.PI * 2; inner.push(ring.v([Math.cos(q) * 0.9, 0.02, Math.sin(q) * 0.9], D0)); outer.push(ring.v([Math.cos(q), 0.08, Math.sin(q)], D1)); }
       for (let j = 0; j < segs; j++) { const k = (j + 1) % segs; ring.t(inner[j], outer[k], outer[j]); ring.t(inner[j], inner[k], outer[k]); } }
     return [m.part({ roughness: 0.5 }), f.part({ unlit: true }), b.part({ unlit: true }), st.part({ unlit: true, opacity: 0.92 }), cap.part({ unlit: true, opacity: 0.94 }), ring.part({ unlit: true, opacity: 0.6 })]; }
+  // Deadlines use wall time so a long visit in another tab counts. Only exited vehicles enter this queue.
+  function invVehicleReturns(restore, now = Date.now) {
+    const waiting = new Map(), timeout = 30*60*1000;
+    let next = Infinity;
+    const key = car => car.own || car.id?.join(",");
+    return {
+      leave(car) {
+        const id = key(car);
+        if (id == null || car.own?.rescue) return;
+        const due = now()+timeout;
+        waiting.set(id,{car,due}); next = Math.min(next,due);
+      },
+      take(car) { waiting.delete(key(car)); },
+      tick() {
+        if (!waiting.size) return;
+        const time = now(); if (time < next) return;
+        next = Infinity;
+        for (const [id,entry] of waiting) {
+          if (time >= entry.due) {
+            if (restore(entry.car)) { waiting.delete(id); continue; }
+            entry.due = time+15000;
+          }
+          next = Math.min(next,entry.due);
+        }
+      }
+    };
+  }
   function townCar(T, m, F, ground, place) {
     const C = { in: false, enter() {}, frame() {}, dispose() {} };
     const RIDES = TOWN_RIDES[place]; if (!RIDES || !m.addParts) return C;
@@ -22841,13 +22897,13 @@ const handle = async (m, post) => {
       if (k === "possum") obj = veh === "possum" ? null : pos; else if (k === "pigeon" || k === "goldpigeon") obj = veh === "pigeon" ? null : pg; else if (k === "drone") obj = veh === "drone" ? null : dr;
       else { const L = /plane|heli/.test(k) ? planes.filter(P => !!P.heli === /heli/.test(k) && !!P.gold === /^gold/.test(k) && P !== plane) : owns.filter(G => !!G.bus === (k === "bus") && !!G.gold === (k === "gold") && !!G.hotrod === (k === "hotrod") && G !== car?.own);
         let far = 25; for (const o of L) { if (o.takenBy) continue; const d = Math.hypot(o.x - x, o.z - z); if (d < far) { far = d; obj = o; } } }
-      if (!obj || obj.takenBy) return; obj.takenBy = id; taken.set(id, obj); redraw(obj); };
+      if (!obj || obj.takenBy) return; if (owns.includes(obj)) returns?.take({own:obj}); obj.takenBy = id; taken.set(id, obj); redraw(obj); };
     C.peerLeft = (id, at) => { const obj = taken.get(id); if (!obj) return; taken.delete(id); obj.takenBy = null;
       if (at && at.x != null && Math.hypot(at.x - obj.x, at.z - obj.z) < 3000) { obj.x = at.x; obj.z = at.z; if (at.h != null) obj.h = at.h;
         if (obj === pos || obj === pg || obj === dr) { obj.y = surf(obj.x, obj.z); if (obj.mode) obj.mode = "ground"; obj.air = false; obj.p = obj.r = 0; obj.v = 0; }
         else if (planes.includes(obj)) { obj.air = false; obj.v = 0; const [y, p, r] = lie(obj, 2, 1.2); obj.y = y; obj.p = p; obj.r = r; }
         else { obj.v = 0; obj.y = ground(obj.x, obj.z) + 0.05; obj.p = obj.r = 0; } }
-      redraw(obj); };
+      if (owns.includes(obj)) returns?.leave({own:obj}); redraw(obj); };
     const redraw = obj => { if (obj === pos) showPossum(); else if (obj === pg) showPigeon(); else if (obj === dr) showDrone(); else if (planes.includes(obj)) showPlane(obj); else if (obj.parts) showOwn(obj); };
     C.probe = () => ({ pos, pg, dr, remote: () => remoteAt, game: () => game, surf, roofAt, solid, loadRoofs, treeAt, loadTrees, mission: () => mission, auto: () => auto, net: () => net });  // (for checking the possum's footing in tests)
     C.walkKeys = on => { if (!veh) showKeys(on ? "walk" : null); }; if (T.walk) showKeys("walk");
@@ -23218,7 +23274,7 @@ const handle = async (m, post) => {
     const rescueClear = () => { for (const G of rescue) { if (car?.own === G) continue; try { G.parts.remove(); } catch {} const i = owns.indexOf(G); if (i >= 0) owns.splice(i, 1); } rescue.length = 0; };
     // the hotrod back where it started, once the fight's over (if you're in it, when you get out): Ash, 27 November 2026, "At the end of
     // the fight move the hotrod back to its starting location"
-    const ownHome = G => { if (!G?.home0) return; if (car?.own === G) { G.goHome = true; return; } G.goHome = false; [G.x, G.z, G.h] = G.home0; const [y, p, r] = lie(G, 1.3, 0.8); G.y = y; G.p = p; G.r = r; if (G.spin) G.steer = 0; showOwn(G); };
+    const ownHome = G => { if (!G?.home0) return; if (car?.own === G) { G.goHome = true; return; } G.goHome = false; [G.x, G.z, G.h] = G.home0; const [y, p, r] = G.bus ? lie(G,3.6,1.1) : lie(G,1.3,.8); G.y = y; G.p = p; G.r = r; if (G.spin) G.steer = 0; showOwn(G); };
     const rexMumma = () => { const B = rex, tg = rexTarget(), from = tg ? Math.atan2(B.x - tg.x, B.z - tg.z) : B.h + Math.PI; let spot = null;
       for (const da of [0, 0.5, -0.5, 1, -1, Math.PI]) for (const d of [45, 35, 60]) { if (spot) break; const x = B.x + Math.sin(from + da) * d, z = B.z + Math.cos(from + da) * d; if (inside(x, z) && ground(x, z) - ground.bed(x, z) < 0.5) spot = [x, z]; }
       spot ||= [B.x, B.z]; if (!mumUp(spot[0], spot[1], tg ? Math.atan2(tg.x - spot[0], tg.z - spot[1]) : B.h, true)) { rex.live = false; rexEnter("dead"); rexWon(); return; } rexEnter("rise"); };
@@ -24076,6 +24132,43 @@ const handle = async (m, post) => {
       if (on && car) M.compose(V.set(car.x, car.y, car.z), Q.setFromEuler(E.set(-car.p, car.h, car.r, "YXZ")), BEAT.set(beat * (car.bus ? 2.1 : 1), 1, beat * (car.bus ? 2.1 : 1)));
       for (let i = 0; i <= RING; i++) { const show = !!on && !!car && (i === 0 || i <= full); if (show || lit[i]) { ring.setMatrix(i, show ? M.elements.slice() : NONE); lit[i] = show; } }
       const pc = Math.round(charge * 100) + "%"; if (boostBtn.style.getPropertyValue("--charge") !== pc) boostBtn.style.setProperty("--charge", pc); };
+    const returns = place === "inv" && m.resetCar ? invVehicleReturns(restoreAbandoned) : null;
+    function restoreAbandoned(previous) {
+      const {own,id} = previous, grid = T.invStatic;
+      if (!grid?.wholeTown || own?.takenBy || (own ? car?.own === own : car?.id?.[0] === id[0] && car.id[1] === id[1])) return false;
+      const source = own || m.parkedCarBlocker(...id);
+      if (!source) {
+        // A car masked after it was parked still owns a driven slot. Its hidden home can safely reclaim it.
+        if (id && m.resetCar(...id)) {
+          const bay = grid.originalBay(id); if (bay) grid.park(id,bay.x,bay.z,bay.h);
+        }
+        return true;
+      }
+      const camera = m.getCamera(), peers = T.peers?.list?.() || [];
+      const watched = (x,z) => {
+        const dx = x-camera.x, dz = z-camera.z, dist = Math.hypot(dx,dz);
+        if (dist < 100 || dist < 450 && dx*Math.sin(camera.yaw)+dz*Math.cos(camera.yaw) < .25*dist) return true;
+        return peers.some(p => Math.hypot(p.x-x,p.z-z) < 150);
+      };
+      if (watched(source.x,source.z)) return false;
+      if (own?.trafficCar) {
+        if (!T.traffic?.rejoin(own)) return false;
+        grid.own(own,true);
+        const i = owns.indexOf(own); if (i >= 0) owns.splice(i,1);
+        return true;
+      }
+      const bay = own?.home0 ? {x:own.home0[0], z:own.home0[1], h:own.home0[2], w:own.bus ? 1.27 : .98, l:own.bus ? 5.55 : 2.22}
+        : id ? grid.originalBay(id) : null;
+      if (!bay) return true;
+      if (watched(bay.x,bay.z) || !grid.bayFree(bay,id,own) || T.traffic?.occupied(own?.bus ? "bus" : "car",bay.x,bay.z,bay.h,ground(bay.x,bay.z))) return false;
+      if (car && Math.hypot(car.x-bay.x,car.z-bay.z) < bay.l+(car.bus ? 5.55 : 2.22)) return false;
+      if (own) ownHome(own);
+      else {
+        if (!m.resetCar(...id)) return false;
+        grid.park(id,bay.x,bay.z,bay.h);
+      }
+      return true;
+    }
     const leave = (step, door) => { if (!veh) return; if (auto) autoEnd(); if (car?.boat) { car.boat = false; boatDraw(false); } mySpin?.hide(); mySig?.remove(); mySig = null; skyNavShow(null); const was = veh; if (was === "possum" && pos?.cling) { try { T.peers?.ride?.(pos.cling.id, false); } catch {} pos.cling = null; }  // (it stayed stuck to the driver: Ash, 18 November 2026)
       // (the comment above once ran on over the rest of this line, so leaving never stopped the engine, the rockets or the sparks: Ash, 19 November
       // 2026, "when i use jump to often the sound of the car or something is still playing")
@@ -24105,6 +24198,7 @@ const handle = async (m, post) => {
         plane = null; showPlane(P); }
       if (was === "car" && car.id) T.invStatic?.park(car.id,car.x,car.z,car.h,car.y,car.p,car.r);
       if (was === "car" && car.own) T.invStatic?.own(car.own, !!car.own.takenBy || !!car.own.rescue);
+      if (was === "car" && !car.own?.goHome) returns?.leave(car);
       if (was === "car" && car.own?.goHome) { const G = car.own; car = null; ownHome(G); }
       veh = null; car = null; plane = null; window.anFast = false; upShow(null); upLook = 0; showKeys(T.walk ? "walk" : null); C.in = false; F.drive = null; F.boost = false; F.hText = ""; F.vert = 0; F.stick.x = F.stick.y = F.lookStick.x = F.lookStick.y = 0; F.keys.clear();
       document.body.classList.remove("bsdrive", "bsplane", "bsheli", "bsdrone", "bspossum", "bsride", "bspowers", "bspow"); powShown = null; pwBtn.hidden = tkBtn.hidden = true; cooBtn.hidden = true; boostBtn.hidden = true; boostBtn.textContent = "Boost"; boostBtn.classList.remove("bsmega"); handBtn.hidden = true; flipBtn.hidden = true; F.flip = false; plantBtn.hidden = plantMenu.hidden = true; gripBtn.hidden = true; unReset(); handBtn.classList.remove("on"); F.hand = false; at = 0; C.frame(); };
@@ -24938,6 +25032,7 @@ const handle = async (m, post) => {
       else { if (c.own && !owns.includes(c.own)) { const G = T.traffic?.take?.(c.own); if (!G) return true; owns.push(G); c.own = G; }
         car = c.own ? { own: c.own, gold: c.own.gold, bus: c.own.bus, hotrod: !!c.own.hotrod, x: c.own.x, z: c.own.z, h: c.own.h, dir: c.own.h, y: c.own.y, p: c.own.p, r: c.own.r, v: 0, steer: 0 } : { id: c.id, bus: !!c.bus, x: c.x, z: c.z, h: c.heading, dir: c.heading, y: ground(c.x, c.z) + 0.05, p: 0, r: 0, v: 0, steer: 0 };
         if (!car.own && !m.driveCar(c.id[0], c.id[1], car.x, car.y, car.z, car.h, 0, 0)) { car = null; toast("That car won't start. Try another one."); return true; }
+        returns?.take(car);
         if (car.id) T.invStatic?.take(car.id); else if (car.own) T.invStatic?.own(car.own,true);
         if (pos?.grip) { const r = pos.grip.ref; if (r === c.own || (r && Math.hypot(r.x - car.x, r.z - car.z) < 1.5)) { pos.grip.ref = car; toast("You're holding on to the roof. Off you go!", 2600); } }
         veh = "car"; camYaw = car.h + Math.PI; document.body.classList.add("bsdrive"); showRing(charge < 0.999); if (car.hotrod) rexArm();
@@ -24959,7 +25054,7 @@ const handle = async (m, post) => {
       if (touch && veh !== "ride" && veh !== "possum" && veh !== "pigeon" && veh !== "drone" && !T.race?.active?.() && !rexRole) toast(veh === "plane" && plane.heli ? "Hold Up to lift off. Left stick: forward to go, sideways to turn. Down lands it." : veh === "plane" ? "Left stick: push up to go, and it lifts off once it's fast. In the air, up climbs, down dives, sideways turns. Faster and Slower set the power." : "Left stick to drive, right stick to look around. Hold Boost for the mega boost.", 5500);
       return true; };
     // the Get in button: there while something is in reach of where you are walking (looked for a few times a second)
-    C.frame = () => { followGrip(); if (veh) return; const now = performance.now(); if (now - at < 300) return; at = now;
+    C.frame = () => { returns?.tick(); followGrip(); if (veh) return; const now = performance.now(); if (now - at < 300) return; at = now;
       if (place === "inv") rememberWalk(now);
       if (pos) { const d = Math.hypot(pos.x - F.pos.x, pos.z - F.pos.z), dh = Math.hypot(PS.x - F.pos.x, PS.z - F.pos.z);
         if (!possumMesh && Math.min(d, dh) < 400) wake(); if (d < 80) { loadRoofs(); loadTrees(); }
