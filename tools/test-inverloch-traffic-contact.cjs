@@ -187,3 +187,23 @@ test("Moorooka and Logan traffic get host-drawn indicators: added on first flash
     car.remove(); assert.ok(lenses.gone);
   }
 });
+
+
+test("a visible NPC waits at a static obstruction and resumes from the same route cursor when clear", async()=>{
+  const {T,F,P,npc,tick}=await world();
+  F.pos.x=24;
+  let closed=true;
+  T.invStatic={wholeTown:true,depth:()=>0,canDrive:()=>!closed};
+  const c=npc(0,-3,7), road=c.r, station=c.s;
+  for(let i=0;i<120;i++) tick();
+  assert.ok(P.cars.includes(c)); assert.equal(c.r,road); assert.equal(c.s,station); assert.equal(c.z,-3);
+  closed=false; tick(); assert.ok(c.s>station); assert.ok(c.z>-3);
+});
+test("ordinary borrowed model cars use the car footprint when traffic crosses their side", async()=>{
+  const {T,npc,tick}=await world();
+  const c=npc(0,-4.5,14), station=c.s;
+  T.car={in:true,pose:()=>({k:"car~m",x:0,z:0,h:Math.PI/2,y:0})};
+  c.s+=1.4; c.z+=1.4;
+  tick();
+  assert.equal(c.s,station+1.4); assert.equal(c.v,0);
+});

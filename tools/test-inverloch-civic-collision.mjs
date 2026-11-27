@@ -77,4 +77,30 @@ for (const town of [{}, { invStatic: make((x,z) => [x+100,z-100], () => false) }
   assert.equal(town.invStatic.depth(-1610,413,0,0,radius),0,'recess beside the second mass stays clear');
   assert.equal(town.invStatic.canDrive(-1623,415,0,-1614,415,0,2.1,.8),false);
 }
+// Native footprints are in world coordinates even when the guest precinct uses a different origin.
+const town = make((x,z) => [x+900,z-70], () => false), home = [-640,-927];
+town.addTown({polygons:[[-601,-906,-593,-906,-593,-898,-601,-898]],circles:[[11,-182,.16],[24.1,-184.8,.16]]},
+  [{id:home,x:home[0],z:home[1],heading:0,halfWidth:.98,halfLength:2.22}]);
+assert.equal(town.wholeTown,true);
+assert.equal(town.canDrive(-609,-902,Math.PI/2,-590,-902,Math.PI/2,2.22,.98),false);
+assert.ok(town.depth(11,-182,0,0,.35)>0);
+assert.equal(town.depth(18.6,-178.55,0,2.22,.98),0);
+town.take(home); town.park(home,320,400,Math.PI/2,2,0,0);
+assert.equal(town.depth(...home,0,0,.35),0);
+assert.ok(town.depth(322,400,0,0,.35)>0);
+town.hideCars([home]); assert.equal(town.depth(320,400,0,0,.35),0);
+town.hideCars([]); town.park(home,325,400,0,2,0,0);
+assert.equal(town.depth(320,400,0,0,.35),0);
+const hostCar = {x:300,z:380,h:0};
+town.own(hostCar,false); assert.ok(town.depth(300,380,0,0,.35)>0);
+town.own(hostCar,true); assert.equal(town.depth(300,380,0,0,.35),0);
+// The kerbside bus must clear the retained awning post in both directions on leaving its bay.
+const bay = source.match(/cars: \[\{ x: ([-.\d]+), z: ([-.\d]+), h: (-1\.683), bus: true, hide:/);
+assert.ok(bay);
+const [busX,busZ,busH]=bay.slice(1).map(Number), busStop=makeIndex();
+busStop.post(-207.422857,-345.533777,.06);
+assert.ok(busStop.depth(-207,-346,busH,5.55,1.27)>0);
+assert.equal(busStop.depth(busX,busZ,busH,5.55,1.27),0);
+for (const step of [-2.5,2.5]) assert.ok(busStop.canDrive(busX,busZ,busH,
+  busX+step*Math.sin(busH),busZ+step*Math.cos(busH),busH,5.55,1.27));
 console.log('A\'Beckett static collision fixtures passed');

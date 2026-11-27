@@ -9844,7 +9844,13 @@ const handle = async (m, post) => {
 
         // the town centre round the Rotary clock and number 11 Norman Road, stood in the model where they really are
         let mine = []; if (inv) try { mine = townModelGuests(T, m); } catch (e) { console.warn("Town model: the town centre and Norman Road couldn't be added", e); }
-        if (inv) invAddDesignedWalls(T, m.designedWallFootprints?.());
+        if (inv) {
+          const buildings = m.buildingBlockers?.();
+          if (buildings) {
+            const grid = T.invStatic ??= invCivicCollision((x,z) => [x,z], () => false);
+            grid.addTown(buildings, m.parkedCarBlockers());
+          } else invAddDesignedWalls(T, m.designedWallFootprints?.());
+        }
         if (cfg.place === "moo") try { mine = mine.concat(townShops(T, m)); } catch (e) { console.warn("Town model: Moorooka's shops couldn't be added", e); }
         const OFF = exOff(); document.body.classList.toggle("bsnoplaces", OFF.has("places"));
         if (cfg.place === "moo" && m.addParts && !OFF.has("no6")) T.no6 = townNo6(T, m);  // 6 Beaudesert Road's street, from Ash's photos (it catches its own errors)
@@ -16904,7 +16910,7 @@ const handle = async (m, post) => {
       const standAt = (name, fx, fz, tx, tz, pitch) => { const [x, z] = block.at(fx, fz), [ax, az] = block.at(tx, tz); jumps.push({ name, target: [ax, az], walk: { x, z, yaw: Math.atan2(x - ax, z - az), pitch } }); };
       if (ownCars) try { const cars = W.invParked.filter(([x, z]) => townInBlock(x, z) && !townOnPlaza(x, z) && Math.hypot(x - TOWN_CLOCK[0], z - TOWN_CLOCK[1]) > 5.5)
         .map(([x, z, yaw, colour, kind]) => { const [X, Z] = block.at(x, z); return { x: X, z: Z, heading: yaw, colour, kind }; });
-        m.addCars(cars); collision.addCars(cars); } catch (e) { console.warn("Town model: the town centre's parked cars couldn't be added", e); }
+        m.addCars(cars); if (!m.parkedCarBlockers) collision.addCars(cars); } catch (e) { console.warn("Town model: the town centre's parked cars couldn't be added", e); }
       standAt("the clock", 11.5, 33.5, TOWN_CLOCK[0], TOWN_CLOCK[1], 0.16);  // from beside the car park, as in Street View: the clock in front, the memorial to the left
       // (where to stand from the whole bakery frontage, as the town's map has it: since the bakery and Alex Scott's were split, the
       // middle of the bakery's own front put the spot 5.5 m east, inside the chemist's corner. Looking at the bakery's own front)
@@ -16945,6 +16951,13 @@ const handle = async (m, post) => {
       (T.pads ||= []).push(L);
       const place = L.lean.clone().multiply(new THREE.Matrix4().makeTranslation(x - hx, top - G0, z - hz));
       lot(W.invHouse, half, zBack, zFront, place, skip);
+      if (m.buildingBlockers) {
+        const grid = T.invStatic ??= invCivicCollision((x,z) => [x,z], () => false);
+        // House, garage, rear wing and rescue van use the same bearing as the lot.
+        for (const [u,v,w,l] of [[-4,-.5,11,11],[5,1,7,8],[5,-5.5,7,5],[6.4,8.6,1.98,5.1]]) {
+          grid.worldBox(x + Math.cos(ry)*u + Math.sin(ry)*v, z - Math.sin(ry)*u + Math.cos(ry)*v, ry, w, l);
+        }
+      }
       moving.forEach(r => whole(r, place));
       cars.forEach(c => { const cp = place.clone(); T.cars.push({ o: c, cp }); whole(c, cp); });  // each car kept on the model's road as it goes
       if (W.invNormanSpot) stop("Norman Rd", W.invNormanSpot, place, [x, z]); }
@@ -17081,8 +17094,10 @@ const handle = async (m, post) => {
     const inPilot = (x,z) => townInBlock((x-o0[0])/kx, (z-o0[1])/kz);
     return { at, place, inPilot, parts: parts.length, corners: parts.reduce((n, p) => n + p.positions.length / 3, 0) };
   }
-  // Ground-level collision for the A'Beckett guest block. Actor poses and shapes use model metres.
+  // Ground-level collision in model metres. Authored guest shapes use their local transform.
   function invCivicCollision(at, inPilot) {
+    const dimensions = new Map(), owned = new WeakMap(), identity = (x,z) => [x,z];
+    let wholeTown = false;
     const cells = new Map(), parked = new Map(), moved = new Map(), cell = v => Math.floor(v / 16), key = (a, b) => a * 65536 + b;
     let stamp = 0, minX = Infinity, maxX = -Infinity, minZ = Infinity, maxZ = -Infinity;
     const nearby = (x,z,r) => x+r >= minX && x-r <= maxX && z+r >= minZ && z-r <= maxZ
@@ -17113,8 +17128,9 @@ const handle = async (m, post) => {
         transform(x + i * width / 2 * c + j * length / 2 * s, z - i * width / 2 * s + j * length / 2 * c)));
     }
     const box = (x,z,h,w,l) => rectangle(x,z,h,w,l,at);
-    function post(x,z,r) {
-      polygon(Array.from({ length: 12 }, (_,i) => { const a = i * Math.PI / 6; return at(x + r * Math.cos(a), z + r * Math.sin(a)); }));
+    const worldBox = (x,z,h,w,l) => rectangle(x,z,h,w,l,identity);
+    function post(x,z,r,transform = at) {
+      polygon(Array.from({ length: 12 }, (_,i) => { const a = i * Math.PI / 6; return transform(x + r * Math.cos(a), z + r * Math.sin(a)); }));
     }
     // For circles use signed distance to the real boundary (including concave recesses). For a
     // rectangle, test every boundary segment against both body axes and the segment normal.
@@ -17187,22 +17203,50 @@ const handle = async (m, post) => {
       pos.x=x; pos.z=z;
     }
     const carKey = (x,z) => Math.round(x*4) + ',' + Math.round(z*4);
+    function removeShape(B) {
+      if (B) eachCell(B.x0,B.z0,B.x1,B.z1,k => {
+        const bucket = cells.get(k); bucket.delete(B); if (!bucket.size) cells.delete(k);
+      });
+    }
     function take(id) {
-      const k = carKey(...id), B = parked.get(k);
+      const k = carKey(...id);
       moved.delete(k);
-      if (!B) return;
-      eachCell(B.x0,B.z0,B.x1,B.z1,k => { const bucket = cells.get(k); bucket.delete(B); if (!bucket.size) cells.delete(k); });
-      parked.set(k, null);
+      if (parked.has(k)) { removeShape(parked.get(k)); parked.set(k,null); }
     }
     function park(id,x,z,h,y,pitch,roll) {
       const k = carKey(...id);
       if (!parked.has(k)) return;
+      take(id);
       if (y != null) moved.set(k,[...id,x,y,z,h,pitch,roll]);
-      if (!inPilot(x,z)) return;
-      parked.set(k, rectangle(x,z,h,1.85,4.55,(px,pz) => [px,pz]));
+      if (!wholeTown && !inPilot(x,z)) return;
+      const [w,l] = dimensions.get(k) || [1.85,4.55];
+      parked.set(k,worldBox(x,z,h,w,l));
     }
     function addCars(cars) {
       for (const {x,z,heading} of cars) { const id=[x,z]; take(id); parked.set(carKey(x,z),null); park(id,x,z,heading); }
+    }
+    function addTown(buildings, cars) {
+      wholeTown = true;
+      for (const ring of buildings.polygons) {
+        const points = [];
+        for (let i=0; i<ring.length; i+=2) points.push([ring[i],ring[i+1]]);
+        polygon(points);
+      }
+      for (const [x,z,r] of buildings.circles) post(x,z,r,identity);
+      for (const {id,x,z,heading,halfWidth,halfLength} of cars) {
+        const k = carKey(...id);
+        dimensions.set(k,[halfWidth*2,halfLength*2]); parked.set(k,null); park(id,x,z,heading);
+      }
+    }
+    function own(actor, occupied) {
+      if (!wholeTown) return;
+      const prev = owned.get(actor);
+      if (prev && !occupied && prev.x === actor.x && prev.z === actor.z && prev.h === actor.h) return;
+      if (prev) { removeShape(prev.shape); owned.delete(actor); }
+      if (!occupied) {
+        const {x,z,h} = actor;
+        owned.set(actor,{x,z,h,shape:worldBox(x,z,h,actor.bus ? 2.54 : 1.96,actor.bus ? 11.1 : 4.44)});
+      }
     }
     function hideCars(ids) {
       const hidden = new Set(ids.map(([x,z]) => carKey(x,z)));
@@ -17210,7 +17254,7 @@ const handle = async (m, post) => {
     }
     // A quality swap reconstructs the renderer (including the cars in their original bays).
     const restoreCars = model => { for (const pose of moved.values()) model.driveCar?.(...pose); };
-    return { polygon, box, post, depth, slide, canDrive, take, park, addCars, hideCars, restoreCars };
+    return { polygon, box, worldBox, post, depth, slide, canDrive, take, park, addCars, addTown, own, hideCars, restoreCars, get wholeTown() { return wholeTown; } };
   }
 
   // Native wall rings are already in model metres. Register individual masses so open
@@ -18189,7 +18233,7 @@ const handle = async (m, post) => {
       cars: [{ x: -228.5, z: -375.5, h: Math.PI, spare: true, name: "The red car", what: "On the lawn by The Hub, beside the plane" }, { x: -232.5, z: -375.5, h: Math.PI, gold: true, name: "The golden car", what: "On the lawn by The Hub. A fifth faster than the red one" },
         // the potato hotrod (Ash, 26 November 2026): beside the golden car. 20 seconds after you get in, the T-rex comes (townCar). Logan has one too
         { x: -237.2, z: -375.5, h: Math.PI, hotrod: true, name: "The hotrod", what: "A potato hot rod with a blower and flames, on the lawn by The Hub. Get in if you dare" }],
-      more: { planes: [{ x: -1602.1, z: 422, h: 2.6, heli: true, name: "The helicopter", at: "behind 11 Norman Road", what: "On the grass behind 11 Norman Road" }], cars: [{ x: -207, z: -346, h: -1.683, bus: true, hide: [[-203.77, -345.76]], name: "The bus", what: "In A'Beckett Street, at the kerb across the road from The Hub" }] },
+      more: { planes: [{ x: -1602.1, z: 422, h: 2.6, heli: true, name: "The helicopter", at: "behind 11 Norman Road", what: "On the grass behind 11 Norman Road" }], cars: [{ x: -206.731, z: -348.385, h: -1.683, bus: true, hide: [[-203.77, -345.76]], name: "The bus", what: "In A'Beckett Street, at the kerb across the road from The Hub" }] },
       roam: [[-278, -562], [627, -1086], [-108, -190], [17, -179], [-1585, 1221], [575, 1066]] },
     logan: { planes: [{ x: 5732, z: -12989, h: 1.0, name: "The plane", at: "on the big lawn in Civic Centre Park", what: "On the big open lawn in Civic Centre Park, behind the council, with room to take off" }],
       cars: [{ x: 5816.2, z: -13302.9, h: 1.94, spare: true, name: "The red car", what: "On the lawn out the front of the council, by the plane" }, { x: 5788.7, z: -13204.6, h: 3.63, gold: true, name: "The golden car", what: "In the car park behind the council. A fifth faster than the red one" },
@@ -18634,14 +18678,28 @@ const handle = async (m, post) => {
       };
     }
     const key = (x, z) => Math.round(x / 2) + "," + Math.round(z / 2);
-    const start = C => { // a random point on a street, mostly near the start
+    const unobserved = (x,z) => {
+      const dx = x-F.pos.x, dz = z-F.pos.z, d = Math.hypot(dx,dz);
+      return d > 450 || (d > 100 && F.pos.y-ground(F.pos.x,F.pos.z) < 35 && dx*Math.sin(F.yaw)+dz*Math.cos(F.yaw) > .6*d);
+    };
+    const start = (C, hiddenOnly = false) => { // a random point on a street, mostly near the start
       const R = Math.random() < 0.7 ? NEAR : FAR * 0.85;
       const player = contact && T.car?.in ? T.car.pose?.() || F.pos : F.pos;
       for (let t = 0; t < 40; t++) { const r = roads[Math.floor(Math.random() * roads.length)], i = Math.floor(Math.random() * (r.n - 1)), x = r.p[i * 2], z = r.p[i * 2 + 1];
         if (Math.hypot(x - home[0], z - home[1]) > R) continue;
         if (contact && Math.hypot(x - player.x, z - player.z) < 14) continue;  // leave room for the player and the lane offset on spawn
         if (P.cars.some(D => D !== C && D.x != null && Math.hypot(D.x - x, D.z - z) < 40)) continue;  // not on top of another
-        Object.assign(C, { r, i, d: r.one || Math.random() < 0.5 ? 1 : -1, s: 0, v: 0, y: null, p: null, rl: null, ln: null, still: 0, x, z }); if (C.d < 0) C.i = i + 1; C.h = null;
+        const d = r.one || Math.random() < 0.5 ? 1 : -1, a = d < 0 ? i+1 : i, b = a+d;
+        let sx = x, sz = z;
+        if (T.invStatic?.wholeTown) {
+          const h = Math.atan2(r.p[b*2]-r.p[a*2],r.p[b*2+1]-r.p[a*2+1]);
+          sx = r.p[a*2]+Math.cos(h)*r.lane; sz = r.p[a*2+1]-Math.sin(h)*r.lane;
+          const [w,l] = townTrafficBodies[C.bus ? "bus" : "car"];
+          if (T.invStatic.depth(sx,sz,h,l,w) || Math.hypot(sx-player.x,sz-player.z) < 14 ||
+              P.cars.some(D => D !== C && D.x != null && Math.hypot(D.x-sx,D.z-sz) < 12) ||
+              (hiddenOnly && !unobserved(sx,sz))) continue;
+        }
+        Object.assign(C, { r, i:a, d, s:0, v:0, y:null, p:null, rl:null, ln:null, still:0, blocked:0, x:sx, z:sz, h:null });
         C.turnPlan = null; C.turnUntil = 0; showSignal(C, 0); return true; }
       return false; };
     const seg = C => { const r = C.r, a = C.i, b = C.i + C.d; return [r.p[a * 2], r.p[a * 2 + 1], r.p[b * 2], r.p[b * 2 + 1]]; };
@@ -18657,7 +18715,14 @@ const handle = async (m, post) => {
       const hIn = Math.atan2(x - r.p[C.i * 2], z - r.p[C.i * 2 + 1]), ways = [];
       for (const [r2, j] of here) { if (r2 === r && j === at) continue; for (const d of r2.one ? [1] : [1, -1]) { const k = j + d; if (k < 0 || k >= r2.n) continue;
         const angle = wrap(Math.atan2(r2.p[k * 2] - x, r2.p[k * 2 + 1] - z) - hIn);
-        if (Math.abs(angle) < 2.4) ways.push({ road: r2, at: j, dir: d, angle }); } }
+        if (Math.abs(angle) >= 2.4) continue;
+        if (T.invStatic?.wholeTown) {
+          const h = hIn+angle, ahead = Math.min(5,Math.hypot(r2.p[k*2]-x,r2.p[k*2+1]-z));
+          const sx = x+Math.cos(h)*r2.lane, sz = z-Math.sin(h)*r2.lane;
+          const [width,length] = townTrafficBodies[C.bus ? "bus" : "car"];
+          if (!T.invStatic.canDrive(sx,sz,h,sx+Math.sin(h)*ahead,sz+Math.cos(h)*ahead,h,length,width)) continue;
+        }
+        ways.push({ road: r2, at: j, dir: d, angle }); } }
       if (!ways.length || (!end && Math.random() >= 0.3)) return null;
       ways.sort((a, b) => Math.abs(a.angle) - Math.abs(b.angle));
       return end && Math.random() < 0.6 ? ways[0] : ways[Math.floor(Math.random() * ways.length)];
@@ -18703,7 +18768,7 @@ const handle = async (m, post) => {
     P.frame = () => { if (!P.cars.length) return; const now = performance.now(), dt = Math.min(0.1, (now - last) / 1000); last = now; if (!dt) return;
       // you: on foot, or in whatever you are driving
       const me = T.car?.in ? T.car.pose?.() : T.walk ? { x: F.pos.x, z: F.pos.z } : null;
-      const kind = contact && me && (T.car?.in ? (me.k === "gold" || me.k === "hotrod" ? "car" : me.k) : "walk");
+      const kind = contact && me && (T.car?.in ? (me.k === "gold" || me.k === "hotrod" || me.k?.startsWith("car~") ? "car" : me.k) : "walk");
       const player = townTrafficBodies[kind] ? { x: me.x, z: me.z, h: me.h || 0, y: me.y ?? ground(me.x, me.z) + (F.jumpH || 0) } : null;
       const previous = playerStart?.kind === kind ? playerStart : player;
       playerStart = null;
@@ -18741,13 +18806,24 @@ const handle = async (m, post) => {
         const oldRoad = C.r, oldI = C.i, oldD = C.d, oldS = C.s, oldH = C.h, oldLane = C.ln;
         C.v += Math.max(-8 * dt, Math.min(3 * dt, want - C.v)); C.s += C.v * dt;
         C.still = C.v < 0.2 && !(C.stopT > 0) && !waitingForPlayer ? (C.still || 0) + dt : 0;
-        if (C.still > 10 && !C.rider) { start(C); return; }
+        if (C.still > 10 && !C.rider && (!T.invStatic?.wholeTown || unobserved(cx,cz))) { start(C,!!T.invStatic?.wholeTown); return; }
         let takenTurn = 0;
         for (let k = 0; k < 6 && C.s >= L; k++) { C.s -= L; takenTurn = next(C) || takenTurn; [ax, az, bx, bz] = seg(C); L = Math.hypot(bx - ax, bz - az) || 0.01; }
         const h = Math.atan2(bx - ax, bz - az); C.h = C.h == null ? h : C.h + wrap(h - C.h) * Math.min(1, dt * 5);
         C.ln = C.ln == null ? C.r.lane : C.ln + bsClamp(C.r.lane - C.ln, -1.5 * dt, 1.5 * dt);  // (its place across the road: over to the next street's lane a bit at a time, not in one jump at the corner)
         const t = Math.min(1, C.s / L), lx = Math.cos(C.h), lz = -Math.sin(C.h)  /* (on the left of the road, as in Australia: Ash, 16 November 2026, "The cars should drive on the left side of the road"; then "the traffic is often on the wrong side of the roads ... all cars should drive on the left, and buses etc.": heading h runs (sin h, cos h) with z to the south, so the left is (cos h, -sin h); it had the right) */, x = ax + (bx - ax) * t + lx * C.ln, z = az + (bz - az) * t + lz * C.ln;
         if (Math.hypot(x - home[0], z - home[1]) > FAR && !C.rider) { start(C); return; }
+        if (T.invStatic?.wholeTown) {
+          const [w,l] = townTrafficBodies[C.bus ? "bus" : "car"];
+          const clear = oldH == null || C.y == null ? !T.invStatic.depth(x,z,C.h,l,w) : T.invStatic.canDrive(cx,cz,oldH,x,z,C.h,l,w);
+          if (!clear) {
+            C.r = oldRoad; C.i = oldI; C.d = oldD; C.s = oldS; C.h = oldH; C.ln = oldLane; C.v = C.still = 0;
+            C.blocked = (C.blocked || 0) + dt;
+            if (C.blocked > 10 && !C.rider && unobserved(cx,cz)) { C.blocked = 8; start(C,true); }
+            return;
+          }
+          C.blocked = 0;
+        }
         if (player && oldH != null && C.y != null) {
           const from = { x: cx, z: cz, h: oldH, y: C.y }, to = { x, z, h: C.h, y: C.y };
           if (townTrafficSweep(from, to, townTrafficBodies[C.bus ? "bus" : "car"], previous, player, townTrafficBodies[kind]) < 1) {
@@ -22310,8 +22386,12 @@ const handle = async (m, post) => {
     // whether something fits there: points along and across it (metres from its middle) clear of buildings, and out of deep water
     const CAR = [[2.1, 0.8], [2.1, -0.8], [-2.1, 0.8], [-2.1, -0.8], [0, 0]], PLANE = [[2.7, 0], [0, 0], [-4.2, 0], [0.2, 5.2], [0.2, -5.2]], BUS = [[5.4, 1.2], [5.4, -1.2], [-5.4, 1.2], [-5.4, -1.2], [2.7, 1.2], [2.7, -1.2], [0, 0], [-2.7, 1.2], [-2.7, -1.2]];
     const fits = (pts, x, z, h) => { const s = Math.sin(h), c = Math.cos(h);
-      if (T.invStatic && (pts === CAR || pts === BUS) && T.invStatic.depth(x,z,h,pts[0][0],pts[0][1])) return false;
-      for (const [a, b] of pts) if (solid(x + s * a - c * b, z + c * a + s * b)) return false;
+      const roadActor = pts === CAR || pts === BUS;
+      if (T.invStatic && roadActor) {
+        const [w,l] = townTrafficBodies[pts === BUS ? "bus" : "car"];
+        if (T.invStatic.depth(x,z,h,l,w)) return false;
+      }
+      if (!(roadActor && T.invStatic?.wholeTown)) for (const [a, b] of pts) if (solid(x + s * a - c * b, z + c * a + s * b)) return false;
       return ground(x, z) - ground.bed(x, z) < 0.35 || pts === CAR; };  // (out of deep water, except a car: it goes in and becomes a boat. Ash, 26 November 2026: "Car to boat doesn't work": this stopped it at the water's edge)
     const inside = (x, z) => x >= F.lim[0] && x <= F.lim[1] && z >= F.lim[2] && z <= F.lim[3];  // the edge of the model: nothing goes past it
     // how the ground lies under something: its height, and how far the nose is up and the right side down
@@ -22399,7 +22479,7 @@ const handle = async (m, post) => {
       P.heli = !!home.heli;
       P.parts = m.addParts((P.heli ? townPlaneParts(P.gold ? "#e2ad1c" : "#c8322b", "heli") : townPlaneParts(P.gold ? "#e2ad1c" : undefined)).map(q => ({ ...q, matrix: M.identity().elements.slice() }))); showPlane(P); return P; });
     // ---- the golden car, the app's own mesh too: twice the top speed and the acceleration of a parked car
-    const showOwn = G => { if (G.takenBy) return hideAll(G.parts, G.np || 1); M.compose(V.set(G.x, G.y, G.z), Q.setFromEuler(E.set(-G.p, G.h, G.r, "YXZ")), ONE); G.parts.setMatrix(0, M.elements.slice());
+    const showOwn = G => { T.invStatic?.own(G, !!G.takenBy || car?.own === G || !!G.rescue); if (G.takenBy) return hideAll(G.parts, G.np || 1); M.compose(V.set(G.x, G.y, G.z), Q.setFromEuler(E.set(-G.p, G.h, G.r, "YXZ")), ONE); G.parts.setMatrix(0, M.elements.slice());
       // the hotrod: its chrome, glass and lamps with it, and its four wheels each where it goes, turning as it rolls (the front two steering)
       if (G.hotrod) { for (let i = 1; i < 4; i++) G.parts.setMatrix(i, M.elements.slice());
         G.wheels.forEach((w, i) => { M2.copy(M).multiply(WT.makeTranslation(w[0], w[1], w[2])); if (i >= 2) M2.multiply(WT.makeRotationY(-G.steer)); G.parts.setMatrix(4 + i, M2.multiply(WT.makeRotationX(G.spin[i >= 2 ? 1 : 0])).elements.slice()); }); } };
@@ -24024,6 +24104,7 @@ const handle = async (m, post) => {
         if (step) { F.pos.x = P.x + Math.cos(P.h) * 1.9; F.pos.z = P.z - Math.sin(P.h) * 1.9; F.yaw = P.h + Math.PI; F.pitch = -0.04; }  // out of the left door
         plane = null; showPlane(P); }
       if (was === "car" && car.id) T.invStatic?.park(car.id,car.x,car.z,car.h,car.y,car.p,car.r);
+      if (was === "car" && car.own) T.invStatic?.own(car.own, !!car.own.takenBy || !!car.own.rescue);
       if (was === "car" && car.own?.goHome) { const G = car.own; car = null; ownHome(G); }
       veh = null; car = null; plane = null; window.anFast = false; upShow(null); upLook = 0; showKeys(T.walk ? "walk" : null); C.in = false; F.drive = null; F.boost = false; F.hText = ""; F.vert = 0; F.stick.x = F.stick.y = F.lookStick.x = F.lookStick.y = 0; F.keys.clear();
       document.body.classList.remove("bsdrive", "bsplane", "bsheli", "bsdrone", "bspossum", "bsride", "bspowers", "bspow"); powShown = null; pwBtn.hidden = tkBtn.hidden = true; cooBtn.hidden = true; boostBtn.hidden = true; boostBtn.textContent = "Boost"; boostBtn.classList.remove("bsmega"); handBtn.hidden = true; flipBtn.hidden = true; F.flip = false; plantBtn.hidden = plantMenu.hidden = true; gripBtn.hidden = true; unReset(); handBtn.classList.remove("on"); F.hand = false; at = 0; C.frame(); };
@@ -24117,7 +24198,8 @@ const handle = async (m, post) => {
         car.steer += (str * 0.55 / (1 + (Math.abs(v) / (8 * K)) ** 2 * (R.lockFade ?? 1.2)) - car.steer) * Math.min(1, dt * (R.steerSnap ?? 7));  // less lock the faster it goes
         car.v = v; let bump = 0;
         const trafficTravel = (x, z, h) => T.traffic?.travel?.(car.bus ? "bus" : "car", car.x, car.z, car.h, x, z, h, car.y) ?? 1;
-        const civicStep = (x, z, h) => !T.invStatic || T.invStatic.canDrive(car.x, car.z, car.h, x, z, h, car.bus ? 5.4 : 2.1, car.bus ? 1.2 : 0.8);
+        const [width,length] = townTrafficBodies[car.bus ? "bus" : "car"];
+        const civicStep = (x,z,h) => !T.invStatic || T.invStatic.canDrive(car.x,car.z,car.h,x,z,h,length,width);
         // the end of Autodrive: once it has stopped, round on the spot to face the place (Ash, 23 November 2026: "At the end of autodrive,
         // face my destination even if it means rotating the car in an abnormal way"). A driving key or the stick calls it off
         if (car.face) { if (mine) car.face = null; else if (Math.abs(v) < 0.8) {
@@ -24856,7 +24938,7 @@ const handle = async (m, post) => {
       else { if (c.own && !owns.includes(c.own)) { const G = T.traffic?.take?.(c.own); if (!G) return true; owns.push(G); c.own = G; }
         car = c.own ? { own: c.own, gold: c.own.gold, bus: c.own.bus, hotrod: !!c.own.hotrod, x: c.own.x, z: c.own.z, h: c.own.h, dir: c.own.h, y: c.own.y, p: c.own.p, r: c.own.r, v: 0, steer: 0 } : { id: c.id, bus: !!c.bus, x: c.x, z: c.z, h: c.heading, dir: c.heading, y: ground(c.x, c.z) + 0.05, p: 0, r: 0, v: 0, steer: 0 };
         if (!car.own && !m.driveCar(c.id[0], c.id[1], car.x, car.y, car.z, car.h, 0, 0)) { car = null; toast("That car won't start. Try another one."); return true; }
-        if (car.id) T.invStatic?.take(car.id);
+        if (car.id) T.invStatic?.take(car.id); else if (car.own) T.invStatic?.own(car.own,true);
         if (pos?.grip) { const r = pos.grip.ref; if (r === c.own || (r && Math.hypot(r.x - car.x, r.z - car.z) < 1.5)) { pos.grip.ref = car; toast("You're holding on to the roof. Off you go!", 2600); } }
         veh = "car"; camYaw = car.h + Math.PI; document.body.classList.add("bsdrive"); showRing(charge < 0.999); if (car.hotrod) rexArm();
         // the GPS button flashes green three times, to say you can use it now (Ash, 25 November 2026: "If I get into a car flash gps green twice
@@ -24936,6 +25018,7 @@ const handle = async (m, post) => {
       if (T.traffic?.occupied) {
         if (T.traffic.occupied(length ? (car?.bus ? "bus" : "car") : "walk", x, z, h, ground(x, z))) return false;
       } else if (T.traffic?.cars?.some(overlapsCar)) return false;
+      if (T.invStatic?.wholeTown) return true;  // the index holds all parked cars and excludes the actively driven one
       const reach = radius + 2.6;  // covers the longest native ute, in any orientation
       const near = parked(x, z, reach);
       if (!near) return true;
@@ -24956,10 +25039,11 @@ const handle = async (m, post) => {
       return Number.isFinite(surface) && !(water >= surface && water - (ground.bed?.(x, z) ?? m.groundAt(x, z)) >= 0.35);
     };
     const walkRadius = 0.35;
+    const groundSolid = (x,z) => T.invStatic?.wholeTown ? T.invStatic.depth(x,z,0,0,walkRadius) > 0 : solid(x,z) || T.invStatic?.depth(x,z,0,0,walkRadius) > 0;
     const walkClear = (x, z) => {
       for (const [dx, dz] of [[0, 0], [walkRadius, 0], [-walkRadius, 0], [0, walkRadius], [0, -walkRadius]]) {
         const px = x + dx, pz = z + dz;
-        if (!dryInside(px, pz) || solid(px, pz)) return false;
+        if (!dryInside(px, pz) || (!T.invStatic?.wholeTown && solid(px, pz))) return false;
       }
       return vacant(x, z, 0, 0, walkRadius);
     };
@@ -25006,7 +25090,7 @@ const handle = async (m, post) => {
     C.walkStuck = () => {
       if (!C.canUnstickWalk()) return false;
       const { x, z } = F.pos;
-      if (!inside(x, z) || solid(x, z) || T.invStatic?.depth(x, z, 0, 0, walkRadius) > 0) {
+      if (!inside(x, z) || groundSolid(x, z)) {
         const p = findWalkSpot(x, z, F.yaw, false, true);
         if (p) { standClear(p); return true; }
       }
