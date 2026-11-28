@@ -299,6 +299,139 @@ range requests (one 600 MB file, 3.6 MB of it read). Street View still gives eac
 - For the whole town: Microsoft's outlines put about 4,700 buildings where the model has its 5,712 made-up houses (and 311
   OpenStreetMap ones). Each would get its colours from the satellite, and Street View detail only where it matters.
 
+### Norman Road in Explore v48
+
+[Explore #400](https://github.com/Ashley-Pettit/3dModels/pull/400) brought the free-source roof, frontage and vacant-lot refinements to production. Production and [beta](https://ashley-pettit.github.io/3dModels/beta/inverloch/) serve the same v48 renderer bytes. The combined source [29f7d18](https://github.com/Ashley-Pettit/ai-forge/commit/29f7d18697fc381f8163f0f94ad73f0f71d0fef8) is in the [canonical renderer branch via #53](https://github.com/Ashley-Pettit/ai-forge/pull/53).
+
+The original No. 13 exterior and full-street outlines first reached production via [Explore #381](https://github.com/Ashley-Pettit/3dModels/pull/381). The model revisions below record the evidence and changes that led to v48.
+
+### 13 Norman Road exterior preview
+
+Number 13 uses a single-storey L-shaped shell based on [Microsoft Global ML Building Footprints](https://github.com/microsoft/GlobalMLBuildingFootprints)
+(12 November 2026, Australia tile 311223133, CDLA-Permissive-2.0). The source shows a roughly 6.4 m-wide, 22.3 m-deep main strip, a wider
+rear wing and an approximately 13 m street setback. The model shifts the outline about 1.25 m across the lot to fit the
+[Vicmap Property](https://www.land.vic.gov.au/maps-and-spatial/spatial-data/vicmap-catalogue/vicmap-property) parcel (PFI 5283723,
+State of Victoria, CC BY 4.0) and insets the modelled walls beneath the eaves. Microsoft estimates mean building height at 4.6 m.
+The footprint west of this parcel belongs outside number 13.
+
+The gables, roof metalwork, weatherboards, glazing, joinery and low planting are review fixtures. Their location and materials
+need a contributor photo or survey with modelling permission before release. The 3D assets use original procedural geometry and
+vertex colours. Number 11 is still drawn by Explore. The bundle is built from the source for revision 42 plus the number 13
+change, using the same renderer build.
+
+### Norman Road from Florida Avenue to the eastern dead end
+
+The [Bass Coast Shire Public Road Register](https://www.basscoast.vic.gov.au/assets/general-images/Public-Road-Register-March-2024.pdf)
+lists 275.4 m between Florida and Ebor Avenues and 95.6 m east of Ebor. The Explore review follows
+both frontages over that entire run, including the dead end short of Surf Parade.
+
+- 26 roofprints across 23 property groups use the [Microsoft Global ML Building Footprints](https://github.com/microsoft/GlobalMLBuildingFootprints)
+  Australian tile 311223133, release 12 November 2026, CDLA-Permissive-2.0. [Vicmap Address and Property](https://www.land.vic.gov.au/maps-and-spatial/spatial-data/vicmap-catalogue/vicmap-property)
+  are State of Victoria data under CC BY 4.0. The centreline follows the existing OpenStreetMap geometry (ODbL).
+- The facade kit models framed openings, sill depth, cladding, eaves and roof seams alongside the authored number 11 and 13 models.
+  Mapped roof edges and cadastral placement are the evidence. Storey estimates, roof profiles, finishes and joinery are provisional.
+  Street View and satellite were consulted in their viewer. No Google imagery or new Street View-derived features enter the candidate.
+- The update includes 1A, 1B and 2B east of Ebor. Number 1–3 retains the current scene because the open source has older footprints.
+  Number 23 keeps its existing placeholder pending a current, reusable footprint. Number 14A and number 19 have no matched roof and
+  have been marketed as vacant. Number 14B overlaps number 14's record and shares its single roof. The corner houses at 2 Ebor Avenue
+  remain in the scene. The formerly mislabelled outbuilding west of 13 is on number 15's parcel.
+- The renderer uses the same revision-42 release source as the number 13 draft, with the two Norman Road patches.
+  The candidate adds no media assets to Explore. The review captures and provenance are outside the delivery bundle.
+
+#### Norman Road free-source pass (28 November 2026)
+
+The [renderer source](https://github.com/Ashley-Pettit/ai-forge/commit/0e413f20504bddb45fc3ec002eb5a4c4b3c4cef1)
+fits the 26 mapped roof envelopes to Microsoft's open estimates of mean roof height above ground. It weights the
+roof planes by plan area and samples the existing bare-earth terrain under them. Number 13 uses the estimate for its
+own L-shaped roof to adjust the existing gables within a small range. Bounds keep the fit from implying a measured
+eave, pitch or ridge. Number 11's authored assets are outside this pass.
+
+- The [January 2024 sale description for 2](https://www.realestate.com.au/sold/property-house-vic-inverloch-142967772)
+  and [November 2021 sale description for 5](https://www.realestate.com.au/sold/property-house-vic-inverloch-137987198)
+  establish two visible levels. Number 5's main entry is at the rear. The [7–9 listing](https://www.realestate.com.au/sold/property-house-vic-inverloch-148947500)
+  and [15 listing](https://www.realestate.com.au/sold/property-house-vic-inverloch-135393894) support wider rear glazing.
+  Exact opening, deck, carport and canopy positions remain uncertain.
+- Where the model can fit a short entry against the rendered ground, it places supported treads. On steep or obstructed
+  ground, a window bay replaces the illustrative floating doorway. Number 14 is the most visible example.
+- Number 14A and number 19 use their Vicmap parcel rings to keep generated buildings off the open lots documented in
+  the [14A land listing](https://www.realestate.com.au/property-residential%2Bland-vic-inverloch-204538948) and
+  [19 property record](https://www.property.com.au/vic/inverloch-3996/norman-rd/19-pid-4519911/).
+- The checked open footprint sources still lack current replacement roof outlines at 1–3 and 23. Those use the previous
+  scene as a fallback. Roof finish and pitch remain illustrative elsewhere. The candidate uses original geometry and the
+  existing ground and model assets.
+
+#### Refined source plan for Norman Road and Inverloch
+
+**Footprints and address matching.** Pull dated OpenStreetMap outlines and building parts through
+[Overpass](https://wiki.openstreetmap.org/wiki/Overpass_API) before rebuilding each block. Keep current OSM footprints
+and usable [building levels and roof tags](https://wiki.openstreetmap.org/wiki/Simple_3D_Buildings) where present.
+Fill gaps with [Microsoft Global ML Building Footprints](https://github.com/microsoft/GlobalMLBuildingFootprints) and
+reconcile both sources against Vicmap parcels and addresses. Deduplicate building parts and parent outlines before
+assigning collision. Track source release and imagery capture separately. Retain the OSM extract and its
+[attribution and ODbL obligations](https://osmfoundation.org/wiki/Licence/Community_Guidelines/Produced_Work_-_Guideline).
+On 28 November 2026, Overpass and the
+[official OSM extract](https://api.openstreetmap.org/api/0.6/map?bbox=145.7096835,-38.6418871,145.7141878,-38.6392615)
+returned four building ways in the corridor’s search bounds. All four sit outside the 30 checked Norman Road parcel records.
+OSM gives address points for 1–3 and 23, so Microsoft still provides the draft’s 26 roofprints. Prioritise 1–3 and 23 for a
+current licensed outline or permitted site survey.
+
+**Ground and roof height.** The 28 November 2026 [ELVIS](https://www.ga.gov.au/scientific-topics/national-location-information/elvis-elevation-information-system)
+query for the corridor returned ground DEMs and national coarse products. It exposed no downloadable
+local roof-resolution DSM, DHM or classified point cloud. Victoria’s coverage index shows the
+[2022 Inverloch survey](https://services-ap1.arcgis.com/P744lA0wf4LlBZ84/arcgis/rest/services/CIP_Elevation_Footprints/FeatureServer/0/53)
+over the full route at 8 points/m² and an [older coastal survey](https://services-ap1.arcgis.com/P744lA0wf4LlBZ84/arcgis/rest/services/CIP_Elevation_Footprints/FeatureServer/0/246).
+The [Digital Twin Victoria LiDAR programme](https://www.land.vic.gov.au/maps-and-spatial/imagery/elevation-data/major-lidar-projects/digital-twin-victoria-lidar-2021-24)
+offers survey products through licensed providers. Verify flight dates against the delivered tiles.
+The [open Victorian Coastal 2.5 m DEM](https://discover.data.vic.gov.au/en_AU/dataset/victorian-coastal-digital-elevation-model-2021-vcdem-250cm)
+is another terrain and bathymetry source. Treat it as a grounding candidate where its local coverage warrants it.
+
+Four street-centre spot checks from Florida Avenue to the dead end put the shipped raw terrain within 0.09 m of
+the [Geoscience Australia 5 m bare-earth DEM](https://ecat.ga.gov.au/geonetwork/srv/api/records/22be4b55-2466-4320-e053-10a3070a5236).
+Use the current ground grid for the Norman Road pilot and check model siting at wall corners and street approaches.
+When a roof-capable survey with suitable reuse terms is available, align its ground and surface grids to the same
+horizontal and vertical datum. Subtract the bare-earth surface for relative building height and fit roof planes
+from classified building returns or a clear, sufficiently dense DSM. Reject canopy and isolated high returns.
+Record eave and ridge separately where supported. Keep unresolved values provisional and apply the measured relative
+height above Explore’s rendered ground.
+
+**Roof attributes and imagery.** Sample 1–3, 13, 23 and a few controls through a small Geoscape Clip extract or
+[Buildings API](https://api-docs.geoscape.com.au/guides/buildings/quickstart) request before committing to a licence.
+Check coverage, capture dates, and populated eave and roof height, shape, slope and colour from the
+[Height](https://docs.geoscape.com.au/projects/building_height_insight_pack/en/stable/index.html)
+and [Roof](https://docs.geoscape.com.au/projects/building_roof_insight_pack/en/stable/index.html) Insight Packs.
+The slope field describes the building’s maximum roof slope. Ridge positions and individual slopes need finer geometry.
+Confirm that the agreement permits generated assets in both the review Site and public Explore. For broad roof colours,
+use a dated aerial layer with derivative rights and sample the main roof away from trees and heavy shadows.
+Evaluate [Vicmap imagery](https://www.land.vic.gov.au/maps-and-spatial/spatial-data/vicmap-catalogue/vicmap-imagery),
+[Esri World Imagery](https://www.esri.com/en-us/legal/terms/web-site-service), and
+[Nearmap](https://www.nearmap.com/au/legal/product-specific-terms) against those rights and actual local capture.
+The [Vicmap imagery index](https://services-ap1.arcgis.com/P744lA0wf4LlBZ84/arcgis/rest/services/Aerial_Imagery_viewable/FeatureServer/0)
+shows 10 cm South Gippsland and January 2023 Outer Melbourne East coverage at the Norman Road checkpoints.
+Use those survey records to scope a licensed sample.
+Nearmap’s [coverage map](https://www.nearmap.com/au/coverage) covers Norman Road in vertical imagery and 3D.
+Check capture dates and permitted outputs for the specific products before relying on them.
+Use [Google Street View](https://about.google/brand-resource-center/products-and-services/geo-guidelines/#street-view)
+as a view or link in Google’s service. Its restrictions on creating data apply to this private review workflow too.
+[Mapillary](https://help.mapillary.com/hc/en-us/articles/115001770409-CC-BY-SA-license-for-open-data) can supply CC BY-SA
+photos where coverage exists. The Norman Road query found no frames, so start with contributor photos with modelling permission.
+
+**Town centre detail.** Capture dated phone photos of the bakery and library façades, their returns and signs.
+Use overlapping views and a scale reference for the clock and war memorial. Test a mesh export from
+[RealityScan Mobile](https://www.realityscan.com/mobile) or [Polycam](https://learn.poly.cam/hc/en-us/articles/27756102599572-What-File-Types-Can-Polycam-Export)
+on one object, then use the scan as a reference for a game-ready mesh. Use the [Victorian Heritage Database](https://vhd.heritagecouncil.vic.gov.au/about),
+[Victorian War Heritage Inventory](https://www.vic.gov.au/victorian-war-heritage-inventory),
+and [Bass Coast Shire heritage and planning material](https://www.basscoast.vic.gov.au/assets/general-images/05-2025-Heritage-Overlay-Audit.pdf)
+to establish identity, site history and dated elevations where available. A permit drawing describes approved intent until
+matched to the building on site. Business websites and social media help confirm current tenancy and signage. Obtain reuse
+permission before incorporating their photos or artwork. Keep State Library Victoria material in a dated historic layer,
+using each item’s [reuse terms](https://www.slv.vic.gov.au/help/copyright-legal-deposit/understanding-copyright/copying-re-use-without-librarys-permission).
+
+Start with the Norman Road exceptions at 1–3 and 23, and use numbers 11 and 13 as reference buildings for the next roof
+measurements and façade photo review. Run a small town-centre photo pilot with the bakery, clock, memorial and library
+before expanding the same method block by block.
+Record source, capture date, rights and whether each footprint, height and finish is measured, mapped or estimated.
+Review the measured changes with the same street and aerial cameras as the v44 draft before extending their use.
+
 ## Inverloch's power poles cast no shadows
 
 Ash, 13 November 2026: "remove power pole shadows from Inverloch". The timber power poles and their wires along the
