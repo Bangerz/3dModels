@@ -52,10 +52,10 @@ const CRUISE = 50 / 3.6, HALF_WIDTH = .98, HALF_LENGTH = 2.22;
 const PARKED_WIDTH = .95, PARKED_LENGTH = 2.25;
 const GRAZE = .0019066, DEEP = .780184;
 
-function drive(hz, { intrusion = DEEP, centres = [40], seconds = 16, gap = false, closed = false, kerbBarrier = false, npc, bus = false, hoon = false, roadWidth, streetEnd } = {}) {
+function drive(hz, { intrusion = DEEP, centres = [40], seconds = 16, gap = false, closed = false, kerbBarrier = false, npc, traffic = npc ? [npc] : [], bus = false, hoon = false, roadWidth, streetEnd } = {}) {
   const car = { x: 0, z: 0, y: 0, h: 0, dir: 0, steer: 0, bus, v: bus ? CRUISE / 1.3 : CRUISE };
-  const trafficCar = npc && { y: 0, ...npc };
-  const T = { traffic: { cars: npc ? [trafficCar] : [] } };
+  const cars = traffic.map(start => ({ y: 0, ...start }));
+  const T = { traffic: { cars } };
   const halfLength = bus ? 5.55 : HALF_LENGTH, halfWidth = bus ? 1.27 : HALF_WIDTH;
   const routeLength = hoon ? 1800 : 400;
   if (roadWidth) T.roadsAll = [{ cls: 3, wd: roadWidth, pts: [0, 0, 0, routeLength] }];
@@ -88,10 +88,10 @@ function drive(hz, { intrusion = DEEP, centres = [40], seconds = 16, gap = false
   if (kerbBarrier) T.invStatic.box(3.8, 50, 0, .2, 180);
   for (let tick = 0; tick < seconds * hz; tick++) {
     time = tick / hz;
-    if (npc) {
-      trafficCar.x = npc.x + Math.sin(npc.h) * npc.v * time;
-      trafficCar.z = npc.z + Math.cos(npc.h) * npc.v * time;
-    }
+    traffic.forEach((start, i) => {
+      cars[i].x = start.x + Math.sin(start.h) * start.v * time;
+      cars[i].z = start.z + Math.cos(start.h) * start.v * time;
+    });
     const sample = advance(1 / hz);
     if (!sample) break;
     const { bump, target, routeEnd } = sample;
@@ -172,6 +172,47 @@ for (const hz of [30, 60]) {
   test(`hold one passing line past a stationary traffic car at ${hz} Hz`, () => {
     const npc = { x: 1.15, z: 40, h: 0, v: 0 };
     checkContinuousPass(drive(hz, { npc, centres: [] }), npc.z, HALF_LENGTH);
+  });
+
+  test(`one continuous pass for stopped traffic, including a mixed parked row at ${hz} Hz`, () => {
+    const traffic = [40, 64].map(z => ({ x: 0, z, h: 0, v: 0 }));
+    checkContinuousPass(drive(hz, { traffic, centres: [] }), 64, HALF_LENGTH);
+    checkContinuousPass(drive(hz, { traffic, centres: [88, 112] }), 112);
+    const longQueue = Array.from({ length: 13 }, (_, i) => ({ x: 0, z: 40 + 12 * i, h: 0, v: 0 }));
+    checkContinuousPass(drive(hz, { traffic: longQueue, centres: [], seconds: 22 }), 184, HALF_LENGTH);
+  });
+
+  test(`an unreachable queue beyond the passing horizon stays blocked at ${hz} Hz`, () => {
+    const traffic = Array.from({ length: 17 }, (_, i) => ({ x: 1.15, z: 28 + 12 * i, h: 0, v: 0 }));
+    const { frames } = drive(hz, { traffic, centres: [], seconds: 4 });
+    assert.ok(frames.every(f => f.target === 0 && f.front < 28 && f.bump === 0));
+    assert.ok(frames.at(-1).speed < 1);
+  });
+
+  test(`yield to oncoming and crossing traffic before passing a queue at ${hz} Hz`, () => {
+    const queue = [40, 64].map(z => ({ x: 0, z, h: 0, v: 0 }));
+    const clear = drive(hz, { centres: [], traffic: queue, kerbBarrier: true, seconds: 2 });
+    const openAt = clear.frames.find(f => f.target !== 0).time;
+    for (const actor of [{ x: -2.6, z: 100, h: Math.PI, v: 10 }, { x: -29, z: 40, h: Math.PI/2, v: 8 }]) {
+      const run = drive(hz, { centres: [], traffic: [...queue, actor], kerbBarrier: true, seconds: 20 });
+      checkPass(run, 64, HALF_LENGTH);
+      const out = run.frames.find(f => f.target !== 0);
+      assert.ok(out.time > openAt + .5, "let the conflicting actor through");
+      assert.ok(run.frames.filter(f => f.time >= out.time && f.rear <= 64 + HALF_LENGTH)
+        .every(f => Math.sign(f.target) === Math.sign(out.target)), "hold the passing side once clear");
+    }
+  });
+
+  test(`GPS stays out past a queue of moving leads at ${hz} Hz`, () => {
+    const traffic = [40, 64].map(z => ({ x: 0, z, h: 0, v: 8 }));
+    const { frames, hops } = drive(hz, { traffic, centres: [], hoon: true, roadWidth: 12, seconds: 20 });
+    assert.deepEqual(hops, []);
+    assert.ok(frames.every(f => f.bump === 0));
+    const first = frames.findIndex(f => f.target !== 0);
+    const clear = frames.findIndex(f => f.rear > 64 + 8 * f.time + HALF_LENGTH);
+    assert.ok(first >= 0 && clear > first, "must overtake the second moving car");
+    assert.ok(frames.slice(first, clear).every(f => Math.sign(f.target) === Math.sign(frames[first].target)));
+    assert.ok(frames.slice(clear).some(f => !f.target && Math.abs(f.x) < .3), "return to the home lane");
   });
 
   test(`GPS Autodrive clears a moving 8 m/s lead before merging back at ${hz} Hz`, () => {
