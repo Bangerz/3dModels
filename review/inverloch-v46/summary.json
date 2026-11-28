@@ -1,0 +1,644 @@
+{
+  "hostSha": "ca2a4a47ef83f67628804be856ad34722e154424b6ce26153b3e265b9cb9836a",
+  "modelSha": "1c9e84558565f7fc9a809ab452b3f115bed9f01506f5364ea413c92917500d7a",
+  "townMapSha": "1bef586b06efcbd72992c36188d0e1b8c0ebde9ab1b2c6241acc7c8784d92ca1",
+  "traceSha": "d7bdf2112e9ed0ed273a87d0f48a6e7d53483b4f91c7b993250132c3895fd6dd",
+  "measuredSeconds": 171,
+  "pageErrors": [],
+  "sampleErrors": [],
+  "shippedCommit": "d083254827e0ccd4c364139f4c924fcc0a997da1",
+  "githubPagesArtifactRun": 46088524006,
+  "thermallyMatched": false,
+  "replayStartUtc": "2026-11-28T00:43:50.383200+00:00",
+  "replayedMetres": 1899.62,
+  "combined": {
+    "renderFps": 59.965,
+    "renderIntervalsMs": [
+      17.8,
+      23.3,
+      24.3
+    ],
+    "rafFps": 90.023,
+    "medianDrawCalls": 156,
+    "medianTriangles": 826169,
+    "bufferCounts": {
+      "534\u00d7985": 10254
+    },
+    "renderCount": 10254
+  },
+  "cycles": [
+    {
+      "street": "A\u2019Beckett",
+      "cycle": 1,
+      "renderFps": 60.0,
+      "renderIntervalsMs": [
+        18.25,
+        23.2,
+        24.0
+      ],
+      "rafFps": 90.026,
+      "medianDrawCalls": 177,
+      "medianTriangles": 878699,
+      "bufferCounts": {
+        "534\u00d7985": 2340
+      },
+      "renderCount": 2340
+    },
+    {
+      "street": "Cuttriss",
+      "cycle": 1,
+      "renderFps": 60.0,
+      "renderIntervalsMs": [
+        17.6,
+        23.4,
+        24.3
+      ],
+      "rafFps": 90.125,
+      "medianDrawCalls": 129,
+      "medianTriangles": 749686,
+      "bufferCounts": {
+        "534\u00d7985": 960
+      },
+      "renderCount": 960
+    },
+    {
+      "street": "A\u2019Beckett",
+      "cycle": 2,
+      "renderFps": 59.872,
+      "renderIntervalsMs": [
+        18.0,
+        23.1,
+        23.9
+      ],
+      "rafFps": 89.897,
+      "medianDrawCalls": 185,
+      "medianTriangles": 881364,
+      "bufferCounts": {
+        "534\u00d7985": 2335
+      },
+      "renderCount": 2335
+    },
+    {
+      "street": "Cuttriss",
+      "cycle": 2,
+      "renderFps": 60.0,
+      "renderIntervalsMs": [
+        17.25,
+        23.4,
+        24.5
+      ],
+      "rafFps": 90.125,
+      "medianDrawCalls": 129,
+      "medianTriangles": 749702,
+      "bufferCounts": {
+        "534\u00d7985": 960
+      },
+      "renderCount": 960
+    },
+    {
+      "street": "A\u2019Beckett",
+      "cycle": 3,
+      "renderFps": 59.974,
+      "renderIntervalsMs": [
+        18.6,
+        23.3,
+        24.2
+      ],
+      "rafFps": 90.103,
+      "medianDrawCalls": 185,
+      "medianTriangles": 881364,
+      "bufferCounts": {
+        "534\u00d7985": 2339
+      },
+      "renderCount": 2339
+    },
+    {
+      "street": "Cuttriss",
+      "cycle": 3,
+      "renderFps": 60.0,
+      "renderIntervalsMs": [
+        17.65,
+        23.8,
+        24.8
+      ],
+      "rafFps": 90.125,
+      "medianDrawCalls": 129,
+      "medianTriangles": 749686,
+      "bufferCounts": {
+        "534\u00d7985": 960
+      },
+      "renderCount": 960
+    }
+  ],
+  "presentation": [
+    {
+      "approximateElapsedSec": 13.2,
+      "cadenceFps": 90.14,
+      "windowSec": 0.688,
+      "displayHz": 90.0
+    },
+    {
+      "approximateElapsedSec": 25.66,
+      "cadenceFps": 90.1,
+      "windowSec": 0.688,
+      "displayHz": 90.0
+    },
+    {
+      "approximateElapsedSec": 38.21,
+      "cadenceFps": 90.15,
+      "windowSec": 0.688,
+      "displayHz": 90.0
+    },
+    {
+      "approximateElapsedSec": 50.73,
+      "cadenceFps": 90.13,
+      "windowSec": 0.688,
+      "displayHz": 90.0
+    },
+    {
+      "approximateElapsedSec": 63.16,
+      "cadenceFps": 90.14,
+      "windowSec": 0.688,
+      "displayHz": 90.0
+    },
+    {
+      "approximateElapsedSec": 75.52,
+      "cadenceFps": 90.14,
+      "windowSec": 0.688,
+      "displayHz": 90.0
+    },
+    {
+      "approximateElapsedSec": 87.97,
+      "cadenceFps": 90.12,
+      "windowSec": 0.688,
+      "displayHz": 90.0
+    },
+    {
+      "approximateElapsedSec": 100.46,
+      "cadenceFps": 90.12,
+      "windowSec": 0.688,
+      "displayHz": 90.0
+    },
+    {
+      "approximateElapsedSec": 112.96,
+      "cadenceFps": 90.12,
+      "windowSec": 0.688,
+      "displayHz": 90.0
+    },
+    {
+      "approximateElapsedSec": 125.49,
+      "cadenceFps": 90.16,
+      "windowSec": 0.688,
+      "displayHz": 90.0
+    },
+    {
+      "approximateElapsedSec": 137.89,
+      "cadenceFps": 90.13,
+      "windowSec": 0.688,
+      "displayHz": 90.0
+    },
+    {
+      "approximateElapsedSec": 150.37,
+      "cadenceFps": 90.11,
+      "windowSec": 0.688,
+      "displayHz": 90.0
+    },
+    {
+      "approximateElapsedSec": 162.87,
+      "cadenceFps": 90.12,
+      "windowSec": 0.688,
+      "displayHz": 90.0
+    }
+  ],
+  "thermal": [
+    {
+      "deviceEpochMs": 1795826621230,
+      "hostEpochMs": 1795826622131,
+      "batteryC": 29.1,
+      "systemStatus": 0,
+      "sensors": {
+        "VIRTUAL-SKIN": [
+          30.1172,
+          0
+        ],
+        "VIRTUAL-SKIN-CHARGE": [
+          30.12233,
+          0
+        ],
+        "G3D": [
+          33,
+          0
+        ],
+        "BIG": [
+          35,
+          0
+        ],
+        "MID": [
+          36,
+          0
+        ],
+        "LITTLE": [
+          36,
+          0
+        ]
+      },
+      "elapsedSec": -8.25
+    },
+    {
+      "deviceEpochMs": 1795826630452,
+      "hostEpochMs": 1795826631376,
+      "batteryC": 29.1,
+      "systemStatus": 0,
+      "sensors": {
+        "VIRTUAL-SKIN": [
+          30.644302,
+          0
+        ],
+        "VIRTUAL-SKIN-CHARGE": [
+          30.621763,
+          0
+        ],
+        "G3D": [
+          48.000004,
+          0
+        ],
+        "BIG": [
+          53.000004,
+          0
+        ],
+        "MID": [
+          54.000004,
+          0
+        ],
+        "LITTLE": [
+          56.000004,
+          0
+        ]
+      },
+      "elapsedSec": 0.99
+    },
+    {
+      "deviceEpochMs": 1795826646165,
+      "hostEpochMs": 1795826647070,
+      "batteryC": 29.1,
+      "systemStatus": 0,
+      "sensors": {
+        "VIRTUAL-SKIN": [
+          31.6973,
+          0
+        ],
+        "VIRTUAL-SKIN-CHARGE": [
+          31.630304,
+          0
+        ],
+        "G3D": [
+          51.000004,
+          0
+        ],
+        "BIG": [
+          54.000004,
+          0
+        ],
+        "MID": [
+          56.000004,
+          0
+        ],
+        "LITTLE": [
+          57.000004,
+          0
+        ]
+      },
+      "elapsedSec": 16.69
+    },
+    {
+      "deviceEpochMs": 1795826661705,
+      "hostEpochMs": 1795826662633,
+      "batteryC": 29.1,
+      "systemStatus": 0,
+      "sensors": {
+        "VIRTUAL-SKIN": [
+          32.451702,
+          0
+        ],
+        "VIRTUAL-SKIN-CHARGE": [
+          32.36746,
+          0
+        ],
+        "G3D": [
+          49.000004,
+          0
+        ],
+        "BIG": [
+          52.000004,
+          0
+        ],
+        "MID": [
+          54.000004,
+          0
+        ],
+        "LITTLE": [
+          54.000004,
+          0
+        ]
+      },
+      "elapsedSec": 32.25
+    },
+    {
+      "deviceEpochMs": 1795826677291,
+      "hostEpochMs": 1795826678204,
+      "batteryC": 29.1,
+      "systemStatus": 0,
+      "sensors": {
+        "VIRTUAL-SKIN": [
+          32.7835,
+          0
+        ],
+        "VIRTUAL-SKIN-CHARGE": [
+          32.69807,
+          0
+        ],
+        "G3D": [
+          49.000004,
+          0
+        ],
+        "BIG": [
+          52.000004,
+          0
+        ],
+        "MID": [
+          53.000004,
+          0
+        ],
+        "LITTLE": [
+          54.000004,
+          0
+        ]
+      },
+      "elapsedSec": 47.82
+    },
+    {
+      "deviceEpochMs": 1795826692792,
+      "hostEpochMs": 1795826693710,
+      "batteryC": 29,
+      "systemStatus": 0,
+      "sensors": {
+        "VIRTUAL-SKIN": [
+          32.999603,
+          0
+        ],
+        "VIRTUAL-SKIN-CHARGE": [
+          32.91459,
+          0
+        ],
+        "G3D": [
+          53.000004,
+          0
+        ],
+        "BIG": [
+          56.000004,
+          0
+        ],
+        "MID": [
+          58.000004,
+          0
+        ],
+        "LITTLE": [
+          60.000004,
+          0
+        ]
+      },
+      "elapsedSec": 63.33
+    },
+    {
+      "deviceEpochMs": 1795826708464,
+      "hostEpochMs": 1795826709391,
+      "batteryC": 29.2,
+      "systemStatus": 0,
+      "sensors": {
+        "VIRTUAL-SKIN": [
+          33.5937,
+          0
+        ],
+        "VIRTUAL-SKIN-CHARGE": [
+          33.49704,
+          0
+        ],
+        "G3D": [
+          53.000004,
+          0
+        ],
+        "BIG": [
+          55.000004,
+          0
+        ],
+        "MID": [
+          57.000004,
+          0
+        ],
+        "LITTLE": [
+          57.000004,
+          0
+        ]
+      },
+      "elapsedSec": 79.01
+    },
+    {
+      "deviceEpochMs": 1795826724006,
+      "hostEpochMs": 1795826724932,
+      "batteryC": 29.2,
+      "systemStatus": 0,
+      "sensors": {
+        "VIRTUAL-SKIN": [
+          33.836605,
+          0
+        ],
+        "VIRTUAL-SKIN-CHARGE": [
+          33.742767,
+          0
+        ],
+        "G3D": [
+          52.000004,
+          0
+        ],
+        "BIG": [
+          54.000004,
+          0
+        ],
+        "MID": [
+          56.000004,
+          0
+        ],
+        "LITTLE": [
+          57.000004,
+          0
+        ]
+      },
+      "elapsedSec": 94.55
+    },
+    {
+      "deviceEpochMs": 1795826739534,
+      "hostEpochMs": 1795826740458,
+      "batteryC": 29.2,
+      "systemStatus": 0,
+      "sensors": {
+        "VIRTUAL-SKIN": [
+          34.054302,
+          0
+        ],
+        "VIRTUAL-SKIN-CHARGE": [
+          33.966064,
+          0
+        ],
+        "G3D": [
+          51.000004,
+          0
+        ],
+        "BIG": [
+          53.000004,
+          0
+        ],
+        "MID": [
+          54.000004,
+          0
+        ],
+        "LITTLE": [
+          56.000004,
+          0
+        ]
+      },
+      "elapsedSec": 110.07
+    },
+    {
+      "deviceEpochMs": 1795826755112,
+      "hostEpochMs": 1795826756031,
+      "batteryC": 29.2,
+      "systemStatus": 0,
+      "sensors": {
+        "VIRTUAL-SKIN": [
+          34.3058,
+          0
+        ],
+        "VIRTUAL-SKIN-CHARGE": [
+          34.213154,
+          0
+        ],
+        "G3D": [
+          55.000004,
+          0
+        ],
+        "BIG": [
+          57.000004,
+          0
+        ],
+        "MID": [
+          61.000004,
+          0
+        ],
+        "LITTLE": [
+          62.000004,
+          0
+        ]
+      },
+      "elapsedSec": 125.65
+    },
+    {
+      "deviceEpochMs": 1795826770867,
+      "hostEpochMs": 1795826771755,
+      "batteryC": 29.5,
+      "systemStatus": 0,
+      "sensors": {
+        "VIRTUAL-SKIN": [
+          34.8444,
+          0
+        ],
+        "VIRTUAL-SKIN-CHARGE": [
+          34.742176,
+          0
+        ],
+        "G3D": [
+          54.000004,
+          0
+        ],
+        "BIG": [
+          57.000004,
+          0
+        ],
+        "MID": [
+          58.000004,
+          0
+        ],
+        "LITTLE": [
+          61.000004,
+          0
+        ]
+      },
+      "elapsedSec": 141.37
+    },
+    {
+      "deviceEpochMs": 1795826786397,
+      "hostEpochMs": 1795826787299,
+      "batteryC": 29.5,
+      "systemStatus": 0,
+      "sensors": {
+        "VIRTUAL-SKIN": [
+          34.982502,
+          0
+        ],
+        "VIRTUAL-SKIN-CHARGE": [
+          34.88267,
+          0
+        ],
+        "G3D": [
+          53.000004,
+          0
+        ],
+        "BIG": [
+          56.000004,
+          0
+        ],
+        "MID": [
+          56.000004,
+          0
+        ],
+        "LITTLE": [
+          57.000004,
+          0
+        ]
+      },
+      "elapsedSec": 156.92
+    },
+    {
+      "deviceEpochMs": 1795826801939,
+      "hostEpochMs": 1795826802857,
+      "batteryC": 29.5,
+      "systemStatus": 0,
+      "sensors": {
+        "VIRTUAL-SKIN": [
+          35.088303,
+          0
+        ],
+        "VIRTUAL-SKIN-CHARGE": [
+          34.994125,
+          0
+        ],
+        "G3D": [
+          52.000004,
+          0
+        ],
+        "BIG": [
+          54.000004,
+          0
+        ],
+        "MID": [
+          56.000004,
+          0
+        ],
+        "LITTLE": [
+          57.000004,
+          0
+        ]
+      },
+      "elapsedSec": 172.47
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "recorded": "2026-11-28T00:44:13.208Z",
+  "host": "d083254",
+  "build": "fbb38c8cee7d",
+  "canvas": [
+    393,
+    851
+  ],
+  "receipts": [
+    {
+      "url": "https://ashley-pettit.github.io/3dModels/town3d/inverloch-model.js?v=46",
+      "status": 200,
+      "sha256": "1c9e84558565f7fc9a809ab452b3f115bed9f01506f5364ea413c92917500d7a",
+      "bytes": 790999
+    },
+    {
+      "url": "https://ashley-pettit.github.io/3dModels/town3d/town.json?v=1bef586b",
+      "status": 200,
+      "sha256": "1bef586b06efcbd72992c36188d0e1b8c0ebde9ab1b2c6241acc7c8784d92ca1",
+      "bytes": 673849
+    },
+    {
+      "url": "https://ashley-pettit.github.io/3dModels/town3d/town.json?v=1bef586b",
+      "status": 200,
+      "sha256": "1bef586b06efcbd72992c36188d0e1b8c0ebde9ab1b2c6241acc7c8784d92ca1",
+      "bytes": 673849
+    }
+  ],
+  "errors": []
+}
