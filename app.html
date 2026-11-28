@@ -10144,6 +10144,7 @@ const handle = async (m, post) => {
     ]) clearLatLon.push({ lat, lon, r: 0.25 });
     if (inv && home && BS.W.invHouse) { const [lat, lon] = townLL(home[0], home[1]); clearLatLon.push({ lat, lon, r: 24 }); detailLatLon.push({ lat, lon, r: 170 }); }
     if (inv && BS.W.invTG && BS.W.invClock) TOWN_BLOCK.forEach(P => clearPolygons.push({ latLon: P.map(([x, z]) => townLL(x, z)), roads: true }));  // the town centre comes across whole
+    if (inv) clearLatLon.push({ lat: -38.63196885, lon: 145.73880880, r: 0.16 }); // 109 Bayview Avenue: tree seed 35741 inside the measured house.
     if (inv) clearPolygons.push({ latLon: INV_GLADE_SHELTER });
     if (inv) clearPolygons.push({ latLon: invScrewCreekMask(), roads: true });
     // Moorooka's bridges (town.json's roads marked as one): their decks, so a car drives over them, not down through them into the creek.
@@ -10232,6 +10233,7 @@ const handle = async (m, post) => {
             catch (e) { console.warn("Inverloch: Surf Parade beach access couldn't be added", e); }
         }
         if (inv && m.addParts) try { mine.push(invWestJetty(T, BS.B.THREE)); } catch (e) { console.warn("Inverloch: the west jetty could not be added", e); }
+        if (inv && m.addParts) invBayviewAvenue109(T, m, BS.B.THREE);
         if (inv && m.addParts) invIndustrialEstateSign(T, m, BS.B.THREE);
         if (cfg.place === "moo") try { mine = mine.concat(townShops(T, m)); } catch (e) { console.warn("Town model: Moorooka's shops couldn't be added", e); }
         const OFF = exOff(); document.body.classList.toggle("bsnoplaces", OFF.has("places"));
@@ -17969,6 +17971,70 @@ const handle = async (m, post) => {
       grid.worldBox(foot.x, foot.z, angle, postWidth, postWidth);
     }
   }
+
+  // 109 Bayview Avenue: the confirmed low roof steps back in three connected sections.
+  function invBayviewAvenue109(T, model, THREE) {
+    const x0 = 765.29897328, z0 = -552.3502281, cosine = 0.99767001, sine = 0.06822424;
+    const walls = [[0.48,0.48],[0.48,5.84],[-2.31,5.84],[-2.31,13.19],[3.99,13.19],[3.99,25.06],[6.53,25.06],[6.53,0.48]];
+    const eaves = [[0.1,0.1],[6.91,0.1],[6.91,25.44],[3.61,25.44],[3.61,13.57],[-2.69,13.57],[-2.69,5.46],[0.1,5.46]];
+    const roofFaces = [[[[0.1,5.46],[0.1,0.1],[6.91,5.46]],[[6.91,5.46],[0.1,0.1],[6.91,0.1]]],[[[-2.69,13.57],[-2.69,5.46],[0.1,5.46]],[[-2.69,13.57],[0.1,5.46],[3.61,13.57]],[[3.61,13.57],[0.1,5.46],[6.91,5.46]],[[3.61,13.57],[6.91,5.46],[6.91,13.57]]],[[[3.61,25.44],[3.61,13.57],[6.91,13.57]],[[3.61,25.44],[6.91,13.57],[6.91,25.44]]]];
+    const world = ([u,v]) => [x0+u*cosine+v*sine,z0+u*sine-v*cosine];
+    const point = ([u,v],y) => [u*cosine+v*sine,y,u*sine-v*cosine];
+    const grade = walls.map(p => model.groundAt(...world(p)));
+    const floor = Math.max(...grade) + .07;
+    const wallTop = 2.39;
+    const positions = [], colors = [];
+    const wall = new THREE.Color(0x999486), skirting = new THREE.Color(0x50524e);
+    const roof = new THREE.Color(0xbfc3bf), fascia = new THREE.Color(0x676b65);
+    const surround = new THREE.Color(0xc8c8b9), glass = new THREE.Color(0x465450);
+    const tri = (a,b,c,tint) => {
+      positions.push(...a,...b,...c);
+      for (let i=0; i<3; i++) colors.push(tint.r,tint.g,tint.b);
+    };
+    const quad = (a,b,c,d,tint) => { tri(a,b,c,tint); tri(a,c,d,tint); };
+    for (let i=0; i<walls.length; i++) {
+      const j = (i+1)%walls.length, a = walls[i], b = walls[j];
+      quad(point(a,grade[i]-floor-.14),point(b,grade[j]-floor-.14),point(b,.15),point(a,.15),skirting);
+      quad(point(a,.15),point(b,.15),point(b,wallTop),point(a,wallTop),wall);
+    }
+    const roofHeight = ([u,v],section) => [2.62,2.77,2.67][section] + .022*(6.91-u) - (section === 2 ? .009*(v-13.57) : 0);
+    const atRoof = (p,section) => point(p,roofHeight(p,section));
+    roofFaces.forEach((faces,section) => {
+      for (const [a,b,c] of faces) tri(atRoof(a,section),atRoof(b,section),atRoof(c,section),roof);
+    });
+    const trim = (a,b,section) => quad(point(a,wallTop-.015),point(b,wallTop-.015),atRoof(b,section),atRoof(a,section),fascia);
+    for (let i=0; i<eaves.length; i++) {
+      let a = eaves[i];
+      const b = eaves[(i+1)%eaves.length];
+      const cuts = [5.46,13.57].filter(v => (a[1]-v)*(b[1]-v)<0).sort((u,v) => b[1]>a[1] ? u-v : v-u);
+      for (const v of cuts) {
+        const t = (v-a[1])/(b[1]-a[1]), p = [a[0]+(b[0]-a[0])*t,v];
+        const mid = (a[1]+p[1])/2;
+        trim(a,p,mid<5.46 ? 0 : mid<=13.57 ? 1 : 2);
+        a = p;
+      }
+      const mid = (a[1]+b[1])/2;
+      trim(a,b,mid<5.46 ? 0 : mid<=13.57 ? 1 : 2);
+    }
+    for (const [v,left,before,after] of [[5.46,.10,0,1],[13.57,3.61,1,2]]) {
+      const a=[left,v], b=[6.91,v];
+      quad(atRoof(a,before),atRoof(b,before),atRoof(b,after),atRoof(a,after),fascia);
+    }
+    const panel = (u0,u1,v,y0,y1,tint) => {
+      const a=[u0,v], b=[u1,v];
+      quad(point(a,y0),point(b,y0),point(b,y1),point(a,y1),tint);
+    };
+    panel(3.34,5.98,.455,.53,2.16,surround);
+    panel(3.43,4.61,.431,.60,2.08,glass);
+    panel(4.70,5.89,.431,.60,2.08,glass);
+    panel(-1.98,-.55,5.815,1.22,2.10,surround);
+    panel(-1.90,-.63,5.79,1.29,2.03,glass);
+    const matrix = new THREE.Matrix4().makeTranslation(x0,floor,z0).elements;
+    model.addParts([{ positions:new Float32Array(positions), colors:new Float32Array(colors), matrix, roughness:.89, doubleSide:true }]);
+    const grid = T.invStatic ??= invCivicCollision((x,z) => [x,z], () => false);
+    grid.polygon(walls.map(world));
+  }
+
 
   // BEGIN GENERATED src/explore/collision.mjs
   // Ground-level collision in model metres. Authored guest shapes use their local transform.
