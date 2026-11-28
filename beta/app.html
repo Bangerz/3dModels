@@ -9896,12 +9896,17 @@ const handle = async (m, post) => {
       await new Promise(ok => setTimeout(ok, 1500));
       if (dead || BS.town !== T) return;
       // Older embeds and full terrain replacements have no yield point inside the model.
-      if (graphics && !(best === "medium" && lib.canYieldQualityCommit && cur.setQualityInPlace)) {
+      const needsHostGate = graphics && !(best === "medium" && lib.canYieldQualityCommit && cur.setQualityInPlace);
+      if (needsHostGate) {
         await waitForControls();
         if (dead || BS.town !== T) return;
       }
       const f = await fps(2000);
       if (!currentTown() || (f < 55 && !window.__anForceUp)) return;
+      if (needsHostGate) {
+        await waitForControls(); // A control may have been pressed during the frame-rate sample.
+        if (dead || BS.town !== T) return;
+      }
       hiBox.hidden = false;
       if (!await changeQuality(best, initialLoadMs)) return;
       // the sharp one has to keep up: if it can't, back to light, and this device stays light
