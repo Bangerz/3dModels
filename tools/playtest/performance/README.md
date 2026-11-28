@@ -1,0 +1,50 @@
+# Sustained Inverloch Explore performance playtest
+
+Use this replay to compare renderer load for the same occupied ute and chase camera on the same streets. Run it when a change can affect sustained scene performance, for example geometry, foliage, traffic rendering, textures, shadows or weather. Use normal steering, Autodrive and trusted touch checks for input, navigation and collision. The replay places the native vehicle and camera from a trace, so those gameplay outcomes require separate evidence.
+
+Pass `--channel beta` to test a staged beta. The runner hashes and instruments the renderer and map named by that channel�s own host. Use the same channel and host for a renderer-only comparison.
+
+## Prepare two pinned builds
+
+1. Obtain a complete static site for each revision. For release verification, use the matching Pages artifact when available, then verify the live HTML, model and map digests if claiming the measurement applies to the deployed bytes. For a source comparison, run `python build.py <output-folder>` in each pinned checkout with the same build settings. Use distinct output folders outside any served site. Preserve `inverloch/explore/index.html`, `town3d/inverloch-model.js`, `town3d/town.json` and all other site assets together. If a change only replaces the renderer, use the same underlying site assets in both variants and preserve the versioned model request.
+2. Record the baseline and candidate source revisions, native model source revision when known, and the expected original HTML, model and map SHA-256 values. The driver records all three hashes and accepts `--expect-host`, `--expect-model` and `--expect-map` to reject the wrong input. Rebuilding the same commit can change the stamped HTML bytes. Keep the exact artifact for byte-for-byte reproduction.
+3. Use Node.js 22 or newer and an installed Chrome or Chromium for emulation. Physical mode additionally needs Android Platform Tools (`adb`), a USB-debugging-authorized Android phone and native Chrome open and in the foreground. Check `adb -d get-state` before the run. The driver selects a USB device and fails if more than one is eligible. Enable USB debugging only on the handset designated for the playtest.
+
+The driver runs the site on localhost, with in-memory hooks for observing the native renderer and replaying the positions. It serves a pinned local copy of Three.js 0.152.2. The CLI fetches it from cdnjs if `--three` is omitted. Supply `--three <file>` to reuse a downloaded copy across runs or work offline. Its SHA-256 must be `218b9f9420af1ee2b773fa066cee0eeb52f7ac76ca2fa11b11b732c1ba0a6e39`. The loopback fixture blocks external requests, primes the Medium preference and disables online players. Measured runs start after the model settles and the occupied ute warms for 1.8 seconds. Run the published page separately to assess first-load behavior and online integrations.
+
+## Run the test
+
+Run commands from the repository root. Replace `out/site-a` and `out/site-b` with the prepared build directories and `PATH_TO_CHROME` with a browser executable. Put output in a fresh directory for each comparison to keep evidence from prior runs. An existing output file causes a run to stop before setup.
+
+```sh
+node tools/playtest/performance/run.mjs --mode emulated --chrome "PATH_TO_CHROME" --site out/site-a --out out/perf-smoke.json --label smoke --smoke
+node tools/playtest/performance/run.mjs --mode emulated --chrome "PATH_TO_CHROME" --site out/site-a --out out/perf-emulated/A1.json --label A1
+node tools/playtest/performance/run.mjs --mode emulated --chrome "PATH_TO_CHROME" --site out/site-b --out out/perf-emulated/B1.json --label B1
+```
+
+The three-second smoke covers only the start of A’Beckett Street. Use it to diagnose hook, asset, WebGL or browser problems. The two default runs are 171 seconds each in the same desktop mobile profile, with a 426 × 780 CSS px viewport, DPR 3, touch and the laptop's actual GPU. Keep Chrome and GPU configuration consistent, close competing workloads and inspect the reported GPU to catch software rendering. The historical desktop comparison captured the two street clips separately. This driver uses the continuous physical-run schedule for the full emulated comparison.
+
+On the physical Pixel 7, keep portrait Chrome foregrounded and the screen on. Record the Android and Chrome builds, GPU, CSS viewport, DPR, initial scene buffer, brightness, battery saver, power connection, refresh rate, case and ambient conditions. Keep those settings fixed across the four runs. The historical phone was USB-powered with battery saver off, the native viewport 411 × 758 CSS px at DPR 2.625, and the initial native buffer 534 × 985. The driver requests a screen wake lock and records whether Chrome granted it. It uses USB ADB reverse for the test site and ADB forwarding for DevTools. The benchmark tab and its storage live in a disposable Chrome context, which the driver closes before removing its own forwards. If native Chrome rejects disposable contexts, run on a supported Chrome installation on a dedicated test handset or use emulation for the renderer comparison and record the physical run as pending. Use `--adb <file>` if ADB is outside `PATH`, and `--note <text>` to record conditions with each run.
+
+```sh
+node tools/playtest/performance/run.mjs --mode physical --site out/site-a --out out/perf-pixel/A1.json --label A1
+node tools/playtest/performance/run.mjs --mode physical --site out/site-b --out out/perf-pixel/B1.json --label B1
+node tools/playtest/performance/run.mjs --mode physical --site out/site-b --out out/perf-pixel/B2.json --label B2
+node tools/playtest/performance/run.mjs --mode physical --site out/site-a --out out/perf-pixel/A2.json --label A2
+```
+
+Run A1, B1, B2 and A2 consecutively with the same handoff time and no deliberate cooldown between runs. Capture thermals from setup into the replay. Compare the temperature, status and first-to-last street progression before interpreting a build delta. The middle and outer runs help expose warm-up effects. If two runs have different thermal conditions, describe the mismatch, retain the evidence, and use a repeat with comparable conditions for a thermal performance claim. Treat missing HAL sensor values or compositor history as missing data. Some Android versions expose different sensor names and Chrome surface names.
+
+## Verify the workload and read the report
+
+- Use the original [v44 trajectory fixture](inverloch-v44-traces.json), SHA-256 `d7bdf2112e9ed0ed273a87d0f48a6e7d53483b4f91c7b993250132c3895fd6dd`. It has timed camera eye, ground target, heading, speed and vehicle positions from the original occupied-ute drives. The driver uses the same native parked ute, shortest-angle heading interpolation, 1.02 m look-target offset, Medium preset, 60 FPS target, random seed and clear-weather epoch `1782000331`. Each cycle plays 40 seconds on A’Beckett Street then 17 seconds on Cuttriss Street, for three cycles and about 1,899.6 m of recorded motion excluding resets.
+- Check `status: complete`, zero `pageErrors`, the original `hashes`, the versioned model GET in `requests`, and the expected `state` and `plan`. Inspect asset failures, the GPU, viewport and buffers, and compare the ute registry key and shape across builds. A lost WebGL context, hidden tab, replaced model, missing native ute or early replay end invalidates the run. If a build changes an instrumentation anchor, update the local hooks symmetrically and repeat the short smoke. Preserve the original asset hashes and the native-render measurement boundary.
+- Compare `summary.overall` and all six `summary.segments`. Overall includes the street resets. Each street window excludes 0.5 seconds at either end. Capture scene renders/s, interval p50/p95/p99, median draw calls and triangles, and observed buffer sizes. Native scene intervals time the returns of the main Three.js render calls, including pacing between calls. They do not measure GPU-completion time. The separately labelled rAF counts are browser callbacks. Android SurfaceFlinger samples represent Chrome compositor presentations and can include repeated WebGL images.
+- Use `summary.virtualSkinC`, `maxAndroidThermalStatus`, and the raw timestamped `thermal` readings to assess heat. HAL samples are collected approximately every 15 seconds. SurfaceFlinger snapshots are attempted approximately every 12 seconds and are reported as short history windows, with coverage and failures in `presentation` and `sampleErrors`. On a device without thermal or compositor data, report the cadence that was measured and the coverage gap alongside it.
+- Keep the run JSON files and write a short report identifying the tested revisions, conditions, key deltas and any failed or unmatched runs. Record the first and last repeats separately to show degradation over time. Renderer measurements provide technical evidence. Human playtest acceptance and release promotion remain distinct decisions.
+
+### Historical evidence
+
+The [v44/v45 physical Pixel 7 comparison](https://github.com/Bangerz/3dModels/tree/5544431ec1afa3e4fceaacb08871402ff8223004/review/inverloch-v45/pixel7) used A1/B1/B2/A2. The warm v44/v45 runs both peaked at 43.4 °C virtual skin, with 59.92 and 59.78 scene renders/s and p95 intervals of 23.2 and 23.3 ms respectively. One earlier v45 A’Beckett window dipped to 56.21 scene renders/s and reached 59.92 on the warmer repeat. The separate [desktop-emulated comparison](https://github.com/Bangerz/3dModels/blob/e7353632962d507e6e0340440fb06df05055d7e7/review/inverloch-v45/comparison.json) documents its own source and camera inputs.
+
+The [shipped v46 Pixel 7 verification](https://github.com/Bangerz/3dModels/tree/1e7d4217e37e1a7fc6d50e3b5319bc55a0ac33e2/review/inverloch-v46) used the same 171-second replay on the Pages artifact for `d083254`. It measured 59.97 native scene renders/s, 23.3 ms p95 and 24.3 ms p99. The handset peaked at 35.1 °C and the run had no heat-matched control. Use the checked-in replay to obtain a fresh matched A/B result when comparing a new candidate.
