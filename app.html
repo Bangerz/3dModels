@@ -7660,19 +7660,19 @@ const handle = async (m, post) => {
       // ---- Norman Road, about 1.6 km west: its own patch of the town (Explore's "Jump to Norman Rd"). Streets, house numbers, the
       // surf beach and the sea from OpenStreetMap; number 11 drawn in detail, the rest as simple coastal houses facing their streets.
       if (D.nr) {
-        const N = D.nr, [ncx, ncz] = N.c, nb = bag(), nl = bag(), nw = bag(), nt = bag(), ntl = bag();
-        put(nb, new THREE.BoxGeometry(620, 2.2, 620), 0x5b8a46, mtx(ncx, 1.1, ncz, 0));  // its own lawn, so it isn't floating
+        const N = D.nr, [ncx, ncz] = N.c, nb = bag(), nl = bag(), nw = bag(), nt = bag(), ntl = bag(), ng = bag();
+        put(ng, new THREE.BoxGeometry(620, 2.2, 620), 0x5b8a46, mtx(ncx, 1.1, ncz, 0));  // its own lawn, so it isn't floating
         // the sea beyond the coastline, then the beach on top
         if (N.coast.length > 3) { const cp = pts2(N.coast), [hx0, hz0] = N.c; const mid = cp[cp.length >> 1], ox = mid[0] - hx0, oz = mid[1] - hz0, ol = Math.hypot(ox, oz) || 1;
           const sea = [...cp, ...cp.slice().reverse().map(([x, z]) => [x + ox / ol * 700, z + oz / ol * 700])];
           const g = new THREE.ShapeGeometry(new THREE.Shape(sea.map(([x, z]) => new THREE.Vector2(x, -z)))); g.applyMatrix4(flatDown); put(nw, g, 0x2f7391, mtx(0, G0 + 0.05, 0, 0)); }
-        if (N.beach.length > 5) { const g = new THREE.ShapeGeometry(new THREE.Shape(P(N.beach))); g.applyMatrix4(flatDown); put(nb, g, 0xe6d6ac, mtx(0, G0 + 0.08, 0, 0)); }
+        if (N.beach.length > 5) { const g = new THREE.ShapeGeometry(new THREE.Shape(P(N.beach))); g.applyMatrix4(flatDown); put(ng, g, 0xe6d6ac, mtx(0, G0 + 0.08, 0, 0)); }
         // streets: bitumen, gravel for the service lanes, sandy tracks for paths
         const segs = [];
         N.r.forEach(([w, f]) => { const pp = pts2(f); for (let i = 0; i < pp.length - 1; i++) { const [ax, az] = pp[i], [bx, bz] = pp[i + 1], L = Math.hypot(bx - ax, bz - az); if (L < 0.2) continue;
           segs.push([ax, az, bx, bz, w]); const c = w >= 7 ? 0x3d4146 : w >= 4 ? 0x8d8a82 : 0xcdbb92;
-          put(nb, new THREE.BoxGeometry(w, 0.08, L + (w >= 7 ? w * 0.6 : 0.4)), c, mtx((ax + bx) / 2, G0 + 0.05, (az + bz) / 2, Math.atan2(bx - ax, bz - az)));
-          if (w >= 7) put(nb, new THREE.BoxGeometry(0.15, 0.1, L * 0.5), 0xe9e4d8, mtx((ax + bx) / 2, G0 + 0.1, (az + bz) / 2, Math.atan2(bx - ax, bz - az))); } });  // a dash down the middle
+          put(ng, new THREE.BoxGeometry(w, 0.08, L + (w >= 7 ? w * 0.6 : 0.4)), c, mtx((ax + bx) / 2, G0 + 0.05, (az + bz) / 2, Math.atan2(bx - ax, bz - az)));
+          if (w >= 7) put(ng, new THREE.BoxGeometry(0.15, 0.1, L * 0.5), 0xe9e4d8, mtx((ax + bx) / 2, G0 + 0.1, (az + bz) / 2, Math.atan2(bx - ax, bz - az))); } });  // a dash down the middle
         const nearRoad = (x, z, pad) => segs.some(([ax, az, bx, bz, w]) => { const dx = bx - ax, dz = bz - az, L2 = dx * dx + dz * dz, t = Math.max(0, Math.min(1, ((x - ax) * dx + (z - az) * dz) / L2));
           return Math.hypot(x - ax - dx * t, z - az - dz * t) < w / 2 + pad; });
         // a hipped roof: a ridge along x, eaves round all four sides
@@ -7776,44 +7776,54 @@ const handle = async (m, post) => {
           put(nb, new THREE.BoxGeometry(5.6, 0.12, 0.1), 0xd8d2c2, m(5, F0 + 2.48, 5.06));  // its head
           [[-9.3, 5.2], [1.3, 5.2]].forEach(([x, z]) => brick(0.5, 0.9, 0.5, x, F0 + H1 + 0.45 + 0.15, z));  // brick piers under the balcony posts
           // the bins out on the kerb for collection: red lid and yellow lid
-          [[0xc8302c, 7.4], [0xe6c228, 8.3]].forEach(([c, x]) => { put(nb, new THREE.BoxGeometry(0.6, 0.95, 0.7), 0x2f6b3a, m(x, G0 + 0.5, 15.0)); put(nb, new THREE.BoxGeometry(0.64, 0.06, 0.76), c, m(x, G0 + 1.0, 15.0)); });
+          W.invNormanBins = [[0xc8302c, 7.4], [0xe6c228, 8.3]].map(([colour, u]) => {
+            const v = 15, bin = bag();
+            put(bin, new THREE.BoxGeometry(.6, .95, .7), 0x2f6b3a, mtx(0, .475, 0, 0));
+            put(bin, new THREE.BoxGeometry(.64, .06, .76), colour, mtx(0, .975, 0, 0));
+            const mesh = done(bin, { side: THREE.DoubleSide });
+            mesh.applyMatrix4(m(u, G0 + .025, v));
+            return { mesh, u, v };
+          });
           // kangaroo paws and a grass tree among the natives
           for (let i = 0; i < 6; i++) { const x = -8.5 + i * 0.5, z = 9.4; put(nt, new THREE.CylinderGeometry(0.02, 0.02, 1.1, 4), 0x5e7a3c, m(x, G0 + 0.75, z)); put(ntl, new THREE.ConeGeometry(0.08, 0.3, 5), i % 2 ? 0xd2452c : 0xe8a52a, m(x, G0 + 1.4, z, 0, 1, 1, 1, Math.PI)); }
           put(nt, new THREE.CylinderGeometry(0.22, 0.26, 1.1, 8), 0x2a2420, m(-6.2, G0 + 0.65, 7.2)); for (let i = 0; i < 14; i++) put(ntl, new THREE.ConeGeometry(0.03, 1.1, 3), 0x8a9a52, m(-6.2 + Math.sin(i) * 0.15, G0 + 1.6, 7.2 + Math.cos(i) * 0.15, i * 0.45, 1, 1, 1, 0.6));
           put(nt, new THREE.CylinderGeometry(0.03, 0.03, 2.2, 4), 0x6a5a3a, m(-6.2, G0 + 2.4, 7.2));  // its flower spike
           // a concrete path from the street to the front door, and the nature strip
-          put(nb, new THREE.BoxGeometry(1.1, 0.05, 10), 0xc7c1b4, m(-4.4, G0 + 0.07, 10.2));
+          put(ng, new THREE.BoxGeometry(1.1, 0.05, 10), 0xc7c1b4, m(-4.4, G0 + 0.07, 10.2));
           // the driveway: exposed aggregate up to the garage, stamped red concrete out to the street
           skin.floor("aggregate", 5.2, G0+.09, 8.1, 6.6, 6.2);
           skin.floor("paving", 5.2, G0+.095, 13.3, 7.4, 4.3);
           // the white wildlife-rescue van (a long-wheelbase HiAce), nose to the garage and its back to the street as in the photo
-          { const vm = (lx, ly, lz, ry = 0) => m(6.4 + lx, ly, 8.6 + lz, ry);
+          { const van = bag(), vanRoot = W.invNormanVan = new THREE.Group(); TG.add(vanRoot);
+            const vm = (lx, ly, lz, ry = 0) => m(6.4 + lx, ly, 8.6 + lz, ry);
             const prof = new THREE.Shape([[2.45, 0.32], [2.5, 0.75], [2.38, 1.08], [2.05, 1.2], [1.55, 2.0], [1.3, 2.08], [-2.45, 2.08], [-2.5, 1.9], [-2.5, 0.32]].map(([x, y]) => new THREE.Vector2(x, y)));
             const vg = new THREE.ExtrudeGeometry(prof, { depth: 1.88, bevelEnabled: true, bevelSize: 0.05, bevelThickness: 0.05, bevelSegments: 2 }); vg.translate(0, 0, -0.94); vg.rotateY(Math.PI / 2);  // nose to -z
-            put(nb, vg, 0xf4f4f1, vm(0, G0, 0));
+            put(van, vg, 0xf4f4f1, vm(0, G0, 0));
             const dk = 0x232a31, gr = 0x3c4045;
             // windscreen, front side windows, the long side windows, the back windows
-            { const an = Math.atan2(0.5, 0.8); put(nb, new THREE.BoxGeometry(1.8, 0.92, 0.05), dk, vm(0, G0 + 1.62, -1.83).multiply(new THREE.Matrix4().makeRotationX(-an))); }
-            [-1, 1].forEach(sd => { put(nb, new THREE.BoxGeometry(0.05, 0.62, 0.8), dk, vm(sd * 0.99, G0 + 1.68, -1.05)); put(nb, new THREE.BoxGeometry(0.05, 0.55, 2.6), dk, vm(sd * 0.99, G0 + 1.7, 0.85));
-              put(nb, new THREE.BoxGeometry(0.03, 1.35, 0.02), 0xcfcfcb, vm(sd * 1.0, G0 + 1.25, -0.6)); put(nb, new THREE.BoxGeometry(0.03, 0.02, 1.0), 0xcfcfcb, vm(sd * 1.0, G0 + 0.85, -0.05));  // sliding door seams, handle line
-              put(nb, new THREE.BoxGeometry(0.18, 0.24, 0.1), 0x1f2124, vm(sd * 1.08, G0 + 1.55, -1.45)); put(nb, new THREE.BoxGeometry(0.06, 0.06, 0.18), 0x1f2124, vm(sd * 1.02, G0 + 1.5, -1.5));  // mirrors
-              put(nb, new THREE.BoxGeometry(0.06, 0.12, 4.3), gr, vm(sd * 0.98, G0 + 0.42, 0)); });  // rubbing strips
-            [-0.48, 0.48].forEach(a => put(nb, new THREE.BoxGeometry(0.78, 0.6, 0.05), dk, vm(a, G0 + 1.68, 2.53)));
-            put(nb, new THREE.BoxGeometry(0.02, 1.55, 0.05), 0xcfcfcb, vm(0, G0 + 1.15, 2.54));  // the barn doors' join
-            put(nb, new THREE.BoxGeometry(1.95, 0.24, 0.22), gr, vm(0, G0 + 0.42, 2.55)); put(nb, new THREE.BoxGeometry(1.95, 0.24, 0.22), gr, vm(0, G0 + 0.45, -2.55));  // bumpers
+            { const an = Math.atan2(0.5, 0.8); put(van, new THREE.BoxGeometry(1.8, 0.92, 0.05), dk, vm(0, G0 + 1.62, -1.83).multiply(new THREE.Matrix4().makeRotationX(-an))); }
+            [-1, 1].forEach(sd => { put(van, new THREE.BoxGeometry(0.05, 0.62, 0.8), dk, vm(sd * 0.99, G0 + 1.68, -1.05)); put(van, new THREE.BoxGeometry(0.05, 0.55, 2.6), dk, vm(sd * 0.99, G0 + 1.7, 0.85));
+              put(van, new THREE.BoxGeometry(0.03, 1.35, 0.02), 0xcfcfcb, vm(sd * 1.0, G0 + 1.25, -0.6)); put(van, new THREE.BoxGeometry(0.03, 0.02, 1.0), 0xcfcfcb, vm(sd * 1.0, G0 + 0.85, -0.05));  // sliding door seams, handle line
+              put(van, new THREE.BoxGeometry(0.18, 0.24, 0.1), 0x1f2124, vm(sd * 1.08, G0 + 1.55, -1.45)); put(van, new THREE.BoxGeometry(0.06, 0.06, 0.18), 0x1f2124, vm(sd * 1.02, G0 + 1.5, -1.5));  // mirrors
+              put(van, new THREE.BoxGeometry(0.06, 0.12, 4.3), gr, vm(sd * 0.98, G0 + 0.42, 0)); });  // rubbing strips
+            [-0.48, 0.48].forEach(a => put(van, new THREE.BoxGeometry(0.78, 0.6, 0.05), dk, vm(a, G0 + 1.68, 2.53)));
+            put(van, new THREE.BoxGeometry(0.02, 1.55, 0.05), 0xcfcfcb, vm(0, G0 + 1.15, 2.54));  // the barn doors' join
+            put(van, new THREE.BoxGeometry(1.95, 0.24, 0.22), gr, vm(0, G0 + 0.42, 2.55)); put(van, new THREE.BoxGeometry(1.95, 0.24, 0.22), gr, vm(0, G0 + 0.45, -2.55));  // bumpers
             [-0.82, 0.82].forEach(a => { put(nl, new THREE.BoxGeometry(0.2, 0.5, 0.06), 0xb81d22, vm(a, G0 + 1.05, 2.55)); put(nl, new THREE.BoxGeometry(0.38, 0.16, 0.06), 0xf2efe6, vm(a, G0 + 0.92, -2.54)); });  // tail lights, headlights
-            put(nb, new THREE.BoxGeometry(1.1, 0.26, 0.05), 0x2b2e31, vm(0, G0 + 0.8, -2.53)); put(nb, new THREE.BoxGeometry(0.5, 0.14, 0.03), 0xf2f2ee, vm(0, G0 + 0.75, 2.67));  // grille, number plate
-            [[-0.92, 1.55], [0.92, 1.55], [-0.92, -1.6], [0.92, -1.6]].forEach(([a, b]) => { put(nb, new THREE.CylinderGeometry(0.37, 0.37, 0.24, 14).rotateZ(Math.PI / 2), 0x17181a, vm(a, G0 + 0.37, b));
-              put(nb, new THREE.CylinderGeometry(0.2, 0.2, 0.26, 10).rotateZ(Math.PI / 2), 0xa9adb1, vm(a, G0 + 0.37, b)); put(nb, new THREE.CylinderGeometry(0.45, 0.45, 0.2, 14, 1, false, 0, Math.PI).rotateZ(Math.PI / 2).rotateX(Math.PI / 2), 0x2b2e31, vm(a * 1.02, G0 + 0.4, b)); });
-            [-0.7, 0.7].forEach(a => put(nb, new THREE.BoxGeometry(0.06, 0.06, 3.8), 0x55595c, vm(a, G0 + 2.18, 0.2))); [-1.3, 0, 1.3].forEach(b => put(nb, new THREE.BoxGeometry(1.5, 0.05, 0.06), 0x55595c, vm(0, G0 + 2.2, b)));  // roof racks
+            put(van, new THREE.BoxGeometry(1.1, 0.26, 0.05), 0x2b2e31, vm(0, G0 + 0.8, -2.53)); put(van, new THREE.BoxGeometry(0.5, 0.14, 0.03), 0xf2f2ee, vm(0, G0 + 0.75, 2.67));  // grille, number plate
+            [[-0.92, 1.55], [0.92, 1.55], [-0.92, -1.6], [0.92, -1.6]].forEach(([a, b]) => { put(van, new THREE.CylinderGeometry(0.37, 0.37, 0.24, 14).rotateZ(Math.PI / 2), 0x17181a, vm(a, G0 + 0.37, b));
+              put(van, new THREE.CylinderGeometry(0.2, 0.2, 0.26, 10).rotateZ(Math.PI / 2), 0xa9adb1, vm(a, G0 + 0.37, b)); put(van, new THREE.CylinderGeometry(0.45, 0.45, 0.2, 14, 1, false, 0, Math.PI).rotateZ(Math.PI / 2).rotateX(Math.PI / 2), 0x2b2e31, vm(a * 1.02, G0 + 0.4, b)); });
+            [-0.7, 0.7].forEach(a => put(van, new THREE.BoxGeometry(0.06, 0.06, 3.8), 0x55595c, vm(a, G0 + 2.18, 0.2))); [-1.3, 0, 1.3].forEach(b => put(van, new THREE.BoxGeometry(1.5, 0.05, 0.06), 0x55595c, vm(0, G0 + 2.2, b)));  // roof racks
             // "WILDLIFE" in green and yellow: on the back window (as in the photo) and down both sides
             const wl = (() => { const c = document.createElement("canvas"); c.width = 512; c.height = 96; const g = c.getContext("2d"); g.fillStyle = "#cfe63a"; g.fillRect(0, 0, 512, 96);
               g.fillStyle = "#1f6b3a"; g.fillRect(0, 0, 512, 10); g.fillRect(0, 86, 512, 10); g.font = "900 64px system-ui, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText("WILDLIFE", 256, 50);
               const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; return new THREE.MeshStandardMaterial({ map: t, roughness: .6 }); })();
-            const decal = (w, h, x, y, z, ry) => { const d = new THREE.Mesh(new THREE.PlaneGeometry(w, h), wl); d.applyMatrix4(vm(x, y, z, ry)); TG.add(d); };
-            decal(0.62, 0.13, 0.48, G0 + 1.48, 2.57, 0); decal(2.4, 0.42, 1.0, G0 + 1.1, 0.4, Math.PI / 2); decal(2.4, 0.42, -1.0, G0 + 1.1, 0.4, -Math.PI / 2); }
+            const decal = (w, h, x, y, z, ry) => { const d = new THREE.Mesh(new THREE.PlaneGeometry(w, h), wl); d.applyMatrix4(vm(x, y, z, ry)); vanRoot.add(d); };
+            decal(0.62, 0.13, 0.48, G0 + 1.48, 2.57, 0); decal(2.4, 0.42, 1.0, G0 + 1.1, 0.4, Math.PI / 2); decal(2.4, 0.42, -1.0, G0 + 1.1, 0.4, -Math.PI / 2);
+            vanRoot.add(done(van, { side: THREE.DoubleSide })); }
           // the garden: lawn at the street, a deep bed of natives (grey-green, white-flowering), pink daisies, a gum or two
-          put(nb, new THREE.BoxGeometry(10.5, 0.04, 5), 0x6a9a4e, m(-4, G0 + 0.04, 12.8)); put(nb, new THREE.BoxGeometry(10.5, 0.2, 5.4), 0x5a4030, m(-4, G0 + 0.1, 7.9));
+          put(ng, new THREE.BoxGeometry(10.5, 0.04, 5), 0x6a9a4e, m(-4, G0 + 0.04, 12.8));
+          put(nb, new THREE.BoxGeometry(10.5, 0.2, 5.4), 0x5a4030, m(-4, G0 + 0.1, 7.9));
           // Open forks and separate, flattened sprays leave sky between the gum crowns.
           // The atlas adds leaf-sized marks; the outline and forks are real geometry.
           const spray = (x, y, z, w, h, d, seed, colour) => {
@@ -7870,7 +7880,9 @@ const handle = async (m, post) => {
           put(nb, new THREE.BoxGeometry(0.1, 1.1, 0.1), 0x3a3d40, m(1.6, G0 + 0.55, 10.6)); put(nb, new THREE.BoxGeometry(0.55, 0.42, 0.42), 0xc8532a, m(1.6, G0 + 1.3, 10.6)); put(nb, new THREE.BoxGeometry(0.6, 0.06, 0.46), 0x9c3e1f, m(1.6, G0 + 1.53, 10.6));
           put(nb, new THREE.BoxGeometry(0.3, 0.04, 0.02), 0x2d2f31, m(1.6, G0 + 1.4, 10.82));  // the letter slot
           skin.front("number", 1.6, G0 + 1.13, 10.815, .26, .22);
-          W.invHomeGlass = skin.finish();
+          const finishes = skin.finish();
+          W.invHomeGlass = finishes.glassMaterial;
+          W.invNormanPaving = finishes.paving;
           put(nb, new THREE.BoxGeometry(0.5, 0.7, 0.03), 0x1f3c8a, m(1.6, G0 + 0.6, 10.67));
           { const gate = new THREE.Mesh(new THREE.BoxGeometry(0.04, 1.1, 1.6), new THREE.MeshStandardMaterial({ color: 0x8c9296, transparent: true, opacity: .55, metalness: .4, roughness: .5 })); gate.applyMatrix4(m(1.9, G0 + 0.55, 9.6)); TG.add(gate); }
           lights(...(() => { const v = new THREE.Vector3(-4, F0 + H1 + 2, 1.8).applyMatrix4(m(0, 0, 0)); return [v.x, v.y, v.z]; })());
@@ -7959,6 +7971,7 @@ const handle = async (m, post) => {
           // Explore's "Jump to Norman Rd": on the street out the front, looking at the house
           const sp = new THREE.Vector3(3.5, G0 + 1.9, 25).applyMatrix4(m(0, 0, 0)), tg = new THREE.Vector3(0, F0 + 3.2, 0).applyMatrix4(m(0, 0, 0)), s = toW(sp.x, sp.y, sp.z), l = toW(tg.x, tg.y, tg.z).sub(s);
           W.invNormanSpot = { pos: [s.x, s.y, s.z], yaw: Math.atan2(-l.x, -l.z), pitch: Math.atan2(l.y, Math.hypot(l.x, l.z)) }; }
+        W.invNormanGround = done(ng, { side: THREE.DoubleSide });
         done(nb, { side: THREE.DoubleSide }); done(nl, { roughness: .5 }); done(nt); done(ntl, { flatShading: true, roughness: 1 });
         { const gm = done(nw); gm.material.dispose(); gm.material = W.invGlass || gm.material; }  // windows glow at night, like the shops
       }
@@ -9815,6 +9828,7 @@ const handle = async (m, post) => {
       if (dead || BS.town !== T) return;
       const old = cur, oldEl = rootOf(old), el = rootOf(to);
       cur = to; next = null; replaying = null; if (el) el.style.visibility = ""; if (oldEl) oldEl.style.visibility = "hidden";
+      if (to.normanGrade) T.normanGrade.apply(to.normanGrade);
       try { old.dispose(); } catch {}
       hiBox.hidden = true;
       try { T.bowls?.swapped?.(); } catch {}  // what was shaped to the old model's ground is made again on this one's (Moorooka's road medians)
@@ -9842,7 +9856,10 @@ const handle = async (m, post) => {
         if (!currentTown()) return false;
         const n = next = make(target, false); tag(n);
         const el = rootOf(n); if (el) el.style.visibility = "hidden";
-        try { await n.ready; } catch { if (next === n) drop(); return false; }
+        try {
+          await n.ready;
+          if (next === n && currentTown() && T.normanGrade) n.normanGrade = T.normanGrade.fit(n);
+        } catch { if (next === n) drop(); return false; }
         if (next !== n || !currentTown()) return false;
         const loadMs = Math.round(performance.now() - n.t0);
         await swapTo(n, target);
@@ -16923,10 +16940,11 @@ const handle = async (m, post) => {
     });
     const texture = new THREE.CanvasTexture(sheet);
     texture.colorSpace = THREE.SRGBColorSpace; texture.anisotropy = 4;
-    const batch = () => ({ p: [], n: [], c: [], uv: [] }), masonry = batch(), windows = batch();
+    const batch = () => ({ p: [], n: [], c: [], uv: [] }), masonry = batch(), windows = batch(), paving = batch();
     const normal = new THREE.Vector3(), a = new THREE.Vector3(), b = new THREE.Vector3();
     const face = (name, corners, uv, shade = [], tint, normals) => {
-      const [x, y, w, h] = regions[name], dst = name === "glass" ? windows : masonry;
+      const [x, y, w, h] = regions[name], dst = name === "glass" ? windows
+        : name === "aggregate" || name === "paving" ? paving : masonry;
       a.fromArray(corners[1]).sub(b.fromArray(corners[0])); b.fromArray(corners[2]).sub(normal.fromArray(corners[0]));
       normal.crossVectors(a, b).normalize();
       for (let j = 1; j < corners.length - 1; j++) for (const i of [0, j, j + 1]) {
@@ -16962,8 +16980,8 @@ const handle = async (m, post) => {
       face("roof", corners, corners.map(([x,y,z]) => [(ribsAlongZ ? x + 12 : z + 9)/22, (y-2)/13]));
     };
     const finish = () => {
-      let glassMaterial;
-      for (const dst of [masonry, windows]) {
+      let glassMaterial, pavingMesh;
+      for (const dst of [masonry, windows, paving]) {
         const geom = new THREE.BufferGeometry();
         for (const [k, data, size] of [["position",dst.p,3],["normal",dst.n,3],["color",dst.c,3],["uv",dst.uv,2]])
           geom.setAttribute(k, new THREE.Float32BufferAttribute(data, size));
@@ -16977,8 +16995,9 @@ const handle = async (m, post) => {
           glassMaterial = mat; mat.roughness = .35; mat.emissive.setHex(0xffc98a); mat.emissiveIntensity = 0;
         }
         const mesh = new THREE.Mesh(geom, mat); mesh.applyMatrix4(frame); parent.add(mesh);
+        if (dst === paving) pavingMesh = mesh;
       }
-      return glassMaterial;
+      return { glassMaterial, paving: { mesh: pavingMesh, map: sheet, aggregate: regions.aggregate, tiles: regions.paving } };
     };
     return { face, front, floor, brick, metal, finish };
   }
@@ -16992,7 +17011,7 @@ const handle = async (m, post) => {
     if (!TG || !m.addParts) return jumps;
     TG.updateMatrixWorld(true);
     const toTG = T.toTG = new THREE.Matrix4().copy(TG.matrixWorld).invert(), v = new THREE.Vector3(), nm = new THREE.Matrix3();
-    T.live = []; T.glow = []; T.roots = []; T.cars = [];
+    T.live = []; T.glow = []; T.roots = []; T.cars = []; T.groundGuests = [];
     const rgb = c => [c.r, c.g, c.b], matOf = o => Array.isArray(o.material) ? o.material[0] : o.material;
     const plain = mat => mat && (mat.isMeshStandardMaterial || mat.isMeshBasicMaterial || mat.isMeshLambertMaterial || mat.isMeshPhongMaterial);
     const look = mat => ({ color: mat.color ? rgb(mat.color) : [1, 1, 1], map: mat.map?.image || undefined, mapRepeat: mat.map ? [mat.map.repeat.x, mat.map.repeat.y] : undefined,
@@ -17029,7 +17048,10 @@ const handle = async (m, post) => {
             if (C) col.push(C.getX(i), C.getY(i), C.getZ(i));
             if (U) uv.push(U.getX(i), U.getY(i)); } }
         if (pos.length) { parts.push({ positions: pos, normals: Nn ? nor : undefined, colors: C ? col : undefined, uvs: U ? uv : undefined, ...look(mat), matrix: place.elements }); mats.push(mat); } });
-      if (parts.length) glows(m.addParts(parts), mats); };
+      if (!parts.length) return;
+      const h = m.addParts(parts); glows(h, mats);
+      const count = parts.length;
+      return matrix => { for (let i = 0; i < count; i++) h.setMatrix(i, matrix.elements); }; };
     // a Jump stop from one of Explore's own spots (kept in the weather scene's coordinates): to the town's metres, then the model's
     const stop = (name, sp, place, target) => { const p = v.set(...sp.pos).applyMatrix4(toTG).applyMatrix4(place);
       jumps.push({ name, target, walk: { x: p.x, z: p.z, yaw: sp.yaw - TG.rotation.y, pitch: sp.pitch } }); };
@@ -17037,7 +17059,8 @@ const handle = async (m, post) => {
     const tower = W.invClock?.children.find(o => !o.isMesh && o.children.length);  // the clock's poles, faces, hands and ship; the rest of it is its plaza
     const flags = (W.invFlags || []).filter(under), drive = (W.invDriveCars || []).map(d => d.mesh).filter(Boolean);
     // what moves at number 11: the koala, the wombats, the joey and the magpie, the two on the balcony; and the cars on Norman Road
-    const moving = [W.invKoala?.ko, ...(W.invWombats || []).map(w => w.g), W.invCritters?.roo, W.invCritters?.mag, ...(W.invFolk?.all || [])].filter(Boolean), cars = W.invNormanCars || [], skip = new Set();
+    const wombats = (W.invWombats || []).map(w => w.g);
+    const moving = [W.invKoala?.ko, ...wombats, W.invCritters?.roo, W.invCritters?.mag, ...(W.invFolk?.all || [])].filter(Boolean), cars = W.invNormanCars || [], skip = new Set();
     [W.invClock, ...moving, ...cars].filter(Boolean).forEach(r => r.traverse(o => skip.add(o)));
 
     // the town centre round the clock: the bakery and the other shops, the war memorial, the library and the Hub, the streets
@@ -17094,46 +17117,210 @@ const handle = async (m, post) => {
     const home = D.nr?.home;
     if (home && W.invHouse) { const [hx, hz, nx, nz] = home, ry = Math.atan2(nx, nz), half = 16.5, zBack = -17, zFront = 15.4, zc = (zBack + zFront) / 2;
       const [x, z] = m.fromLatLon(...townLL(hx, hz));
-      // The lawn lies on the slope, just above the ground, not on a flat pad level with the slope's highest corner (which stood it up to
-      // 1.4 m over the ground on the low side). The house and everything on the lot lean with it, walls still upright: the slope is about
-      // a degree, too little to see. Ash, 26 November 2026: "The grass on 11 Norman Rd is too high", then "Remove that extra grass from
-      // 11 Norman Rd that you just added and instead just make the grass lower" (the grassy bank round it, which is gone)
-      const L = slopePad(m, { x: x + Math.sin(ry) * zc, z: z + Math.cos(ry) * zc, hw: half + 0.4, hd: (zFront - zBack) / 2 + 0.4, heading: ry, color: [0.105, 0.254, 0.061] }), top = L.top;
+      // The fitted slope still anchors the house and paving. The rendered lawn grades down around them.
+      const bounds = { x: x + Math.sin(ry) * zc, z: z + Math.cos(ry) * zc,
+        hw: half + 0.4, hd: (zFront - zBack) / 2 + 0.4, heading: ry, zc };
+      const houseParts = [[-4,-.5,11,11],[5,1,7,8],[5,-5.5,7,5]];
+      // Each native world owns these terrain-fitted vertices. Prepare them off screen on a swap.
+      const fit = native => {
+        const lawn = normanLawn(native, bounds, W.invNormanPaving);
+        for (const { mesh, u, v } of W.invNormanBins) normanGroundBin(native, lawn, mesh.geometry, u, v - zc, THREE);
+        normanFoundations(native, lawn, houseParts, zc, THREE);
+        return lawn;
+      };
+      const L = fit(T.pair.cur), place = new THREE.Matrix4(), vanPlace = new THREE.Matrix4(), vanU = 6.4, vanV = 8.6 - zc;
       (T.pads ||= []).push(L);
-      const place = L.lean.clone().multiply(new THREE.Matrix4().makeTranslation(x - hx, top - G0, z - hz));
-      lot(W.invHouse, half, zBack, zFront, place, skip);
+      const align = () => {
+        place.makeTranslation(x - hx, L.top - G0, z - hz).premultiply(L.lean);
+        vanPlace.copy(place);
+        const vanPlane = L.top + L.gu * vanU + L.gv * vanV;
+        vanPlace.elements[13] += L.surfaceAt(vanU, vanV, vanPlane) - vanPlane;
+      };
+      align();
+      skip.add(W.invNormanGround);  // the full-town terrain and road supply these surfaces
+      skip.add(W.invNormanPaving.mesh);
+      W.invNormanBins.forEach(({ mesh }) => skip.add(mesh));
+      W.invNormanVan.traverse(o => skip.add(o));
+      const moveHouse = lot(W.invHouse, half, zBack, zFront, place, skip);
+      whole(W.invNormanVan, vanPlace);
       if (m.buildingBlockers) {
         const grid = T.invStatic ??= invCivicCollision((x,z) => [x,z], () => false);
         // House, garage, rear wing and rescue van use the same bearing as the lot.
-        for (const [u,v,w,l] of [[-4,-.5,11,11],[5,1,7,8],[5,-5.5,7,5],[6.4,8.6,1.98,5.1]]) {
+        for (const [u,v,w,l] of [...houseParts,[vanU,vanV + zc,1.98,5.1]]) {
           grid.worldBox(x + Math.cos(ry)*u + Math.sin(ry)*v, z - Math.sin(ry)*u + Math.cos(ry)*v, ry, w, l);
         }
       }
-      moving.forEach(r => whole(r, place));
+      moving.forEach(r => {
+        if (!wombats.includes(r)) { whole(r, place); return; }
+        const anchored = place.clone();
+        T.groundGuests.push({ root: r, anchored, place, lawn: L });
+        whole(r, anchored);
+      });
       cars.forEach(c => { const cp = place.clone(); T.cars.push({ o: c, cp }); whole(c, cp); });  // each car kept on the model's road as it goes
+      T.normanGrade = { fit, apply(grade) {
+        // Walking, wheels and grounded guests all retain this one pad reference.
+        Object.assign(L, grade);
+        align();
+        moveHouse?.(place);
+        for (const guest of T.groundGuests) guest.anchored.copy(place);
+        for (const car of T.cars) car.cp.copy(place);
+      } };
       if (W.invNormanSpot) stop("Norman Rd", W.invNormanSpot, place, [x, z]); }
     return jumps;
   }
-  // A lawn laid on a slope (P: its middle x, z, half its width hw and depth hd, its heading, its colour): the plane that best fits the
-  // model's ground under it (sampled 9 x 9), raised just enough that the ground doesn't come up through it (5 cm clear, at least 6 cm
-  // up). Gives back what padGround and the drone need, its height at its middle (top), the slope across and along it (gu, gv), and lean:
-  // the shear that tilts things laid flat at its middle onto it, keeping upright things upright
-  function slopePad(m, P) { const c = Math.cos(P.heading), s = Math.sin(P.heading), N = 9, g = [];
+  // Fit the same placement plane as the original pad before grading the exposed lawn.
+  function normanLawn(m, P, paving) { const c = Math.cos(P.heading), s = Math.sin(P.heading), N = 9, g = [];
     for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) { const u = (i / (N - 1) * 2 - 1) * P.hw, v = (j / (N - 1) * 2 - 1) * P.hd; g.push([u, v, m.groundAt(P.x + u * c + v * s, P.z - u * s + v * c)]); }
     const mean = g.reduce((a, q) => a + q[2], 0) / g.length, gu = g.reduce((a, q) => a + q[0] * q[2], 0) / g.reduce((a, q) => a + q[0] * q[0], 0), gv = g.reduce((a, q) => a + q[1] * q[2], 0) / g.reduce((a, q) => a + q[1] * q[1], 0);
     const top = mean + Math.max(0.06, Math.max(...g.map(([u, v, y]) => y - (mean + gu * u + gv * v))) + 0.05);
     const gx = gu * c + gv * s, gz = -gu * s + gv * c, THREE = BS.B.THREE, M = (a, b, cc, d, e, f, h, k, l, n, o, q) => new THREE.Matrix4().set(a, b, cc, d, e, f, h, k, l, n, o, q, 0, 0, 0, 1);
     const lean = M(1, 0, 0, 0, gx, 1, gz, -gx * P.x - gz * P.z, 0, 0, 1, 0);  // (y goes up gx a metre across x and gz along z, about the lawn's middle)
-    // the lawn: a slab 1.5 m deep, its top on the plane, its sides down into the ground
-    const pos = [], box = (x0, x1, y0, y1, z0, z1) => { for (const f of [[[x1, y0, z0], [x1, y1, z0], [x1, y1, z1], [x1, y0, z1]], [[x0, y0, z1], [x0, y1, z1], [x0, y1, z0], [x0, y0, z0]], [[x0, y1, z0], [x0, y1, z1], [x1, y1, z1], [x1, y1, z0]],
-      [[x0, y0, z1], [x1, y0, z1], [x1, y1, z1], [x0, y1, z1]], [[x1, y0, z0], [x0, y0, z0], [x0, y1, z0], [x1, y1, z0]]]) pos.push(...f[0], ...f[1], ...f[2], ...f[0], ...f[2], ...f[3]); };
-    box(-P.hw, P.hw, -1.5, 0, -P.hd, P.hd);
-    const at = lean.clone().multiply(new THREE.Matrix4().makeTranslation(P.x, top, P.z)).multiply(new THREE.Matrix4().makeRotationY(P.heading));
-    m.addParts([{ positions: new Float32Array(pos), color: P.color, roughness: 1, matrix: at.elements.slice() }]);
-    return { x: P.x, z: P.z, c, s, hw: P.hw, hd: P.hd, top, gu, gv, lean }; }
-  // the ground on a pad: its top where you're on it (on a sloping one, its slope), else the ground g
+    const { x, z, hw, hd, zc } = P;
+    const world = (u, v) => [x + c*u + s*v, z - s*u + c*v];
+    const roadAt = (u, v) => m.roadSurfaceAt?.(...world(u, v));
+    // Find the near edge of the rendered asphalt across the driveway and footpath.
+    let far = hd;
+    for (const u of [-4.95, -4.4, -3.85, 1.5, 3.1, 5.2, 7.4, 8.9]) {
+      for (let v = hd - .4; v <= hd + .4; v += .025) {
+        if (roadAt(u, v) != null) { far = Math.max(far, v); break; }
+      }
+    }
+    far += .045;
+    const finishes = [
+      { u0: 1.9, u1: 8.5, v0: 5 - zc, v1: 11.15 - zc, lift: .09, uv: paving.aggregate },
+      { u0: 1.5, u1: 8.9, v0: 11.15 - zc, v1: far, lift: .09, slopeFrom: 12.8 - zc, uv: paving.tiles },
+      { u0: -4.95, u1: -3.85, v0: 5.2 - zc, v1: far, lift: .095, slopeFrom: 12.8 - zc, color: new THREE.Color(0xc7c1b4).toArray() },
+    ];
+    const smooth = (a, b, t) => { const f = bsClamp((t - a) / (b - a), 0, 1); return f * f * (3 - 2 * f); };
+    // A single height grid has exact boundaries for each paving material and the shared walking/driving surface.
+    const grid = breaks => {
+      const knots = [...new Set(breaks)].sort((a, b) => a - b);
+      const coords = [knots[0]];
+      for (let k = 1; k < knots.length; k++) {
+        const a = knots[k - 1], b = knots[k], count = Math.ceil((b - a) / .46);
+        for (let i = 1; i < count; i++) coords.push(a + (b - a) * i / count);
+        coords.push(b);
+      }
+      return coords;
+    };
+    const across = grid([-hw, hw, ...finishes.flatMap(f => [f.u0, f.u1])]);
+    const along = grid([-hd, hd, far, ...finishes.flatMap(f => [f.v0, f.v1, f.slopeFrom ?? f.v0])]);
+    const stride = across.length, height = new Float32Array(stride * along.length);
+    const positions = [], indices = [], uvs = [], paveFaces = finishes.map(() => []);
+    const atToe = across.map(u => roadAt(u, far) ?? m.groundAt(...world(u, far)));
+    for (let j = 0; j < along.length; j++) for (let i = 0; i < stride; i++) {
+      const u = across[i], v = along[j], [wx, wz] = world(u, v), plane = top + gu*u + gv*v;
+      const bed = Math.max(m.groundAt(wx, wz), v > hd - .45 ? roadAt(u, v) ?? -Infinity : -Infinity);
+      const edge = Math.min(hw - Math.abs(u), v + hd, far - v);
+      const vergeTie = smooth(far - 1.45, far - .12, v) * smooth(0, 1.3, hw - Math.abs(u));
+      const grass = bed + Math.max(smooth(0, 4.1, edge) * Math.max(0, plane - bed),
+        vergeTie * Math.max(0, atToe[i] - bed));
+      let y = grass;
+      for (const f of finishes) {
+        const side = Math.max(f.u0 - u, u - f.u1, 0);
+        const end = Math.max(f.v0 - v, v - f.v1, 0);
+        const weight = 1 - smooth(0, .42, Math.hypot(side, end));
+        const slope = f.slopeFrom == null ? 0 : smooth(f.slopeFrom, far, v);
+        const deck = (1 - slope) * (plane + f.lift) + slope * atToe[i];
+        y = Math.max(y, grass + weight * (deck - grass));
+      }
+      height[j * stride + i] = y;
+      positions.push(wx, y + .012, wz);
+      uvs.push((u + hw) / (2 * hw), 1 - (v + hd) / (hd + far));
+      if (i === stride - 1 || j === along.length - 1) continue;
+      const id = j * stride + i, uu = (u + across[i + 1]) / 2, vv = (v + along[j + 1]) / 2;
+      const corners = [id, id + stride, id + 1, id + 1, id + stride, id + stride + 1];
+      const k = finishes.findIndex(f => uu >= f.u0 && uu <= f.u1 && vv >= f.v0 && vv <= f.v1);
+      if (k < 0) indices.push(...corners);
+      else paveFaces[k].push(...corners);
+    }
+    // Feather over the renderer's own verge texture, with a little deterministic lawn grain.
+    const map = document.createElement("canvas"); map.width = map.height = 128;
+    const ctx = map.getContext("2d"), pixels = ctx.createImageData(map.width, map.height);
+    let seed = 11;
+    for (let j = 0; j < map.height; j++) for (let i = 0; i < map.width; i++) {
+      const u = -hw + 2 * hw * i / (map.width - 1), v = -hd + (hd + far) * j / (map.height - 1);
+      const edge = Math.min(hw - Math.abs(u), v + hd, far - v);
+      const mottling = Math.sin(u*.94 + v*.31) * Math.cos(v*.59 - u*.24);
+      seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+      const grain = 6 * mottling + (seed / 4294967296 - .5) * 10;
+      const k = 4 * (j * map.width + i);
+      pixels.data[k] = 115 + grain;
+      pixels.data[k + 1] = 125 + grain;
+      pixels.data[k + 2] = 82 + grain;
+      const vergeOpacity = smooth(far - 1.45, far - .95, v) * smooth(0, .28, far - v) * smooth(0, 1.3, hw - Math.abs(u));
+      pixels.data[k + 3] = Math.round(255 * Math.max(vergeOpacity, smooth(0, 2.6 + .35 * mottling, edge)));
+    }
+    ctx.putImageData(pixels, 0, 0);
+    const matrix = new THREE.Matrix4().elements;
+    const parts = [{ positions, indices, uvs, map, opacity: .999, roughness: 1, matrix }];
+    const driveway = { positions: [], uvs: [], map: paving.map, roughness: .95, matrix };
+    finishes.forEach((f, k) => {
+      const part = f.uv ? driveway : { positions: [], color: f.color, roughness: .95, matrix };
+      for (const id of paveFaces[k]) {
+        part.positions.push(positions[id*3], height[id] + .004, positions[id*3 + 2]);
+        if (f.uv) {
+          const [tx, ty, w, h] = f.uv;
+          const u = (across[id % stride] - f.u0) / (f.u1 - f.u0);
+          const v = (f.v1 - along[Math.floor(id / stride)]) / (f.v1 - f.v0);
+          part.uvs.push((tx + 2 + u * (w - 4)) / paving.map.width,
+            1 - (ty + h - 2 - v * (h - 4)) / paving.map.height);
+        }
+      }
+      if (!f.uv) parts.push(part);
+    });
+    parts.push(driveway);
+    m.addParts(parts);
+    // Interpolate the same triangles that are drawn, so wheels and feet follow the visible grade.
+    const cellAt = (coords, v) => {
+      let lo = 0, hi = coords.length - 1;
+      while (hi > lo + 1) { const mid = (hi + lo) >> 1; if (coords[mid] <= v) lo = mid; else hi = mid; }
+      return lo;
+    };
+    const surfaceAt = (u, v, fallback) => {
+      if (Math.abs(u) > hw || v < -hd || v > far) return fallback;
+      const i = cellAt(across, u), j = cellAt(along, v), a = j * stride + i;
+      const p = (u - across[i]) / (across[i + 1] - across[i]), q = (v - along[j]) / (along[j + 1] - along[j]);
+      const y = p + q <= 1 ? height[a] * (1 - p - q) + height[a + 1] * p + height[a + stride] * q
+        : height[a + stride + 1] * (p + q - 1) + height[a + 1] * (1 - q) + height[a + stride] * (1 - p);
+      return Math.max(fallback, y);
+    };
+    return { x, z, c, s, hw, hd, top, gu, gv, lean, surfaceAt };
+  }
+  function normanGroundBin(m, lawn, geometry, u, v, THREE) {
+    const { c, s, x, z, surfaceAt } = lawn;
+    const wx = x + c*u + s*v, wz = z - s*u + c*v;
+    const feet = [[-.3,-.35],[.3,-.35],[-.3,.35],[.3,.35]].map(([du,dv]) => {
+      const bed = m.groundAt(wx + c*du + s*dv, wz - s*du + c*dv);
+      return [du, dv, surfaceAt(u + du, v + dv, bed)];
+    });
+    const gu = (feet[1][2] + feet[3][2] - feet[0][2] - feet[2][2]) / 1.2;
+    const gv = (feet[2][2] + feet[3][2] - feet[0][2] - feet[1][2]) / 1.4;
+    const y = Math.max(...feet.map(([du,dv,gy]) => gy - gu*du - gv*dv)) + .004;
+    const matrix = new THREE.Matrix4().set(c,0,s,wx, gu,1,gv,y, -s,0,c,wz, 0,0,0,1);
+    const a = geometry.attributes;
+    m.addParts([{ positions: a.position.array, normals: a.normal.array, colors: a.color.array, roughness: .9, matrix: matrix.elements }]);
+  }
+  function normanFoundations(m, lawn, houseParts, zc, THREE) {
+    const { c, s, x, z, top, gu, gv, surfaceAt } = lawn;
+    const positions = [];
+    for (const [u, localZ, width, depth] of houseParts) {
+      const v = localZ - zc, x0 = u - width/2, x1 = u + width/2, z0 = v - depth/2, z1 = v + depth/2;
+      const rim = [[x0,z0],[x0,z1],[x1,z1],[x1,z0]].map(([a,b]) => {
+        const wx = x + c*a + s*b, wz = z - s*a + c*b;
+        return { wx, wz, top: top + gu*a + gv*b + .3, bed: surfaceAt(a, b, m.groundAt(wx, wz)) };
+      });
+      const base = Math.min(...rim.map(p => p.bed)) - .14;
+      for (let i = 0; i < rim.length; i++) {
+        const a = rim[i], b = rim[(i + 1) % rim.length];
+        positions.push(a.wx,base,a.wz, b.wx,base,b.wz, b.wx,b.top,b.wz,
+          a.wx,base,a.wz, b.wx,b.top,b.wz, a.wx,a.top,a.wz);
+      }
+    }
+    m.addParts([{ positions, color: new THREE.Color(0x807364).toArray(), roughness: 1, matrix: new THREE.Matrix4().elements }]);
+  }
   function padGround(P, x, z, g) { const dx = x - P.x, dz = z - P.z, u = dx * P.c - dz * P.s, v = dx * P.s + dz * P.c;
-    return Math.abs(u) <= P.hw && Math.abs(v) <= P.hd ? Math.max(g, P.top + (P.gu || 0) * u + (P.gv || 0) * v) : g; }
+    return P.surfaceAt(u, v, g); }
   // The weather's town centre, cut out of its merged shapes and laid over the whole-town model's ground, which slopes where
   // the weather's is flat: every shape goes across with its heights measured from the ground, and the model lays it down so
   // that it follows the ground beneath it. A building comes whole or not at all (by its outline on the map); so does each
@@ -25924,6 +26111,12 @@ const handle = async (m, post) => {
     // the clock's hands, the koala and the wombats: wherever the weather's own are now
     if (T.live?.length) { const M = T.mtx || (T.mtx = new BS.B.THREE.Matrix4());
       T.roots.forEach(r => r.updateWorldMatrix(true, true));
+      for (const { root, place, anchored, lawn } of T.groundGuests) {
+        const p = (T.cv || (T.cv = new BS.B.THREE.Vector3())).setFromMatrixPosition(root.matrixWorld).applyMatrix4(T.toTG).applyMatrix4(place);
+        const plane = lawn.top + lawn.lean.elements[1] * (p.x - lawn.x) + lawn.lean.elements[9] * (p.z - lawn.z);
+        const ground = padGround(lawn, p.x, p.z, m.groundAt(p.x, p.z));
+        anchored.elements[13] = place.elements[13] + ground - plane;
+      }
       for (const C of T.cars || []) { const p = (T.cv || (T.cv = new BS.B.THREE.Vector3())).setFromMatrixPosition(C.o.matrixWorld).applyMatrix4(T.toTG);
         C.cp.elements[13] = m.groundAt(p.x + C.cp.elements[12], p.z + C.cp.elements[14]) + 0.05 - 2.2; }  // the cars: on the ground under them (the weather's G0 is 2.2)
       for (const L of T.live) L.h.setMatrix(L.i, M.copy(L.place).multiply(T.toTG).multiply(L.o.matrixWorld).elements); }

@@ -21,6 +21,13 @@ async function openAuto({live, slow = false, preset = 'auto'}) {
     },
     setTimeout(fn) { queueMicrotask(fn); },
   };
+  T.normanGrade = {
+    fit(target) {
+      target.fittedWhile = T.pair.cur.quality;
+      return {target};
+    },
+    apply({target}) { target.publishedWhile = T.pair.cur.quality; },
+  };
   const lib = {create(node, options) {
     const root = {dataset: {}, style: {}};
     node.children.push(root); node.lastElementChild = root;
@@ -49,6 +56,15 @@ test('Auto promotes and rolls back on the same model when the native tiers are c
   assert.equal(demoted.models.length, 1);
   assert.equal(demoted.pair.quality, 'low');
   assert.equal(demoted.saved.slow, true);
+});
+
+test('replacement fits the destination grade before publishing its walking surface', async () => {
+  const {models: [low, replacement]} = await openAuto({live: false});
+  assert.equal(replacement.fittedWhile, low.quality);
+  assert.equal(replacement.publishedWhile, replacement.quality);
+  assert.equal(low.publishedWhile, undefined);
+  const inPlace = await openAuto({live: true});
+  assert.equal(inPlace.models[0].fittedWhile, undefined);
 });
 
 test('older bundles still swap and a manual Low choice stays fixed', async () => {
