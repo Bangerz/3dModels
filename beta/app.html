@@ -25106,11 +25106,14 @@ const handle = async (m, post) => {
       const [a, b, r] = W.segs[S[1]], fwd = !!(r.one || r.ring) || Math.sin(car.h) * (W.X[b] - W.X[a]) + Math.cos(car.h) * (W.Z[b] - W.Z[a]) >= 0, to = fwd ? b : a, from = fwd ? a : b;
       const lane = laneOf(r);
       autoBegin([car.x, S[3], W.X[to]], [car.z, S[4], W.Z[to]], [0, lane], { cruise: true, turn, node: to, from, sign: null }); autoPin(null); cruiseOn(auto); return true; };
-    // more of the way ahead, to about 130 m on: at each corner straight on (the street that bends least), or the turn asked for, the
+    // more of the way ahead: at each corner straight on (the street that bends least), or the turn asked for, the
     // first corner that has one (a street off to that side by 35 to 135 degrees: not a hairpin back down the other side of a divided
     // road); never back the way it came unless the street ends, and never against a one-way
     const cruiseOn = A => { let W = net; if (!W) return; let grew = false;
-      for (let g = 0; g < 60 && A.node != null; g++) { const n = A.cx.length; let ahead = 0; for (let i = A.i; i + 1 < n; i++) ahead += Math.hypot(A.cx[i + 1] - A.cx[i], A.cz[i + 1] - A.cz[i]) * (i === A.i ? 1 - A.t : 1); if (ahead > 130) break;  // (from where the car is on its stretch: a long straight one is not 130 m ahead for long)
+      // An indexed pass must see the return lane beyond a long row. Buffer a little extra
+      // centreline for the offset lane and the distance driven between route updates.
+      const lookahead = place === "inv" && T.invStatic?.wholeTown && (A.blk || A.dTgt) ? AUTO_PASS_HORIZON + 25 : 130;
+      for (let g = 0; g < 60 && A.node != null; g++) { const n = A.cx.length; let ahead = 0; for (let i = A.i; i + 1 < n; i++) ahead += Math.hypot(A.cx[i + 1] - A.cx[i], A.cz[i + 1] - A.cz[i]) * (i === A.i ? 1 - A.t : 1); if (ahead > lookahead) break;
         // near the edge of the streets it knows: the streets round here instead, picking up at the same point
         const u0 = A.node, ux = W.X[u0], uz = W.Z[u0];
         if (ux < W.box[0] + 150 || ux > W.box[1] - 150 || uz < W.box[2] + 150 || uz > W.box[3] - 150) { const fx = W.X[A.from], fz = W.Z[A.from]; W = autoNet(ux, uz); if (!W) { A.node = null; break; }
@@ -25150,6 +25153,7 @@ const handle = async (m, post) => {
       if (!cruise(side)) toast("There's no street near enough to follow. Drive onto a street first.", 3400); return true; };
     ezGo.onclick = e => { e.stopPropagation(); ezGo.blur(); C.autoGo(); }; ezL.onclick = e => { e.stopPropagation(); ezL.blur(); C.autoTurn(1); }; ezR.onclick = e => { e.stopPropagation(); ezR.blur(); C.autoTurn(-1); };
     const AUTO_V = 50 / 3.6;  // it drives at up to 50 km/h
+    const AUTO_PASS_HORIZON = 185;
     // Autodrive from the GPS drives like a hoon (Ash, 23 November 2026: "When I type in the address allow standard or autodrive to drive
     // me there automatically. Drive like a hoon to get there"): flat out to the car's own top speed, boost down the straights, braking
     // late and hard for the corners, a flick of the handbrake to swing round the sharp ones, and a skid to a stop at the door
@@ -25191,7 +25195,7 @@ const handle = async (m, post) => {
     const autoIndexedPass = (A, at, rem, v, cars, homeTraffic, oncoming, latCar) => {
       const grid = T.invStatic, shape = townTrafficBodies[car.bus ? "bus" : "car"], [width, length] = shape;
       const margin = 0.55, transition = offset => 8 + 4 * Math.abs(offset);
-      const passHorizon = Math.min(rem, 185);
+      const passHorizon = Math.min(rem, AUTO_PASS_HORIZON);
       const blockers = [], seen = new Set();
       // Look beyond the first blocker for a place to merge back. Testing the home lane alongside the car
       // keeps the target until its rear clears, including after braking, reversing or a route-buffer trim.

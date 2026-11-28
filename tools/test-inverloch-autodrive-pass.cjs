@@ -22,21 +22,28 @@ const driver = new Script([
     section("  const townTrafficBodies", "  function townTraffic("),
   ]),
   section("    const CAR = [[2.1", "    // how the ground lies"),
+  section("    const autoEnd = why =>", "    // the spot it is driving to"),
+  section("    let net = null;", "    // the shortest way through them"),
+  section("    const cruise = turn =>", "    // G (or the button)"),
   section("    const autoShape =", "    // start driving to a spot:"),
   section("    const AUTO_V =", "    // what the speed chip adds"),
   `let auto, playerStart;
    const P = T.traffic, contact = true;`,
   section("    if (contact) {\n      // Only live traffic", "    const key = (x, z) =>"),
   `T.invStatic = invCivicCollision((x, z) => [x, z], () => false);
-   autoBegin([0, 0, 0], [0, 100, routeLength], [0, 0], { hoon });
+   if (streetEnd != null) {
+     if (!cruise(0)) throw Error("Drive for me could not start on the fixture street");
+   } else autoBegin([0, 0, 0], [0, 100, routeLength], [0, 0], { hoon });
    const advance = dt => {
+     const route = auto;
+     if (!route) return null;
      const [go, str] = autoStep(dt);
      let v = car.v;
      const K = car.bus ? .7 : 1, gc = false, brake = false, boosting = false, teamOn = false,
        slide = false, back = false, VREV = 6.05, SHAPE = car.bus ? BUS : CAR, vboost = 210 / 3.6,
        vmax = R.carTop / 3.6 * K;`,
   section("        if (go > 0.05) v +=", "        if (bump > 1.5)"),
-  `  return { bump, target: auto.dTgt };
+  `  return { bump, target: route.dTgt, routeEnd: route.cz.at(-1) };
    };
    advance;`
 ].join("\n"));
@@ -45,19 +52,25 @@ const CRUISE = 50 / 3.6, HALF_WIDTH = .98, HALF_LENGTH = 2.22;
 const PARKED_WIDTH = .95, PARKED_LENGTH = 2.25;
 const GRAZE = .0019066, DEEP = .780184;
 
-function drive(hz, { intrusion = DEEP, centres = [40], seconds = 16, gap = false, closed = false, kerbBarrier = false, npc, bus = false, hoon = false, roadWidth } = {}) {
+function drive(hz, { intrusion = DEEP, centres = [40], seconds = 16, gap = false, closed = false, kerbBarrier = false, npc, bus = false, hoon = false, roadWidth, streetEnd } = {}) {
   const car = { x: 0, z: 0, y: 0, h: 0, dir: 0, steer: 0, bus, v: bus ? CRUISE / 1.3 : CRUISE };
   const trafficCar = npc && { y: 0, ...npc };
   const T = { traffic: { cars: npc ? [trafficCar] : [] } };
   const halfLength = bus ? 5.55 : HALF_LENGTH, halfWidth = bus ? 1.27 : HALF_WIDTH;
   const routeLength = hoon ? 1800 : 400;
   if (roadWidth) T.roadsAll = [{ cls: 3, wd: roadWidth, pts: [0, 0, 0, routeLength] }];
+  if (streetEnd != null) {
+    // The one-way lane is 2.6 m left of its centreline, putting the host's driving lane at x=0.
+    const pts = [];
+    for (let z = 0; z <= streetEnd; z += 10) pts.push(-2.6, z);
+    T.roadsAll = [{ cls: 3, one: true, wd: 12, pts }];
+  }
   const ground = Object.assign(() => 0, { bed: () => 0 });
   const hops = [], frames = [];
   let time = 0;
   const advance = driver.runInNewContext({
     ...collision,
-    T, car, ground, hoon, routeLength, solid: () => false, F: { lim: [-500, 500, -500, routeLength + 100] },
+    T, car, ground, hoon, routeLength, streetEnd, autoPin() {}, solid: () => false, F: { lim: [-500, 500, -500, routeLength + 100] },
     bsClamp: (v, lo, hi) => Math.max(lo, Math.min(hi, v)),
     wrap: v => Math.atan2(Math.sin(v), Math.cos(v)),
     performance: { now: () => time * 1000 },
@@ -79,9 +92,11 @@ function drive(hz, { intrusion = DEEP, centres = [40], seconds = 16, gap = false
       trafficCar.x = npc.x + Math.sin(npc.h) * npc.v * time;
       trafficCar.z = npc.z + Math.cos(npc.h) * npc.v * time;
     }
-    const { bump, target } = advance(1 / hz);
+    const sample = advance(1 / hz);
+    if (!sample) break;
+    const { bump, target, routeEnd } = sample;
     const extent = halfLength * Math.abs(Math.cos(car.h)) + halfWidth * Math.abs(Math.sin(car.h));
-    frames.push({ time, x: car.x, z: car.z, rear: car.z - extent, front: car.z + extent, speed: car.v, target, bump });
+    frames.push({ time, x: car.x, z: car.z, rear: car.z - extent, front: car.z + extent, speed: car.v, target, bump, routeEnd });
     assert.equal(T.invStatic.depth(car.x, car.z, car.h, halfLength, halfWidth), 0, `static overlap at ${time}s`);
     assert.equal(T.traffic.occupied(bus ? "bus" : "car", car.x, car.z, car.h, 0), false, `traffic overlap at ${time}s`);
   }
@@ -137,6 +152,21 @@ for (const hz of [30, 60]) {
   test(`stay out until all 14 parked cars in a long row clear at ${hz} Hz`, () => {
     const centres = Array.from({ length: 14 }, (_, i) => 40 + 12 * i);
     checkContinuousPass(drive(hz, { centres, seconds: 19 }), centres.at(-1));
+  });
+
+  test(`Drive for me passes the full parked row on a street with 10 m segments at ${hz} Hz`, () => {
+    const centres = Array.from({ length: 14 }, (_, i) => 40 + 12 * i);
+    const run = drive(hz, { centres, streetEnd: 400, seconds: 22 });
+    assert.ok(run.frames[0].routeEnd <= 150, "ordinary cruise starts with its shorter street buffer");
+    checkContinuousPass(run, centres.at(-1));
+  });
+
+  test(`Drive for me waits when the actual one-way street ends before the return at ${hz} Hz`, () => {
+    const centres = Array.from({ length: 14 }, (_, i) => 40 + 12 * i);
+    const { frames } = drive(hz, { centres, streetEnd: 200, seconds: 6 });
+    assert.ok(frames.every(f => f.target === 0 && f.bump === 0), "no pass beyond the actual street end");
+    assert.ok(frames.some(f => f.routeEnd === 200), "cruise reached the last permitted graph node");
+    assert.ok(frames.at(-1).front < 40 && frames.at(-1).speed < 1, "stop before the parked row");
   });
 
   test(`hold one passing line past a stationary traffic car at ${hz} Hz`, () => {
