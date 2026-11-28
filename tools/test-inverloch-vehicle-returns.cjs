@@ -22,7 +22,7 @@ test("thirty-minute returns restart at exit, retry occupied bays, and ignore res
 });
 
 test("a preset swap restores every borrowed car and mirrors returns while swapping",async()=>{
-  const frames=[], T={}, BS={town:T};
+  const frames=[], models=[], T={}, BS={town:T};
   const model=()=>({ready:Promise.resolve(), poses:new Map(), dispose(){},
     driveCar(x0,z0,x,y,z) { if (x0<0) return false; this.poses.set(x0+","+z0,[x,y,z]); return true; },
     resetCar(x0,z0){ return this.poses.delete(x0+","+z0); }});
@@ -30,13 +30,15 @@ test("a preset swap restores every borrowed car and mirrors returns while swappi
     invGraphicsPresets:["auto","low","medium","high"],performance:{now:()=>0},$:()=>({}),bsNote(){},BS,
     requestAnimationFrame:f=>frames.push(f)};
   const src=between("  function townModelPair(", "    return m;\n  }") + "    return m;\n  }";
-  const pair=vm.runInNewContext(src.replace("T.pair = { initialPreset","T.pair = { testSwap:swapTo, initialPreset")+";townModelPair",ctx);
-  const m=pair(T,{create:model},{children:[]},{place:"inv"},{},{});
+  const pair=vm.runInNewContext(src.replace("T.pair = { initialPreset","T.pair = { changeQuality:changeQuality, initialPreset")+";townModelPair",ctx);
+  const m=pair(T,{create() { const created=model(); models.push(created); return created; }},{children:[]},{place:"inv"},{},{});
   await m.ready;
   m.driveCar(1,1,8,0,12); m.driveCar(2,2,11,0,9); m.driveCar(3,3,-1,1,16);
   assert.equal(m.driveCar(-1,0,0,0,0),false);
   m.resetCar(1,1);
-  const high=model(), swapping=T.pair.testSwap(high,"high");
+  const swapping=T.pair.changeQuality("high",0);
+  await new Promise(resolve => setImmediate(resolve)); // the replacement has loaded and is waiting for the two-frame handover
+  const high=models[1];
   assert.deepEqual([...high.poses.keys()],["2,2","3,3"]);
   m.resetCar(2,2); m.driveCar(3,3,24,0,-7);
   while(frames.length) frames.shift()();

@@ -9741,7 +9741,10 @@ const handle = async (m, post) => {
       for (const [key, n] of [["positions", 3], ["normals", 3], ["colors", 3], ["uvs", 2]]) { const src = q[key]; if (!src) continue; const dst = new Float32Array(I.length * n);
         for (let i = 0; i < I.length; i++) { const o = I[i] * n; for (let c = 0; c < n; c++) dst[i * n + c] = src[o + c]; } out[key] = dst; }
       return out; }); }
-  function townModelPair(T, lib, box, cfg, opts, cb) {
+  function townModelPair(T, library, box, cfg, opts, cb) {
+    const lib = { ...library, create(node, options) {
+      return (cur && graphics && library.createStaged?.(node, options, cur)) || library.create(node, options);
+    } };
     const key = "an3d-" + cfg.place, mem = navigator.deviceMemory || 8, touch = matchMedia("(pointer: coarse)").matches;
     let seen = {}; try { seen = JSON.parse(localStorage.getItem(key) || "{}") || {}; } catch {}
     let commitWaitMs = 0;
@@ -9783,7 +9786,15 @@ const handle = async (m, post) => {
     // a handle Inverloch's town centre moves things with: always the one in the model that's showing
     const handle = real => { const H = { real, calls: new Map() };
       H.proxy = new Proxy(H, { get: (h, k) => { const v = h.real[k]; if (typeof v !== "function") return v;
-        return (...a) => { h.calls.set(k + ":" + (k === "setSignal" || k === "setCabin" ? "" : a[0]), a); return h.real[k](...a); }; } });
+        return (...a) => {
+          const key = k + ":" + (k === "setSignal" || k === "setCabin" ? "" : a[0]);
+          if (graphics && k === "setMatrix") {
+            let saved = h.calls.get(key);
+            if (!saved) { saved = [a[0], new Float64Array(16)]; h.calls.set(key, saved); }
+            saved[1].set(a[1]);
+          } else h.calls.set(key, a);
+          return h.real[k](...a);
+        }; } });
       return H; };
     const handles = [];
     let ids = 0; const tag = mm => { mm.id = ++ids; const el = box.lastElementChild; if (el) el.dataset.anModel = String(mm.id); };
@@ -9816,16 +9827,35 @@ const handle = async (m, post) => {
     tag(cur);
     // frames a second over a short while
     const fps = ms => new Promise(ok => { let n = 0, t0 = 0; const f = t => { if (dead) return ok(0); if (!t0) t0 = t; n++; if (t - t0 < ms) requestAnimationFrame(f); else ok(n * 1000 / (t - t0)); }; requestAnimationFrame(f); });
-    const swapTo = async (to, q) => { bsNote("sharper model swapped in");
-      for (const [name, a, H] of log) { if (H) H.real = to[name](...a); else to[name]?.(...a); }
-      for (const H of handles) for (const [ck, a] of H.calls) { const fn = ck.split(":")[0]; try { H.real[fn](...a); } catch {} }
+    const swapTo = async (to, q) => {
+      // A staged Inverloch world has synchronous replay calls. Keep every live handle
+      // on the old world until the canvas and all its replacements can change together.
+      const staged = typeof to.commitStagedWorld === "function";
+      const replacements = new Map();
+      for (const [name, a, H] of log) {
+        if (!H) { to[name]?.(...a); continue; }
+        const real = to[name](...a);
+        if (staged) replacements.set(H, real); else H.real = real;
+      }
+      for (const H of handles) for (const [ck, a] of H.calls) {
+        const fn = ck.split(":")[0];
+        if (staged) replacements.get(H)[fn](...a); else try { H.real[fn](...a); } catch {}
+      }
       if (driven) {
-        replaying = to;
+        if (!staged) replaying = to;
         for (const pose of driven.values()) to.driveCar(...pose);
       } else T.invStatic?.restoreCars(to);
-      for (const k of LAST) if (last[k]) { try { const r = to[k](...last[k]); if (r?.then) await r; } catch {} }
-      await new Promise(ok => requestAnimationFrame(() => requestAnimationFrame(ok)));
-      if (dead || BS.town !== T) return;
+      for (const k of LAST) if (last[k]) {
+        if (staged) to[k]?.(...last[k]);
+        else try { const r = to[k](...last[k]); if (r?.then) await r; } catch {}
+      }
+      if (!staged) await new Promise(ok => requestAnimationFrame(() => requestAnimationFrame(ok)));
+      if (dead || BS.town !== T || next !== to) return;
+      if (staged) {
+        if (!to.commitStagedWorld()) { drop(); return; }
+        for (const [H, real] of replacements) H.real = real;
+      }
+      bsNote("sharper model swapped in");
       const old = cur, oldEl = rootOf(old), el = rootOf(to);
       cur = to; next = null; replaying = null; if (el) el.style.visibility = ""; if (oldEl) oldEl.style.visibility = "hidden";
       if (to.normanGrade) T.normanGrade.apply(to.normanGrade);
@@ -9862,7 +9892,12 @@ const handle = async (m, post) => {
         } catch { if (next === n) drop(); return false; }
         if (next !== n || !currentTown()) return false;
         const loadMs = Math.round(performance.now() - n.t0);
-        await swapTo(n, target);
+        try { await swapTo(n, target); } catch (error) {
+          if (!n.commitStagedWorld) throw error;
+          if (next === n) drop();
+          console.warn("Inverloch staged world could not replace the current view", error);
+          return false;
+        }
         if (cur !== n || !currentTown()) return false;
         activeQuality = target;
         if (target !== "low") save({ q: target, ms: loadMs });
