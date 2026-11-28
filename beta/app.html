@@ -17206,6 +17206,7 @@ const handle = async (m, post) => {
     const inPilot = (x,z) => townInBlock((x-o0[0])/kx, (z-o0[1])/kz);
     return { at, place, inPilot, parts: parts.length, corners: parts.reduce((n, p) => n + p.positions.length / 3, 0) };
   }
+  // BEGIN GENERATED src/explore/collision.mjs
   // Ground-level collision in model metres. Authored guest shapes use their local transform.
   function invCivicCollision(at, inPilot) {
     const dimensions = new Map(), owned = new WeakMap(), identity = (x,z) => [x,z];
@@ -17256,7 +17257,7 @@ const handle = async (m, post) => {
         const bucket = cells.get(k);
         if (!bucket) return;
         for (const B of bucket) {
-          if (B.stamp === id || B.hidden || B === ignore || x+ex < B.x0 || x-ex > B.x1 || z+ez < B.z0 || z-ez > B.z1) continue;
+          if (B.stamp === id || B.hidden || (hl > 0 && B.walkClearance) || B === ignore || x+ex < B.x0 || x-ex > B.x1 || z+ez < B.z0 || z-ez > B.z1) continue;
           B.stamp = id;
           let inside = false, distance2 = Infinity, vx = 0, vz = 0, rim = 0;
           for (const e of B.edges) {
@@ -17393,6 +17394,52 @@ const handle = async (m, post) => {
       grid.polygon(points);
     }
   }
+
+  // Half width, half length and height in metres. The sedan follows the traffic sedan in townPlaneParts.
+  const townTrafficBodies = { walk: [0.32, 0.32, 1.75], car: [0.98, 2.22, 1.4], bus: [1.27, 5.55, 3.12] };
+
+  // First contact in [0,1] for two moving footprints. Straight travel is a swept
+  // separating-axis test. On turns, enclose the turning corners and refine only
+  // intervals that can touch, to a centimetre. Headings use +Z for the nose.
+  function townTrafficSweep(a, endA, bodyA, b, endB, bodyB) {
+    const x = a.x - b.x, z = a.z - b.z, ex = endA.x - endB.x, ez = endA.z - endB.z;
+    const reach = bodyA[0] + bodyA[1] + bodyB[0] + bodyB[1];
+    if (Math.min(x, ex) > reach || Math.max(x, ex) < -reach || Math.min(z, ez) > reach || Math.max(z, ez) < -reach) return 1;
+    if (Math.min(a.y, endA.y) >= Math.max(b.y, endB.y) + bodyB[2] ||
+        Math.min(b.y, endB.y) >= Math.max(a.y, endA.y) + bodyA[2]) return 1;
+    const ra = Math.hypot(bodyA[0], bodyA[1]), rb = Math.hypot(bodyB[0], bodyB[1]);
+    const dx = ex - x, dz = ez - z;
+    const da = Math.atan2(Math.sin(endA.h - a.h), Math.cos(endA.h - a.h));
+    const db = Math.atan2(Math.sin(endB.h - b.h), Math.cos(endB.h - b.h));
+    const at = (lo, hi) => {
+      const mid = (lo + hi) / 2, len = hi - lo;
+      const sa = Math.sin(a.h + da * mid), ca = Math.cos(a.h + da * mid);
+      const sb = Math.sin(b.h + db * mid), cb = Math.cos(b.h + db * mid);
+      const pad = (ra * Math.abs(da) + rb * Math.abs(db)) * len / 2;  // maximum travel of a corner from the midpoint orientation
+      let enter = 0, leave = 1, shallowest = -Infinity, outward = 0;
+      const axes = [ca, -sa, sa, ca, cb, -sb, sb, cb];
+      for (let i = 0; i < axes.length; i += 2) {
+        const ax = axes[i], az = axes[i + 1];
+        const span = bodyA[0] * Math.abs(ax * ca - az * sa) + bodyA[1] * Math.abs(ax * sa + az * ca)
+                   + bodyB[0] * Math.abs(ax * cb - az * sb) + bodyB[1] * Math.abs(ax * sb + az * cb) + pad;
+        const offset = (x + dx * lo) * ax + (z + dz * lo) * az, speed = (dx * ax + dz * az) * len;
+        const gap = Math.abs(offset) - span;
+        if (gap > shallowest) { shallowest = gap; outward = Math.sign(offset) * speed; }
+        if (Math.abs(speed) < 1e-10) { if (gap >= 0) return 1; continue; }
+        const t0 = (-span - offset) / speed, t1 = (span - offset) / speed;
+        enter = Math.max(enter, Math.min(t0, t1)); leave = Math.min(leave, Math.max(t0, t1));
+        if (enter >= leave) return 1;
+      }
+      if (pad > 0.01) { const left = at(lo, mid); return left < 1 ? left : at(mid, hi); }
+      // In an existing overlap, allow motion away from its shallowest face. At coincident
+      // centres, or sliding along that face, the centres must also move apart.
+      if (shallowest < 0 && (outward > 2 * pad + 1e-8 ||
+          (!pad && outward >= 0 && (dx || dz) && (x + dx * lo) * dx + (z + dz * lo) * dz >= 0))) return 1;
+      return Math.max(0, lo + enter * len - 1e-5);
+    };
+    return at(0, 1);
+  }
+  // END GENERATED src/explore/collision.mjs
 
   // Things made for the model's town centre alone. The foot of the Rotary clock as in photos of it: brick paving, a planted
   // bed of tussock grasses and low shrubs round the two poles, their broad teal bases, and the four mosaic blocks in a row out
@@ -18652,9 +18699,6 @@ const handle = async (m, post) => {
   // the car you drive does (Ash, 15 November 2026: "Make the traffic ... a bit smarter ... Cars need to respect terrain a bit
   // better"). One stuck for 10 s, or more than 800 m off, starts again near the start. They are drawn by the app (the same as the cars
   // to drive), from the streets the model has already loaded, so every town gets them; nothing is fetched until 4 s in.
-  // Half width, half length and height in metres. The sedan follows the traffic sedan in townPlaneParts.
-  const townTrafficBodies = { walk: [0.32, 0.32, 1.75], car: [0.98, 2.22, 1.4], bus: [1.27, 5.55, 3.12] };
-
   // Vehicle-relative sides: negative is left. Positive yaw turns a nose pointing along +Z to its left.
   function townIndicatorSide(angle) {
     return Math.abs(angle) >= Math.PI / 6 && Math.abs(angle) < 5 * Math.PI / 6 ? -Math.sign(angle) : 0;
@@ -18716,48 +18760,6 @@ const handle = async (m, post) => {
     const car = m.addParts([{ ...townCarPart(kind, colour), matrix }]), sig = townSignals(m, kind);
     return { setMatrix(i, e) { car.setMatrix(i, e); if (i === 0) sig.at(e); }, setSignal: s => sig.set(s),
       remove() { try { car.remove(); } finally { sig.remove(); } } };
-  }
-
-  // First contact in [0,1] for two moving footprints. Straight travel is a swept
-  // separating-axis test. On turns, enclose the turning corners and refine only
-  // intervals that can touch, to a centimetre. Headings use +Z for the nose.
-  function townTrafficSweep(a, endA, bodyA, b, endB, bodyB) {
-    const x = a.x - b.x, z = a.z - b.z, ex = endA.x - endB.x, ez = endA.z - endB.z;
-    const reach = bodyA[0] + bodyA[1] + bodyB[0] + bodyB[1];
-    if (Math.min(x, ex) > reach || Math.max(x, ex) < -reach || Math.min(z, ez) > reach || Math.max(z, ez) < -reach) return 1;
-    if (Math.min(a.y, endA.y) >= Math.max(b.y, endB.y) + bodyB[2] ||
-        Math.min(b.y, endB.y) >= Math.max(a.y, endA.y) + bodyA[2]) return 1;
-    const ra = Math.hypot(bodyA[0], bodyA[1]), rb = Math.hypot(bodyB[0], bodyB[1]);
-    const dx = ex - x, dz = ez - z;
-    const da = Math.atan2(Math.sin(endA.h - a.h), Math.cos(endA.h - a.h));
-    const db = Math.atan2(Math.sin(endB.h - b.h), Math.cos(endB.h - b.h));
-    const at = (lo, hi) => {
-      const mid = (lo + hi) / 2, len = hi - lo;
-      const sa = Math.sin(a.h + da * mid), ca = Math.cos(a.h + da * mid);
-      const sb = Math.sin(b.h + db * mid), cb = Math.cos(b.h + db * mid);
-      const pad = (ra * Math.abs(da) + rb * Math.abs(db)) * len / 2;  // maximum travel of a corner from the midpoint orientation
-      let enter = 0, leave = 1, shallowest = -Infinity, outward = 0;
-      const axes = [ca, -sa, sa, ca, cb, -sb, sb, cb];
-      for (let i = 0; i < axes.length; i += 2) {
-        const ax = axes[i], az = axes[i + 1];
-        const span = bodyA[0] * Math.abs(ax * ca - az * sa) + bodyA[1] * Math.abs(ax * sa + az * ca)
-                   + bodyB[0] * Math.abs(ax * cb - az * sb) + bodyB[1] * Math.abs(ax * sb + az * cb) + pad;
-        const offset = (x + dx * lo) * ax + (z + dz * lo) * az, speed = (dx * ax + dz * az) * len;
-        const gap = Math.abs(offset) - span;
-        if (gap > shallowest) { shallowest = gap; outward = Math.sign(offset) * speed; }
-        if (Math.abs(speed) < 1e-10) { if (gap >= 0) return 1; continue; }
-        const t0 = (-span - offset) / speed, t1 = (span - offset) / speed;
-        enter = Math.max(enter, Math.min(t0, t1)); leave = Math.min(leave, Math.max(t0, t1));
-        if (enter >= leave) return 1;
-      }
-      if (pad > 0.01) { const left = at(lo, mid); return left < 1 ? left : at(mid, hi); }
-      // In an existing overlap, allow motion away from its shallowest face. At coincident
-      // centres, or sliding along that face, the centres must also move apart.
-      if (shallowest < 0 && (outward > 2 * pad + 1e-8 ||
-          (!pad && outward >= 0 && (dx || dz) && (x + dx * lo) * dx + (z + dz * lo) * dz >= 0))) return 1;
-      return Math.max(0, lo + enter * len - 1e-5);
-    };
-    return at(0, 1);
   }
 
   function townTraffic(T, m, F, ground, cfg) {

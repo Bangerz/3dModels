@@ -14,9 +14,12 @@ import shutil
 import subprocess
 import sys
 
+from tools.explore_collision import sync_preview
+
 site = sys.argv[1] if len(sys.argv) > 1 else "_site"
 here = os.path.dirname(os.path.abspath(__file__))
 app = open(os.path.join(here, "app.html"), encoding="utf-8").read()
+sync_preview(app, "app.html")
 
 m = re.search(r"<title>(.*?)</title>", app)
 title = m.group(1) if m else "Awesome News"
@@ -185,6 +188,7 @@ with open(os.path.join(site, "index.html"), "w", encoding="utf-8") as f:
 beta_src = os.path.join(here, "beta", "app.html")
 if os.path.exists(beta_src):
     bapp = open(beta_src, encoding="utf-8").read()
+    sync_preview(bapp, "beta/app.html")
     bbody = re.sub(r"<title>.*?</title>\s*", "", bapp, count=1)
     bbody = re.sub(r'<meta name="claude:[^"]+"[^>]*>\s*', "", bbody)
     bbody = re.sub(r'<meta name="theme-color"[^>]*>\s*', "", bbody)

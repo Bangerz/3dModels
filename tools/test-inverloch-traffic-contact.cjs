@@ -5,7 +5,8 @@ const path = require("node:path");
 const {test} = require("node:test");
 const app = fs.readFileSync(path.join(__dirname, "..", "app.html"), "utf8");
 const between = (start, end) => app.slice(app.indexOf(start), app.indexOf(end, app.indexOf(start)));
-const mechanics = between("  const townTrafficBodies", "  function townCritter(");
+const collision = import("../src/explore/collision.mjs");
+const mechanics = between("  function townIndicatorSide(", "  function townCritter(");
 const walkCode = between("  function bsFlyTick(", "  function bsStrike(");
 const normalDrive = between("        const trafficTravel = ", "        if (bump > 1.5)");
 const at = (x,z,h=0,y=0) => ({x,z,h,y});
@@ -20,11 +21,12 @@ async function world(place="inv", model={}, roads=[-100,0,100].map(x=>({cls:0,pt
   const T={cfg:{place}, walk:true};
   const B={THREE:Object.fromEntries(["Matrix4","Quaternion","Euler","Vector3"].map(k=>[k,MatrixStub]))};
   const BS={B,town:T,fly:F};
-  const ctx=vm.createContext({BS, setTimeout: f=>{startup=f;}, performance:{now:()=>now}, matchMedia:()=>({matches:false}), townLaneOf:()=>0,
+  const {townTrafficBodies, townTrafficSweep} = await collision;
+  const ctx=vm.createContext({BS, townTrafficBodies, townTrafficSweep, setTimeout: f=>{startup=f;}, performance:{now:()=>now}, matchMedia:()=>({matches:false}), townLaneOf:()=>0,
     bsClamp:(x,lo,hi)=>Math.max(lo,Math.min(x,hi)), bsBlock:()=>{}, bsUnstick:()=>{throw Error("unexpected sidestep into traffic");},
     townPlaneParts:()=>[], townCarPart:()=>({}), townSpinner:()=>null, townStreetData:async()=>({names:[],roads})});
   vm.runInContext("let seed=37; Math.random=()=>((seed=(Math.imul(1664525, seed)+1013904223)>>>0)/4294967296)",ctx);
-  vm.runInContext(mechanics+walkCode+"; globalThis.sweep=townTrafficSweep; globalThis.shape=townTrafficBodies;",ctx);
+  vm.runInContext(mechanics+walkCode,ctx);
   const parts=()=>({setMatrix(){},remove(){}});
   const P=ctx.townTraffic(T,{addParts:parts,...model},F,()=>0,T.cfg);
   T.traffic=P; await startup(); const initial=P.cars.splice(0);
@@ -109,7 +111,7 @@ test("a traffic car signals its chosen branch before turning, then cancels", asy
   }
 });
 test("sweeps cover fast opposed travel and a rotating corner while separated paths stay clear", async()=>{
-  const {ctx:{sweep,shape}}=await world();
+  const {townTrafficSweep: sweep, townTrafficBodies: shape} = await collision;
   const s=(a,A,ka,b,B,kb)=>sweep(a,A,shape[ka],b,B,shape[kb]);
   const headOn=s(at(0,-10),at(0,10),"car",at(0,10),at(0,-10),"car");
   assert.ok(Math.abs(headOn-(20-4.44)/40)<0.001, headOn);

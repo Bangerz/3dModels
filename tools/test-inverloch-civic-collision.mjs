@@ -1,15 +1,19 @@
 // Run with node tools/test-inverloch-civic-collision.mjs. No renderer or network required.
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { runInNewContext } from 'node:vm';
+import { invCivicCollision as make, invAddDesignedWalls as addWalls } from '../src/explore/collision.mjs';
 
 const source = readFileSync(new URL('../app.html', import.meta.url), 'utf8');
-const start = source.indexOf('  function invCivicCollision(');
-const end = source.indexOf('  function townModelExtras(', start);
-const make = runInNewContext(source.slice(start, end) + '\ninvCivicCollision');
 const identity = (x,z) => [x,z];
 const makeIndex = () => make(identity,(x,z) => Math.abs(x) <= 100 && Math.abs(z) <= 100);
 const radius = .35;
+
+// A display window's near-plane guard protects a walking camera without displacing a parked car.
+const display = makeIndex();
+const panel = display.box(0, 0, 0, 0.5, 5);
+panel.walkClearance = true;
+assert.ok(display.depth(0, 0, 0, 0, radius) > 0);
+assert.equal(display.depth(0, 0, 0, 2.1, .8), 0);
 
 // A narrow post between all five original car probes. A fast step crosses two grid cells.
 const fixtures = makeIndex();
@@ -68,7 +72,6 @@ cars.take(id);
 cars.park(id,200,300,0);
 assert.equal(cars.depth(200,300,0,0,radius),0,'pilot stays local');
 // Renderer rings use world metres even if the civic block has a different transform.
-const addWalls = runInNewContext(source.slice(start, end) + '\ninvAddDesignedWalls');
 const rings = [[-1618,411,-1612,411,-1612,421,-1618,421],
                [-1612,416,-1609,416,-1609,419,-1612,419]];
 for (const town of [{}, { invStatic: make((x,z) => [x+100,z-100], () => false) }]) {
