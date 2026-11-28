@@ -10007,7 +10007,8 @@ const handle = async (m, post) => {
         // Ash, 16 November 2026: "The golden car is still too low in Logan, sitting inside the road")
         const bed = (x, z) => (inv ? T.pair.cur.roadSurfaceAt?.(x, z) : null) ?? m.groundAt(x, z);
         const LIFT = cfg.lift, b = m.bounds(), ground = (x = F.pos.x, z = F.pos.z) => { const fo = T.floorOver?.(x, z); if (fo != null) return fo;  /* (Dino Land's island, up in the sky) */ let g = Math.max(bed(x, z), m.waterAt ? m.waterAt(x, z) : m.waterLevel());
-          if (T.decks) { const dy = T.deckAt(x, z); if (dy != null && dy > g) g = dy; }  // (on a bridge: its deck)
+          const deck = T.deckAt?.(x, z);
+          if (deck != null && deck > g) g = deck;
           if (LIFT && x > LIFT[0] && x < LIFT[2] && z > LIFT[1] && z < LIFT[3]) g += LIFT[4];
           if (T.pads) { const g0 = g; for (const P of T.pads) g = Math.max(g, padGround(P, x, z, g0)); }
           if (T.bal6) g = T.bal6.top(x, z, g);  // number 6's floor, decks and stairs, where you can step up onto them
@@ -10043,6 +10044,7 @@ const handle = async (m, post) => {
               else grid.park(c.id, B.x, B.z, B.h); } } catch (e) { console.warn("Inverloch: couldn't move the parked cars stuck in poles", e); }
           } else invAddDesignedWalls(T, m.designedWallFootprints?.());
         }
+        if (inv && m.addParts) try { mine.push(invWestJetty(T, m, BS.B.THREE)); } catch (e) { console.warn("Inverloch: the west jetty could not be added", e); }
         if (cfg.place === "moo") try { mine = mine.concat(townShops(T, m)); } catch (e) { console.warn("Town model: Moorooka's shops couldn't be added", e); }
         const OFF = exOff(); document.body.classList.toggle("bsnoplaces", OFF.has("places"));
         if (cfg.place === "moo" && m.addParts && !OFF.has("no6")) T.no6 = townNo6(T, m);  // 6 Beaudesert Road's street, from Ash's photos (it catches its own errors)
@@ -18295,6 +18297,119 @@ const handle = async (m, post) => {
   const STREETS_KEY = "an3d-streets";
   const streetsPref = () => { try { return localStorage.getItem(STREETS_KEY) === "1"; } catch { return false; } };  // off to start with (Ash, 14 November 2026: "Names start off")
   const streetsSave = on => { try { localStorage.setItem(STREETS_KEY, on ? "1" : "0"); } catch {} };
+  // The late-2024 west boat-ramp jetty. The native pier across the slipway is the older east jetty.
+  function invWestJetty(T, model, THREE) {
+    const shoreX = 332.8, shoreZ = -134.7, length = 30, half = 1.42;
+    const bearing = Math.atan2(10.6, 28.8), dx = Math.sin(bearing), dz = Math.cos(bearing);
+    const at = (along, west) => [shoreX + along * dx - west * dz, shoreZ + along * dz + west * dx];
+    const high = 3, low = 1.05; // Awarded AHD levels of 2.00 and 0.70 m in Explore's 1.5× height scale.
+    const access = -8, entry = model.groundAt(...at(access, 0)) + 0.06;
+    const stairsStart = length - 2.8, landingStart = 4.7, landingEnd = 15, steps = 8;
+    const riseAt = u => high + (entry - high) * Math.max(0, u / access);
+    const stepWidth = (landingStart - half) / steps;
+    const stepTop = index => high - (index + 1) * (high - low) / steps;
+    const positions = [], colours = [], blockers = [];
+    const silver = 0xbec5c6, steel = 0x393c3d, timber = 0x675848;
+    const point = (u, y, v) => { const [x, z] = at(u, v); return [x, y, z]; };
+    // Each run is a closed rectangular section, with its height allowed to change along the approach.
+    function prism(u0, u1, v0, v1, y0, y1, depth, tint) {
+      const top = [point(u0, y0, v0), point(u1, y1, v0), point(u1, y1, v1), point(u0, y0, v1)];
+      const bottom = top.map(([x, y, z]) => [x, y - depth, z]);
+      const vertices = [...top, ...bottom], color = new THREE.Color(tint);
+      for (const [a, b, c, d] of [[0,1,2,3], [4,7,6,5], [0,4,5,1], [1,5,6,2], [2,6,7,3], [3,7,4,0]]) {
+        for (const i of [a, c, b, a, d, c]) {
+          positions.push(...vertices[i]);
+          colours.push(color.r, color.g, color.b);
+        }
+      }
+    }
+    const collisionBox = (u, v, along, width) => blockers.push([...at(u, v), width, along]);
+    const post = (u, v, w, y, height, tint) => prism(u - w / 2, u + w / 2, v - w / 2, v + w / 2, y, y, height, tint);
+    const rail = (u0, u1, v) => {
+      for (const rise of [0.58, 1.04]) prism(u0, u1, v - 0.027, v + 0.027, riseAt(u0) + rise, riseAt(u1) + rise, 0.045, silver);
+      const count = Math.ceil((u1 - u0) / 2.5);
+      for (let i = 0; i <= count; i++) {
+        const u = u0 + (u1 - u0) * i / count;
+        post(u, v, 0.065, riseAt(u) + 1.04, 1.08, silver);
+      }
+      collisionBox((u0 + u1) / 2, v, u1 - u0, 0.09);
+    };
+
+    prism(access, 0, -half, half, entry, high, 0.18, 0xa5a399);
+    for (let u = 0; u < length; u += 1.25) {
+      const end = Math.min(length, u + 1.25);
+      prism(u, end, -half, half, high, high, 0.21, (u / 1.25) % 2 ? 0x42484a : 0x484f50);
+    }
+    rail(-2.7, length, -half);
+    rail(access + 1.8, stairsStart, half);
+    for (const rise of [0.58, 1.04]) prism(length - 0.055, length, -half, half, high + rise, high + rise, 0.045, silver);
+    collisionBox(length, 0, 0.09, half * 2);
+    for (const v of [-0.85, 0.85]) {
+      post(-0.55, v, 0.18, riseAt(-0.55) + 0.94, 0.94, 0xe5b72c);
+      collisionBox(-0.55, v, 0.18, 0.18);
+    }
+    for (let u = 2; u < length; u += 4) {
+      post(u, -half + 0.04, 0.25, high - 0.16, 5.35, steel);
+      post(u, half - 0.03, 0.27, high + 0.16, 5.55, steel);
+      prism(u - 0.19, u + 0.19, -half - 0.14, -half + 0.03, high - 0.27, high - 0.27, 1.8, 0x252728);
+    }
+    // Dark piles and the closely spaced timber baffles read separately from the water.
+    for (let u = 3; u < stairsStart - 0.38; u += 0.39) {
+      prism(u, u + 0.32, half - 0.08, half + 0.04, high - 0.22, high - 0.22, 2.45, timber);
+    }
+    for (const u of [0.9, 12.5, 25]) {
+      const v = half - 0.19, top = high + 4.35;
+      post(u, v, 0.105, top, 4.55, silver);
+      prism(u - 0.43, u + 0.43, v - 0.25, v + 0.25, top - 0.14, top + 0.13, 0.055, 0x202d3a);
+      prism(u - 0.17, u + 0.17, v - 0.38, v + 0.05, top - 0.3, top - 0.3, 0.085, 0xc1c6c4);
+      collisionBox(u, v, 0.105, 0.105);
+    }
+    for (let i = 0; i < steps; i++) {
+      const v = half + i * stepWidth, top = stepTop(i);
+      prism(stairsStart, length, v, v + stepWidth, top, top, 0.3, 0x505655);
+    }
+    prism(stairsStart, length, landingStart, landingEnd, low, low, 0.23, 0x454c4c);
+    for (const v of [landingStart + 0.4, 9, 13.6, landingEnd - 0.32]) {
+      post(stairsStart + 0.18, v, 0.27, low + 0.86, 4.7, steel);
+      post(length - 0.18, v, 0.27, low + 0.65, 4.5, steel);
+      collisionBox(stairsStart + 0.18, v, 0.27, 0.27);
+      collisionBox(length - 0.18, v, 0.27, 0.27);
+    }
+    // Handrails close the two sides of the short stair while leaving the entrance and landing open.
+    for (const u of [stairsStart, length]) {
+      post(u, half, 0.065, high + 0.99, 1.04, silver);
+      post(u, landingStart, 0.065, low + 0.99, 1.04, silver);
+      // Rotate the slope into the cross-deck axis for the stair handrail.
+      const p = point(u, high + 0.99, half), q = point(u, low + 0.99, landingStart);
+      const delta = new THREE.Vector3(q[0] - p[0], q[1] - p[1], q[2] - p[2]);
+      const mesh = new THREE.BoxGeometry(0.055, delta.length(), 0.055);
+      mesh.rotateX(Math.atan2(Math.hypot(delta.x, delta.z), delta.y));
+      mesh.rotateY(Math.atan2(delta.x, delta.z));
+      mesh.translate((p[0] + q[0]) / 2, (p[1] + q[1]) / 2, (p[2] + q[2]) / 2);
+      const silverColor = new THREE.Color(silver), vertex = mesh.attributes.position;
+      for (const i of mesh.index.array) {
+        positions.push(vertex.getX(i), vertex.getY(i), vertex.getZ(i));
+        colours.push(silverColor.r, silverColor.g, silverColor.b);
+      }
+      mesh.dispose();
+      collisionBox(u, (half + landingStart) / 2, 0.09, landingStart - half);
+    }
+    model.addParts([{ positions: new Float32Array(positions), colors: new Float32Array(colours),
+      matrix: new THREE.Matrix4().elements, roughness: 0.86 }]);
+    const grid = T.invStatic ??= invCivicCollision((x, z) => [x, z], () => false);
+    for (const [x, z, w, l] of blockers) grid.worldBox(x, z, bearing, w, l);
+    T.deckAt = (x, z) => {
+      const ex = x - shoreX, ez = z - shoreZ;
+      if (ex < -19 || ex > 13 || ez < -9 || ez > 36) return null;
+      const u = ex * dx + ez * dz, v = -ex * dz + ez * dx;
+      if (u >= access && u <= length && Math.abs(v) <= half) return riseAt(u);
+      if (u < stairsStart || u > length || v <= half || v > landingEnd) return null;
+      return v >= landingStart ? low : stepTop(Math.min(steps - 1, Math.floor((v - half) / stepWidth)));
+    };
+    const [x, z] = at(access - 2, 0), target = at(8, 0);
+    return { name: "Boat ramp jetty", walk: { x, z, yaw: Math.atan2(x - target[0], z - target[1]), pitch: -0.06 }, target };
+  }
+
   // the address the model itself fetched a file from (Logan adds ?v=), so the browser serves it from its cache
   // (watched from when Explore opens a model: the browser's own list stops at 250 files)
   const townAssetWatch = () => { if (BS.assetSeen) return; BS.assetSeen = new Map();
@@ -23097,7 +23212,7 @@ const handle = async (m, post) => {
       const t = performance.now() / 1000, bob = Math.sin(t * 2.1) * 0.06 - 0.32, rl = (car.r || 0) + Math.sin(t * 1.6) * 0.03 + bsClamp((car.yr || 0) * 0.08, -0.12, 0.12);
       M.compose(V.set(car.x, car.y + bob, car.z), Q.setFromEuler(E.set(-(car.p || 0) - bsClamp(car.v / 60, -0.05, 0.12), car.h + (car.spinY || 0), rl, "YXZ")), ONE); boatP.setMatrix(0, M.elements); };
     const boatCheck = () => { if (car.bus || !m.groundAt) return false; const w = m.waterAt ? m.waterAt(car.x, car.z) : m.waterLevel?.(); if (!(w > -1e4)) return car.boat = false;
-      const dk = T.decks ? T.deckAt(car.x, car.z) : null, d = w - ground.bed(car.x, car.z), on = dk != null && dk > w ? false : car.boat ? d > 0.15 : d > 0.5;  // (on a bridge's deck over the creek: still a car)
+      const dk = T.deckAt?.(car.x, car.z), d = w - ground.bed(car.x, car.z), on = dk != null && dk > w ? false : car.boat ? d > 0.15 : d > 0.5;  // (on a deck above water: still a car)
       if (on !== !!car.boat) { car.boat = on; fxBurst(car, false); snd.whoosh?.(); if (!rexRole) toast(on ? "\ud83d\udea4 Boat mode! Drive back onto land to be a car again." : "\ud83d\ude97 Back on the road.", 2200); if (!on) boatDraw(false); }
       return on; };
     const sit = (dt, signal = 0) => { T.deckY = car.y; const [y, p, r] = car.bus ? lie(car, 3.6, 1.1) : lie(car, 1.3, 0.8), e = dt ? Math.min(1, dt * 12) : 1; car.y += (y + 0.05 + (car.hop || 0) - car.y) * (car.flip || car.trick ? 1 : e); car.p += (p - car.p) * e; car.r += (r - car.r) * e; const rd = car.r + (car.roll || 0), hd = car.h + (car.spinY || 0);

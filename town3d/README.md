@@ -508,6 +508,13 @@ These files are built, not written by hand. The source is the `ai-forge` reposit
 To update one, run its build there and copy its four files (and Moorooka's `detail/` folder) into its folder here. If the script changes, bump the
 `?v=` on it in `TOWNS` in `app.html` so phones fetch the new one.
 
+### The Esplanade boat ramp and west jetty
+
+The new west jetty stands beside the existing launch ramp. It adds the pedestrian approach, a roughly 30 m main deck, steel handrails, solar fixtures, timber wave screens and a low landing extending about 15 m west from the outer end. Its walkable surfaces are registered at deck height with the Explore host. At higher tides the water stands above the lower landing. The main rail and entry bollards have collision, and the launch lanes and the Gippsland Ports jetty retain their existing models. **Jump to → Boat ramp jetty** starts by the new apron.
+
+- **Mapped and photographed.** [OpenStreetMap slipway node 1969363650](https://www.openstreetmap.org/node/1969363650) and [east pier way 235753492](https://www.openstreetmap.org/way/235753492) anchor the setting. The west footprint is estimated against [BobTanGo’s 7 December 2025 aerial](https://commons.wikimedia.org/wiki/File:Inverloch,_from_above._December_2025.jpg), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Original vertex-coloured geometry represents that photographed layout. The aerial remains a source reference outside the runtime.
+- **As-built chronology and levels.** [Bass Coast Shire](https://engage.basscoast.vic.gov.au/inverlochjetty) documents the new fixed jetty west of the slipway and wave screens. [Better Boating Victoria](https://betterboating.vic.gov.au/ramp-upgrades/inverloch/) documents the December 2024 reopening and the approach, grip mesh and handrail updates in early 2025. The [awarded council tender](https://www.basscoast.vic.gov.au/assets/agendas-minutes/agendas/Council_Meeting_-_17_April_202_ciBlYPw2NkGGDA_DFjMHtg_v1.pdf#page=43) specifies main and lower deck levels at +2.00 m and +0.70 m AHD. Explore applies its existing vertical scale to those levels. The local approach profile, exact deck outline, connecting steps and fitting dimensions are provisional. The existing ramp's bearing is approximate and is a separate survey item.
+
 ### Inverloch terrain-tiling trial
 
 The v24 embed comes from [the terrain source revision](https://github.com/Ashley-Pettit/ai-forge/commit/0284c5a68b908fb85b75e46ba27c6fe7b08e3ee2) on top of
