@@ -33,7 +33,7 @@ const driver = new Script([
   `T.invStatic = invCivicCollision((x, z) => [x, z], () => false);
    if (streetEnd != null) {
      if (!cruise(0)) throw Error("Drive for me could not start on the fixture street");
-   } else autoBegin([0, 0, 0], [0, 100, routeLength], [0, 0], { hoon });
+   } else autoBegin([0, 0, 250*bend], [0, bend ? 44 : 100, bend ? 294 : routeLength], [0, 0], { hoon });
    const advance = dt => {
      const route = auto;
      if (!route) return null;
@@ -52,13 +52,13 @@ const CRUISE = 50 / 3.6, HALF_WIDTH = .98, HALF_LENGTH = 2.22;
 const PARKED_WIDTH = .95, PARKED_LENGTH = 2.25;
 const GRAZE = .0019066, DEEP = .780184;
 
-function drive(hz, { intrusion = DEEP, centres = [40], seconds = 16, gap = false, closed = false, kerbBarrier = false, npc, traffic = npc ? [npc] : [], bus = false, hoon = false, roadWidth, streetEnd } = {}) {
+function drive(hz, { intrusion = DEEP, centres = [40], seconds = 16, gap = false, closed = false, kerbBarrier = false, npc, traffic = npc ? [npc] : [], bus = false, hoon = false, roadWidth, streetEnd, parallelWall = false, bend = 0 } = {}) {
   const car = { x: 0, z: 0, y: 0, h: 0, dir: 0, steer: 0, bus, v: bus ? CRUISE / 1.3 : CRUISE };
   const cars = traffic.map(start => ({ y: 0, ...start }));
   const T = { traffic: { cars } };
   const halfLength = bus ? 5.55 : HALF_LENGTH, halfWidth = bus ? 1.27 : HALF_WIDTH;
   const routeLength = hoon ? 1800 : 400;
-  if (roadWidth) T.roadsAll = [{ cls: 3, wd: roadWidth, pts: [0, 0, 0, routeLength] }];
+  if (roadWidth) T.roadsAll = [{ cls: 3, wd: roadWidth, pts: bend ? [0, 0, 0, 44, 250*bend, 294] : [0, 0, 0, routeLength] }];
   if (streetEnd != null) {
     // The one-way lane is 2.6 m left of its centreline, putting the host's driving lane at x=0.
     const pts = [];
@@ -70,7 +70,7 @@ function drive(hz, { intrusion = DEEP, centres = [40], seconds = 16, gap = false
   let time = 0;
   const advance = driver.runInNewContext({
     ...collision,
-    T, car, ground, hoon, routeLength, streetEnd, autoPin() {}, solid: () => false, F: { lim: [-500, 500, -500, routeLength + 100] },
+    T, car, ground, hoon, routeLength, streetEnd, bend, autoPin() {}, solid: () => false, F: { lim: [-500, 500, -500, routeLength + 100] },
     bsClamp: (v, lo, hi) => Math.max(lo, Math.min(hi, v)),
     wrap: v => Math.atan2(Math.sin(v), Math.cos(v)),
     performance: { now: () => time * 1000 },
@@ -79,10 +79,11 @@ function drive(hz, { intrusion = DEEP, centres = [40], seconds = 16, gap = false
     unReset() { hops.push({ time, z: car.z }); },
     ezShow() {}, sit() {}, snd: {}, toast() {}
   });
-  const parkedX = HALF_WIDTH + PARKED_WIDTH - intrusion;
+  const parkedX = (HALF_WIDTH + PARKED_WIDTH - intrusion) * (bend > 0 ? -1 : 1);
   T.invStatic.addTown({ polygons: [], circles: [] }, centres.map(z => ({
     id: [parkedX, z], x: parkedX, z, heading: 0, halfWidth: PARKED_WIDTH, halfLength: PARKED_LENGTH
   })));
+  if (parallelWall) T.invStatic.box(1.6, 100, 0, .4, 300);
   if (gap) T.invStatic.box(-3.1, 50, 0, .2, 180);
   if (closed) T.invStatic.box(0, 40, 0, 100, 2);
   if (kerbBarrier) T.invStatic.box(3.8, 50, 0, .2, 180);
@@ -148,6 +149,21 @@ for (const hz of [30, 60]) {
       checkContinuousPass(drive(hz, { centres }), centres.at(-1));
     });
   }
+
+  test(`a parallel wall outside the home lane leaves a stopped car passable at ${hz} Hz`, () => {
+    const npc = { x: 0, z: 40, h: 0, v: 0 };
+    const run = drive(hz, { centres: [], npc, parallelWall: true, roadWidth: 12 });
+    checkContinuousPass(run, 40, HALF_LENGTH);
+    assert.ok(run.frames.some(f => f.target > 0), "pass on the open side");
+  });
+
+  test(`pass a parked car immediately before a 45-degree bend without a rear-corner hit at ${hz} Hz`, () => {
+    for (const bend of [-1, 1]) {
+      const run = drive(hz, { bend, roadWidth: 12 });
+      checkPass(run, 40);
+      assert.ok(bend*run.frames.at(-1).x > 20, "continue along the outgoing street");
+    }
+  });
 
   test(`stay out until all 14 parked cars in a long row clear at ${hz} Hz`, () => {
     const centres = Array.from({ length: 14 }, (_, i) => 40 + 12 * i);

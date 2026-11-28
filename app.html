@@ -25689,6 +25689,20 @@ const handle = async (m, post) => {
     const autoDir = (A, sd) => { const [x, z] = autoPt(A, sd), [x2, z2] = autoPt(A, sd + 1.5); let ux = x2 - x, uz = z2 - z; const l = Math.hypot(ux, uz);
       if (l < 1e-3) { const [x0, z0] = autoPt(A, sd - 1.5); ux = x - x0; uz = z - z0; const l0 = Math.hypot(ux, uz); return l0 < 1e-3 ? [x, z, Math.sin(car.h), Math.cos(car.h)] : [x, z, ux / l0, uz / l0]; }
       return [x, z, ux / l, uz / l]; };
+    // Blend the passing normal over the vehicle's footprint so its target stays continuous
+    // as the front enters a bend. Both the swept path and the steering use this same point.
+    const autoPassPoint = (A, sd, offset) => {
+      const [x,z] = autoPt(A,sd);
+      if (!offset) return [x,z];
+      const span = townTrafficBodies[car.bus ? "bus" : "car"][1];
+      const [ax,az] = autoPt(A,sd-span), [bx,bz] = autoPt(A,sd+span);
+      const dx = bx-ax, dz = bz-az, length = Math.hypot(dx,dz);
+      if (length < 0.01) {
+        const [, , ux,uz] = autoDir(A,sd);
+        return [x-offset*uz,z+offset*ux];
+      }
+      return [x-offset*dz/length,z+offset*dx/length];
+    };
     // (right of the way (ux, uz) is (-uz, ux): out towards the middle of the road. Left of it is the kerb)
     const autoFree = (A, x, z, h) => { const SH = car.bus ? BUS : CAR; return inside(x, z) && fits(SH, x, z, h); };
     // Only gather road segments near a manoeuvre. GPS routes can start without the click-to-drive road graph.
@@ -25721,9 +25735,9 @@ const handle = async (m, post) => {
       for (const [d,x,z,ux,uz] of path) {
         if (d > passHorizon) break;
         if (!A.cut && A.join < 20 && at + d < A.join + 1) continue;
-        // A neighbour can clear the straight lane yet clip a rotating corner on the return.
-        // The ordinary scan below still requires an actual intrusion to initiate a static pass.
-        const hit = grid.obstacle(x,z,Math.atan2(ux,uz),length,width+margin);
+        // Only an obstruction of the actual home lane needs to be overtaken. The candidate
+        // sweep below still checks nearby walls and parked vehicles throughout the return.
+        const hit = grid.obstacle(x,z,Math.atan2(ux,uz),length,width);
         if (!hit || seen.has(hit)) continue;
         seen.add(hit);
         let near = Infinity, far = -Infinity, left = Infinity, right = -Infinity;
@@ -25768,7 +25782,7 @@ const handle = async (m, post) => {
           const t = Math.min(1,d/enter), approach = smooth(t);
           const back = smooth(bsClamp((d-far)/leave,0,1));
           const lateral = (latCar + (offset-latCar)*approach + lateralSlope*d*(1-t)*(1-t))*(1-back);
-          const [px,pz,ux,uz] = autoDir(A, at+d), x = px-uz*lateral, z = pz+ux*lateral;
+          const [x,z] = autoPassPoint(A,at+d,lateral);
           const step = Math.hypot(x-previous.x,z-previous.z);
           if (step < 0.01) return null;
           const h = Math.atan2(x-previous.x,z-previous.z), next = {x,z,h,y:ground(x,z)};
@@ -25987,7 +26001,13 @@ const handle = async (m, post) => {
       // (aimed a little further over while the car is short of it, so it gets there, not just near)
       // On a pass keep the steering point close enough to follow the checked line around a bend.
       const aim = A.passCap != null && (A.dTgt || Math.abs(A.dCur) > 0.1) ? Math.min(look, (2.2 + Math.abs(v)*0.38)*big) : look;
-      let [tx, tz] = pt(aim); if (Math.abs(A.dCur) > 0.01) { const [px, pz, u0, w0] = autoDir(A, at), lat = -(car.x - px) * w0 + (car.z - pz) * u0, o = A.dCur + bsClamp((A.dCur - lat) * 0.8, -1.5, 1.5), [, , ux, uz] = autoDir(A, at + aim); tx -= uz * o; tz += ux * o; }
+      let [tx,tz] = pt(aim);
+      if (Math.abs(A.dCur) > 0.01) {
+        const [px,pz,ux,uz] = autoDir(A,at), lat = -(car.x-px)*uz + (car.z-pz)*ux;
+        const offset = A.dCur + bsClamp((A.dCur-lat)*0.8,-1.5,1.5);
+        if (A.passCap != null) [tx,tz] = autoPassPoint(A,at+aim,offset);
+        else { const [, , fx,fz] = autoDir(A,at+aim); tx -= fz*offset; tz += fx*offset; }
+      }
       const e = wrap(Math.atan2(tx - car.x, tz - car.z) - car.h);
       // backing off something it has run into: a second or so in reverse, the wheel the other way, then on again
       if (A.rev > 0) { A.rev -= dt; return [-0.8, bsClamp(A.revE * 2.4, -1, 1)]; }
