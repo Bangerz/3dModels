@@ -9927,6 +9927,7 @@ const handle = async (m, post) => {
       [-38.6338849, 145.7295854], [-38.6329661, 145.7297324], [-38.6348155, 145.7301642]]) clearLatLon.push({ lat, lon, r: 1.5 });
     if (inv && home && BS.W.invHouse) { const [lat, lon] = townLL(home[0], home[1]); clearLatLon.push({ lat, lon, r: 24 }); detailLatLon.push({ lat, lon, r: 170 }); }
     if (inv && BS.W.invTG && BS.W.invClock) TOWN_BLOCK.forEach(P => clearPolygons.push({ latLon: P.map(([x, z]) => townLL(x, z)), roads: true }));  // the town centre comes across whole
+    if (inv) clearPolygons.push({ latLon: INV_GLADE_SHELTER });
     // Moorooka's bridges (town.json's roads marked as one): their decks, so a car drives over them, not down through them into the creek.
     // The deck is as the model draws it (moorooka-model.js ?v=79): straight from one end's ground to the other's, a metre's hump in the
     // middle, and 0.6 m up, coming up from the road over its first and last 8 m. Under a bridge (a road under an overpass) you stay down:
@@ -9989,6 +9990,7 @@ const handle = async (m, post) => {
         // the town centre round the Rotary clock and number 11 Norman Road, stood in the model where they really are
         let mine = []; if (inv) try { mine = townModelGuests(T, m); } catch (e) { console.warn("Town model: the town centre and Norman Road couldn't be added", e); }
         if (inv) {
+          if (m.addParts) townGlade(T, m, BS.B.THREE);
           const buildings = m.buildingBlockers?.();
           if (buildings) {
             const grid = T.invStatic ??= invCivicCollision((x,z) => [x,z], () => false);
@@ -10351,6 +10353,9 @@ const handle = async (m, post) => {
   }
   // The town's own metres (x east, z south, from the library: tools/inverloch_town.py) as latitude and longitude
   const townLL = (x, z) => [-38.63351 - z / 110540, 145.72774 + x / (111320 * Math.cos(38.63351 * Math.PI / 180))];
+  // The Glade's open picnic shelter. Replace its mapped roof alone (OSM way 1117561260).
+  const INV_GLADE_SHELTER = [[-38.6353608, 145.7301261], [-38.6353350, 145.7302765],
+    [-38.6354224, 145.7303011], [-38.6354483, 145.7301507]];
   // The town centre round the clock, in the town's metres: the Hub and library, the war memorial, the shops along Reilly Street
   // and on both sides of A'Beckett Street (the bakery among them). Three convex pieces, corners clockwise on the map. Inside
   // them the whole-town model keeps only its ground, and the weather's own town centre is stood there instead (below).
@@ -17002,6 +17007,111 @@ const handle = async (m, post) => {
     return { face, front, floor, brick, metal, finish };
   }
 
+  // Ramsey Boulevard to The Glade. Road, aerial ground and adjoining buildings are the native model's.
+  function townGlade(T, m, THREE) {
+    const matrix = new THREE.Matrix4().elements;
+    // Explore metres measured east/south from the town.json origin. These runs follow the
+    // native pavements. Add surface detail within their widths and leave the original joins.
+    const concrete = [
+      [2.42, 0.15, [-133.86,-126.86, -120.92,-134.4, -104.82,-148.37, -106.33,-176.26, -92.17,-189.23, -70.95,-199.37,
+        -67.99,-200.17, -59.45,-203.12, -9.75,-223.56, -1.47,-223.85, 4.33,-224.61, 14.18,-223.82,
+        32.19,-229.8, 40.04,-227.73, 61.58,-213.58, 84,-199.14, 99.97,-193.17, 114.09,-191.21]],
+      [1.64, 0.13, [-145.85,-176.67, -121.8,-212.95, -116.89,-227.37, -109.48,-238.21, -99.72,-252.48]],
+      [1.64, 0.13, [-6.41,-240.9, -1.6,-232.12, -1.47,-223.85]],
+      [1.64, 0.13, [-172.94,-175.27, -145.03,-214.79]],
+      [1.64, 0.13, [-136.8,-227.8, -125.07,-244.12]],
+    ];
+    const positions = [], colours = [];
+    function joints(line, width, height, interval, hex, endClearance = 0.12) {
+      const tint = new THREE.Color(hex), half = width / 2, gap = 0.022;
+      let next = interval / 2;
+      for (let i = 2; i < line.length; i += 2) {
+        const ax = line[i - 2], az = line[i - 1], dx = line[i] - ax, dz = line[i + 1] - az;
+        const length = Math.hypot(dx, dz), ux = dx / length, uz = dz / length;
+        for (; next < length; next += interval) {
+          if (next < endClearance || length - next < endClearance) continue;
+          const X = ax + next * ux, Z = az + next * uz;
+          for (const [a, b] of [[-1,-1], [-1,1], [1,1], [-1,-1], [1,1], [1,-1]]) {
+            positions.push(X + a * gap * ux - b * half * uz, height, Z + a * gap * uz + b * half * ux);
+            colours.push(tint.r, tint.g, tint.b);
+          }
+        }
+        next -= length;
+      }
+    }
+    for (const [width, height, line] of concrete) joints(line, width, height, 4.3, 0xa39d91);
+    // Leave the timber seams inside the connector, clear of the taller shared path at the join.
+    joints([-70.95,-199.37, -55.99,-184.5], 1.64, 0.15, 0.27, 0x79654e, 1.4);
+
+    const [[ax, az], [bx, bz], [cx, cz], [dx, dz]] = INV_GLADE_SHELTER.map(([lat, lon]) => m.fromLatLon(lat, lon));
+    const x = (ax + bx + cx + dx) / 4, z = (az + bz + cz + dz) / 4;
+    const width = Math.hypot(bx - ax, bz - az), depth = Math.hypot(dx - ax, dz - az);
+    const tx = (bx - ax) / width, tz = (bz - az) / width, yaw = -Math.atan2(tz, tx);
+    const at = (u, v) => [x + u * tx - v * tz, z + u * tz + v * tx];
+    const hw = width / 2, hd = depth / 2;
+    const floor = Math.max(...[[-hw, -hd], [hw, -hd], [hw, hd], [-hw, hd], [0, 0]].map(p => m.groundAt(...at(...p))));
+    const eave = floor + 2.42, ridge = eave + 0.92, roof = [], shades = [], box = new THREE.BoxGeometry(1, 1, 1);
+    const roofPoint = (u, y, v) => { const [X, Z] = at(u, v); return [X, y, Z]; };
+    const triangle = (p, q, r, colour) => {
+      roof.push(...p, ...q, ...r);
+      for (let i = 0; i < 3; i++) shades.push(colour.r, colour.g, colour.b);
+    };
+    const quad = (a, b, c, d, hex) => {
+      const colour = new THREE.Color(hex);
+      triangle(a, b, c, colour);
+      triangle(a, c, d, colour);
+    };
+    for (const side of [-1, 1]) {
+      const v = side * hd;
+      // Narrow bands read as the seams of light corrugated sheets without a texture.
+      const sheets = Math.ceil(width / 0.56);
+      for (let i = 0; i < sheets; i++) {
+        const u = -hw + i * width / sheets, next = -hw + (i + 1) * width / sheets;
+        quad(roofPoint(u, ridge, 0), roofPoint(next, ridge, 0),
+          roofPoint(next, eave, v), roofPoint(u, eave, v), [0xd8d8d1, 0xd0d0c9, 0xd4d4cd][i % 3]);
+      }
+      quad(roofPoint(-hw, eave, v), roofPoint(hw, eave, v),
+        roofPoint(hw, eave - 0.13, v), roofPoint(-hw, eave - 0.13, v), 0xa4a7a0);
+    }
+    for (const u of [-hw, hw]) triangle(roofPoint(u, eave, -hd), roofPoint(u, ridge, 0),
+      roofPoint(u, eave, hd), new THREE.Color(0x9f9d93));
+
+    const solids = [], p = box.attributes.position;
+    const block = (u, v, low, top, w, d, hex) => {
+      const colour = new THREE.Color(hex);
+      for (const i of box.index.array) {
+        roof.push(...roofPoint(u + p.getX(i) * w, low + (p.getY(i) + 0.5) * (top - low), v + p.getZ(i) * d));
+        shades.push(colour.r, colour.g, colour.b);
+      }
+    };
+    for (const u of [-hw + 0.45, -width / 6, width / 6, hw - 0.45]) for (const v of [-hd + 0.5, hd - 0.5]) {
+      const bottom = m.groundAt(...at(u, v)) - 0.03, top = eave + 0.07;
+      const base = bottom + 0.64;
+      block(u, v, bottom, base, 0.58, 0.58, 0x8d7d6b);
+      for (let band = 0; band < 6; band++) {
+        const from = base + (top - base) * band / 6, to = base + (top - base) * (band + 1) / 6;
+        block(u, v, from, to, 0.48, 0.48, [0x837669, 0x8b7c6e, 0x796f65][band % 3]);
+      }
+      solids.push([...at(u, v), 0.58]);
+    }
+    const wall = { v: hd - 0.5, width: width / 3, depth: 0.38 };
+    const wallBase = Math.min(m.groundAt(...at(-wall.width / 2, wall.v)), m.groundAt(...at(wall.width / 2, wall.v)));
+    block(0, wall.v, wallBase - 0.04, floor + 0.55, wall.width, wall.depth, 0x8d7d6b);
+    box.dispose();
+    const slab = [[-hw + 0.22, -hd + 0.22], [hw - 0.22, -hd + 0.22], [hw - 0.22, hd - 0.22], [-hw + 0.22, hd - 0.22]];
+    const paving = new THREE.Color(0xa59c8c);
+    for (const i of [0, 2, 1, 0, 3, 2]) {
+      positions.push(...roofPoint(slab[i][0], 0.055, slab[i][1]));
+      colours.push(paving.r, paving.g, paving.b);
+    }
+    m.addParts([
+      { positions: new Float32Array(positions), colors: new Float32Array(colours), matrix, roughness: 0.97, onGround: true },
+      { positions: new Float32Array(roof), colors: new Float32Array(shades), matrix, roughness: 0.81, doubleSide: true },
+    ]);
+    const grid = T.invStatic ??= invCivicCollision((X, Z) => [X, Z], () => false);
+    for (const [X, Z, size] of solids) grid.worldBox(X, Z, yaw, size, size);
+    grid.worldBox(...at(0, wall.v), yaw, wall.width, wall.depth);
+  }
   // The town centre, the Rotary clock and number 11 Norman Road are copied out of the weather's Inverloch (which is left as it
   // is) and stood in the whole-town model where they really are: their shapes, colours and pictures. The clock's hands, its lit
   // faces, the flags, the koala, the wombats and the windows' glow at night keep following the weather's own, frame by frame.
@@ -18641,7 +18751,7 @@ const handle = async (m, post) => {
         // the potato hotrod (Ash, 26 November 2026): beside the golden car. 20 seconds after you get in, the T-rex comes (townCar). Logan has one too
         { x: -237.2, z: -375.5, h: Math.PI, hotrod: true, name: "The hotrod", what: "A potato hot rod with a blower and flames, on the lawn by The Hub. Get in if you dare" }],
       more: { planes: [{ x: -1602.1, z: 422, h: 2.6, heli: true, name: "The helicopter", at: "behind 11 Norman Road", what: "On the grass behind 11 Norman Road" }], cars: [{ x: -206.731, z: -348.385, h: -1.683, bus: true, hide: [[-203.77, -345.76]], name: "The bus", what: "In A'Beckett Street, at the kerb across the road from The Hub" }] },
-      roam: [[-278, -562], [627, -1086], [-108, -190], [17, -179], [-1585, 1221], [575, 1066]] },
+      roam: [[-278, -562], [627, -1086], [-108, -190], [22, -143], [-1585, 1221], [575, 1066]] },
     logan: { planes: [{ x: 5732, z: -12989, h: 1.0, name: "The plane", at: "on the big lawn in Civic Centre Park", what: "On the big open lawn in Civic Centre Park, behind the council, with room to take off" }],
       cars: [{ x: 5816.2, z: -13302.9, h: 1.94, spare: true, name: "The red car", what: "On the lawn out the front of the council, by the plane" }, { x: 5788.7, z: -13204.6, h: 3.63, gold: true, name: "The golden car", what: "In the car park behind the council. A fifth faster than the red one" },
         // Logan's potato hotrod and its T-rex (Ash, 27 November 2026: "start working on adding the boss fight to Logan. Make sure multiplayer

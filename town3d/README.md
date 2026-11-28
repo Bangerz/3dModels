@@ -284,6 +284,13 @@ Rd". `inverloch-model.js` ?v=25, built from ai-forge `src/features/inverloch3d/d
   left to the app. Number 13 is drawn 7.8 m wide, not about 11 m, because number 11's lot in the game is wider than the real one.
 - East of Ebor Avenue (the Beach Avenue units and the building site at 3 Norman Road) is as it was.
 
+### Ramsey Boulevard and The Glade
+
+The foreshore pilot links the roadside approach to the shared path, the timber connector and The Glade picnic shelter. It adds concrete joints and timber seams over the existing pavement, and uses Explore's terrain fit for those details and the shelter floor. The pilot adds two colour-batched meshes. The road network, town-centre handover, Esplanade Hotel and Norman Road keep their existing owners. The shelter replaces one native roof and its solid footprint with individual pier and low-wall colliders and passable bays. The roaming aircraft's nearby lawn stop is clear of the shelter.
+
+- **Mapped alignment.** OpenStreetMap contributors, ODbL, [local map extract](https://api.openstreetmap.org/api/0.6/map?bbox=145.7271,-38.6363,145.7310,-38.6340). The concrete shared path uses [159254664](https://www.openstreetmap.org/way/159254664), [1570630145](https://www.openstreetmap.org/way/1570630145), and [1570626629](https://www.openstreetmap.org/way/1570626629), edited in October 2026. The forecourt and approach detail follows ways 842582869, 852240668 and 842578144. The [timber connector](https://www.openstreetmap.org/way/1117561267) was last edited in March 2023. Those are map edit dates. Joint and seam spacing are visual estimates.
+- **Shelter.** The plan uses [OSM way 1117561260](https://www.openstreetmap.org/way/1117561260), mapped November 2022. The low metal roof and masonry piers use original geometry based on [photographs supplied by Travel Victoria](https://www.travelvictoria.com.au/inverloch/photos/) under its [photo reuse terms](https://www.travelvictoria.com.au/about/photos/). The [shelter view](https://www.travelvictoria.com.au/images/inverloch/photos/inverloch-028.jpg) has an unknown capture date and a server file date of December 2011. The [council's 2021 existing-site plan](https://hdp-au-prod-app-bass-engage-files.s3.ap-southeast-2.amazonaws.com/6316/4911/5881/BCDT_Masterplan_extract_web.pdf) identifies the shelter as site feature 6 on page 29. The roof pitch, pier sizes and floor finish are visual estimates. The park's current fittings and signs still need dated close-up photos.
+
 ### Norman Road from real outlines (25 November 2026, ?v=26)
 
 Ash, 25 November 2026: "Okay try for Norman Rd". The traced rectangles are replaced by real building outlines from Overture Maps
