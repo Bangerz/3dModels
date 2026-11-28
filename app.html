@@ -9772,7 +9772,7 @@ const handle = async (m, post) => {
         const fly = BS.fly, now = performance.now();
         if (fly?.joys?.some(joy => joy.held()) || fly?.touches?.size || movementKeys.some(key => fly?.keys?.has(key)) ||
             fly?.drag || fly?.rmb || fly?.vert || fly?.mw || fly?.boost || fly?.hand || fly?.jumpBtn || fly?.sprint ||
-            T.car?.passengerBoostHeld?.()) lastHeld = now;
+            T.car?.passengerBoostHeld?.() || T.mapGestureHeld?.()) lastHeld = now;
         if (now - lastHeld >= 350) break;
         await new Promise(resolve => setTimeout(resolve, 100));
       }
@@ -10090,7 +10090,12 @@ const handle = async (m, post) => {
         // ---- Walk or Fly ----
         const tideBox = $("bsTownTide"), tideIn = $("bsTownTideIn"), tideOut = $("bsTownTideOut"), tidal = m.tide.max > m.tide.min, tideBtn = $("bsTideBtn");
         tideBtn.setAttribute("aria-expanded", "false"); tideBtn.onclick = () => { tideBox.hidden = !tideBox.hidden; tideBtn.setAttribute("aria-expanded", String(!tideBox.hidden)); };  // Moorooka has no tide to move
+        const ptrs = new Map(); let pinch = null;
+        T.mapGestureHeld = () => !T.walk && ptrs.size > 0;
+        const clearMapGesture = () => { ptrs.clear(); pinch = null; };
+        const endMapPointer = id => { if (ptrs.delete(id)) pinch = null; };
         const setMode = (walk, to) => { if (walk && F.home) { if (F.home.veh && T.car?.held?.()) T.car.drop?.(); F.home = null; }  // (Jump to from Explore mode, while in a car: it was left held, and you stuck half in it)
+          if (walk) clearMapGesture();
           T.walk = walk; T.car?.walkKeys?.(walk); document.body.classList.toggle("bswalk", walk); F.walk = walk ? () => ground() + (T.bal6 ? T.bal6.eye(F.eye) : F.eye) : null; tideBtn.hidden = walk || !tidal; tideBox.hidden = tideBtn.hidden || tideBtn.getAttribute("aria-expanded") !== "true"; F.lim = walk ? inner : outer;
           modeBox.querySelectorAll("button").forEach(bn => bn.setAttribute("aria-pressed", String((bn.dataset.townMode === "walk") === walk)));
           if (F.on?.freeFor) F.on.freeFor(); else if (document.pointerLockElement) document.exitPointerLock?.();
@@ -10159,7 +10164,6 @@ const handle = async (m, post) => {
           if (c && !(own && Math.hypot(mine.x - c.x, mine.z - c.z) < 1.5)) { const h = c.heading ?? 0, bx = c.x - Math.sin(h) * 7, bz = c.z - Math.cos(h) * 7;
             T.tween = null; setMode(true); F.pos.set(bx, ground(bx, bz) + F.eye, bz); F.yaw = h + Math.PI; F.pitch = -0.2; box.style.cursor = ""; box.title = ""; T.car.enterCar?.(c); }
           else if (own) { toMode(true); T.car.driveTo?.(hit.x, hit.z); } };
-        const ptrs = new Map(); let pinch = null;
         const gest = {
           pointerdown: e => { if (T.admin?.down(e)) return; if (T.walk) return; list.hidden = true; jump.setAttribute("aria-expanded", "false"); fl.hidden = true; fb.setAttribute("aria-expanded", "false"); closeAsk(); try { box.setPointerCapture(e.pointerId); } catch {}
             ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY, sx: e.clientX, sy: e.clientY, t: e.timeStamp, b: e.button, one: ptrs.size === 0 }); pinch = null; T.tween = null; tip.classList.add("dim"); e.preventDefault(); },
@@ -10169,14 +10173,27 @@ const handle = async (m, post) => {
               if (pinch) { const da = ang - pinch.ang; zoomTurn(pinch.d / d, Math.atan2(Math.sin(da), Math.cos(da))); } pinch = { d, ang };
               if (T.admin?.tool) pan(dx / 2, dy / 2); }  // with an editing tool on, two fingers drag the map as well
             e.preventDefault(); },
-          pointerup: e => { if (T.admin?.up(e)) return; const p = ptrs.get(e.pointerId); ptrs.delete(e.pointerId); pinch = null;
+          pointerup: e => { const p = ptrs.get(e.pointerId); endMapPointer(e.pointerId); if (T.admin?.up(e)) return;
             if (p && p.one && p.b === 0 && e.type === "pointerup" && e.pointerType === "mouse" && Math.hypot(e.clientX - p.sx, e.clientY - p.sy) < 6 && e.timeStamp - p.t < 800) mapClick(e.clientX, e.clientY); },
           wheel: e => { if (T.walk) return; T.tween = null; zoomTurn(Math.exp(bsClamp(e.deltaY, -300, 300) * 0.0015), 0); e.preventDefault(); },
           contextmenu: e => e.preventDefault(),
         };
         gest.pointercancel = gest.pointerup;
+        gest.lostpointercapture = e => { if (e.target === box) endMapPointer(e.pointerId); };
+        const mapHidden = () => { if (document.hidden) clearMapGesture(); };
+        // If capture was refused, the release can be delivered outside the town.
+        const releaseOutside = e => { if (ptrs.has(e.pointerId) && !box.contains(e.target)) endMapPointer(e.pointerId); };
+        window.addEventListener("blur", clearMapGesture);
+        document.addEventListener("visibilitychange", mapHidden);
+        for (const event of ["pointerup", "pointercancel"]) document.addEventListener(event, releaseOutside, true);
         Object.entries(gest).forEach(([k, f]) => box.addEventListener(k, f, { passive: BS_PASSIVE && /^pointer/.test(k) }));
-        T.ungest = () => Object.entries(gest).forEach(([k, f]) => box.removeEventListener(k, f));
+        T.ungest = () => {
+          Object.entries(gest).forEach(([k, f]) => box.removeEventListener(k, f));
+          window.removeEventListener("blur", clearMapGesture);
+          document.removeEventListener("visibilitychange", mapHidden);
+          for (const event of ["pointerup", "pointercancel"]) document.removeEventListener(event, releaseOutside, true);
+          clearMapGesture();
+        };
 
         // ---- the tide (flying) ----
         const tideName = v => { const f = (v - m.tide.min) / (m.tide.max - m.tide.min); return f < 0.25 ? "Low tide" : f < 0.7 ? "Mid tide" : "High tide"; };

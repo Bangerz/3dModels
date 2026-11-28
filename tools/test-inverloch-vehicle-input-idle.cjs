@@ -39,6 +39,18 @@ for (const page of ['app.html', 'beta/app.html']) {
       await waiting;
       assert.equal(timers.length, 0);
     }
+    const freeView = new Map();
+    T.mapGestureHeld = () => !T.walk && freeView.size > 0;
+    freeView.set(1, true);
+    freeView.set(2, true);
+    const pinching = beforeQualityCommit();
+    await advance();
+    freeView.delete(1);
+    await advance();
+    freeView.delete(2);
+    for (let i = 0; i < 4; i++) await advance();
+    await pinching;
+    assert.equal(timers.length, 0);
     for (const field of ['boost', 'hand', 'jumpBtn', 'sprint']) {
       await holdUntilReleased(on => { fly[field] = on; });
     }
