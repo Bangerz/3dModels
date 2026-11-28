@@ -10159,7 +10159,7 @@ const handle = async (m, post) => {
           else { const v = typeof p.fly === "function" ? p.fly() : p.fly; F.pos.set(v.x, v.y, v.z); F.yaw = v.yaw; F.pitch = v.pitch; } };
         const goTo = cfg.flyTo && places.find(p => p.id === cfg.flyTo.id);
         const clock = cfg.place === "inv" && mine.find(p => p.name === "the clock")?.target;
-        const clockDistance = () => clock && T.walk && !F.drive ? Math.hypot(F.pos.x - clock[0], F.pos.z - clock[1]) : Infinity;
+        const clockDistance = () => clock && T.walk && !T.tween && !F.drive ? Math.hypot(F.pos.x - clock[0], F.pos.z - clock[1]) : Infinity;
         const flyTo = () => { closeAsk(); if (T.walk) setMode(false);
           const v = goTo.fly, a = { x: F.pos.x, y: F.pos.y, z: F.pos.z, yaw: F.yaw, pitch: F.pitch }, d = Math.hypot(v.x - a.x, v.z - a.z);
           T.tween = { a, b: { x: v.x, y: v.y, z: v.z, yaw: v.yaw, pitch: v.pitch }, t0: performance.now(), ms: bsClamp(1400 + d * 0.32, 1600, 6500), arc: Math.min(d * 0.28, 2600) };
@@ -10222,7 +10222,6 @@ const handle = async (m, post) => {
             openList(false);
             const distance = clockDistance();
             if (distance <= 65) {
-              T.tween = null;
               F.goTo = null;
               F.yaw = Math.atan2(F.pos.x - clock[0], F.pos.z - clock[1]);
               F.pitch = bsClamp(Math.atan2(ground(...clock) + 5.4 - F.pos.y, distance), -1.45, 1.45);
