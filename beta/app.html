@@ -9400,7 +9400,8 @@ const handle = async (m, post) => {
     const r = (has("KeyD", "ArrowRight") ? 1 : 0) - (has("KeyA", "ArrowLeft") ? 1 : 0) + F.stick.x;
     const u = (F.walk ? 0 : (has("Space") ? 1 : 0) - (has("KeyC") ? 1 : 0)) + F.vert;  // Space up, C down (flying; on foot Space jumps: Ash, 16 November 2026, "On pc remove c and space for up down when walking. Make space bar for jump")
     const lk = Math.min(dt, 0.1);  // the look stick turns you, faster the further it's pushed
-    F.yaw -= F.lookStick.x * Math.abs(F.lookStick.x) * 2.4 * lk; F.pitch = bsClamp(F.pitch + F.lookStick.y * Math.abs(F.lookStick.y) * 1.6 * lk, -1.45, 1.45);
+    const lookTime = F.walk && BS.town?.slowWalkingLook ? lk * 0.5 : lk;
+    F.yaw -= F.lookStick.x * Math.abs(F.lookStick.x) * 2.4 * lookTime; F.pitch = bsClamp(F.pitch + F.lookStick.y * Math.abs(F.lookStick.y) * 1.6 * lookTime, -1.45, 1.45);
     const sy = Math.sin(F.yaw), cy = Math.cos(F.yaw);
     const lim = F.lim || [-420, 420, -420, 200];  // the area you can fly in (Norman Road has its own)
     // on foot with the keys (a computer): a walk, Shift to run, easing in and out, and a little bob of the head (Ash, 15 November 2026:
@@ -9669,6 +9670,9 @@ const handle = async (m, post) => {
     openWeather(); if ($("weather").hidden) return;
     BS.invBeach = false; BS.mooAlt = false; BS.exploreOnly = cfg.place; if (BS.B) { bsPlace(); bsLite(); }  // Inverloch's town, not its beach; Moorooka's streets, not its bowls club
     const T = BS.town = { on: false, model: null, dead: false, keep: !!viaExplore, cfg };
+    if (cfg.place === "inv" && matchMedia("(pointer: coarse)").matches) {
+      try { T.slowWalkingLook = localStorage.getItem("an3d-inv-slow-look") === "1"; } catch {}
+    }
     { const mine = exTimeSaved(); BS.exTimeSet = mine != null;  // (each town opens at midday, or at an admin's own time)
       if (mine != null && BS.view) { BS.view.ms = bsMidnight(BS.view.day || bsKey(BS.view.ms)) + mine * 60000; const ti = $("bsFlyTime"); if (ti) ti.value = mine; } }
     exLoadShow(exploreName(cfg.place));
@@ -19309,11 +19313,22 @@ const handle = async (m, post) => {
       // play as an explorer or a construction worker (who sees themselves from behind and can suggest changes to the ground)
       // Standard or Google Maps style, here too, for once the welcome card has gone (Ash, 19 November 2026). Standard is "Play as explorer"
       // now (Ash, 24 November 2026: "Make play as explorer - relabel standard. This should be the default"), and the welcome card starts on it
-      const st = el("div", "bs-me-sec"); { const sr = el("div", "bs-me-role"); sr.setAttribute("role", "group"); sr.setAttribute("aria-label", "Controls style");
+      const st = el("div", "bs-me-sec");
+      if (!touch) { const sr = el("div", "bs-me-role"); sr.setAttribute("role", "group"); sr.setAttribute("aria-label", "Controls style");
         const gmNow = (() => { try { return localStorage.getItem("an3d-style") === "gmaps"; } catch { return false; } })();
         for (const [v, label] of [[false, "Gamer"], [true, "Simple"]]) { const bn = el("button", "", label); bn.type = "button"; bn.setAttribute("aria-pressed", String(gmNow === v));
           bn.onclick = () => { if (gmNow === v) return; meClose(); BS.mapStyle?.(v); toast(v ? (touch ? "Simple controls: tap to walk there, drag to look." : "Simple controls: click to walk there, hold and drag to look.") : "Gamer controls: on foot, with the game controls.", 2800); }; sr.append(bn); }
-        st.append(el("span", "bs-me-lbl", "Controls style"), sr); if (touch) st.hidden = true; }  // (a phone is always Simple)
+        st.append(el("span", "bs-me-lbl", "Controls style"), sr);
+      } else if (place === "inv") {
+        const label = el("label", "bs-wel-tick"), slow = el("input");
+        slow.type = "checkbox"; slow.checked = !!T.slowWalkingLook;
+        slow.onchange = () => {
+          T.slowWalkingLook = slow.checked;
+          try { localStorage.setItem("an3d-inv-slow-look", slow.checked ? "1" : "0"); } catch {}
+        };
+        label.append(slow, "Turn more slowly with the Look stick");
+        st.append(el("span", "bs-me-lbl", "Walking controls"), label);
+      } else st.hidden = true;  // phones always use Simple controls
       const as = el("div", "bs-me-sec"), rl = el("div", "bs-me-role"); rl.setAttribute("role", "group"); rl.setAttribute("aria-label", "Play as");
       for (const [v, label] of [["explorer", "Explorer"], ["builder", "Construction worker"]]) { const bn = el("button", "", label); bn.type = "button"; bn.setAttribute("aria-pressed", String(townRole() === v));
         bn.onclick = () => { if (townRole() === v) return; try { if (v === "builder") localStorage.setItem("an-player-role", "builder"); else localStorage.removeItem("an-player-role"); } catch {}
