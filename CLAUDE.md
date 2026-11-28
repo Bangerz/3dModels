@@ -106,6 +106,8 @@ we've lost tonnes of great work in design." The cause was the model being rebuil
 Ash words it differently, their wording wins.
 
 
+For Inverloch playtests, use the [playtest guide](tools/playtest/README.md) to choose a player role or a technical protocol and record the build tested.
+
 ## Explore's touch sticks: don't break them
 
 Ash plays Explore on an iPhone with two thumbs. When the left stick drops back to the middle, the game can't be played, and this
