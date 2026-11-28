@@ -9731,7 +9731,10 @@ const handle = async (m, post) => {
   function townModelPair(T, lib, box, cfg, opts, cb) {
     const key = "an3d-" + cfg.place, mem = navigator.deviceMemory || 8, touch = matchMedia("(pointer: coarse)").matches;
     let seen = {}; try { seen = JSON.parse(localStorage.getItem(key) || "{}") || {}; } catch {}
-    const save = o => { seen = { ...seen, ...o }; try { localStorage.setItem(key, JSON.stringify(seen)); } catch {} };
+    let commitWaitMs = 0;
+    const save = o => {
+      if (o.ms !== undefined && commitWaitMs) { o.ms = Math.max(0, Math.round(o.ms - commitWaitMs)); commitWaitMs = 0; }
+      seen = { ...seen, ...o }; try { localStorage.setItem(key, JSON.stringify(seen)); } catch {} };
     const best = navigator.connection?.saveData || mem < 4 ? "low" : touch || mem <= 4 ? "medium" : "high";
     const graphics = cfg.place === "inv" ? invGraphics : null;
     const presets = lib.qualityPresets ? ["auto", ...lib.qualityPresets] : invGraphicsPresets;
@@ -9745,8 +9748,21 @@ const handle = async (m, post) => {
     const driven = cfg.place === "inv" ? new Map() : null;
     let replaying = null;
     const log = [], last = {}, LAST = ["setLabelObstacles", "setTide", "setFlood", "setFloodLevel", "setMinutes", "setCamera", "setGroundEdits", "setRemoved", "setMore", "driveCar", "setControlledCar"];
+    const movementKeys = ["KeyW", "KeyA", "KeyS", "KeyD", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Space", "KeyC"];
+    const waitForControls = async signal => {
+      const start = performance.now();
+      let lastHeld = -Infinity;
+      while (!dead && BS.town === T && !signal?.aborted) {
+        const fly = BS.fly, now = performance.now();
+        if (fly?.joys?.some(joy => joy.held()) || fly?.touches?.size || movementKeys.some(key => fly?.keys?.has(key)) ||
+            fly?.drag || fly?.rmb || fly?.vert || fly?.mw || fly?.boost || fly?.hand) lastHeld = now;
+        if (now - lastHeld >= 350) break;
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+      if (signal) commitWaitMs += performance.now() - start;
+    };
     const make = (q, own) => { const t0 = performance.now(); let mm = null;
-      mm = lib.create(box, { ...opts, quality: q, ...(graphics ? { frameTarget: graphics.frameTarget } : {}), onProgress: own ? cb.onProgress : undefined,
+      mm = lib.create(box, { ...opts, quality: q, ...(graphics ? { frameTarget: graphics.frameTarget, beforeQualityCommit: waitForControls } : {}), onProgress: own ? cb.onProgress : undefined,
         ...(graphics ? { onThunder: strength => { if (mm === cur && T.on && !T.dead && !document.hidden) T.snd?.thunder(strength); } } : {}),
         onFloodLevel: v => { if (mm === cur) cb.onFloodLevel(v); },
         onError: msg => { if (mm === cur) cb.onError(msg); else if (mm === next) drop(); } });
@@ -9844,6 +9860,11 @@ const handle = async (m, post) => {
       for (let i = 0; i < 600 && !T.on && !dead; i++) await new Promise(ok => setTimeout(ok, 100));
       await new Promise(ok => setTimeout(ok, 1500));
       if (dead || BS.town !== T) return;
+      // Older embeds and full terrain replacements have no yield point inside the model.
+      if (graphics && !(best === "medium" && lib.canYieldQualityCommit && cur.setQualityInPlace)) {
+        await waitForControls();
+        if (dead || BS.town !== T) return;
+      }
       const f = await fps(2000);
       if (!currentTown() || (f < 55 && !window.__anForceUp)) return;
       hiBox.hidden = false;
