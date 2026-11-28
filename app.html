@@ -17809,6 +17809,15 @@ const handle = async (m, post) => {
         add(bits, box(0.4, 0.04, 0.4), chair, cx, FOOT + 0.46, cz, r); add(bits, box(0.4, 0.42, 0.04), chair, bx, FOOT + 0.7, bz, r);
         [[-0.17, -0.17], [0.17, -0.17], [-0.17, 0.17], [0.17, 0.17]].forEach(([a, b]) => add(bits, rod(0.018, 0.45, 5), 0x8d9396, cx + Math.cos(r) * a + Math.sin(r) * b, FOOT + 0.225, cz - Math.sin(r) * a + Math.cos(r) * b)); }); };
     const units = W.invRetailUnits || D.u, pie = units.find(u => /PIEMAN/.test(u[9] || "")), larder = units.find(u => /LARDER/.test(u[9] || ""));
+    // The shop windows project past the mapped footprints. Keep the walking camera
+    // outside their display panels, while leaving the pavement under the awnings open.
+    for (const u of units) {
+      const [x, z, angle] = front(u, 0.5, 0.3);
+      if (townInBlock(x, z)) {
+        const panel = collision.box(x, z, angle, 0.5, Math.hypot(u[2] - u[0], u[3] - u[1]));
+        if (panel) panel.walkClearance = true; // camera near-plane buffer, including while backing away
+      }
+    }
     if (pie) [0.12, 0.3, 0.5, 0.68].forEach(t => table(pie, t, 1.5, 0xc8202a));
     if (larder) [0.28, 0.7].forEach(t => table(larder, t, 1.5, 0x2f7a72));
     // sandwich boards: two leaning panels, each shop's own colour with a pale face
