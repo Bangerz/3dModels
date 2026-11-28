@@ -97,6 +97,9 @@ Inverloch: that copy lacks what stands the town centre in the model, and a build
 shops, the war memorial and the library under plain grey buildings. Put new Inverloch model work on top of
 `claude/inverloch-combined`.
 
+For survey and photo-based changes, use the [Inverloch streetscapes skill](.agents/skills/inverloch-streetscapes/SKILL.md)
+and its [survey-to-model workflow](.agents/skills/inverloch-streetscapes/references/survey-to-model.md).
+
 Where this comes from: on 15 November 2026 Ash said "When we introduced multiplayer or cars into Inverloch explore
 we've lost tonnes of great work in design." The cause was the model being rebuilt from the wrong branch (see
 `town3d/README.md`, "Inverloch put back together"). This section is Claude's safeguard against it happening again; if
