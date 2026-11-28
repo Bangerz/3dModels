@@ -1,4 +1,4 @@
-// Deterministic closed-loop drives using the host's planner, sedan dynamics and collision sweeps.
+// Deterministic closed-loop drives using the host's planner, vehicle dynamics and collision sweeps.
 const assert = require("node:assert/strict");
 const { existsSync, readFileSync } = require("node:fs");
 const path = require("node:path");
@@ -28,13 +28,13 @@ const driver = new Script([
    const P = T.traffic, contact = true;`,
   section("    if (contact) {\n      // Only live traffic", "    const key = (x, z) =>"),
   `T.invStatic = invCivicCollision((x, z) => [x, z], () => false);
-   autoBegin([0, 0, 0], [0, 100, 400], [0, 0], {});
+   autoBegin([0, 0, 0], [0, 100, routeLength], [0, 0], { hoon });
    const advance = dt => {
      const [go, str] = autoStep(dt);
      let v = car.v;
-     const K = 1, gc = false, brake = false, boosting = false, teamOn = false,
-       slide = false, back = false, VREV = 6.05, SHAPE = CAR, vboost = 210 / 3.6,
-       vmax = R.carTop / 3.6;`,
+     const K = car.bus ? .7 : 1, gc = false, brake = false, boosting = false, teamOn = false,
+       slide = false, back = false, VREV = 6.05, SHAPE = car.bus ? BUS : CAR, vboost = 210 / 3.6,
+       vmax = R.carTop / 3.6 * K;`,
   section("        if (go > 0.05) v +=", "        if (bump > 1.5)"),
   `  return { bump, target: auto.dTgt };
    };
@@ -44,18 +44,20 @@ const driver = new Script([
 const CRUISE = 50 / 3.6, HALF_WIDTH = .98, HALF_LENGTH = 2.22;
 const PARKED_WIDTH = .95, PARKED_LENGTH = 2.25;
 const GRAZE = .0019066, DEEP = .780184;
-const longitudinalExtent = h => HALF_LENGTH * Math.abs(Math.cos(h)) + HALF_WIDTH * Math.abs(Math.sin(h));
 
-function drive(hz, { intrusion = DEEP, centres = [40], seconds = 16, gap = false, closed = false, kerbBarrier = false, npc } = {}) {
-  const car = { x: 0, z: 0, y: 0, h: 0, dir: 0, steer: 0, v: CRUISE };
+function drive(hz, { intrusion = DEEP, centres = [40], seconds = 16, gap = false, closed = false, kerbBarrier = false, npc, bus = false, hoon = false, roadWidth } = {}) {
+  const car = { x: 0, z: 0, y: 0, h: 0, dir: 0, steer: 0, bus, v: bus ? CRUISE / 1.3 : CRUISE };
   const trafficCar = npc && { y: 0, ...npc };
   const T = { traffic: { cars: npc ? [trafficCar] : [] } };
+  const halfLength = bus ? 5.55 : HALF_LENGTH, halfWidth = bus ? 1.27 : HALF_WIDTH;
+  const routeLength = hoon ? 1800 : 400;
+  if (roadWidth) T.roadsAll = [{ cls: 3, wd: roadWidth, pts: [0, 0, 0, routeLength] }];
   const ground = Object.assign(() => 0, { bed: () => 0 });
   const hops = [], frames = [];
   let time = 0;
   const advance = driver.runInNewContext({
     ...collision,
-    T, car, ground, solid: () => false, F: { lim: [-500, 500, -500, 500] },
+    T, car, ground, hoon, routeLength, solid: () => false, F: { lim: [-500, 500, -500, routeLength + 100] },
     bsClamp: (v, lo, hi) => Math.max(lo, Math.min(hi, v)),
     wrap: v => Math.atan2(Math.sin(v), Math.cos(v)),
     performance: { now: () => time * 1000 },
@@ -78,26 +80,26 @@ function drive(hz, { intrusion = DEEP, centres = [40], seconds = 16, gap = false
       trafficCar.z = npc.z + Math.cos(npc.h) * npc.v * time;
     }
     const { bump, target } = advance(1 / hz);
-    const extent = longitudinalExtent(car.h);
+    const extent = halfLength * Math.abs(Math.cos(car.h)) + halfWidth * Math.abs(Math.sin(car.h));
     frames.push({ time, x: car.x, z: car.z, rear: car.z - extent, front: car.z + extent, speed: car.v, target, bump });
-    assert.equal(T.invStatic.depth(car.x, car.z, car.h, HALF_LENGTH, HALF_WIDTH), 0, `static overlap at ${time}s`);
-    assert.equal(T.traffic.occupied("car", car.x, car.z, car.h, 0), false, `traffic overlap at ${time}s`);
+    assert.equal(T.invStatic.depth(car.x, car.z, car.h, halfLength, halfWidth), 0, `static overlap at ${time}s`);
+    assert.equal(T.traffic.occupied(bus ? "bus" : "car", car.x, car.z, car.h, 0), false, `traffic overlap at ${time}s`);
   }
   return { frames, hops };
 }
 
-function checkPass(run, lastCentre, halfLength = PARKED_LENGTH) {
+function checkPass(run, lastCentre, halfLength = PARKED_LENGTH, cruise = CRUISE) {
   const { frames, hops } = run;
   assert.deepEqual(hops, [], "a driveable pass must not invoke Unstick");
   assert.ok(frames.every(f => f.bump === 0), "movement sweep caught a collision");
   const past = frames.find(f => f.rear > lastCentre + halfLength);
   assert.ok(past, "rear did not clear the last vehicle");
-  const resumed = frames.find(f => f.time >= past.time && f.target === 0 && f.speed >= .9 * CRUISE);
+  const resumed = frames.find(f => f.time >= past.time && f.target === 0 && f.speed >= .9 * cruise);
   assert.ok(resumed && resumed.time - past.time < 4, "cruise speed must resume after the rear clears");
 }
 
-function checkContinuousPass(run, lastCentre, halfLength = PARKED_LENGTH) {
-  checkPass(run, lastCentre, halfLength);
+function checkContinuousPass(run, lastCentre, halfLength = PARKED_LENGTH, cruise = CRUISE) {
+  checkPass(run, lastCentre, halfLength, cruise);
   const first = run.frames.find(f => f.target !== 0);
   assert.ok(first, "the driver must command a passing offset");
   const alongside = run.frames.filter(f => f.time >= first.time && f.rear <= lastCentre + halfLength);
@@ -140,6 +142,35 @@ for (const hz of [30, 60]) {
   test(`hold one passing line past a stationary traffic car at ${hz} Hz`, () => {
     const npc = { x: 1.15, z: 40, h: 0, v: 0 };
     checkContinuousPass(drive(hz, { npc, centres: [] }), npc.z, HALF_LENGTH);
+  });
+
+  test(`GPS Autodrive clears a moving 8 m/s lead before merging back at ${hz} Hz`, () => {
+    const npc = { x: 0, z: 40, h: 0, v: 8 };
+    const { frames, hops } = drive(hz, { centres: [], npc, hoon: true, seconds: 45, roadWidth: 12 });
+    assert.deepEqual(hops, []);
+    assert.ok(frames.every(f => f.bump === 0));
+    const first = frames.find(f => f.target !== 0);
+    assert.ok(first, "a slower vehicle on an open straight is passable");
+    const merged = frames.find(f => f.time > first.time && !f.target && Math.abs(f.x) < .3 &&
+      f.rear > npc.z + npc.v * f.time + HALF_LENGTH);
+    assert.ok(merged, "must pass the moving front bumper and return to the lane");
+    assert.ok(frames.filter(f => f.time >= first.time && f.rear <= npc.z + npc.v * f.time + HALF_LENGTH)
+      .every(f => Math.sign(f.target) === Math.sign(first.target)), "stay out until the moving lead clears");
+  });
+
+  test(`GPS Autodrive waits when a moving pass would exceed the 185 m horizon at ${hz} Hz`, () => {
+    // Same reachable lead, but closing at only 2 m/s puts the return well outside the checked road.
+    const npc = { x: 0, z: 34, h: 0, v: 11.9 };
+    const run = drive(hz, { centres: [], npc, hoon: true, seconds: .25, roadWidth: 12 });
+    assert.ok(run.frames.every(f => f.target === 0 && f.bump === 0));
+  });
+
+  test(`bus replans around the parked car without braking to a stop or using Unstick at ${hz} Hz`, () => {
+    const run = drive(hz, { bus: true, roadWidth: 12 });
+    checkContinuousPass(run, 40, PARKED_LENGTH, CRUISE / 1.3);
+    const narrow = drive(hz, { bus: true, roadWidth: 4, seconds: 5 });
+    assert.ok(narrow.frames.every(f => f.target === 0 && f.bump === 0), "no wider target off the road");
+    assert.ok(narrow.frames.at(-1).speed < 1, "brake for the blocked lane");
   });
 
   test(`a car pulling away ahead leaves the clear 10 cm gap driveable at ${hz} Hz`, () => {

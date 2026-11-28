@@ -25723,6 +25723,7 @@ const handle = async (m, post) => {
         return Math.hypot(dx-t*s.dx, dz-t*s.dz) <= s.half;
       });
       const from = {x:car.x,z:car.z,h:car.h,y:car.y};
+      const speed = bsClamp(Math.abs(v), 4, AUTO_V);
       let trafficConflict = false;
       const check = (offset, near, far) => {
         const enter = bsClamp(near-length-0.8, 6, transition(offset-latCar)), leave = transition(offset);
@@ -25732,7 +25733,6 @@ const handle = async (m, post) => {
         const [, , startX, startZ] = autoDir(A,at);
         const lateralSlope = bsClamp(Math.tan(wrap(Math.atan2(startX,startZ)-car.h)),-0.6,0.6);
         let previous = from, previousD = 0, speedLimit = Infinity;
-        const speed = bsClamp(Math.abs(v), 4, AUTO_V);
         // A stopped driver needs room to accelerate into the pass. Wait until opposing traffic
         // clears that lane even if one exact constant-speed prediction would slip in behind it.
         if (offset && oncoming.some(b => Math.abs(offset-b.lat) < width+b.across+0.35 &&
@@ -25776,10 +25776,17 @@ const handle = async (m, post) => {
         }
         A.dTgt = 0; return;
       }
-      let left = first.left, right = first.right, far = first.far+length+0.8;
+      // The rear must clear the lead's future front bumper before steering back.
+      // Use the travel time from the swept traffic check; a non-closing pass cannot fit.
+      const clearStation = b => {
+        const distance = b.far + length + 0.8;
+        if (!b.forwardSpeed || distance <= 0) return distance;
+        return b.forwardSpeed < speed ? distance / (1 - b.forwardSpeed / speed) : Infinity;
+      };
+      let left = first.left, right = first.right, far = clearStation(first);
       for (const b of blockers.slice(1)) {
         if (b.near-length-far > 2*transition(Math.min(Math.abs(left-width-margin), Math.abs(right+width+margin)))) break;
-        far = Math.max(far,b.far+length+0.8); left = Math.min(left,b.left); right = Math.max(right,b.right);
+        far = Math.max(far,clearStation(b)); left = Math.min(left,b.left); right = Math.max(right,b.right);
       }
       const free = first.near-length-1.6;
       A.blk = {...first, free};
@@ -25787,8 +25794,14 @@ const handle = async (m, post) => {
       const rightPass = right+width+margin, leftPass = left-width-margin;
       const options = A.dTgt > 0 ? [Math.max(A.dTgt,rightPass)] : A.dTgt < 0 ? [Math.min(A.dTgt,leftPass)]
         : [rightPass,leftPass].sort((a,b) => Math.abs(a)-Math.abs(b));
+      const maxOffset = car.bus ? 4.8 : 4.2;
+      // A long vehicle can already be farther out than its target. Check the path that
+      // holds that line before braking for an inward turn that would clip a parked car.
+      const heldOffset = bsClamp(latCar,-maxOffset,maxOffset);
+      if (A.dTgt && Math.sign(heldOffset) === Math.sign(A.dTgt) && Math.abs(heldOffset) > Math.abs(options[0]))
+        options.push(heldOffset);
       for (const offset of options) {
-        if (Math.abs(offset) > (car.bus ? 4.8 : 4.2)) continue;
+        if (Math.abs(offset) > maxOffset) continue;
         const cap = check(offset,first.near,far);
         if (cap == null) continue;
         A.dTgt = offset; A.passCap = cap;
@@ -25814,7 +25827,7 @@ const handle = async (m, post) => {
         const still = (D.v || 0) < 0.6, dv = (D.v || 0) * B.c, slow = !still && B.c > 0.6 && dv < (H ? 12 : 4);
         if (indexed && B.c < -0.5 && !still) oncoming.push({al, lat, across:B.across, ext:B.along, closing:-dv});
         const inHomeLane = indexed && (still || (H && slow)) && al+B.along+hlS >= -1 && al <= L+B.along && Math.abs(lat) < hwS+B.across+0.35;
-        if (inHomeLane) homeTraffic.push({D, al, lat, across:B.across, still, ext:B.along, slow});
+        if (inHomeLane) homeTraffic.push({D, al, lat, across:B.across, still, ext:B.along, slow, forwardSpeed:dv});
         if (gap < -1.5 || al > L + B.along || Math.abs(lat - off(al)) > hwS + B.across + 0.35) continue;
         const free = gap - 1.6;
         const vt = free <= 0 ? 0 : still || dv < 0.5 ? Math.sqrt(2 * 4.5 * free) : Math.min(Math.sqrt(2 * 4.5 * free) + dv, dv + free * 0.5);
