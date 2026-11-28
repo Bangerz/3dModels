@@ -19276,6 +19276,19 @@ const handle = async (m, post) => {
         choice("Frame-rate target", [["30", "30 fps"], ["60", "60 fps"]], invGraphics.frameTarget, value => {
           invGraphics.frameTarget = Number(value); T.pair.setFrameTarget(invGraphics.frameTarget);
         }));
+      const renderer = T.pair.cur;
+      if (T.pair.initialPreset === "ultra" && renderer.getDrivingAA && renderer.setDrivingAA) {
+        const fallback = el("p", "", "This display currently uses MSAA. Your Temporal AA choice is saved.");
+        const showFallback = () => { fallback.hidden = !renderer.getDrivingAA().fallback; };
+        section.append(choice("Driving anti-aliasing", [["msaa", "MSAA (default)"], ["temporal", "Temporal AA"]],
+          renderer.getDrivingAA().mode, mode => {
+            renderer.setDrivingAA(mode);
+            showFallback();
+            // The first temporal frame checks whether the GPU can copy scene depth.
+            if (mode === "temporal") setTimeout(showFallback, 250);
+          }), fallback);
+        showFallback();
+      }
       section.append(el("p", "", "A new detail preset takes effect when you reopen Inverloch."), restart);
       return section;
     };
