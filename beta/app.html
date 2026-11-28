@@ -9759,7 +9759,7 @@ const handle = async (m, post) => {
         const fly = BS.fly, now = performance.now();
         if (fly?.joys?.some(joy => joy.held()) || fly?.touches?.size || movementKeys.some(key => fly?.keys?.has(key)) ||
             fly?.drag || fly?.rmb || fly?.vert || fly?.mw || fly?.boost || fly?.hand || fly?.jumpBtn || fly?.sprint ||
-            T.car?.passengerBoostHeld?.() || T.mapGestureHeld?.()) lastHeld = now;
+            T.car?.passengerBoostHeld?.() || T.car?.bossFireHeld?.() || T.mapGestureHeld?.()) lastHeld = now;
         if (now - lastHeld >= 350) break;
         await new Promise(resolve => setTimeout(resolve, 100));
       }
@@ -23728,7 +23728,8 @@ const handle = async (m, post) => {
     // the nuke at the console), held, and so does the left mouse button while the mouse is looking round; Q or the right button rolls the
     // choppa, Shift boosts it. Simple: press on the dinosaur and hold to fire (in a car you still drive as you hold), a quick right click
     // rolls the choppa to that side of the screen. L, B and 0 still work, and the buttons on the screen
-    const fireHeld = () => spudHeld || mouseFire || F.keys.has("KeyL") || F.keys.has("KeyZ");
+    const fireHeld = R => !!R?.live && !R.nuke && R.st !== "dead" && (spudHeld || mouseFire || F.keys.has("KeyL") || F.keys.has("KeyZ"));
+    C.bossFireHeld = () => fireHeld(rex) && fighting() && !!meNow();
     // (is the screen point on the dinosaur: the ray through it close to its hips, chest, head or tail, generously)
     const rexUnder = (sx, sy) => { const R = rex; if (!R) return false; const ray = townRayAt(m, F, sx, sy); if (!ray) return false;
       const gy = m.groundAt(R.x, R.z) + (R.pose?.jump || 0), fx = Math.sin(R.h), fz = Math.cos(R.h), s = R.s;
@@ -24227,13 +24228,13 @@ const handle = async (m, post) => {
       // In the choppa, rockets: four or five a second, from under its nose, straight at her chest if she's anywhere ahead (no drop)
       // (riding with someone: you fire too, rockets from their helicopter, spuds from their car. Ash, 27 November 2026, "If riding I want to be
       // able to shoot")
-      spudCd -= dt; if (me && me !== car && !(me.ride && !me.air) && R.live && !R.nuke && R.st !== "dead" && fireHeld() && spudCd <= 0 && spuds.length < REX_SPUDS) { spudCd = 0.22;
+      spudCd -= dt; if (me && me !== car && !(me.ride && !me.air) && fireHeld(R) && spudCd <= 0 && spuds.length < REX_SPUDS) { spudCd = 0.22;
         // (off the way the helicopter's facing, tipped up or down at her if she's ahead (a helicopter's nose can't point down at her), then
         // steering only a little after her: Ash, 27 November 2026, "The homing missles home too much, maybe just slightly")
         const hx = Math.sin(me.h), hz = Math.cos(me.h), x0 = me.x + hx * 2.2, y0 = me.y + 0.9, z0 = me.z + hz * 2.2, tx = R.x + fx * 1.6 * s, ty = m.groundAt(R.x, R.z) + 3.4 * s + (p.jump || 0), tz = R.z + fz * 1.6 * s;
         const th = Math.hypot(tx - x0, tz - z0), aim = Math.abs(rexWrap(Math.atan2(tx - x0, tz - z0) - me.h)), pt = aim < 0.7 && th < 400 ? Math.atan2(ty - y0, th) : -0.05;
         spuds.push({ x: x0, y: y0, z: z0, vx: hx * Math.cos(pt) * 110, vy: Math.sin(pt) * 110, vz: hz * Math.cos(pt) * 110, t: 0, rk: true }); snd.whoosh(); snd.tone?.(520, 140, 0.25, 0.07, "sawtooth"); }
-      else if (me && (me === car || (me.ride && !me.air)) && R.live && !R.nuke && R.st !== "dead" && fireHeld() && spudCd <= 0 && spuds.length < REX_SPUDS) { spudCd = 0.3;
+      else if (me && (me === car || (me.ride && !me.air)) && fireHeld(R) && spudCd <= 0 && spuds.length < REX_SPUDS) { spudCd = 0.3;
         const hx = Math.sin(me.h), hz = Math.cos(me.h), x0 = me.x + hx * 1.4, y0 = me.y + (me.hotrod ? 2.2 : 1.7), z0 = me.z + hz * 1.4, tx = R.x + fx * 1.6 * s, ty = m.groundAt(R.x, R.z) + 3.4 * s, tz = R.z + fz * 1.6 * s;
         let vx = hx * 60 + Math.sin(me.dir ?? me.h) * me.v, vy = 3, vz = hz * 60 + Math.cos(me.dir ?? me.h) * me.v; const td = Math.hypot(tx - x0, tz - z0), aim = Math.abs(rexWrap(Math.atan2(tx - x0, tz - z0) - me.h));
         // (right up close, its chest can be beside or behind you while its body is in front: then at its body, up where it counts. They

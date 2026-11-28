@@ -66,7 +66,25 @@ for (const page of ['app.html', 'beta/app.html']) {
     await holdUntilReleased(on => { passenger.pwHeld = on; });
     await holdUntilReleased(on => on ? fly.keys.add('KeyB') : fly.keys.delete('KeyB'));
     passenger.powerTo = () => null;
-    fly.keys = new Set(['Enter', 'Tab', 'KeyB', 'KeyX']);
+    const fire = {C: T.car, F: fly, rex: {live: true}, spudHeld: false, mouseFire: false,
+      fighting: () => true, meNow: () => ({})};
+    vm.runInNewContext(html.slice(html.indexOf('    const fireHeld ='), html.indexOf('    const rexUnder =')), fire);
+    for (const field of ['spudHeld', 'mouseFire']) {
+      await holdUntilReleased(on => { fire[field] = on; });
+    }
+    for (const key of ['KeyZ', 'KeyL']) {
+      await holdUntilReleased(on => on ? fly.keys.add(key) : fly.keys.delete(key));
+    }
+    fly.keys = new Set(['Enter', 'Tab', 'KeyB', 'KeyX', 'KeyZ', 'KeyL']);
+    for (const rex of [null, {live: false}, {live: true, nuke: 'ready'}, {live: true, st: 'dead'}]) {
+      fire.rex = rex;
+      await beforeQualityCommit();
+    }
+    fire.rex = {live: true};
+    fire.fighting = () => false;
+    await beforeQualityCommit();
+    fire.fighting = () => true;
+    fire.meNow = () => null;
     await beforeQualityCommit();
     assert.equal(timers.length, 0);
   });
