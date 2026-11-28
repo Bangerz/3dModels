@@ -10146,6 +10146,8 @@ const handle = async (m, post) => {
     if (inv && home && BS.W.invHouse) { const [lat, lon] = townLL(home[0], home[1]); clearLatLon.push({ lat, lon, r: 24 }); detailLatLon.push({ lat, lon, r: 170 }); }
     if (inv && BS.W.invTG && BS.W.invClock) TOWN_BLOCK.forEach(P => clearPolygons.push({ latLon: P.map(([x, z]) => townLL(x, z)), roads: true }));  // the town centre comes across whole
     if (inv) clearPolygons.push({ latLon: INV_GLADE_SHELTER });
+    if (inv) clearLatLon.push({ lat: -38.63273681, lon: 145.70697882, r: 0.16 }); // 4–6 Somerset Place: 1672 crosses both titles.
+    if (inv) clearLatLon.push({ lat: -38.63267375, lon: 145.70691853, r: 0.16 }); // 4–6 Somerset Place: 36469 falls within No. 4.
     if (inv) clearPolygons.push({ latLon: invScrewCreekMask(), roads: true });
     // Moorooka's bridges (town.json's roads marked as one): their decks, so a car drives over them, not down through them into the creek.
     // The deck is as the model draws it (moorooka-model.js ?v=79): straight from one end's ground to the other's, a metre's hump in the
@@ -10273,6 +10275,7 @@ const handle = async (m, post) => {
         T.mapGestureHeld = () => !T.walk && ptrs.size > 0;
         if (inv && m.addParts) invSomersetPlace2(T, m, BS.B.THREE);
         const clearMapGesture = () => { ptrs.clear(); pinch = null; };
+        if (inv && m.addParts) invSomersetPlace46(T, m, BS.B.THREE);
         const endMapPointer = id => { if (ptrs.delete(id)) pinch = null; };
         const setMode = (walk, to) => { if (walk && F.home) { if (F.home.veh && T.car?.held?.()) T.car.drop?.(); F.home = null; }  // (Jump to from Explore mode, while in a car: it was left held, and you stuck half in it)
           if (walk) clearMapGesture();
@@ -20132,6 +20135,93 @@ const handle = async (m, post) => {
     P.dispose = () => { try { parts.remove(); } catch {} };
     return P;
   }
+  // The two verified houses replace the one generated shell that crosses their common title line.
+  function invSomersetPlace46(T, model, THREE) {
+    const grid = T.invStatic ??= invCivicCollision((x,z) => [x,z], () => false);
+    const addHouse = ({origin,angle,walls,roof,faces,apron,garage,windows,wallHex,roofHex}) => {
+      const radians=angle*Math.PI/180, c=Math.cos(radians), s=Math.sin(radians);
+      const rotate = ([u,v]) => [u*c-v*s,u*s+v*c];
+      const world = p => rotate(p).map((v,i)=>v+origin[i]);
+      const grade = p=>model.groundAt(...world(p));
+      const [front,near,far]=garage;
+      const floor=grade([front+.06,(near+far)/2])+.09, eave=floor+2.65;
+      const positions=[], colors=[];
+      const wall=new THREE.Color(wallHex), steel=new THREE.Color(roofHex);
+      const trim=new THREE.Color(0xb9bcb6), door=new THREE.Color(0x4c565e);
+      const glass=new THREE.Color(0x3f4d4a), concrete=new THREE.Color(0xb0b0a6);
+      const point = (p,y) => { const [x,z]=rotate(p); return [x,y,z]; };
+      const tri = (a,b,c,colour) => {
+        positions.push(...a,...b,...c);
+        for (let i=0;i<3;i++) colors.push(colour.r,colour.g,colour.b);
+      };
+      const quad=(a,b,c,d,f)=>{tri(a,b,c,f);tri(a,c,d,f);};
+      const upward=(a,b,c,colour)=>{
+        const ny=(b[2]-a[2])*(c[0]-a[0])-(b[0]-a[0])*(c[2]-a[2]);
+        if (ny>0) tri(a,b,c,colour); else tri(a,c,b,colour);
+      };
+      const band=(a,b,lo,hi,colour)=>quad(point(b,lo),point(b,hi),point(a,hi),point(a,lo),colour);
+      for (let i=0;i<walls.length;i++) {
+        const j=(i+1)%walls.length,a=walls[i],b=walls[j];
+        band(a,b,Math.min(grade(a),grade(b),floor)-.11,eave,wall);
+        band(roof[j].slice(0,2),roof[i].slice(0,2),eave-.13,eave,steel);
+      }
+      const top=roof.map(([u,v,h])=>point([u,v],eave+h));
+      for (const [a,b,c] of faces) upward(top[a],top[b],top[c],steel);
+      const face = (a,b,u,lo,hi,col)=>band([u,b],[u,a],floor+lo,floor+hi,col);
+      face(near,far,front+.024,.02,2.33,trim);
+      face(near+.10,far-.10,front+.032,.04,2.21,door);
+      for (const [a,b,low,high] of windows) face(a,b,front+.028,low,high,glass);
+      const cross = ([u,left,right]) => Array.from({length:5},(_,i)=>{
+        const p=[u,left+(right-left)*i/4];
+        return point(p,grade(p)+.040);
+      });
+      const rows=[cross(apron[0])];
+      for (let k=1;k<apron.length;k++) {
+        const a=apron[k-1],b=apron[k];
+        rows.push(cross(a.map((x,i)=>(x+b[i])/2)),cross(b));
+      }
+      for (let k=1;k<rows.length;k++) for (let i=0;i<4;i++) {
+        const a=rows[k-1],b=rows[k];
+        upward(a[i],b[i],b[i+1],concrete);
+        upward(a[i],b[i+1],a[i+1],concrete);
+      }
+      model.addParts([{ positions: new Float32Array(positions), colors: new Float32Array(colors),
+        matrix: new THREE.Matrix4().makeTranslation(origin[0],0,origin[1]).elements, roughness: .88 }]);
+      grid.polygon(walls.map(world));
+    };
+    addHouse({
+      origin: [-2004,-480],
+      angle: 5.93,
+      walls: [[-10.46,6.05],[10.54,6.05],[10.54,-7.95],[5.72,-7.95],
+        [5.72,-2.71],[-10.46,-3.11]],
+      roof: [[-10.89,6.48,0],[10.97,6.48,0],[10.97,-8.38,0],[5.29,-8.38,0],
+        [5.29,-3.15,0],[-10.89,-3.55,0],[-6.42,1.47,1.47],[3.93,1.47,1.43],
+        [8.13,-5.11,1.11],[8.13,1.47,1.2]],
+      faces: [[0,1,7],[0,7,6],[0,6,5],[5,6,7],
+        [5,7,4],[4,7,8],[4,8,3],[3,8,2],
+        [2,8,9],[2,9,1],[1,9,7],[7,9,8]],
+      apron: [[10.55,-7.76,-3.24],[12.35,-7.67,-3.16],[14.14,-7.54,-3.08],[16.38,-7.36,-2.95]],
+      garage: [10.54,-7.72,-3.25],
+      windows: [[-2.06,-1.34,0.24,2.37],[-0.84,-0.12,0.24,2.37],[1.48,2.24,0.24,2.37],[2.82,3.58,0.24,2.37]],
+      wallHex: 0x8b6d57,
+      roofHex: 0x48515a
+    });
+    addHouse({
+      origin: [-2004,-463],
+      angle: 4.17,
+      walls: [[-9.73,5.45],[8.77,5.45],[8.77,-6.05],[-9.73,-6.05]],
+      roof: [[-10.16,5.88,0],[9.2,5.88,0],[9.2,-6.48,0],[-10.16,-6.48,0],
+        [-4.82,-0.29,1.38],[4.01,-0.29,1.37]],
+      faces: [[0,1,5],[0,5,4],[0,4,3],[3,4,5],
+        [3,5,2],[2,5,1]],
+      apron: [[8.78,0.24,5.22],[10.6,0.16,5.09],[12.48,0.1,4.93],[14.49,0.1,4.79]],
+      garage: [8.77,0.44,5.24],
+      windows: [],
+      wallHex: 0xc6bc9f,
+      roofHex: 0xc9d1d2
+    });
+  }
+
   function townPeers(T, m, F, ground, place, box) {
     const P = { frame() {}, dispose() {}, count: 0 }; let off = false; try { off = localStorage.getItem("an-player-off") === "1"; } catch {}
     if (!m.addParts || !m.getCamera) return P;
