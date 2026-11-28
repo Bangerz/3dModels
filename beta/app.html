@@ -24533,7 +24533,7 @@ const handle = async (m, post) => {
             : auto ? auto.indicator || 0 : townManualIndicator(car, str, go);
           signal = townIndicatorFlash(car, side, now);
         }
-        sit(dt, signal); unTick(now, thr);
+        sit(dt, signal); unTick(now, thr, bump > 0 && !brake);
         const a = Math.abs(car.v), G = [0, 7, 14, 21, 30, 44, 60], g = Math.max(0, G.findIndex(q => a < q) - 1), top = G[g + 1] ?? 60;  // the engine rises through each gear and drops into the next
         snd.set(0.18 + 0.82 * bsClamp((a - G[g]) / (top - G[g]), 0, 1), Math.abs(thr) > 0.05 && !brake ? 0.35 + 0.65 * Math.abs(thr) : 0.08, a, boosting || teamOn, slide ? 1 : Math.min(1, Math.abs(wrap(car.h - car.dir)) * 2.5));
         showRing(boosting || charge < 0.999, boosting);
@@ -25494,6 +25494,7 @@ const handle = async (m, post) => {
     const unBtn = document.createElement("button"); unBtn.type = "button"; unBtn.className = "bs-fly-x bs-unstick"; unBtn.textContent = "Unstick"; unBtn.dataset.key = "U"; unBtn.hidden = true;
     $("bsFly")?.append(unBtn);
     const un = { f: -1e9, b: -1e9, trail: [], at: null, placed: 0 };  // (never pushed yet, not "pushed when the page opened")
+    let gaveClearanceHint = false;
     C.canUnstickWalk = () => place === "inv" && T.walk && !veh && !F.home && !T.tween && !C.dizzyHold?.();
     // A relocation must be clear before it is applied. Use a conservative circle around the
     // destination car. These checks run on a placement attempt, never on ordinary driving frames.
@@ -25611,11 +25612,15 @@ const handle = async (m, post) => {
     // time, however it wriggled. It was forward and back both pushed in the last 8 s while staying within 6 m: too late against a wall
     // (pushing only forward never showed it), and too early in a fight or a tight turn. Ash, 27 November 2026: "Unstick often shows too
     // early or too late". Not while Drive for me is driving, or the car's flying or a boat)
-    const unTick = (now, thr) => { if (thr > 0.4) un.f = now; else if (thr < -0.4) un.b = now;
+    const unTick = (now, thr, hit) => { if (thr > 0.4) un.f = now; else if (thr < -0.4) un.b = now;
       if (!un.trail.length || now - un.trail[un.trail.length - 1][0] > 100) { un.trail.push([now, car.x, car.z, Math.abs(thr) > 0.4 && !auto ? 1 : 0]); while (now - un.trail[0][0] > UN_WIN + 150) un.trail.shift(); }
       let path = 0, push = 0; for (let i = 1; i < un.trail.length; i++) { const a = un.trail[i - 1], b = un.trail[i]; path += Math.hypot(b[1] - a[1], b[2] - a[2]); push += b[3]; }
       const still = now - un.trail[0][0] > UN_WIN - 150 && push >= (un.trail.length - 1) * 0.85 && path < 2.5 && !car.boat && !car.trick && !car.flip;
       const show = un.at ? Math.hypot(car.x - un.at[0], car.z - un.at[1]) < 12 && now - un.at[2] < 20000 : still && !!T.roadsAll;
+      if (place === "inv" && !gaveClearanceHint && show && still && hit && !auto && Math.abs(thr) > 0.4) {
+        gaveClearanceHint = true;
+        toast(thr > 0 ? "Reverse straight back to make room, then steer." : "Pull straight forward to make room, then steer.", 3500, true);
+      }
       if (show && !un.at) un.at = [car.x, car.z, now]; else if (!show) un.at = null;
       if (unBtn.hidden === show) { unBtn.hidden = !show; if (show) { un.placed = now; unPlace(); } } else if (show && now - un.placed > 500) { un.placed = now; unPlace(); } };
     const recover = () => { if (C.canUnstickWalk()) { recoverWalk(); return; } const roads = T.roadsAll; if (veh !== "car" || !car || !roads) return;
