@@ -10098,6 +10098,8 @@ const handle = async (m, post) => {
           if (walk) { F.pos.set(p.walk.x, ground(p.walk.x, p.walk.z) + F.eye, p.walk.z); F.yaw = p.walk.yaw; F.pitch = p.walk.pitch; }
           else { const v = typeof p.fly === "function" ? p.fly() : p.fly; F.pos.set(v.x, v.y, v.z); F.yaw = v.yaw; F.pitch = v.pitch; } };
         const goTo = cfg.flyTo && places.find(p => p.id === cfg.flyTo.id);
+        const clock = cfg.place === "inv" && mine.find(p => p.name === "the clock")?.target;
+        const clockDistance = () => clock && T.walk && !F.drive ? Math.hypot(F.pos.x - clock[0], F.pos.z - clock[1]) : Infinity;
         const flyTo = () => { closeAsk(); if (T.walk) setMode(false);
           const v = goTo.fly, a = { x: F.pos.x, y: F.pos.y, z: F.pos.z, yaw: F.yaw, pitch: F.pitch }, d = Math.hypot(v.x - a.x, v.z - a.z);
           T.tween = { a, b: { x: v.x, y: v.y, z: v.z, yaw: v.yaw, pitch: v.pitch }, t0: performance.now(), ms: bsClamp(1400 + d * 0.32, 1600, 6500), arc: Math.min(d * 0.28, 2600) };
@@ -10115,6 +10117,7 @@ const handle = async (m, post) => {
           const top = [...(T.gps ? [item({ townGps: "1" }, "GPS", "Type an address, or pick a place to go")] : []),
             ...(T.race ? [item({ townRace: "1" }, `Race around ${T.race.name}`, T.race.active() ? "In a race now" : T.race.host ? `Talk to ${T.race.host.name}: ${T.race.host.what}` : "Everyone here, standard cars, one lap")] : [])];
           if (T.car?.bossGo && ["inv", "logan", "moo"].includes(T.cfg?.place)) top.push(item({ townBoss: "1" }, "Boss fight: T-rex", `Into the hotrod ${T.cfg?.place === "logan" ? "out the front of the council" : T.cfg?.place === "moo" ? "in the Woolworths car park" : "by The Hub"}. The T-rex comes in a few seconds`));  // (Ash, 26 November 2026: "Add a jump to boss fight")
+          if (clockDistance() <= 65) top.push(item({ townFaceClock: "1" }, "Face the Rotary clock", "Turn towards the clock from where you’re standing"));
           if (T.car?.canUnstickWalk?.()) top.push(item({ townUnstick: "1" }, "Unstick on foot", "Move to a clear spot nearby (U)"));
           const who = T.peers?.list?.() || []; if (!who.length) { list.prepend(...top); return; }
           const near = who.map(q => ({ ...q, d: Math.hypot(q.x - F.pos.x, q.z - F.pos.z) })).sort((a, b) => a.d - b.d);
@@ -10155,6 +10158,17 @@ const handle = async (m, post) => {
         list.onclick = e => { if (e.target.closest("[data-town-fly]")) { openList(false); flyTo(); jump.focus({ preventScroll: true }); return; }
           if (e.target.closest("[data-town-race]")) { openList(false); T.race?.fromJump ? T.race.fromJump() : T.race?.open(); return; }
           if (e.target.closest("[data-town-gps]")) { openList(false); T.gps?.open(); return; }
+          if (e.target.closest("[data-town-face-clock]")) {
+            openList(false);
+            const distance = clockDistance();
+            if (distance <= 65) {
+              T.tween = null;
+              F.goTo = null;
+              F.yaw = Math.atan2(F.pos.x - clock[0], F.pos.z - clock[1]);
+              F.pitch = bsClamp(Math.atan2(ground(...clock) + 5.4 - F.pos.y, distance), -1.45, 1.45);
+            }
+            jump.focus({ preventScroll: true }); return;
+          }
           if (e.target.closest("[data-town-unstick]")) { openList(false); T.car?.unstick?.(); return; }
           if (e.target.closest("[data-town-boss]")) { openList(false); T.car?.bossGo?.(); return; }
           const nw = e.target.closest("[data-town-new]"); if (nw) { const q = MOO_NEW[+nw.dataset.townNew]; openList(false); if (q) { T.tween = null; if (!T.walk) setMode(true);
