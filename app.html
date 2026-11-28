@@ -9764,14 +9764,15 @@ const handle = async (m, post) => {
     const driven = cfg.place === "inv" ? new Map() : null;
     let replaying = null;
     const log = [], last = {}, LAST = ["setLabelObstacles", "setTide", "setFlood", "setFloodLevel", "setMinutes", "setCamera", "setGroundEdits", "setRemoved", "setMore", "driveCar", "setControlledCar"];
-    const movementKeys = ["KeyW", "KeyA", "KeyS", "KeyD", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Space", "KeyC"];
+    const movementKeys = ["KeyW", "KeyA", "KeyS", "KeyD", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Space", "KeyC", "ShiftLeft", "ShiftRight"];
     const waitForControls = async signal => {
       const start = performance.now();
       let lastHeld = -Infinity;
       while (!dead && BS.town === T && !signal?.aborted) {
         const fly = BS.fly, now = performance.now();
         if (fly?.joys?.some(joy => joy.held()) || fly?.touches?.size || movementKeys.some(key => fly?.keys?.has(key)) ||
-            fly?.drag || fly?.rmb || fly?.vert || fly?.mw || fly?.boost || fly?.hand) lastHeld = now;
+            fly?.drag || fly?.rmb || fly?.vert || fly?.mw || fly?.boost || fly?.hand || fly?.jumpBtn || fly?.sprint ||
+            T.car?.passengerBoostHeld?.()) lastHeld = now;
         if (now - lastHeld >= 350) break;
         await new Promise(resolve => setTimeout(resolve, 100));
       }
@@ -26266,6 +26267,8 @@ const handle = async (m, post) => {
     const tkBtn = document.createElement("button"); tkBtn.type = "button"; tkBtn.className = "bs-fly-x bs-tk"; tkBtn.dataset.key = "V"; tkBtn.hidden = true; tkBtn.textContent = "Jump";
     let pwCharge = 1, pwSpent = false, pwHeld = false, pwOn = false, pwSend = 0, tkWait = 0, pwLook = 0;
     const powerTo = () => veh === "ride" && ride?.id ? { id: ride.id, k: ride.k, possum: false } : veh === "possum" && pos?.cling ? { id: pos.cling.id, k: (T.peers?.list?.() || []).find(v => v.id === pos.cling.id)?.k, possum: true, gold: !!pos.gold } : null;
+    const boostPressed = () => pwHeld || F.keys.has("KeyB");
+    C.passengerBoostHeld = () => boostPressed() && !!powerTo();
     const usePower = () => { const to = powerTo(); if (!to) return false; if (pwSpent) toast("Still charging.", 900); return true; };
     const useTrick = () => { const to = powerTo(); if (!to) return false; if (tkWait > 0) return true; const air = /plane|heli/.test(to.k || ""), boss = !!(rexRole && rex?.live && veh === "ride");
       if (T.peers?.power?.(to.id, 2, to.possum && !air, to.gold)) { tkWait = boss ? 10 : R.trickBack; snd.boing(); if (boss) rexSay("BARREL ROLL!", 1100); else toast(air ? "Spin!" : to.possum ? "Jump and roll!" : "Jump!", 1200); } return true; };
@@ -26273,7 +26276,7 @@ const handle = async (m, post) => {
     for (const ev of ["pointerup", "pointercancel", "pointerleave"]) pwBtn.addEventListener(ev, () => { pwHeld = false; }); tkBtn.addEventListener("pointerdown", e => { e.preventDefault(); e.stopPropagation(); useTrick(); });
     $("bsFly")?.append(pwBtn, tkBtn); C.powerKey = k => (k === "B" ? usePower : useTrick)();
     const powersTick = dt => { const to = powerTo(); tkWait = Math.max(0, tkWait - dt);
-      const on = !!to && (pwHeld || F.keys.has("KeyB")) && pwCharge > 0 && !pwSpent;
+      const on = !!to && boostPressed() && pwCharge > 0 && !pwSpent;
       if (on) { pwCharge = Math.max(0, pwCharge - dt / R.teamBoostSecs); if (!pwCharge) pwSpent = true; if (!pwOn) { snd.whoosh(); pwSend = 0; } if ((pwSend -= dt) <= 0) { pwSend = 0.25; T.peers?.power?.(to.id, 1, false, to.gold); } }
       else { pwCharge = Math.min(1, pwCharge + dt / R.teamBoostBack); if (pwCharge >= 0.2) pwSpent = false; if (!to) pwHeld = false; }
       if (pwOn !== on) { pwOn = on; pwBtn.classList.toggle("on", on); }

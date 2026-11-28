@@ -5,10 +5,10 @@ const {test} = require('node:test');
 const vm = require('node:vm');
 
 for (const page of ['app.html', 'beta/app.html']) {
-  test(page + ' defers the Auto commit during held pigeon Flap and Dive', async () => {
+  test(page + ' defers Auto for held movement and ignores unrelated keys', async () => {
     const html = readFileSync(path.join(__dirname, '..', page), 'utf8');
     const source = html.slice(html.indexOf('  function townModelPair('), html.indexOf('  function townModelOn('));
-    const T = {}, fly = {}, timers = [];
+    const T = {}, fly = {keys: new Set()}, timers = [];
     let now = 0, beforeQualityCommit;
     const env = {
       BS: {town: T, fly}, navigator: {}, matchMedia: () => ({matches: true}),
@@ -26,19 +26,37 @@ for (const page of ['app.html', 'beta/app.html']) {
       timers.shift()();
       await new Promise(resolve => setImmediate(resolve));
     };
-    for (const button of ['boost', 'hand']) {
-      fly[button] = true;
+    async function holdUntilReleased(press) {
+      press(true);
       let settled = false;
       const waiting = beforeQualityCommit().then(() => { settled = true; });
       for (let i = 0; i < 5; i++) await advance();
       assert.equal(settled, false);
-      fly[button] = false;
+      press(false);
       for (let i = 0; i < 3; i++) await advance();
       assert.equal(settled, false, 'brief gaps between movements remain protected');
       await advance();
       await waiting;
       assert.equal(timers.length, 0);
     }
+    for (const field of ['boost', 'hand', 'jumpBtn', 'sprint']) {
+      await holdUntilReleased(on => { fly[field] = on; });
+    }
+    for (const code of ['ShiftLeft', 'ShiftRight']) {
+      await holdUntilReleased(on => on ? fly.keys.add(code) : fly.keys.delete(code));
+    }
+    // Use the same passenger checks the vehicle controller attaches to the active town.
+    const start = html.indexOf('    const boostPressed =');
+    const end = html.indexOf('    const usePower =', start);
+    const passenger = {C: {}, F: fly, pwHeld: false, powerTo: () => ({id: 'driver'})};
+    vm.runInNewContext(html.slice(start, end), passenger);
+    T.car = passenger.C;
+    await holdUntilReleased(on => { passenger.pwHeld = on; });
+    await holdUntilReleased(on => on ? fly.keys.add('KeyB') : fly.keys.delete('KeyB'));
+    passenger.powerTo = () => null;
+    fly.keys = new Set(['Enter', 'Tab', 'KeyB', 'KeyX']);
+    await beforeQualityCommit();
+    assert.equal(timers.length, 0);
   });
 }
 for (const page of ['app.html', 'beta/app.html']) {
