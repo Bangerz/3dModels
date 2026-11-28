@@ -10159,8 +10159,8 @@ const handle = async (m, post) => {
         const releaseOutside = e => { if (ptrs.has(e.pointerId) && !box.contains(e.target)) endMapPointer(e.pointerId); };
         window.addEventListener("blur", clearMapGesture);
         document.addEventListener("visibilitychange", mapHidden);
-        for (const event of ["pointerup", "pointercancel"]) document.addEventListener(event, releaseOutside, true);
-        Object.entries(gest).forEach(([k, f]) => box.addEventListener(k, f, { passive: BS_PASSIVE && /^pointer/.test(k) }));
+        for (const event of ["pointerup", "pointercancel"]) document.addEventListener(event, releaseOutside, { capture: true, passive: true });
+        Object.entries(gest).forEach(([k, f]) => box.addEventListener(k, f, { passive: k === "lostpointercapture" || (BS_PASSIVE && /^pointer/.test(k)) }));
         T.ungest = () => {
           Object.entries(gest).forEach(([k, f]) => box.removeEventListener(k, f));
           window.removeEventListener("blur", clearMapGesture);
