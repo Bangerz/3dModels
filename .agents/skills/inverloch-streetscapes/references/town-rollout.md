@@ -4,6 +4,8 @@ Treat the current whole-town model as the fallback for every street. Its town fi
 
 ## Pilot one connected walk
 
+Use the [hotel-to-Glade fieldwork map, two-sided inventory and town geometry exporter](../../../../tools/streetscapes/README.md) to pick up the pilot at its surveyed boundaries. It identifies the Ramsey crossing and car-park transition that still need a dated local photo walk.
+
 Start at the Esplanade Hotel, continue through the A’Beckett–Williams Street junction onto Ramsey Boulevard, and end at an identifiable foreshore entrance selected from the available evidence. In one walk the viewer passes a detailed frontage, turns a junction and emerges into open space. Use the A’Beckett camera route as the town-centre comparison and the Norman Road example as a residential comparison. Before carrying model data forward from the A’Beckett trial, check the source of each feature. Re-author any Street View-derived features from independently reusable evidence. [A’Beckett streetscape](https://github.com/Ashley-Pettit/3dModels/pull/221) · [Norman Road exterior](https://github.com/Ashley-Pettit/3dModels/pull/218)
 
 | Stage | Deliverable | How to decide what comes next |
