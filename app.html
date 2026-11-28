@@ -9782,6 +9782,10 @@ const handle = async (m, post) => {
         ...(graphics ? { onThunder: strength => { if (mm === cur && T.on && !T.dead && !document.hidden) T.snd?.thunder(strength); } } : {}),
         onFloodLevel: v => { if (mm === cur) cb.onFloodLevel(v); },
         onError: msg => { if (mm === cur) cb.onError(msg); else if (mm === next) drop(); } });
+      if (!own && T.fitWestJetty) mm.ready = mm.ready.then(value => {
+        if (!dead && BS.town === T && next === mm) T.fitWestJetty(mm);
+        return value;
+      });
       mm.t0 = t0; return mm; };
     // a handle Inverloch's town centre moves things with: always the one in the model that's showing
     const handle = real => { const H = { real, calls: new Map() };
@@ -10044,7 +10048,7 @@ const handle = async (m, post) => {
               else grid.park(c.id, B.x, B.z, B.h); } } catch (e) { console.warn("Inverloch: couldn't move the parked cars stuck in poles", e); }
           } else invAddDesignedWalls(T, m.designedWallFootprints?.());
         }
-        if (inv && m.addParts) try { mine.push(invWestJetty(T, m, BS.B.THREE)); } catch (e) { console.warn("Inverloch: the west jetty could not be added", e); }
+        if (inv && m.addParts) try { mine.push(invWestJetty(T, BS.B.THREE)); } catch (e) { console.warn("Inverloch: the west jetty could not be added", e); }
         if (cfg.place === "moo") try { mine = mine.concat(townShops(T, m)); } catch (e) { console.warn("Town model: Moorooka's shops couldn't be added", e); }
         const OFF = exOff(); document.body.classList.toggle("bsnoplaces", OFF.has("places"));
         if (cfg.place === "moo" && m.addParts && !OFF.has("no6")) T.no6 = townNo6(T, m);  // 6 Beaudesert Road's street, from Ash's photos (it catches its own errors)
@@ -18298,7 +18302,22 @@ const handle = async (m, post) => {
   const streetsPref = () => { try { return localStorage.getItem(STREETS_KEY) === "1"; } catch { return false; } };  // off to start with (Ash, 14 November 2026: "Names start off")
   const streetsSave = on => { try { localStorage.setItem(STREETS_KEY, on ? "1" : "0"); } catch {} };
   // The late-2024 west boat-ramp jetty. The native pier across the slipway is the older east jetty.
-  function invWestJetty(T, model, THREE) {
+  function invWestJetty(T, THREE) {
+    const decks = new WeakMap();
+    const fit = model => {
+      const jetty = invWestJettyParts(model, THREE);
+      decks.set(model, jetty.deckAt);
+      return jetty;
+    };
+    const { blockers, bearing, stop } = fit(T.pair.cur);
+    const grid = T.invStatic ??= invCivicCollision((x, z) => [x, z], () => false);
+    for (const [x, z, w, l] of blockers) grid.worldBox(x, z, bearing, w, l);
+    // The destination can be ready before it owns the canvas. Feet and wheels follow the active deck.
+    T.fitWestJetty = fit;
+    T.deckAt = (x, z) => decks.get(T.pair.cur)(x, z);
+    return stop;
+  }
+  function invWestJettyParts(model, THREE) {
     const shoreX = 332.8, shoreZ = -134.7, length = 30, half = 1.42;
     const bearing = Math.atan2(10.6, 28.8), dx = Math.sin(bearing), dz = Math.cos(bearing);
     const at = (along, west) => [shoreX + along * dx - west * dz, shoreZ + along * dz + west * dx];
@@ -18396,9 +18415,7 @@ const handle = async (m, post) => {
     }
     model.addParts([{ positions: new Float32Array(positions), colors: new Float32Array(colours),
       matrix: new THREE.Matrix4().elements, roughness: 0.86 }]);
-    const grid = T.invStatic ??= invCivicCollision((x, z) => [x, z], () => false);
-    for (const [x, z, w, l] of blockers) grid.worldBox(x, z, bearing, w, l);
-    T.deckAt = (x, z) => {
+    const deckAt = (x, z) => {
       const ex = x - shoreX, ez = z - shoreZ;
       if (ex < -19 || ex > 13 || ez < -9 || ez > 36) return null;
       const u = ex * dx + ez * dz, v = -ex * dz + ez * dx;
@@ -18407,7 +18424,8 @@ const handle = async (m, post) => {
       return v >= landingStart ? low : stepTop(Math.min(steps - 1, Math.floor((v - half) / stepWidth)));
     };
     const [x, z] = at(access - 2, 0), target = at(8, 0);
-    return { name: "Boat ramp jetty", walk: { x, z, yaw: Math.atan2(x - target[0], z - target[1]), pitch: -0.06 }, target };
+    const stop = { name: "Boat ramp jetty", walk: { x, z, yaw: Math.atan2(x - target[0], z - target[1]), pitch: -0.06 }, target };
+    return { blockers, bearing, deckAt, stop };
   }
 
   // the address the model itself fetched a file from (Logan adds ?v=), so the browser serves it from its cache
