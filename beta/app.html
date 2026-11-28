@@ -17274,12 +17274,16 @@ const handle = async (m, post) => {
           const push = hl ? Math.max(rim, inside ? d + Math.min(hl,hw) : 0) : hw + (inside ? d : -d);
           if (push <= deepest) continue;
           deepest = push;
-          if (normal) { const sign = (inside ? -1 : 1) / (d || 1); normal.x = vx*sign; normal.z = vz*sign; }
+          if (normal) { const sign = (inside ? -1 : 1) / (d || 1); normal.x = vx*sign; normal.z = vz*sign; normal.shape = B; }
         }
       });
       return deepest;
     }
     const depth = (x,z,h,hl,hw) => contact(x,z,h,hl,hw);
+    const obstacle = (x,z,h,hl,hw) => {
+      const hit = {};
+      return contact(x,z,h,hl,hw,hit) > 0 ? hit.shape : null;
+    };
     // Bound the entire rotating body during a step. Only subdivide when its conservative
     // midpoint box touches something; centimetre-scale uncertainty stops the step.
     function canDrive(x,z,h,tx,tz,th,hl,hw) {
@@ -17333,7 +17337,7 @@ const handle = async (m, post) => {
       if (y != null) moved.set(k,[...id,x,y,z,h,pitch,roll]);
       if (!wholeTown && !inPilot(x,z)) return;
       const [w,l] = dimensions.get(k) || [1.85,4.55];
-      const shape = worldBox(x,z,h,w,l); shape.hidden = hiddenCars.has(k); parked.set(k,shape);
+      const shape = worldBox(x,z,h,w,l); shape.hidden = hiddenCars.has(k); shape.key = k; parked.set(k,shape);
     }
     function addCars(cars) {
       for (const {x,z,heading} of cars) { const id=[x,z]; take(id); parked.set(carKey(x,z),null); park(id,x,z,heading); }
@@ -17375,7 +17379,7 @@ const handle = async (m, post) => {
     }
     // A quality swap reconstructs the renderer (including the cars in their original bays).
     const restoreCars = model => { for (const pose of moved.values()) model.driveCar?.(...pose); };
-    return { polygon, box, worldBox, post, depth, slide, canDrive, take, park, addCars, addTown, own, originalBay, bayFree, hideCars, restoreCars, get wholeTown() { return wholeTown; } };
+    return { polygon, box, worldBox, post, depth, obstacle, slide, canDrive, take, park, addCars, addTown, own, originalBay, bayFree, hideCars, restoreCars, get wholeTown() { return wholeTown; } };
   }
 
   // Native wall rings are already in model metres. Register individual masses so open
@@ -25049,6 +25053,139 @@ const handle = async (m, post) => {
       return [x, z, ux / l, uz / l]; };
     // (right of the way (ux, uz) is (-uz, ux): out towards the middle of the road. Left of it is the kerb)
     const autoFree = (A, x, z, h) => { const SH = car.bus ? BUS : CAR; return inside(x, z) && fits(SH, x, z, h); };
+    // Only gather road segments near a manoeuvre. GPS routes can start without the click-to-drive road graph.
+    const autoPassRoads = A => {
+      if (!T.roadsAll?.length) return null;
+      if (A.passRoads?.source === T.roadsAll && Math.hypot(car.x - A.passRoads.x, car.z - A.passRoads.z) < 45) return A.passRoads.segments;
+      const segments = [];
+      for (const r of T.roadsAll) {
+        if (r.cls > 5 || !(r.wd > 0)) continue;
+        const pad = 235 + r.wd / 2, p = r.pts;
+        if (r.bb && (r.bb[0] > car.x + pad || r.bb[1] < car.x - pad || r.bb[2] > car.z + pad || r.bb[3] < car.z - pad)) continue;
+        for (let i = 2; i < p.length; i += 2) {
+          const ax = p[i-2], az = p[i-1], bx = p[i], bz = p[i+1];
+          if (Math.min(ax,bx) > car.x + pad || Math.max(ax,bx) < car.x - pad || Math.min(az,bz) > car.z + pad || Math.max(az,bz) < car.z - pad) continue;
+          const dx = bx-ax, dz = bz-az;
+          segments.push({ax, az, dx, dz, len2: dx*dx + dz*dz || 1, half: r.wd/2});
+        }
+      }
+      A.passRoads = {source:T.roadsAll, x:car.x, z:car.z, segments};
+      return segments;
+    };
+    // Plan the whole excursion in route metres relative to the car. The indexed polygons include the parked
+    // car's actual trim, orientation and position. The ordinary vehicle movement still checks every substep.
+    const autoIndexedPass = (A, at, rem, v, cars, homeTraffic, oncoming, latCar) => {
+      const grid = T.invStatic, shape = townTrafficBodies[car.bus ? "bus" : "car"], [width, length] = shape;
+      const margin = 0.55, transition = offset => 8 + 4 * Math.abs(offset);
+      const passHorizon = Math.min(rem, 185);
+      const blockers = [], seen = new Set();
+      // Look beyond the first blocker for a place to merge back. Testing the home lane alongside the car
+      // keeps the target until its rear clears, including after braking, reversing or a route-buffer trim.
+      let limit = Math.min(passHorizon, 72);
+      for (let d = 0; d <= limit; d += 2) {
+        if (!A.cut && A.join < 20 && at + d < A.join + 1) continue;
+        const [x,z,ux,uz] = autoDir(A, at+d);
+        // A neighbour can clear the straight lane yet clip a rotating corner on the return.
+        // The ordinary scan below still requires an actual intrusion to initiate a static pass.
+        const hit = grid.obstacle(x,z,Math.atan2(ux,uz),length,width+margin);
+        if (!hit || seen.has(hit)) continue;
+        seen.add(hit);
+        let near = Infinity, far = -Infinity, left = Infinity, right = -Infinity;
+        for (const e of hit.edges) {
+          const dx = e.x-x, dz = e.z-z, along = d + dx*ux + dz*uz, across = dz*ux - dx*uz;
+          near = Math.min(near,along); far = Math.max(far,along);
+          left = Math.min(left,across); right = Math.max(right,across);
+        }
+        blockers.push({near,far,left,right,key:hit.key,wall:true,still:true});
+        // Include the far end of a parked row before testing the merge. Bound each scan on long streets.
+        if (far+32 > limit) limit = Math.min(passHorizon, far+32);
+      }
+      for (const lead of homeTraffic) blockers.push({
+        near:lead.al-lead.ext, far:lead.al+lead.ext, left:lead.lat-lead.across, right:lead.lat+lead.across, ...lead
+      });
+      blockers.sort((a,b) => a.near-b.near);
+      const first = blockers[0], reach = Math.max(32, 2*transition(A.dTgt));
+      const passing = first && first.near-length <= reach;
+      const roads = autoPassRoads(A);
+      const onRoad = (x,z) => !roads || roads.some(s => {
+        const dx = x-s.ax, dz = z-s.az, t = bsClamp((dx*s.dx + dz*s.dz)/s.len2,0,1);
+        return Math.hypot(dx-t*s.dx, dz-t*s.dz) <= s.half;
+      });
+      const from = {x:car.x,z:car.z,h:car.h,y:car.y};
+      let trafficConflict = false;
+      const check = (offset, near, far) => {
+        const enter = bsClamp(near-length-0.8, 6, transition(offset-latCar)), leave = transition(offset);
+        const end = Math.min(rem, far+leave);
+        if (far > rem || end > passHorizon || (offset && end < far+leave)) return null;
+        const smooth = t => t*t*(3-2*t);
+        const [, , startX, startZ] = autoDir(A,at);
+        const lateralSlope = bsClamp(Math.tan(wrap(Math.atan2(startX,startZ)-car.h)),-0.6,0.6);
+        let previous = from, previousD = 0, speedLimit = Infinity;
+        const speed = bsClamp(Math.abs(v), 4, AUTO_V);
+        // A stopped driver needs room to accelerate into the pass. Wait until opposing traffic
+        // clears that lane even if one exact constant-speed prediction would slip in behind it.
+        if (offset && oncoming.some(b => Math.abs(offset-b.lat) < width+b.across+0.35 &&
+          b.al+b.ext+length >= -1 && b.al-b.ext-length < end*(1+b.closing/speed))) {
+          trafficConflict = true; return null;
+        }
+        const steps = Math.max(1,Math.ceil(end/2));
+        for (let i = 1; i <= steps; i++) {
+          const d = end*i/steps;
+          const t = Math.min(1,d/enter), approach = smooth(t);
+          const back = smooth(bsClamp((d-far)/leave,0,1));
+          const lateral = (latCar + (offset-latCar)*approach + lateralSlope*d*(1-t)*(1-t))*(1-back);
+          const [px,pz,ux,uz] = autoDir(A, at+d), x = px-uz*lateral, z = pz+ux*lateral;
+          const step = Math.hypot(x-previous.x,z-previous.z);
+          if (step < 0.01) return null;
+          const h = Math.atan2(x-previous.x,z-previous.z), next = {x,z,h,y:ground(x,z)};
+          if (!autoFree(A,x,z,h) || !grid.canDrive(previous.x,previous.z,previous.h,x,z,h,length,width+0.07)) return null;
+          if (roads) {
+            const sx = Math.sin(h), cz = Math.cos(h);
+            for (const l of [-length,length]) for (const w of [-width,width])
+              if (!onRoad(x+sx*l+cz*w,z+cz*l-sx*w)) return null;
+          }
+          for (const D of cars) {
+            const body = townTrafficBodies[D.bus ? "bus" : "car"];
+            const predicted = distance => ({x:D.x+Math.sin(D.h)*(D.v||0)*distance/speed,
+              z:D.z+Math.cos(D.h)*(D.v||0)*distance/speed,h:D.h,y:D.y ?? next.y});
+            if (townTrafficSweep(previous,next,shape,predicted(previousD),predicted(d),body) < 1) { trafficConflict = true; return null; }
+          }
+          // Brake in time for curvature ahead, then regain speed on the straight part of the pass.
+          const curvature = Math.abs(wrap(h-previous.h))/step;
+          if (curvature > 0.002) speedLimit = Math.min(speedLimit,Math.sqrt(2.8/curvature + 9*previousD));
+          previous = next; previousD = d;
+        }
+        return speedLimit;
+      };
+      if (!passing) {
+        if (A.dTgt || Math.abs(latCar) > 0.15) {
+          const cap = check(0, transition(latCar)+length+1, transition(latCar));
+          if (cap == null) { A.cap = 0; A.blk = {still:true, wall:true, free:0}; return; }
+          A.passCap = cap;
+        }
+        A.dTgt = 0; return;
+      }
+      let left = first.left, right = first.right, far = first.far+length+0.8;
+      for (const b of blockers.slice(1)) {
+        if (b.near-length-far > 2*transition(Math.min(Math.abs(left-width-margin), Math.abs(right+width+margin)))) break;
+        far = Math.max(far,b.far+length+0.8); left = Math.min(left,b.left); right = Math.max(right,b.right);
+      }
+      const free = first.near-length-1.6;
+      A.blk = {...first, free};
+      // Smallest safe displacement first, keeping an established passing line through a row.
+      const rightPass = right+width+margin, leftPass = left-width-margin;
+      const options = A.dTgt > 0 ? [Math.max(A.dTgt,rightPass)] : A.dTgt < 0 ? [Math.min(A.dTgt,leftPass)]
+        : [rightPass,leftPass].sort((a,b) => Math.abs(a)-Math.abs(b));
+      for (const offset of options) {
+        if (Math.abs(offset) > (car.bus ? 4.8 : 4.2)) continue;
+        const cap = check(offset,first.near,far);
+        if (cap == null) continue;
+        A.dTgt = offset; A.passCap = cap;
+        return true;
+      }
+      // Leave enough run-up to steer around a parked car after oncoming traffic has cleared.
+      A.cap = Math.min(A.cap, Math.sqrt(9*Math.max(0, free-(trafficConflict ? 8 : 0))));
+    };
     const autoLook = (A, at, rem, v, H) => {
       const L = Math.max(6, Math.min(rem + 3, bsClamp(12 + Math.abs(v) * 2.2, 16, 50))), hlS = car.bus ? 5.6 : 2.25, hwS = car.bus ? 1.27 : 0.98;
       const P = []; for (let d = 0; d <= L; d += 2) P.push([d, ...autoDir(A, at + d)]);
@@ -25056,21 +25193,37 @@ const handle = async (m, post) => {
       const proj = (qx, qz) => { let b = P[0], bd = Infinity; for (const p of P) { const q = (qx - p[1]) ** 2 + (qz - p[2]) ** 2; if (q < bd) { bd = q; b = p; } }
         const dx = qx - b[1], dz = qz - b[2]; return [b[0] + dx * b[3] + dz * b[4], -dx * b[4] + dz * b[3], b]; };
       const latCar = -(car.x - P[0][1]) * P[0][4] + (car.z - P[0][2]) * P[0][3], off = d => d > hlS + 4 ? A.dTgt : latCar;  // (where the car is across the road, or will be by then)
-      const cars = (T.traffic?.cars || []).filter(D => D.x != null && D.h != null && !D.away && Math.hypot(D.x - car.x, D.z - car.z) < L + 16);
+      const indexed = place === "inv" && T.invStatic?.wholeTown;
+      const cars = (T.traffic?.cars || []).filter(D => D.x != null && D.h != null && !D.away && Math.hypot(D.x - car.x, D.z - car.z) < (indexed ? 80 + 8*Math.abs(D.v || 0) : L + 16));
       const body = (D, p) => { const c = Math.sin(D.h) * p[3] + Math.cos(D.h) * p[4], s = Math.sqrt(Math.max(0, 1 - c * c)), hl = D.bus ? 5.55 : 2.22, hw = D.bus ? 1.27 : 0.98; return { c, across: hw * Math.abs(c) + hl * s, along: hl * Math.abs(c) + hw * s }; };
       // a car of the traffic in the way: the nearest one ahead (or alongside) within the car's width of where it's going
-      let blk = null, cap = Infinity;
+      let blk = null, cap = Infinity, followingCap = Infinity;
+      const homeTraffic = [], oncoming = [];
       for (const D of cars) { const [al, lat, p] = proj(D.x, D.z), B = body(D, p), gap = al - B.along - hlS;
+        const still = (D.v || 0) < 0.6, dv = (D.v || 0) * B.c, slow = !still && B.c > 0.6 && dv < (H ? 12 : 4);
+        if (indexed && B.c < -0.5 && !still) oncoming.push({al, lat, across:B.across, ext:B.along, closing:-dv});
+        const inHomeLane = indexed && (still || (H && slow)) && al+B.along+hlS >= -1 && al <= L+B.along && Math.abs(lat) < hwS+B.across+0.35;
+        if (inHomeLane) homeTraffic.push({D, al, lat, across:B.across, still, ext:B.along, slow});
         if (gap < -1.5 || al > L + B.along || Math.abs(lat - off(al)) > hwS + B.across + 0.35) continue;
-        const free = gap - 1.6, dv = (D.v || 0) * B.c, still = (D.v || 0) < 0.6;
+        const free = gap - 1.6;
         const vt = free <= 0 ? 0 : still || dv < 0.5 ? Math.sqrt(2 * 4.5 * free) : Math.min(Math.sqrt(2 * 4.5 * free) + dv, dv + free * 0.5);
-        cap = Math.min(cap, vt); if (!blk || free < blk.free) blk = { D, al, lat, across: B.across, free, still, ext: B.along, slow: !still && B.c > 0.6 && dv < (H ? 12 : 4) }; }
+        if (!inHomeLane) followingCap = Math.min(followingCap,vt);
+        cap = Math.min(cap, vt); if (!blk || free < blk.free) blk = { D, al, lat, across: B.across, free, still, ext: B.along, slow }; }
       // the rest of what it can't fit past (a parked car, a post, a wall), along where it's going
       // (every metre close in, every 2 further on; not right in front while it's already touching something)
       // (and not on its first stretch, from where the car was to the street: getting out of a parking spot, the car's own bumping sorts it)
       const near0 = autoFree(A, car.x, car.z, car.h) ? 1 : 3, DS = [1, 2, 3, 4, 5, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28], first = d => !A.cut && A.join < 20 && at + d < A.join + 1;
       for (const d of DS) { if (d > L) break; if (d < near0 || first(d)) continue; const o = off(d), [px, pz, ux, uz] = autoDir(A, at + d), x = px - uz * o, z = pz + ux * o;
         if (!autoFree(A, x, z, Math.atan2(ux, uz))) { const free = d - 1.3; cap = Math.min(cap, free <= 0 ? 0 : Math.sqrt(2 * 4.5 * free)); if (!blk || free < blk.free) blk = { al: d, free, still: true, ext: 1, wall: true }; break; } }
+      if (indexed) {
+        A.blk = blk; A.cap = cap; A.passCap = Infinity;
+        if (blk?.wall || homeTraffic.length || A.dTgt || Math.abs(A.dCur) > 0.1) {
+          A.cap = followingCap;
+          const clearPass = autoIndexedPass(A,at,rem,v,cars,homeTraffic,oncoming,latCar);
+          if (!clearPass) A.cap = Math.min(A.cap,cap);
+        }
+        return;
+      }
       // is a line across the road, from `from` to `to` along the way, clear: of what the car can't fit past, and of the traffic (where
       // it is now and where it'll be in a second and in two and a half), but the one being got round
       const clear = (o, from, to, not) => { for (const d of DS) { if (d > Math.min(to, L)) break; if (d < near0 || first(d)) continue; const oo = d < Math.min(from, 6) ? o / 2 : o, [px, pz, ux, uz] = autoDir(A, at + d);
@@ -25093,7 +25246,7 @@ const handle = async (m, post) => {
         if (!autoFree(A, x, z, h)) continue; if (place === "inv" && !vacant(x, z, h, car.bus ? 5.4 : 2.25, car.bus ? 1.2 : 0.95)) continue;
         if (T.traffic?.occupied?.(car.bus ? "bus" : "car", x, z, h, ground(x, z))) continue;
         car.flip = car.trick = car.face = null; car.hop = car.roll = car.spinY = car.teamTil = 0;
-        car.x = x; car.z = z; car.h = car.dir = h; car.v = 0; car.steer = 0; if (place === "inv") sit(0);
+        car.x = x; car.z = z; car.h = car.dir = h; car.v = 0; car.steer = 0; if (place === "inv") { sit(0); A.cursorX = x; A.cursorZ = z; }
         const [, , i, f] = autoPt(A, at + d); A.i = i; A.t = f; A.slow = A.rev = A.waitT = 0; A.tries = 0; A.dTgt = A.dCur = 0; A.lookT = 0; A.hopAt = A.odo;
         unReset(); snd.whoosh?.(); toast("Unstuck: on its way again.", 1800); return true; }
       return false; };
@@ -25103,17 +25256,42 @@ const handle = async (m, post) => {
       recover(); if (Math.hypot(car.x - x0, car.z - z0) < 0.5) return false;  // (nowhere clear to put it)
       auto = null; try { if (was.cruise) cruise(was.turn || 0); else if (was.click && was.goal) C.driveTo(was.goal[0], was.goal[1]); else C.drivePath([car.x, car.z, ...rest], { hoon: !!was.hoon }); } catch (e) { console.warn("Autodrive: couldn't set off again", e); }
       if (!auto) ezShow(); return true; };
+    // Passing a parked car can put us beside the return leg of a hairpin. Advance from our
+    // current segment with actual travel, allowing for the car cutting the inside of a corner.
+    const invAdvanceRoute = A => {
+      const moved = Math.hypot(car.x - (A.cursorX ?? car.x), car.z - (A.cursorZ ?? car.z));
+      A.cursorX = car.x; A.cursorZ = car.z;
+      if (!moved || car.v < 0 || A.rev > 0) return;
+      const at = A.s[A.i] + (A.s[A.i + 1] - A.s[A.i]) * A.t;
+      const limit = at + moved * 1.6, hx = Math.sin(car.h), hz = Math.cos(car.h);
+      let best = Infinity, station = at;
+      // The adjacent stretch can guide us through a bend before we reach its vertex.
+      // Further stretches must start within this tick's forward travel.
+      for (let i = A.i; i < A.x.length - 1 && (i <= A.i + 1 || A.s[i] <= limit); i++) {
+        const dx = A.x[i + 1] - A.x[i], dz = A.z[i + 1] - A.z[i], length = A.s[i + 1] - A.s[i];
+        if (!length || (i !== A.i && dx * hx + dz * hz < -0.1 * length)) continue;
+        const rx = car.x - A.x[i], rz = car.z - A.z[i];
+        const t = bsClamp((rx * dx + rz * dz) / (length * length), i === A.i ? A.t : 0, 1);
+        const distance = Math.hypot(rx - dx * t, rz - dz * t);
+        if (distance < best - 0.01) { best = distance; station = A.s[i] + length * t; }
+      }
+      station = Math.min(station, limit);
+      while (A.i < A.x.length - 2 && A.s[A.i + 1] <= station) A.i++;
+      A.t = (station - A.s[A.i]) / (A.s[A.i + 1] - A.s[A.i] || 1);
+    };
     // one step of it: what to do with the accelerator and the wheel, [go, steer]
     const autoStep = dt => { const A = auto, v = car.v; A.odo += Math.abs(v) * dt;
       A.indicator = 0;
       if (A.cruise && !A.done) cruiseOn(A);
       const n = A.x.length;
-      // where the car is along the way: the nearest point on the next few stretches, never back the way it came
-      let best = Infinity, bi = A.i, bt = A.t;
-      for (let i = A.i; i < Math.min(n - 1, A.i + (A.hoon || A.userBoost ? 12 : 5)); i++) { const ax = A.x[i], az = A.z[i], dx = A.x[i + 1] - ax, dz = A.z[i + 1] - az, L2 = dx * dx + dz * dz || 1;
-        const t = bsClamp(((car.x - ax) * dx + (car.z - az) * dz) / L2, i === A.i ? A.t : 0, 1), d = Math.hypot(car.x - ax - dx * t, car.z - az - dz * t); if (d < best - 0.01) { best = d; bi = i; bt = t; } }
-      A.i = bi; A.t = bt;
-      const at = A.s[bi] + ((A.s[bi + 1] ?? A.s[bi]) - A.s[bi]) * bt, total = A.s[n - 1], rem = total - at, toEnd = Math.hypot(A.x[n - 1] - car.x, A.z[n - 1] - car.z); A.rem = rem;
+      if (place === "inv") invAdvanceRoute(A);
+      else {
+        let best = Infinity, bi = A.i, bt = A.t;
+        for (let i = A.i; i < Math.min(n - 1, A.i + (A.hoon || A.userBoost ? 12 : 5)); i++) { const ax = A.x[i], az = A.z[i], dx = A.x[i + 1] - ax, dz = A.z[i + 1] - az, L2 = dx * dx + dz * dz || 1;
+          const t = bsClamp(((car.x - ax) * dx + (car.z - az) * dz) / L2, i === A.i ? A.t : 0, 1), d = Math.hypot(car.x - ax - dx * t, car.z - az - dz * t); if (d < best - 0.01) { best = d; bi = i; bt = t; } }
+        A.i = bi; A.t = bt;
+      }
+      const bi = A.i, at = A.s[bi] + (A.s[bi + 1] - A.s[bi]) * A.t, total = A.s[n - 1], rem = total - at, toEnd = Math.hypot(A.x[n - 1] - car.x, A.z[n - 1] - car.z); A.rem = rem;
       const pt = d => { const sd = Math.min(total, at + d); let i = bi; while (i < n - 2 && A.s[i + 1] < sd) i++; const L = (A.s[i + 1] ?? A.s[i]) - A.s[i] || 1, f = bsClamp((sd - A.s[i]) / L, 0, 1), j = Math.min(i + 1, n - 1); return [A.x[i] + (A.x[j] - A.x[i]) * f, A.z[i] + (A.z[j] - A.z[i]) * f]; };
       if (A.sign && Math.hypot(A.sign.x - car.x, A.sign.z - car.z) < 7) A.sign.near = true; else if (A.sign?.near) { A.sign = null; ezShow(); }  // the turn it was asked for is behind it now
       // there (or as near as the way goes), or told to stop: brake to a stop, and it is yours again
@@ -25123,10 +25301,12 @@ const handle = async (m, post) => {
       if (A.done || rem < 1.6 || (rem < 7 && toEnd < 2.6)) { if (!A.done) { A.done = true; ezShow(); if (A.cruise) toast("That's as far as this street goes.", 2800); } if (Math.abs(v) < 0.6) { autoEnd(); return [0, 0]; } return [v > 0 ? -1 : 1, 0, 0, !!A.hoon && !car.bus && v > 4]; }
       const big = car.bus ? 1.6 : 1, look = bsClamp(4.5 + Math.abs(v) * 0.75, 5, H ? 26 : 15) * big;
       // what's in the way, ten times a second; and over across the road (to go round something) a little at a time, as it goes along
-      if ((A.lookT -= dt) <= 0) { A.lookT = 0.1; try { autoLook(A, at, rem, v, H); } catch (e) { A.cap = Infinity; A.blk = null; } }
+      if ((A.lookT -= dt) <= 0) { A.lookT = 0.1; try { autoLook(A, at, rem, v, H); } catch (e) { A.cap = place === "inv" && T.invStatic?.wholeTown ? 0 : Infinity; A.blk = null; } }
       { const dd = A.dTgt - A.dCur; A.dCur += Math.sign(dd) * Math.min(Math.abs(dd), bsClamp(Math.abs(v) * 0.45, 0.6, 3) * dt); }
       // (aimed a little further over while the car is short of it, so it gets there, not just near)
-      let [tx, tz] = pt(look); if (Math.abs(A.dCur) > 0.01) { const [px, pz, u0, w0] = autoDir(A, at), lat = -(car.x - px) * w0 + (car.z - pz) * u0, o = A.dCur + bsClamp((A.dCur - lat) * 0.8, -1.5, 1.5), [, , ux, uz] = autoDir(A, at + look); tx -= uz * o; tz += ux * o; }
+      // On a pass keep the steering point close enough to follow the checked line around a bend.
+      const aim = A.passCap != null && (A.dTgt || Math.abs(A.dCur) > 0.1) ? Math.min(look, (2.2 + Math.abs(v)*0.38)*big) : look;
+      let [tx, tz] = pt(aim); if (Math.abs(A.dCur) > 0.01) { const [px, pz, u0, w0] = autoDir(A, at), lat = -(car.x - px) * w0 + (car.z - pz) * u0, o = A.dCur + bsClamp((A.dCur - lat) * 0.8, -1.5, 1.5), [, , ux, uz] = autoDir(A, at + aim); tx -= uz * o; tz += ux * o; }
       const e = wrap(Math.atan2(tx - car.x, tz - car.z) - car.h);
       // backing off something it has run into: a second or so in reverse, the wheel the other way, then on again
       if (A.rev > 0) { A.rev -= dt; return [-0.8, bsClamp(A.revE * 2.4, -1, 1)]; }
@@ -25146,7 +25326,7 @@ const handle = async (m, post) => {
         if (A.hoon && !A.ht && !A.hc && v > 9 && worst > 0.9 && Math.abs(e) > 0.35 && rem > 25) { A.ht = 0.32; A.hc = 1.8; }
         hoonH = A.ht > 0; }
       else { vt = Math.min(vt, Math.sqrt(2 * 2.4 * Math.max(0, rem - 1.2)) + 0.9); if (Math.abs(e) > 0.7) vt = Math.min(vt, 3.8); }
-      vt = Math.min(vt, A.cap); if (A.dTgt || Math.abs(A.dCur) > 0.4) vt = Math.min(vt, H ? 9 : 7);  // (what's in the way; going round it, steady)
+      vt = Math.min(vt, A.cap); if (A.dTgt || Math.abs(A.dCur) > (A.passCap != null ? 0.1 : 0.4)) vt = Math.min(vt, A.passCap ?? (H ? 9 : 7));
       if (A.cap < 0.3) hoonB = hoonH = false;
       let go = bsClamp((vt - v) * (H ? 1.4 : 0.6), -1, 1); if (go < 0 && v < 0.8) go = 0;
       // stopped behind something that isn't going anywhere, with no way round it, for 4 seconds: Unstick, done for it (three goes,
