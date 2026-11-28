@@ -50,6 +50,16 @@ Every frame the app passes the camera Explore is moving to `model.setCamera(...)
   The clock's hands and lit faces, the flags, the koala, the wombats and the windows' glow keep following the
   originals. Moorooka has no guests of this kind.
 
+### Bunurong Environment Centre, Ramsey Boulevard
+
+Explore places the museum's entrance on the mapped wall and the public EV charger beside the existing car-park aisle. The museum, its car park and the adjoining paths retain their original ground, walls and collision. The two narrow canopy posts and the cabinet have their own collision. The museum door is a visual entrance to a closed interior.
+
+- **Placement.** Map data © OpenStreetMap contributors, ODbL. The main entrance node and museum wall were last edited in May 2024. The car-park node records one CCS and one CHAdeMO connector and was last edited in May 2025. [Main entrance](https://www.openstreetmap.org/node/11897542004) · [Museum footprint](https://www.openstreetmap.org/way/472789980) · [Charger](https://www.openstreetmap.org/node/12869788102) · [Car park](https://www.openstreetmap.org/way/768985478) · [OSM licence](https://www.openstreetmap.org/copyright)
+- **Museum.** The South Gippsland Conservation Society identifies the centre at 1 Ramsey Boulevard. The glazed entrance and shallow shelter use original geometry informed by the historical street exterior. Photography supplied by Travel Victoria. Capture date unknown, server file date 21 December 2011. Glazing, canopy widths and colours are estimates. The present upper facade and exact window divisions still need a dated, reusable exterior view. [Operator](https://www.sgcs.org.au/our-centre) · [Exterior photograph](https://www.travelvictoria.com.au/images/inverloch/photos/inverloch-022.jpg) · [Travel Victoria](https://www.travelvictoria.com.au/) · [Photo terms](https://www.travelvictoria.com.au/about/photos/)
+- **Charging court.** The council identifies the 60 kW station at 3 Ramsey Boulevard and confirmed the site's operation in March 2026. Its OSM location anchors an unbranded two-lead cabinet. The enclosure size, orientation, face and cable drape are estimates. The existing paving, access aisles and two unmarked driveway crossings supply the approach. [Bass Coast EV project](https://engage.basscoast.vic.gov.au/electric-vehicle-charging-stations) · [March 2026 opening](https://www.sgst.com.au/inverloch-ev-recharge-station-open-for-business/)
+
+On a matched 30-second, 124 m camera replay, v48 Medium at a fixed 553 × 1,014 pixels rendered 57.77 frames/s before and 56.49 after. Median frame intervals were 16 ms in both runs and p95 went from 30 to 31 ms. Cold transfer grew by 2,411 gzip-equivalent bytes across the same 12 requests. The moving replay made zero further requests. These are single Chrome mobile-emulation runs on an RTX 5070 Laptop GPU. [Before and after views](../tools/streetscapes/bunurong-comparison.webp) · [Replay route and camera poses](../tools/streetscapes/bunurong-route.json)
+
 ### Inverloch's town centre
 
 The block round the clock comes across whole (`townModelBlock`): the Hub and library, the war memorial, the shops

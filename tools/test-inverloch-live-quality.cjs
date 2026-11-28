@@ -11,6 +11,7 @@ async function openAuto({live, slow = false, preset = 'auto', staging, addGuests
   let now = 0, frames = 0, saved = {};
   const T = {on: true}, spinner = {hidden: true}, box = {children: []};
   const models = [], changes = [];
+  T.fitMuseumFrontage = native => { native.museumFittedBeforeSwap = native !== T.pair.cur; };
   const environment = {
     BS: {town: T}, navigator: {deviceMemory: 8}, matchMedia: () => ({matches: !staging}),
     invGraphics: {preset, frameTarget: 60}, invGraphicsPresets: ['auto', 'low', 'medium', 'high'],
@@ -55,6 +56,7 @@ test('Auto promotes and rolls back on the same model when the native tiers are c
   const promoted = await openAuto({live: true});
   assert.deepEqual(promoted.changes, ['medium']);
   assert.equal(promoted.pair.cur, promoted.models[0]);
+  assert.equal(promoted.models[0].museumFittedBeforeSwap, undefined);
   assert.equal(promoted.pair.quality, 'medium');
   assert.equal(promoted.saved.q, 'medium');
   assert.equal(promoted.pair.pendingQuality, null);
@@ -80,6 +82,7 @@ test('older bundles still swap and a manual Low choice stays fixed', async () =>
   assert.deepEqual(legacy.models.map(model => model.quality), ['low', 'medium']);
   assert.equal(legacy.models[0].disposed, true);
   assert.equal(legacy.pair.cur, legacy.models[1]);
+  assert.equal(legacy.models[1].museumFittedBeforeSwap, true);
   const manual = await openAuto({live: true, preset: 'low'});
   assert.deepEqual(manual.changes, []);
   assert.equal(manual.models.length, 1);

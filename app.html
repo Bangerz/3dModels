@@ -9891,6 +9891,7 @@ const handle = async (m, post) => {
           if (next === n && currentTown() && T.normanGrade) n.normanGrade = T.normanGrade.fit(n);
         } catch { if (next === n) drop(); return false; }
         if (next !== n || !currentTown()) return false;
+        try { T.fitMuseumFrontage?.(n); } catch { drop(); return false; }
         const loadMs = Math.round(performance.now() - n.t0);
         try { await swapTo(n, target); } catch (error) {
           if (!n.commitStagedWorld) throw error;
@@ -16898,6 +16899,74 @@ const handle = async (m, post) => {
       if (far !== shown) return;  // already where it should be
       shown = !far; for (let i = 0; i < parts.length; i++) h.setMatrix(i, shown ? I : FAR); } };
   }
+  // Bunurong Environment Centre. Two mapped landmarks at the Ramsey foreshore approach.
+  function townMuseumFrontage(m, THREE, grid) {
+    // Charger node 12869788102 beside the north edge of car-park way 768985478.
+    const [x,z] = m.fromLatLon(-38.6346880,145.7289911);
+    const [a,b] = [[-38.6346392,145.7289537],[-38.6347083,145.7290923]].map(ll => m.fromLatLon(...ll));
+    const heading = -Math.atan2(b[1]-a[1], b[0]-a[0]);
+    const pose = new THREE.Matrix4().makeRotationY(heading);
+    pose.setPosition(x, m.groundAt(x,z) + 0.025, z);
+    const body = [], colours = [];
+    function part(shape, hex) {
+      shape.applyMatrix4(pose);
+      const tint = new THREE.Color(hex), pos = shape.attributes.position;
+      for (const i of shape.index.array) {
+        body.push(pos.getX(i), pos.getY(i), pos.getZ(i));
+        colours.push(tint.r, tint.g, tint.b);
+      }
+      shape.dispose();
+    }
+    function box(u,y,v,w,h,d,colour) {
+      part(new THREE.BoxGeometry(w,h,d).translate(u,y,v), colour);
+    }
+    box(0,0,0,1.16,0.18,0.81,0xb3b0a8);
+    box(0,0.15,0,0.72,0.12,0.49,0x404449);
+    box(0,1.01,0,0.82,1.64,0.50,0xd5d6d3);
+    box(0,1.83,0,0.85,0.08,0.53,0x3a4247);
+    box(0,1.27,0.257,0.42,0.34,0.035,0x30383d);
+    box(0,1.30,0.278,0.29,0.19,0.012,0x55737c);
+    for (const side of [-1,1]) {
+      const lead = [[0.38,1.44,0.18],[0.52,1.05,0.21],[0.50,0.49,0.27],
+        [0.40,0.43,0.32],[0.32,0.88,0.31],[0.31,1.10,0.28]];
+      const curve = new THREE.CatmullRomCurve3(lead.map(([u,y,v]) => new THREE.Vector3(side*u,y,v)));
+      part(new THREE.TubeGeometry(curve, 12, 0.025, 5, false), 0x282d30);
+      box(side*0.31,1.12,0.28,0.075,0.16,0.10,0x353b3c);
+    }
+    grid?.worldBox(x,z,heading,1.05,0.65);
+
+    // Main entrance node 11897542004 and its adjoining north-west wall end on way 472789980.
+    // The glazing and shallow canopy follow the historical Travel Victoria exterior view.
+    const [ex,ez] = m.fromLatLon(-38.6345773,145.7291541);
+    const [wx,wz] = m.fromLatLon(-38.6345195,145.7290502);
+    const facing = -Math.atan2(wz-ez,wx-ex), base = m.groundAt(ex,ez);
+    pose.makeRotationY(facing).setPosition(ex,base,ez);
+    // The paved landing under the canopy follows the slope and ends at the porch.
+    const landing = [[-2.52,.05],[2.52,.05],[2.52,1.36],[-2.52,1.36]]
+      .map(([u,v]) => new THREE.Vector3(u,0,v).applyMatrix4(pose));
+    const paving = new THREE.Color(0xb9b8a9);
+    for (const i of [0,2,1,0,3,2]) {
+      const p = landing[i];
+      body.push(p.x,m.groundAt(p.x,p.z)+.025,p.z);
+      colours.push(paving.r,paving.g,paving.b);
+    }
+    // A shallow insert on the solid native building. Keep the entrance and sidelights visually distinct.
+    box(0,1.14,0.12,4.6,2.28,0.18,0x53554f);
+    for (const u of [-1.71,-0.57,0.57,1.71]) {
+      box(u,1.15,0.23,1.06,2.1,0.06,Math.abs(u)<1 ? 0x34484e : 0x50656a);
+      box(u,1.76,0.28,1.06,0.045,0.035,0x9d9f95);
+    }
+    for (const u of [-0.13,0.13]) box(u,1.02,0.285,0.035,0.30,0.06,0xb4b6ac);
+    box(0,2.41,0.62,5.05,0.15,1.26,0xb8b9a8);
+    for (const u of [-2.32,2.32]) {
+      const foot = new THREE.Vector3(u,0,1.11).applyMatrix4(pose);
+      const bottom = m.groundAt(foot.x,foot.z) - base - 0.025;
+      box(u,(2.36+bottom)/2,1.11,0.10,2.36-bottom,0.10,0x747767);
+      grid?.worldBox(foot.x,foot.z,facing,0.10,0.10);
+    }
+    m.addParts([{ positions: new Float32Array(body), colors: new Float32Array(colours),
+      matrix: new THREE.Matrix4().elements, roughness: 0.77 }]);
+  }
   // One mipmapped sheet for the photographed finishes at number 11. Its opaque faces
   // travel into Explore in one mesh. The night-lit batch only needs the little glazing tile.
   function normanHouseFinishes(THREE, parent, frame) {
@@ -17311,6 +17380,10 @@ const handle = async (m, post) => {
         for (const car of T.cars) car.cp.copy(place);
       } };
       if (W.invNormanSpot) stop("Norman Rd", W.invNormanSpot, place, [x, z]); }
+    // Collision stays in the host. Each native world owns a mesh fitted to its terrain.
+    const museumGrid = T.invStatic ??= invCivicCollision((X,Z) => [X,Z], () => false);
+    townMuseumFrontage(T.pair.cur, THREE, museumGrid);
+    T.fitMuseumFrontage = native => townMuseumFrontage(native, THREE);
     return jumps;
   }
   // Fit the same placement plane as the original pad before grading the exposed lawn.

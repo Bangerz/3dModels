@@ -1,0 +1,12 @@
+{
+  "name": "Ramsey Boulevard into the Bunurong Environment Centre car park",
+  "source": "OSM Ramsey road and service aisle way 768985479. Camera positions in Explore metres.",
+  "points": [[-132.9,-222.1],[-118,-242.9],[-107.59,-257.89],[-99.72,-252.48],[-81.79,-240.31],[-91.55,-226.05],[-94.94,-228.36],[-109.48,-238.21],[-117.63,-243.7]],
+  "holds": [
+    {"id":"museum-frontage","eye":[-69.5,-275.9,1.65],"target":[-73.7,-268.9,1.3]},
+    {"id":"ramsey-entrance","eye":[-106.9,-254.1,2],"target":[-88,-251.5,1]},
+    {"id":"charging-court","eye":[-100,-246.5,2],"target":[-87.85,-256.65,1]},
+    {"id":"charger-and-museum","eye":[-91.6,-251,1.6],"target":[-87.85,-256.65,1.05]},
+    {"id":"lot-and-path","eye":[-93,-239,45],"target":[-94,-241,0]}
+  ]
+}
