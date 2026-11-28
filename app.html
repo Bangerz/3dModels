@@ -25675,6 +25675,19 @@ const handle = async (m, post) => {
     ezGo.onclick = e => { e.stopPropagation(); ezGo.blur(); C.autoGo(); }; ezL.onclick = e => { e.stopPropagation(); ezL.blur(); C.autoTurn(1); }; ezR.onclick = e => { e.stopPropagation(); ezR.blur(); C.autoTurn(-1); };
     const AUTO_V = 50 / 3.6;  // it drives at up to 50 km/h
     const AUTO_PASS_HORIZON = 185;
+    // Predict how long it takes to reach a station along a pass. A GPS car approaching
+    // a moving lead can accelerate without boost; allow for that run-up in its merge.
+    const autoPassMotion = (v, movingLead) => {
+      // Normal throttle scales by (1 - speed / top). Reserve at least 20% of it
+      // and use the weakest acceleration in the predicted speed range.
+      const current = bsClamp(Math.abs(v),4,AUTO_V), top = R.carTop/3.6, attainable = Math.min(AUTO_V,0.8*top);
+      if (!movingLead || v < 0 || v >= attainable || !(R.carAccel > 0 && attainable > 0))
+        return {speed:current, delay:0, timeAt:d => d/current};
+      const acceleration = R.carAccel*(1-attainable/top), rampTime = (attainable-v)/acceleration;
+      const rampDistance = (v+attainable)*rampTime/2, delay = rampTime-rampDistance/attainable;
+      return {speed:attainable, delay, timeAt:d => d < rampDistance
+        ? (Math.sqrt(v*v+2*acceleration*d)-v)/acceleration : d/attainable+delay};
+    };
     // Autodrive from the GPS drives like a hoon (Ash, 23 November 2026: "When I type in the address allow standard or autodrive to drive
     // me there automatically. Drive like a hoon to get there"): flat out to the car's own top speed, boost down the straights, braking
     // late and hard for the corners, a flick of the handbrake to swing round the sharp ones, and a skid to a stop at the door
@@ -25727,7 +25740,7 @@ const handle = async (m, post) => {
     };
     // Plan the whole excursion in route metres relative to the car. The indexed polygons include the parked
     // car's actual trim, orientation and position. The ordinary vehicle movement still checks every substep.
-    const autoIndexedPass = (A, at, rem, v, cars, homeTraffic, oncoming, latCar, path, passHorizon) => {
+    const autoIndexedPass = (A, at, rem, v, cars, homeTraffic, oncoming, latCar, path, passHorizon, motion) => {
       const grid = T.invStatic, shape = townTrafficBodies[car.bus ? "bus" : "car"], [width, length] = shape;
       const margin = 0.55, transition = offset => 8 + 4 * Math.abs(offset);
       const blockers = [], seen = new Set();
@@ -25761,7 +25774,7 @@ const handle = async (m, post) => {
         return Math.hypot(dx-t*s.dx, dz-t*s.dz) <= s.half;
       });
       const from = {x:car.x,z:car.z,h:car.h,y:car.y};
-      const speed = bsClamp(Math.abs(v), 4, AUTO_V);
+      const slowSpeed = bsClamp(Math.abs(v),4,AUTO_V);
       let trafficConflict = false, waitForTraffic = false;
       const check = (offset, near, far) => {
         const enter = bsClamp(near-length-0.8, 6, transition(offset-latCar)), leave = transition(offset);
@@ -25774,7 +25787,7 @@ const handle = async (m, post) => {
         // A stopped driver needs room to accelerate into the pass. Wait until opposing traffic
         // clears that lane even if one exact constant-speed prediction would slip in behind it.
         if (offset && oncoming.some(b => Math.abs(offset-b.lat) < width+b.across+0.35 &&
-          b.al+b.ext+length >= -1 && b.al-b.ext-length < end*(1+b.closing/speed))) {
+          b.al+b.ext+length >= -1 && b.al-b.ext-length < end + b.closing*Math.max(end/slowSpeed,motion.timeAt(end)))) {
           trafficConflict = waitForTraffic = true; return null;
         }
         const steps = Math.max(1,Math.ceil(end/2));
@@ -25793,11 +25806,12 @@ const handle = async (m, post) => {
             for (const l of [-length,length]) for (const w of [-width,width])
               if (!onRoad(x+sx*l+cz*w,z+cz*l-sx*w)) return null;
           }
+          const previousTime = motion.timeAt(previousD), nextTime = motion.timeAt(d);
           for (const D of cars) {
             const body = townTrafficBodies[D.bus ? "bus" : "car"];
-            const predicted = distance => ({x:D.x+Math.sin(D.h)*(D.v||0)*distance/speed,
-              z:D.z+Math.cos(D.h)*(D.v||0)*distance/speed,h:D.h,y:D.y ?? next.y});
-            if (townTrafficSweep(previous,next,shape,predicted(previousD),predicted(d),body) < 1) {
+            const predicted = seconds => ({x:D.x+Math.sin(D.h)*(D.v||0)*seconds,
+              z:D.z+Math.cos(D.h)*(D.v||0)*seconds,h:D.h,y:D.y ?? next.y});
+            if (townTrafficSweep(previous,next,shape,predicted(previousTime),predicted(nextTime),body) < 1) {
               trafficConflict = true; if (Math.abs(D.v || 0) >= 0.6) waitForTraffic = true; return null;
             }
           }
@@ -25821,7 +25835,8 @@ const handle = async (m, post) => {
       const clearStation = b => {
         const distance = b.far + length + 0.8;
         if (!b.forwardSpeed || distance <= 0) return distance;
-        return b.forwardSpeed < speed ? distance / (1 - b.forwardSpeed / speed) : Infinity;
+        // d / speed + delay bounds travel time even inside the acceleration phase.
+        return b.forwardSpeed < motion.speed ? (distance + b.forwardSpeed*motion.delay) / (1 - b.forwardSpeed/motion.speed) : Infinity;
       };
       let left = first.left, right = first.right, far = clearStation(first);
       for (const b of blockers.slice(1)) {
@@ -25840,6 +25855,14 @@ const handle = async (m, post) => {
       const heldOffset = bsClamp(latCar,-maxOffset,maxOffset);
       if (A.dTgt && Math.sign(heldOffset) === Math.sign(A.dTgt) && Math.abs(heldOffset) > Math.abs(options[0]))
         options.push(heldOffset);
+      // An object beside the home lane may block the minimum offset. Try farther out
+      // on each permitted side, within the same road, body-sweep and displacement limits.
+      if (!A.dTgt) for (const base of options.slice()) {
+        for (let distance = Math.abs(base); distance < maxOffset;) {
+          distance = Math.min(distance+0.5,maxOffset);
+          options.push(Math.sign(base)*distance);
+        }
+      }
       for (const offset of options) {
         if (Math.abs(offset) > maxOffset) continue;
         const cap = check(offset,first.near,far);
@@ -25873,11 +25896,11 @@ const handle = async (m, post) => {
       };
       const homeLane = (b, range) => indexed && (b.still || (H && b.slow)) && b.al+b.ext+hlS >= -1 &&
         b.al <= range+b.ext && Math.abs(b.lat) < hwS+b.across+0.35;
-      let blk = null, cap = Infinity, followingCap = Infinity, nearLead = false;
+      let blk = null, cap = Infinity, followingCap = Infinity, nearLead = false, movingLead = false;
       for (const D of cars) {
         const b = observe(D), {al, lat, ext, across, still, forwardSpeed:dv} = b, gap = al-ext-hlS;
         const inHomeLane = homeLane(b,L);
-        if (inHomeLane) nearLead = true;
+        if (inHomeLane) { nearLead = true; if (b.slow) movingLead = true; }
         if (gap < -1.5 || al > L + ext || Math.abs(lat-off(al)) > hwS+across+0.35) continue;
         const free = gap - 1.6;
         const vt = free <= 0 ? 0 : still || dv < 0.5 ? Math.sqrt(2 * 4.5 * free) : Math.min(Math.sqrt(2 * 4.5 * free) + dv, dv + free * 0.5);
@@ -25895,7 +25918,8 @@ const handle = async (m, post) => {
         if (blk?.wall || nearLead || A.dTgt || Math.abs(A.dCur) > 0.1) {
           // The following scan starts a pass. Check the whole return route for queued traffic,
           // including cars on another approach that can reach it within the predicted travel time.
-          const horizon = Math.min(rem,AUTO_PASS_HORIZON), seconds = horizon/bsClamp(Math.abs(v),4,AUTO_V);
+          const horizon = Math.min(rem,AUTO_PASS_HORIZON), motion = autoPassMotion(v,movingLead);
+          const seconds = Math.max(horizon/bsClamp(Math.abs(v),4,AUTO_V), motion.timeAt(horizon));
           extendProjection(horizon);
           let minX = car.x, maxX = car.x, minZ = car.z, maxZ = car.z;
           for (const [,x,z] of P) {
@@ -25915,7 +25939,7 @@ const handle = async (m, post) => {
             if (b.opposing) oncoming.push({...b, closing:-b.forwardSpeed});
           }
           A.cap = followingCap;
-          const clearPass = autoIndexedPass(A,at,rem,v,passCars,homeTraffic,oncoming,latCar,P,horizon);
+          const clearPass = autoIndexedPass(A,at,rem,v,passCars,homeTraffic,oncoming,latCar,P,horizon,motion);
           if (!clearPass) A.cap = Math.min(A.cap,cap);
         }
         return;

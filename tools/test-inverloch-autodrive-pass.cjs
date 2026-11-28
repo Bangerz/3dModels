@@ -34,13 +34,17 @@ const driver = new Script([
    if (streetEnd != null) {
      if (!cruise(0)) throw Error("Drive for me could not start on the fixture street");
    } else autoBegin([0, 0, 250*bend], [0, bend ? 44 : 100, bend ? 294 : routeLength], [0, 0], { hoon });
+   let charge = 1, spent = false;
    const advance = dt => {
      const route = auto;
      if (!route) return null;
-     const [go, str] = autoStep(dt);
+     const [thr, str, wantsBoost] = autoStep(dt);
      let v = car.v;
-     const K = car.bus ? .7 : 1, gc = false, brake = false, boosting = false, teamOn = false,
-       slide = false, back = false, VREV = 6.05, SHAPE = car.bus ? BUS : CAR, vboost = 210 / 3.6,
+     const boost = charged && wantsBoost, brake = false, mega = false, bSecs = 4, bBack = 10;`,
+  section("        const boosting = boost && !brake", "        // (the golden car has its own boost"),
+  section("        if (boosting) { charge =", "        const K = (car.gold"),
+  `   const K = car.bus ? .7 : 1, gc = false,
+       slide = false, VREV = 6.05, SHAPE = car.bus ? BUS : CAR, vboost = 210 / 3.6,
        vmax = R.carTop / 3.6 * K;`,
   section("        if (go > 0.05) v +=", "        if (bump > 1.5)"),
   `  return { bump, target: route.dTgt, routeEnd: route.cz.at(-1) };
@@ -52,8 +56,8 @@ const CRUISE = 50 / 3.6, HALF_WIDTH = .98, HALF_LENGTH = 2.22;
 const PARKED_WIDTH = .95, PARKED_LENGTH = 2.25;
 const GRAZE = .0019066, DEEP = .780184;
 
-function drive(hz, { intrusion = DEEP, centres = [40], seconds = 16, gap = false, closed = false, kerbBarrier = false, npc, traffic = npc ? [npc] : [], bus = false, hoon = false, roadWidth, streetEnd, parallelWall = false, bend = 0 } = {}) {
-  const car = { x: 0, z: 0, y: 0, h: 0, dir: 0, steer: 0, bus, v: bus ? CRUISE / 1.3 : CRUISE };
+function drive(hz, { intrusion = DEEP, centres = [40], seconds = 16, gap = false, closed = false, kerbBarrier = false, npc, traffic = npc ? [npc] : [], bus = false, hoon = false, roadWidth, streetEnd, parallelWall = false, bend = 0, smallBarrier = false, startSpeed, charged = false, carTop = 120 } = {}) {
+  const car = { x: 0, z: 0, y: 0, h: 0, dir: 0, steer: 0, bus, v: startSpeed ?? (bus ? CRUISE / 1.3 : CRUISE) };
   const cars = traffic.map(start => ({ y: 0, ...start }));
   const T = { traffic: { cars } };
   const halfLength = bus ? 5.55 : HALF_LENGTH, halfWidth = bus ? 1.27 : HALF_WIDTH;
@@ -70,11 +74,11 @@ function drive(hz, { intrusion = DEEP, centres = [40], seconds = 16, gap = false
   let time = 0;
   const advance = driver.runInNewContext({
     ...collision,
-    T, car, ground, hoon, routeLength, streetEnd, bend, autoPin() {}, solid: () => false, F: { lim: [-500, 500, -500, routeLength + 100] },
+    T, car, ground, hoon, routeLength, streetEnd, bend, charged, autoPin() {}, solid: () => false, F: { lim: [-500, 500, -500, routeLength + 100] },
     bsClamp: (v, lo, hi) => Math.max(lo, Math.min(hi, v)),
     wrap: v => Math.atan2(Math.sin(v), Math.cos(v)),
     performance: { now: () => time * 1000 },
-    R: { carTop: 120, carAccel: 5, carTurn: 140 }, C: {}, place: "inv",
+    R: { carTop, carAccel: 5, carTurn: 140 }, C: {}, place: "inv",
     vacant: (x, z, h, length, width) => !T.invStatic.depth(x, z, h, length, width),
     unReset() { hops.push({ time, z: car.z }); },
     ezShow() {}, sit() {}, snd: {}, toast() {}
@@ -83,6 +87,7 @@ function drive(hz, { intrusion = DEEP, centres = [40], seconds = 16, gap = false
   T.invStatic.addTown({ polygons: [], circles: [] }, centres.map(z => ({
     id: [parkedX, z], x: parkedX, z, heading: 0, halfWidth: PARKED_WIDTH, halfLength: PARKED_LENGTH
   })));
+  if (smallBarrier) T.invStatic.box(-1.8, 40, 0, .2, 2);
   if (parallelWall) T.invStatic.box(1.6, 100, 0, .4, 300);
   if (gap) T.invStatic.box(-3.1, 50, 0, .2, 180);
   if (closed) T.invStatic.box(0, 40, 0, 100, 2);
@@ -149,6 +154,30 @@ for (const hz of [30, 60]) {
       checkContinuousPass(drive(hz, { centres }), centres.at(-1));
     });
   }
+
+  test(`take the initially wider clear line beside an off-lane barrier at ${hz} Hz`, () => {
+    const run = drive(hz, { smallBarrier: true, kerbBarrier: true, roadWidth: 10 });
+    checkContinuousPass(run, 40);
+    assert.ok(run.frames.find(f => f.target).target > 2.8, "start outside the additional barrier");
+    const narrow = drive(hz, { smallBarrier: true, kerbBarrier: true, roadWidth: 7, seconds: 5 });
+    assert.ok(narrow.frames.every(f => !f.target && !f.bump), "no passing line outside the road");
+  });
+
+  test(`GPS accelerates from rest to pass a moving lead six metres ahead at ${hz} Hz`, () => {
+    const npc = { x: 0, z: 6, h: 0, v: 8 };
+    for (const charged of [false, true]) {
+      const { frames, hops } = drive(hz, { centres: [], npc, hoon: true, startSpeed: 0, roadWidth: 12, charged, seconds: 45 });
+      assert.deepEqual(hops, []);
+      assert.ok(frames.every(f => !f.bump));
+      const start = frames.find(f => f.target);
+      assert.ok(start, "choose a pass when unboosted acceleration can close the gap");
+      const merged = frames.find(f => f.time > start.time && !f.target && Math.abs(f.x) < .3 &&
+        f.rear > npc.z + npc.v*f.time + HALF_LENGTH);
+      assert.ok(merged, "clear the moving front bumper and return");
+    }
+    const limited = drive(hz, { centres: [], npc, hoon: true, startSpeed: 0, roadWidth: 12, carTop: 24, seconds: 5 });
+    assert.ok(limited.frames.every(f => !f.target && !f.bump), "follow when the configured car is slower than the lead");
+  });
 
   test(`a parallel wall outside the home lane leaves a stopped car passable at ${hz} Hz`, () => {
     const npc = { x: 0, z: 40, h: 0, v: 0 };
